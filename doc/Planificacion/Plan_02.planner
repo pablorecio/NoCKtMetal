@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<project name="No one can kills the metal" company="RPN" manager="Baldomero" phase="" project-start="20090304T000000Z" mrproject-version="2" calendar="1">
+  <properties/>
+  <phases/>
+  <calendars>
+    <day-types>
+      <day-type id="0" name="Obra realiz&#xE1;ndose" description="Un d&#xED;a de trabajo predeterminado"/>
+      <day-type id="1" name="Jornada de descanso" description="Un d&#xED;a predeterminado de descanso"/>
+      <day-type id="2" name="Usar base" description="Usar d&#xED;a del calendario base"/>
+    </day-types>
+    <calendar id="1" name="Predeterminado">
+      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="0" sun="0"/>
+      <overridden-day-types>
+        <overridden-day-type id="0">
+          <interval start="0800" end="1200"/>
+          <interval start="1300" end="1700"/>
+        </overridden-day-type>
+      </overridden-day-types>
+      <days/>
+    </calendar>
+  </calendars>
+  <tasks>
+    <task id="1" name="Toma de requisitos iniciales" note="Realizaci&#xF3;n de una toma de requisitos b&#xE1;sica para &#10;el motor gr&#xE1;fico de la aplicaci&#xF3;n.&#10;(Planteamiento de un &quot;enunciado&quot; b&#xE1;sico del problema)" work="345600" start="20090304T000000Z" end="20090315T170000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+    <task id="2" name="Conocimientos extras" note="" work="288000" start="20090304T000000Z" end="20090315T142000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="3" name="Ampliaci&#xF3;n de MySQL" note="Ampliaci&#xF3;n de conocimientos de MySQL:&#10;- Consultas para modificaci&#xF3;n de datos&#10;- Uso de la API para C. Hacer seguramente &#10;  una hoja de referencia." work="86400" start="20090304T000000Z" end="20090313T170000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="must-start-on" time="20090304T000000Z"/>
+      </task>
+      <task id="4" name="Estudio de la SDL" note="" work="201600" start="20090304T000000Z" end="20090315T142000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+    </task>
+    <task id="5" name="Estad&#xED;sticas y reglas del juego" note="" work="201600" start="20090316T000000Z" end="20090324T150000Z" work-start="20090316T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20090316T000000Z"/>
+    </task>
+    <task id="6" name="An&#xE1;lisis de motores varios" note="" work="57600" start="20090312T000000Z" end="20090315T104000Z" work-start="20090312T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20090312T000000Z"/>
+    </task>
+    <task id="7" name="Multimedia" note="Generaci&#xF3;n y b&#xFA;squeda de im&#xE1;genes y sonido" work="115200" start="20090316T000000Z" end="20090323T170000Z" work-start="20090316T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20090316T000000Z"/>
+    </task>
+    <task id="8" name="Preparar presentaci&#xF3;n" note="" work="14400" start="20090321T000000Z" end="20090322T142000Z" work-start="20090321T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20090321T000000Z"/>
+    </task>
+    <task id="9" name="Presentaci&#xF3;n inicial" note="" work="0" start="20090325T000000Z" end="20090325T000000Z" work-start="20090325T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20090325T000000Z"/>
+      <predecessors>
+        <predecessor id="1" predecessor-id="8" type="FS"/>
+      </predecessors>
+    </task>
+  </tasks>
+  <resource-groups/>
+  <resources>
+    <resource id="1" name="Noelia" short-name="" type="1" units="0" email="" note="" std-rate="6"/>
+    <resource id="2" name="Pablo" short-name="" type="1" units="0" email="" note="" std-rate="6"/>
+    <resource id="3" name="Rosa" short-name="" type="1" units="0" email="" note="" std-rate="6"/>
+  </resources>
+  <allocations>
+    <allocation task-id="8" resource-id="1" units="10"/>
+    <allocation task-id="6" resource-id="1" units="20"/>
+    <allocation task-id="7" resource-id="1" units="40"/>
+    <allocation task-id="4" resource-id="1" units="20"/>
+    <allocation task-id="1" resource-id="1" units="50"/>
+    <allocation task-id="8" resource-id="2" units="10"/>
+    <allocation task-id="6" resource-id="2" units="20"/>
+    <allocation task-id="7" resource-id="2" units="10"/>
+    <allocation task-id="4" resource-id="2" units="20"/>
+    <allocation task-id="5" resource-id="2" units="50"/>
+    <allocation task-id="3" resource-id="2" units="30"/>
+    <allocation task-id="8" resource-id="3" units="10"/>
+    <allocation task-id="5" resource-id="3" units="30"/>
+    <allocation task-id="6" resource-id="3" units="20"/>
+    <allocation task-id="4" resource-id="3" units="20"/>
+    <allocation task-id="1" resource-id="3" units="50"/>
+  </allocations>
+</project>

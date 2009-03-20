@@ -1,0 +1,101 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage[left=2.5cm,top=3.5cm,right=2.5cm,bottom=3.5cm]{geometry}
+
+\usepackage{array}
+
+\usepackage{graphicx} 
+
+\begin{document}
+
+\includegraphics[scale=0.6]{../uca.png}
+
+\begin{center}
+  \noindent \huge\textbf{ Acta de reunión de grupo}\\
+\end{center}
+
+\noindent Día 17 de Febrero de 2009\\
+
+\noindent Asisten:
+
+\begin{center}
+\begin{tabular}{|m{5.2cm}|m{5.2cm}|m{5.2cm}|}
+  \hline
+  Rosa María Durante Lerate & Pablo Recio Quijano & Noelia Sales Montes\\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  Fdo: & Fdo: & Fdo: \\
+  \hline
+\end{tabular}
+\end{center}
+
+\noindent Acuerdos:\\
+
+\begin{itemize}
+\item Trás un estudio de las distintas posibilidades, hemos concretado
+  que el proyecto ha realizar será un videojuego del género
+  \textbf{RPG}. Esta elección se debe fundamentalmente a gustos
+  personales además de como un reto para el grupo, ya que es bastante
+  completo.\\
+
+  \noindent Esta elección se baremó junto con la posibilidad de
+  realizar una Aventura Gráfica, sin embargo, analizando a
+  \textit{grosso modo}  ambos géneros, concretamos que RPG era más
+  completo y mas interesante para realizar.
+\item En una primera aproximación, hemos intentado ver las partes
+  fundamentales que tendrá el software, cara a una futura modulación,
+  y comenzar a abordar el análisis del sistema en función de
+  esto. \\
+
+  \noindent Hemos detectado a primera vista las siguientes partes:
+  
+  \begin{description}
+  \item[Motor gráfico: ] La parte fundamental del sistema. Abstraerá
+    la tecnología que usemos de forma que proporcione las
+    funcionalidades directamente para este tipo de juegos.
+  \item[Estadísticas: ] Las reglas del juego, respecto a puntos de
+    habilidad, daños, defensa y demás.
+  \item[Base de Datos: ] Será necesario tener una base de datos con
+    los PJ, PNJ, los objetos, equipamiento...
+  \item[Inteligencia Artificial: ] Dotar a los enemigos de cierta
+    dificultad para batirlos.
+  \end{description}
+
+
+\item Claramente lo más importante es el motor del juego, y
+  pensándolo más detenidamente, el objetivo será realizar unas
+  librerias que permitan realizar un juego tipo RPG a partir de esta
+  librería. Esta librería / motor tendrá las siguientes
+  funcionalidades:
+
+  \begin{itemize}
+  \item Carga e interacción de escenarios, PJs, PNJs...
+  \item Acciones tanto de movimiento en escenario como en batalla.
+  \item IA del sistema.
+  \item Sincronización con la BD.
+  \item Manejo y tratamiento de estadísticas del juego.
+  \item Diálogos con los PNJs.
+  \item Realización de misiones.
+  \end{itemize}
+  
+\item Por último, decidimos en común que lo más apropiado será usar un
+  modelo de ciclo de vida incremental, de forma que vayamos poco a
+  poco desarrollando el sistema, ya que tampoco podemos tener claros
+  todos los requisitos del sistema, y usar un modelo secuencial, puede
+  inducirnos a un fallo que en una fase de desarrollo avanzada puede
+  ser fatal.
+  
+\item Aunque la idea inicial es desarrollar un motor genérico, en
+  principio el videojuego que haremos para ``probar'' dicho motor,
+  será un juego en el que el jugador maneje a un grupo heavy en una
+  psicodélica aventura.
+\end{itemize}
+
+\end{document}
