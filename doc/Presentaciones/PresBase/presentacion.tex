@@ -1,13 +1,14 @@
 % ===================================================================
-% Presentación con Latex Beamer -> EN proceso de modificación -> CCF
+%                   Presentación con Latex Beamer
 % ===================================================================
 \documentclass[9pt,xcolor=svgnames]{beamer}
 %\documentclass[handout,xcolor=svgnames]{beamer} %Version imprimible
 % -------------------------------------------------------------------
-\usepackage{paquetes}
-\usepackage{colores}
-% -------------------------------------------------------------------
-\usepackage{modo}
+% Paquetes personalizados
+\usepackage{../paquetes}
+\usepackage{../colores}
+\usepackage{../info}
+\usepackage{../modo}
 % -------------------------------------------------------------------
 
 % Comienza el documento
@@ -18,30 +19,40 @@
 \everymath{\displaystyle}
 % -------------------------------------------------------------------
 
-% Fondo blanco: primera pagina
+% -------------------------------------------------------------------
+% Fondo blanco: primera página
 \beamersetaveragebackground{white}
+
 \begin{frame}
-
  \thispagestyle{empty}
- \begin{center}
-  \includegraphics[scale=0.7]{Imagenes/logo.pdf}
- \end{center}
-\end{frame}
 
+ \animate<2-3> 
+ \begin{figure}[t]
+  \centering
+  \includegraphics<1>[scale=0.7]{../Imagenes/logo_1.pdf}
+  \includegraphics<2>[scale=0.7]{../Imagenes/logo_2.pdf}
+  \includegraphics<3>[scale=0.7]{../Imagenes/logo_3.pdf}
+  \includegraphics<4>[scale=0.7]{../Imagenes/logo_4.pdf}
+ \end{figure}
+\end{frame}
+% -------------------------------------------------------------------
+
+% -------------------------------------------------------------------
 % Fondo para el resto del documento
 \setbeamertemplate{background}{
-\includegraphics[width=\paperwidth,height=\paperheight]{Imagenes/fondo.pdf}
+\includegraphics[width=\paperwidth,height=\paperheight]
+{../Imagenes/fondo.pdf}
 }
+% -------------------------------------------------------------------
 
-% Continuacion
+
+% Continuación:
 % Transparencia de Inicio -> Título
 \begin{frame}
  \titlepage
 \end{frame}
 
-
 \normalsize
-
 
 % Transparencia de índice
 \begin{frame}
