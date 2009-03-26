@@ -1,19 +1,13 @@
 CXX = g++
-SDLFLAGS = -lSDL -lSDL_image
-EXE = main
-OBJS = Control_Animacion.o Imagen.o Animacion.o
+CXXFLAGS = -ansi -Wall
+LIB = -lSDL -lSDL_image
+EXE = test
+OBJETOS =  Teclado.o Personaje.o main.o
 
-main: ${OBJS}
-	${CXX} ${EXE}.cpp  ${OBJS} -o ${EXE} ${SDLFLAGS}
+${EXE}: ${OBJETOS}
+	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
 
-Control_Animacion.o:
-	${CXX} -c Control_Animacion.cpp
-
-Imagen.o:
-	${CXX} -c Imagen.cpp
-
-Animacion.o:
-	${CXX} -c Animacion.cpp
+${OBJETOS}: Teclado.h Personaje.h
 
 clean:
-	${RM} ${EXE} ${OBJS} *~ *.gch
+	${RM} ${EXE} ${OBJETOS} *~ *#
