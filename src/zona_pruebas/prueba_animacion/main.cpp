@@ -7,6 +7,9 @@
 
 #include "Animacion.h"
 
+#define TAM_X 480
+#define TAM_Y 360
+
 using namespace std;
 
 int main() {
@@ -26,7 +29,7 @@ int main() {
 
     // Comprobamos que sea compatible el modo de video
     
-    if(SDL_VideoModeOK(640, 480, 24, SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
+    if(SDL_VideoModeOK(TAM_X, TAM_Y, 24, SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
 	
         cerr << "Modo no soportado: " << SDL_GetError() << endl;
         exit(1);
@@ -38,7 +41,7 @@ int main() {
 
     SDL_Surface *pantalla;
 
-    pantalla = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
+    pantalla = SDL_SetVideoMode(TAM_X, TAM_Y, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
 
     if(pantalla == NULL) {
 
@@ -51,8 +54,9 @@ int main() {
     // Creamos animaciones para llenar la pantalla
 
     Animacion animacion("./dentacos.png", 4, 4,"4,5,6,7,6,5,4", 120);  
-    Animacion animacion1("./dentacos.png", 4, 4,"0,4,8,12,8,4,0", 120);  
-    Animacion animacion2("./dentacos.png", 4, 4,"4,5,6,7,6,5,4", 120);  
+    //Animacion animacion1("./dentacos.png", 4, 4,"0,4,8,12,8,4,0", 120);  
+    //Animacion animacion2("./dentacos.png", 4, 4,"4,5,6,7,6,5,4", 120);  
+    Animacion animacion3("./dentacos.png", 4, 4,"0,1,2,3,2,1,0", 120); 
     
     // animacion.animar(pantalla, 100, 100);
 
@@ -72,8 +76,10 @@ int main() {
 
 	// Si se sale de la pantalla volvemos a introducirlo
 
-	if(x == 640)
+	if(x == TAM_X)
 	    x = 0;
+	if(y == TAM_Y)
+	  y = 0;
 
 	// Referencia de tiempo
 
@@ -97,9 +103,14 @@ int main() {
 
 	    // Mostramos el siguiente paso de todas las animaciones
 
-	    animacion.paso_a_paso(pantalla, x, y,-1);
-	    animacion1.paso_a_paso(pantalla, 200, 300);
-	    animacion2.paso_a_paso(pantalla, 300, 300);
+	    if(x % 16 == 0)
+	      animacion.paso_a_paso(pantalla, x, y,-1);
+	    else{
+	      y += 4;
+	      animacion3.paso_a_paso(pantalla,x,y);
+	    }
+	    //animacion1.paso_a_paso(pantalla, 200, 300);
+	    //animacion2.paso_a_paso(pantalla, 300, 300);
 	}
 
 	
