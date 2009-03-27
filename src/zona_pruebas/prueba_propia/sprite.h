@@ -1,4 +1,3 @@
-//-*-C++-*-
 /*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +19,7 @@
 /*
  * --------------------------------------------------------
  * Fichero = sprite.h
- * Autor = Pablo Recio
+ * Autor = Pablo Recio Quijano
  * Fecha = 26 / 03 / 2009
  * 
  * - Definición de la clase Sprite.
@@ -32,13 +31,15 @@
 
 /*-------- Clase en pruebas --------*/
 
+//TODO Acostumbrarnos a usar Uint32, Sint32, Uint16, etc... para independizar
+//de la plataforma lo mas posible.
+
 #ifndef _SPRITE_GENERICO_
 #define _SPRITE_GENERICO_
 
 #include <SDL/SDL.h>
 
 #include <string>
-
 
 /**
  * @brief Clase que modela un tratamiento generico de los sprites.
@@ -69,7 +70,10 @@ class sprite{
    * @brief Constructor de un objeto tipo sprite.
    * Este constructor toma el numero de filas del sprite 
    */
-  sprite(std::string ruta_imagen, int num_f = 1, int num_c = 1, int num_s = 1);
+  sprite(std::string ruta_imagen, 
+	 int num_f = 1, 
+	 int num_c = 1, 
+	 int num_s = 1);
 
   /**
    * @brief Constructor de copia.
@@ -82,7 +86,7 @@ class sprite{
    */
   ~sprite();
 
-  //------- Consultoras --------- //INLINE?
+  //------- Consultoras ---------
 
   int getAncho() const;
   int getAlto() const;
@@ -101,7 +105,8 @@ class sprite{
    * @param x Desplazamiento horizontal en la superficie
    * @param y Desplazamiento vertical en la superficie
    */
-  void dibujar(int fila, int columna, SDL_Surface* dest, int x, int y) const;
+  void dibujar(int fila, int columna, 
+	       SDL_Surface* dest, int x, int y) const;
   
   /**
    * @brief Función que nos dibuja un sprite determinado de una superficie
@@ -111,12 +116,15 @@ class sprite{
    * @param x Desplazamiento horizontal en la superficie
    * @param y Desplazamiento vertical en la superficie
    */
-  void dibujar(int i, SDL_Surface* dest, int x, int y) const;
+  void dibujar(int i, SDL_Surface* dest, 
+	       int x, int y) const;
 
   //TODO Buscar mas funciones que definir e implementar. Cortar? 
 
- private:
- //protected: Si sprite hereda, cambiaremos private por protected
+  //private o protected? Si vemos que nadie hereda de sprite, cambiaremos
+  //protected por private. Por ahora nos curamos en salud
+
+ protected:
 
   //Superficie SDL donde almacenamos la matriz de sprites
   SDL_Surface* _imagen;
@@ -133,5 +141,27 @@ class sprite{
   // Numero de sprites en la matriz.
   int _num;
 };
+
+//-- Funciones get inline, mas eficientes
+
+inline int sprite::getAncho() const{
+  return _ancho;
+}
+
+inline int sprite::getAlto() const{
+  return _alto;
+}
+
+inline int sprite::getFilas() const{
+  return _filas;
+}
+
+inline int sprite::getColumnas() const{
+  return _cols;
+}
+
+inline int sprite::getNumSprites() const{
+  return _num;
+}
 
 #endif

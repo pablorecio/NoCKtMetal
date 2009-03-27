@@ -77,26 +77,6 @@ sprite::~sprite(){
   SDL_FreeSurface(_imagen);
 }
 
-int sprite::getAncho() const{
-  return _ancho;
-}
-
-int sprite::getAlto() const{
-  return _alto;
-}
-
-int sprite::getFilas() const{
-  return _filas;
-}
-
-int sprite::getColumnas() const{
-  return _cols;
-}
-
-int sprite::getNumSprites() const{
-  return _num;
-}
-
 void sprite::dibujar(int fila, 
 		     int columna, 
 		     SDL_Surface* dest, 
@@ -104,6 +84,16 @@ void sprite::dibujar(int fila,
 		     int y) const{
  
   //TODO Usar SDL_BlitSurface
+  //El uso de SDL_BlitSurface:
+  //int SDL_BlitSurface(SDL_Surface *src, 
+                      //SDL_Rect *srcrect, 
+                      //SDL_Surface *dst, 
+                      //SDL_Rect *dstrect);
+
+  //La idea es (creo) dibujar el rectangulo srcrect de src en el rectangulo
+  //dstrect de dst
+
+  //Los rectangulos (SDL_Rect) tenemos que iniciarlos y colocarlos en pantalla
     
 }
 
