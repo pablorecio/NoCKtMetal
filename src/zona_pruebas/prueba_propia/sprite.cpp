@@ -94,14 +94,62 @@ void sprite::dibujar(int fila,
   //dstrect de dst
 
   //Los rectangulos (SDL_Rect) tenemos que iniciarlos y colocarlos en pantalla
+
+  if (fila < 0 || fila >= _filas || columna <0 || columna >= _cols){
+      cerr << "sprite::dibujar = No existe la imagen en ("
+	   << fila << "," << columna << ")" << endl;
+      exit(1);
+    }
     
+    SDL_Rect src_rect; //rectangulo de origen, en la página de sprites
+    
+    src_rect.x = columna * _ancho;
+    src_rect.y = fila * _alto;
+    
+    src_rect.w = _ancho - 1; //damos un margen a la rejilla
+    src_rect.h = _alto - 1;
+    
+    SDL_Rect dst_rect;
+    
+    dst_rect.x = x;
+    dst_rect.y = y;
+    
+    dst_rect.w = 0; //no aplica en el destino
+    dst_rect.h = 0;
+    
+    SDL_BlitSurface(_imagen, &src_rect, dest, &dst_rect);
 }
 
 void sprite::dibujar(int i, 
 		     SDL_Surface* dest, 
 		     int x, 
 		     int y) const{
- 
-  //TODO Usar SDL_BlitSurface
+  if ( i < 0 || i >= _num){
+    cerr << "sprite::dibujar = No existe la imagen numero " 
+	 << i << endl;
+    exit(1);
+  }
+  
+  int fila, columna;
 
+  fila = i / _cols;
+  columna = i % _cols;
+    
+  SDL_Rect src_rect; //rectangulo de origen, en la página de sprites
+  
+  src_rect.x = columna * _ancho;
+  src_rect.y = fila * _alto;
+  
+  src_rect.w = _ancho - 1; //damos un margen a la rejilla
+  src_rect.h = _alto - 1;
+  
+  SDL_Rect dst_rect;
+  
+  dst_rect.x = x;
+  dst_rect.y = y;
+  
+  dst_rect.w = 0; //no aplica en el destino
+  dst_rect.h = 0;
+  
+  SDL_BlitSurface(_imagen, &src_rect, dest, &dst_rect);
 }
