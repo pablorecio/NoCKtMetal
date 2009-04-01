@@ -54,7 +54,7 @@
  * y 4 columnas.
  *
  */
-class sprite{
+class Sprite{
  public:
   //----- Constructores --------
 
@@ -64,13 +64,17 @@ class sprite{
    * la imagen posteriormente. Aunque no la usemos hace falta para las
    * cargas de vectores y demás.
    */
-  sprite();
+  Sprite();
 
   /**
    * @brief Constructor de un objeto tipo sprite.
    * Este constructor toma el numero de filas del sprite 
+   * @param ruta_imagen Cadena con la direccion de la tabla de sprites a cargar
+   * @param num_f Numero de filas de la tabla de sprites. Por defecto a 1
+   * @param num_c Numero de columnas de la tabla de sprites. Por defecto a 1
+   * @param num_s Numero fijo de sprites. Por defecto a 1
    */
-  sprite(std::string ruta_imagen, 
+  Sprite(std::string ruta_imagen,
 	 int num_f = 1, 
 	 int num_c = 1, 
 	 int num_s = 1);
@@ -79,12 +83,12 @@ class sprite{
    * @brief Constructor de copia.
    * @param otro Objeto sprite que queremos copiar
    */
-  sprite(const sprite& otro);
+  Sprite(const Sprite& otro);
 
   /**
    * @brief Destructor del objeto.
    */
-  ~sprite();
+  ~Sprite();
 
   //------- Consultoras ---------
 
@@ -144,23 +148,23 @@ class sprite{
 
 //-- Funciones get inline, mas eficientes
 
-inline int sprite::getAncho() const{
+inline int Sprite::getAncho() const{
   return _ancho;
 }
 
-inline int sprite::getAlto() const{
+inline int Sprite::getAlto() const{
   return _alto;
 }
 
-inline int sprite::getFilas() const{
+inline int Sprite::getFilas() const{
   return _filas;
 }
 
-inline int sprite::getColumnas() const{
+inline int Sprite::getColumnas() const{
   return _cols;
 }
 
-inline int sprite::getNumSprites() const{
+inline int Sprite::getNumSprites() const{
   return _num;
 }
 

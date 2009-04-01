@@ -25,9 +25,9 @@
 
 using namespace std;
 
-sprite::sprite(){}
+Sprite::Sprite(){}
 
-sprite::sprite(std::string ruta_imagen, 
+Sprite::Sprite(std::string ruta_imagen,
 	       int num_f,// = 1, 
 	       int num_c,// = 1, 
 	       int num_s/* = 1*/): _filas(num_f), _cols(num_c), _num(num_s){
@@ -61,7 +61,7 @@ sprite::sprite(std::string ruta_imagen,
   
 }
 
-sprite::sprite(const sprite& otro){
+Sprite::Sprite(const Sprite& otro){
   SDL_Surface* _imagen = otro._imagen;
 
   int _ancho = otro._ancho;
@@ -73,13 +73,13 @@ sprite::sprite(const sprite& otro){
   int _num = otro._num;
 }
 
-sprite::~sprite(){
+Sprite::~Sprite(){
   SDL_FreeSurface(_imagen);
 }
 
-void sprite::dibujar(int fila, 
+void Sprite::dibujar(int fila,
 		     int columna, 
-		     SDL_Surface* dest, 
+		     SDL_Surface *dest, 
 		     int x, 
 		     int y) const{
  
@@ -120,12 +120,12 @@ void sprite::dibujar(int fila,
     SDL_BlitSurface(_imagen, &src_rect, dest, &dst_rect);
 }
 
-void sprite::dibujar(int i, 
-		     SDL_Surface* dest, 
+void Sprite::dibujar(int i,
+		     SDL_Surface *dest, 
 		     int x, 
 		     int y) const{
   if ( i < 0 || i >= _num){
-    cerr << "sprite::dibujar = No existe la imagen numero " 
+    cerr << "Sprite::dibujar = No existe la imagen numero " 
 	 << i << endl;
     exit(1);
   }
