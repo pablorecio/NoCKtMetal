@@ -121,4 +121,8 @@ class Animacion{
   //protected: depende de si queremos o no queremos heredar
 };
 
+inline Uint32 Animacion::getRetardo(){
+  return _retardo;
+}
+
 #endif
