@@ -65,13 +65,13 @@
  * función del nivel, ya que no todos los personajes incrementarán los atributos de 
  * la misma manera.
  */
-class AtributosBase{
+class AtributoBase{
  public:
   /**
    * Constructor vacio de un objeto de la clase AtributoBase
    */
   AtributoBase(): _PV(0), _PE(0), _vel(0), _fue(0), _des(0),  
-		  sue(0), _res(0), _vir(0), _con(0), _int(0), 
+		  _sue(0), _res(0), _vir(0), _con(0), _int(0), 
 		  _incVel(0.0), _incFue(0.0), _incDes(0.0), _incSue(0.0), 
 		  _incVir(0.0), _incCon(0.0), _incInt(0.0) {}
 
@@ -98,8 +98,8 @@ class AtributosBase{
    */
   AtributoBase(Uint32 PV, Uint32 PE, Uint32 ve, Uint32 f,
 	       Uint32 d, Uint32 s, Uint32 r, Uint32 vi,
-	       Uint32 c, Uint32 i, Ufloat32 iVe, Ufloat32 iFu, Ufloat32 iDe, 
-	       Ufloat32 iSu, Ufloat32 iVi, Ufloat32 iCo, Ufloat32 iIn)
+	       Uint32 c, Uint32 i, double iVe, double iFu, double iDe, 
+	       double iSu, double iVi, double iCo, double iIn)
     : _PV(PV), _PE(PE), _vel(ve), _fue(f), _des(d), _sue(s), _res(r), 
       _vir(vi), _con(c), _int(i), _incVel(iVe), _incFue(iFu), 
       _incDes(iDe), _incSue(iSu), _incVir(iVi), _incCon(iCo), _incInt(iIn) {}
@@ -191,7 +191,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de velocidad
    */
-  Ufloat32 getIncrementoVelocidad() const {return _incVel;}
+  double getIncrementoVelocidad() const {return _incVel;}
 
   /** 
    * 
@@ -199,7 +199,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de fuerza
    */
-  Ufloat32 getIncrementoFuerza() const {return _incFue;}
+  double getIncrementoFuerza() const {return _incFue;}
 
   /** 
    * 
@@ -207,7 +207,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de destreza
    */
-  Ufloat32 getIncrementoDestreza() const {return _incDes;}
+  double getIncrementoDestreza() const {return _incDes;}
 
   /** 
    * 
@@ -215,7 +215,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de suerte
    */
-  Ufloat32 getIncrementoSuerte() const {return _incSue;}
+  double getIncrementoSuerte() const {return _incSue;}
 
   /** 
    * 
@@ -223,7 +223,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de resistencia
    */
-  Ufloat32 getIncrementoResistencia() const {return _incRes;}
+  double getIncrementoResistencia() const {return _incRes;}
 
   /** 
    * 
@@ -231,7 +231,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de virtuosidad
    */
-  Ufloat32 getIncrementoVirtuosidad() const {return _incVir;}
+  double getIncrementoVirtuosidad() const {return _incVir;}
 
   /** 
    * 
@@ -239,7 +239,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de constitución
    */
-  Ufloat32 getIncrementoConstitucion() const {return _incCon;}
+  double getIncrementoConstitucion() const {return _incCon;}
 
   /** 
    * 
@@ -247,7 +247,7 @@ class AtributosBase{
    * 
    * @return Valor real sin signo de 32 bits con el incremento base de la inteligencia
    */
-  Ufloat32 getIncrementoInteligencia() const {return _incInt;}
+  double getIncrementoInteligencia() const {return _incInt;}
 
  protected:
   Uint32 _PV;
@@ -261,14 +261,14 @@ class AtributosBase{
   Uint32 _con;
   Uint32 _int;
 
-  Ufloat32 _incVel;
-  Ufloat32 _incFue;
-  Ufloat32 _incDes;
-  Ufloat32 _incSue;
-  Ufloat32 _incRes;
-  Ufloat32 _incVir;
-  Ufloat32 _incCon;
-  Ufloat32 _incInt;
+  double _incVel;
+  double _incFue;
+  double _incDes;
+  double _incSue;
+  double _incRes;
+  double _incVir;
+  double _incCon;
+  double _incInt;
 };
 
 #endif

@@ -10,19 +10,26 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/): _exp(exp){
   _PV = 0; /*TODO*/
   _PE = 0; /*TODO*/
 
-  _vel = base.getVelocidad + base.getIncrementoVelocidad() * _niv;
-  _fue = base.getFuerza + base.getIncrementoFuerza() * _niv;
-  _des = base.getDestreza + base.getIncrementoDestreza() * _niv;
-  _sue = base.getSuerte + base.getIncrementoSuerte() * _niv;
-  _res = base.getResistencia + base.getIncrementoResistencia() * _niv;
-  _vir = base.getVirtuosidad + base.getIncrementoVirtuosidad() * _niv;
-  _con = base.getConstitucion + base.getIncrementoConstitucion() * _niv;
-  _int = base.getInteligencia + base.getIncrementoInteligencia() * _niv;
+  _expSigNiv = 0; /*TODO*/
+
+  _vel = base.getVelocidad() + base.getIncrementoVelocidad() * _niv;
+  _fue = base.getFuerza() + base.getIncrementoFuerza() * _niv;
+  _des = base.getDestreza() + base.getIncrementoDestreza() * _niv;
+  _sue = base.getSuerte() + base.getIncrementoSuerte() * _niv;
+  _res = base.getResistencia() + base.getIncrementoResistencia() * _niv;
+  _vir = base.getVirtuosidad() + base.getIncrementoVirtuosidad() * _niv;
+  _con = base.getConstitucion() + base.getIncrementoConstitucion() * _niv;
+  _int = base.getInteligencia() + base.getIncrementoInteligencia() * _niv;
+}
+
+void Atributos::addExperiencia(Uint32 exp){
+  _exp+= exp;
+  if(_exp >= _expSigNiv) subirNivel();
 }
 
 Uint32 Atributos::tiradaSuerte() const{
   srand(time(0));
-  return aleatorioRango(1,100) < sue_;
+  return aleatorioRango(1,100) < _sue;
 }
 
 Uint32 Atributos::tiradaVelocidad() const { 
@@ -59,16 +66,20 @@ void Atributos::subirNivel(){
   _PV = 0; /*TODO*/
   _PE = 0; /*TODO*/
 
-  _vel = base.getVelocidad + base.getIncrementoVelocidad() * _niv;
-  _fue = base.getFuerza + base.getIncrementoFuerza() * _niv;
-  _des = base.getDestreza + base.getIncrementoDestreza() * _niv;
-  _sue = base.getSuerte + base.getIncrementoSuerte() * _niv;
-  _res = base.getResistencia + base.getIncrementoResistencia() * _niv;
-  _vir = base.getVirtuosidad + base.getIncrementoVirtuosidad() * _niv;
-  _con = base.getConstitucion + base.getIncrementoConstitucion() * _niv;
-  _int = base.getInteligencia + base.getIncrementoInteligencia() * _niv;
+  _vel = _base.getVelocidad() + _base.getIncrementoVelocidad() * _niv;
+  _fue = _base.getFuerza() + _base.getIncrementoFuerza() * _niv;
+  _des = _base.getDestreza() + _base.getIncrementoDestreza() * _niv;
+  _sue = _base.getSuerte() + _base.getIncrementoSuerte() * _niv;
+  _res = _base.getResistencia() + _base.getIncrementoResistencia() * _niv;
+  _vir = _base.getVirtuosidad() + _base.getIncrementoVirtuosidad() * _niv;
+  _con = _base.getConstitucion() + _base.getIncrementoConstitucion() * _niv;
+  _int = _base.getInteligencia() + _base.getIncrementoInteligencia() * _niv;
 }
 
 Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
   return (rand()%(b-a+1)+a);
+}
+
+double Atributos::coeficiente(double n, double a, double b) const{
+  return (1 + n*a + n*b*b);
 }

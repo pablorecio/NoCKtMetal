@@ -173,7 +173,15 @@ class Atributos{
    * 
    * @return Referencia constante al objeto que contiene los atributos base
    */
-  const AtributoBase& getAtributosBase() const {return _atr;}
+  const AtributoBase& getAtributosBase() const {return _base;}
+
+  /** 
+   * Método que incrementa la experiencia en los atributos, subiendo de nivel si fuera
+   * necesario.
+   * 
+   * @param exp Entero sin signo de 32 bits con la experiencia que queremos aumentar. 
+   */
+  void addExperiencia(Uint32 exp);
 
   /** 
    * 
@@ -197,16 +205,13 @@ class Atributos{
   Uint32 tiradaConstitucion() const ;
   Uint32 tiradaInteligencia() const ;
 
-  /** 
-   * @brief Método que incrementa los atributos necesarios cuando se sube un nivel.
-   * 
-   */
-  void subirNivel();
  protected:
-  AtributoBase _atr;
+  AtributoBase _base;
 
   Uint32 _exp;
   Uint32 _niv;
+
+  Uint32 _expSigNiv;
 
   Uint32 _PV;
   Uint32 _PE;
@@ -220,6 +225,9 @@ class Atributos{
   Uint32 _int;
 
   Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
+  void subirNivel();
+  //TODO calcular los coeficientes correctamente, provisionales
+  double coeficiente(double n, double a = 0.1, double b = 0.002) const;
 };
 
 #endif
