@@ -5,12 +5,17 @@
 #include "atributos.h"
 
 Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/): _exp(exp){
-  _niv = 0; /*TODO*/
-  
-  _PV = 0; /*TODO*/
-  _PE = 0; /*TODO*/
+  _niv = 1; /*TODO*/
 
-  _expSigNiv = 0; /*TODO*/
+  _expSigNiv = experienciaParaNivel(1);
+
+  /*for(Uint32 i = 1 ; i <= _niv ; i++)
+    _expSigNiv += experienciaParaNivel(i);*/
+
+  while(_exp > experienciaParaNivel(_nivel)){
+    _nivel++;
+    _expSigNiv = experienciaParaNivel(_nivel);
+  }
 
   _vel = base.getVelocidad() + base.getIncrementoVelocidad() * _niv;
   _fue = base.getFuerza() + base.getIncrementoFuerza() * _niv;
@@ -20,11 +25,16 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/): _exp(exp){
   _vir = base.getVirtuosidad() + base.getIncrementoVirtuosidad() * _niv;
   _con = base.getConstitucion() + base.getIncrementoConstitucion() * _niv;
   _int = base.getInteligencia() + base.getIncrementoInteligencia() * _niv;
+
+  float multiplicadorPV = _niv / 3; //provisional
+  float multiplicadorPE = niv / 3; //provisional
+  _PV = _base.getPV() + _con * multiplicadorPV;
+  _PE = _base.getPE() + _int * multiplicadorPV; 
 }
 
 void Atributos::addExperiencia(Uint32 exp){
   _exp+= exp;
-  if(_exp >= _expSigNiv) subirNivel();
+  while(_exp >= _expSigNiv) subirNivel();
 }
 
 Uint32 Atributos::tiradaSuerte() const{
@@ -62,10 +72,9 @@ Uint32 Atributos::tiradaInteligencia() const{
 
 void Atributos::subirNivel(){
   _niv++;
-  
-  _PV = 0; /*TODO*/
-  _PE = 0; /*TODO*/
 
+  _expSigNiv += experienciaParaNivel(_niv);
+  
   _vel = _base.getVelocidad() + _base.getIncrementoVelocidad() * _niv;
   _fue = _base.getFuerza() + _base.getIncrementoFuerza() * _niv;
   _des = _base.getDestreza() + _base.getIncrementoDestreza() * _niv;
@@ -74,6 +83,11 @@ void Atributos::subirNivel(){
   _vir = _base.getVirtuosidad() + _base.getIncrementoVirtuosidad() * _niv;
   _con = _base.getConstitucion() + _base.getIncrementoConstitucion() * _niv;
   _int = _base.getInteligencia() + _base.getIncrementoInteligencia() * _niv;
+
+  float multiplicadorPV = _niv / 3; //provisional
+  float multiplicadorPE = niv / 3; //provisional
+  _PV = _base.getPV() + _con * multiplicadorPV; 
+  _PE = _base.getPE() + _int * multiplicadorPV; 
 }
 
 Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
@@ -82,4 +96,9 @@ Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
 
 double Atributos::coeficiente(double n, double a, double b) const{
   return (1 + n*a + n*b*b);
+}
+
+Uint32 Atributos::experienciaParaNivel(Uint32 nivel){ //temporal, hay que ajustar para rangos de 
+                                                      //niveles
+  return 1000 * coeficiente(nivel);
 }

@@ -38,28 +38,28 @@
  *
  * Los atributos que se usarán son los siguientes:
  * <UL>
- * <IL><B>PV</B> - Puntos de vida. Indica los puntos que tiene un personaje,
+ * <LI><B>PV</B> - Puntos de vida. Indica los puntos que tiene un personaje,
  *                 de forma que si en algún momento llega a 0, el personaje
- *                 queda KO</IL>
- * <IL><B>PE</B> - Puntos especiales. Los ataques especiales consumen estos
+ *                 queda KO</LI>
+ * <LI><B>PE</B> - Puntos especiales. Los ataques especiales consumen estos
  *                 puntos, de forma que puede ser que no podamos lanzar un 
- *                 ataque por carencia de ellos.</IL>
- * <IL><B>Velocidad</B> - Rapidez con la que se mueve un personaje. Define
- *                        cuantas veces puede atacar en un turno.</IL>
- * <IL><B>Fuerza</B> - Potencia del personaje. Influye en el daño que hacen
- *                     los ataques.</IL>
- * <IL><B>Destreza</B> - Capacidad del personaje para acertar un ataque,
- *                       o poder esquivar uno.</IL>
- * <IL><B>Suerte</B> - Valor abstracto con la probabilidad que una tirada
- *                     sea crítica o no.</IL>
- * <IL><B>Resistencia</B> - Capacidad para amortiguar los golpes físicos 
- *                          de los enemigos.</IL>
- * <IL><B>Virtuosidad</B> - Poder de los ataques especiales. También es la 
- *                          capacidad de resistir dichos ataques.</IL>
- * <IL><B>Constitución</B> - Parámetro sobre el cual se modifica la
- *                           vitalidad del personaje.</IL>
- * <IL><B>Inteligencia</B> - Parámetro sobre el cual se modifica los 
- *                           puntos especiales del personaje.</IL>
+ *                 ataque por carencia de ellos.</LI>
+ * <LI><B>Velocidad</B> - Rapidez con la que se mueve un personaje. Define
+ *                        cuantas veces puede atacar en un turno.</LI>
+ * <LI><B>Fuerza</B> - Potencia del personaje. Influye en el daño que hacen
+ *                     los ataques.</LI>
+ * <LI><B>Destreza</B> - Capacidad del personaje para acertar un ataque,
+ *                       o poder esquivar uno.</LI>
+ * <LI><B>Suerte</B> - Valor abstracto con la probabilidad que una tirada
+ *                     sea crítica o no.</LI>
+ * <LI><B>Resistencia</B> - Capacidad para amortiguar los golpes físicos 
+ *                          de los enemigos.</LI>
+ * <LI><B>Virtuosidad</B> - Poder de los ataques especiales. También es la 
+ *                          capacidad de resistir dichos ataques.</LI>
+ * <LI><B>Constitución</B> - Parámetro sobre el cual se modifica la
+ *                           vitalidad del personaje.</LI>
+ * <LI><B>Inteligencia</B> - Parámetro sobre el cual se modifica los 
+ *                           puntos especiales del personaje.</LI>
  * </UL>
  * También están los atributos de incremento, que definen el aumento de un atributo en
  * función del nivel, ya que no todos los personajes incrementarán los atributos de 
