@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <cstdlib>
 #include <ctime>
 
@@ -35,9 +33,7 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(ex
 }
 
 void Atributos::addExperiencia(Uint32 exp){
-  std::cout << "Experiencia vieja: " << _exp << std::endl;
   _exp = _exp + exp;
-  std::cout << "Experiencia nueva: " << _exp << std::endl;
   while(_exp >= _expSigNiv) subirNivel();
 }
 
