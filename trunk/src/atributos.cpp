@@ -1,20 +1,22 @@
+#include <iostream>
+
 #include <cstdlib>
 #include <ctime>
 
 #include "atributos_base.h"
 #include "atributos.h"
 
-Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/): _exp(exp){
+Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(exp){
   _niv = 1; /*TODO*/
 
-  _expSigNiv = experienciaParaNivel(1);
+  _expSigNiv = experienciaParaNivel(_niv);
 
   /*for(Uint32 i = 1 ; i <= _niv ; i++)
     _expSigNiv += experienciaParaNivel(i);*/
 
-  while(_exp > experienciaParaNivel(_nivel)){
-    _nivel++;
-    _expSigNiv = experienciaParaNivel(_nivel);
+  while(_exp > _expSigNiv){
+    _niv++;
+    _expSigNiv += experienciaParaNivel(_niv);
   }
 
   _vel = base.getVelocidad() + base.getIncrementoVelocidad() * _niv;
@@ -27,19 +29,20 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/): _exp(exp){
   _int = base.getInteligencia() + base.getIncrementoInteligencia() * _niv;
 
   float multiplicadorPV = _niv / 3; //provisional
-  float multiplicadorPE = niv / 3; //provisional
+  float multiplicadorPE = _niv / 3; //provisional
   _PV = _base.getPV() + _con * multiplicadorPV;
-  _PE = _base.getPE() + _int * multiplicadorPV; 
+  _PE = _base.getPE() + _int * multiplicadorPE; 
 }
 
 void Atributos::addExperiencia(Uint32 exp){
-  _exp+= exp;
+  std::cout << "Experiencia vieja: " << _exp << std::endl;
+  _exp = _exp + exp;
+  std::cout << "Experiencia nueva: " << _exp << std::endl;
   while(_exp >= _expSigNiv) subirNivel();
 }
 
 Uint32 Atributos::tiradaSuerte() const{
-  srand(time(0));
-  return aleatorioRango(1,100) < _sue;
+  return (aleatorioRango(1,100) < _sue);
 }
 
 Uint32 Atributos::tiradaVelocidad() const { 
@@ -85,9 +88,9 @@ void Atributos::subirNivel(){
   _int = _base.getInteligencia() + _base.getIncrementoInteligencia() * _niv;
 
   float multiplicadorPV = _niv / 3; //provisional
-  float multiplicadorPE = niv / 3; //provisional
+  float multiplicadorPE = _niv / 3; //provisional
   _PV = _base.getPV() + _con * multiplicadorPV; 
-  _PE = _base.getPE() + _int * multiplicadorPV; 
+  _PE = _base.getPE() + _int * multiplicadorPE; 
 }
 
 Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
@@ -98,7 +101,7 @@ double Atributos::coeficiente(double n, double a, double b) const{
   return (1 + n*a + n*b*b);
 }
 
-Uint32 Atributos::experienciaParaNivel(Uint32 nivel){ //temporal, hay que ajustar para rangos de 
+Uint32 Atributos::experienciaParaNivel(Uint32 nivel) const{ //temporal, hay que ajustar para rangos de 
                                                       //niveles
-  return 1000 * coeficiente(nivel);
+  return (int)(1000 * coeficiente(nivel));
 }

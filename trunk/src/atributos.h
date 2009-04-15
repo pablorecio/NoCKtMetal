@@ -158,6 +158,14 @@ class Atributos{
    */
   Uint32 getExperiencia() const {return _exp;}
 
+
+  /** 
+   *
+   * @brief Método <i>getter</i> para el número de puntos de experiencia necesarios para el siguiente nivel. 
+   *  
+   * @return Valor entero sin signo de 32 bits con el número de puntos de experiencia necesarios para el siguiente nivel.
+   */
+  Uint32 getExperienciaSiguienteNivel() const {return _expSigNiv;}
   /** 
    * 
    * @brief Método <i>getter</i> para el nivel del personaje con estos atributos.
@@ -228,6 +236,7 @@ class Atributos{
   void subirNivel();
   //TODO calcular los coeficientes correctamente, provisionales
   double coeficiente(double n, double a = 0.1, double b = 0.002) const;
+  Uint32 experienciaParaNivel(Uint32 n) const;
 };
 
 #endif

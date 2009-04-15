@@ -27,6 +27,8 @@
 #ifndef _ATRIBUTOS_BASE_
 #define _ATRIBUTOS_BASE_
 
+#include <iostream>
+
 #include <SDL/SDL.h>
 
 
@@ -73,7 +75,7 @@ class AtributoBase{
   AtributoBase(): _PV(0), _PE(0), _vel(0), _fue(0), _des(0),  
 		  _sue(0), _res(0), _vir(0), _con(0), _int(0), 
 		  _incVel(0.0), _incFue(0.0), _incDes(0.0), _incSue(0.0), 
-		  _incVir(0.0), _incCon(0.0), _incInt(0.0) {}
+		  _incRes(0.0), _incVir(0.0), _incCon(0.0), _incInt(0.0) {}
 
   /** 
    * Constructor de un objeto de la clase Atributo base
@@ -99,11 +101,11 @@ class AtributoBase{
   AtributoBase(Uint32 PV, Uint32 PE, Uint32 ve, Uint32 f,
 	       Uint32 d, Uint32 s, Uint32 r, Uint32 vi,
 	       Uint32 c, Uint32 i, double iVe, double iFu, double iDe, 
-	       double iSu, double iVi, double iCo, double iIn)
+	       double iRe, double iSu, double iVi, double iCo, double iIn)
     : _PV(PV), _PE(PE), _vel(ve), _fue(f), _des(d), _sue(s), _res(r), 
-      _vir(vi), _con(c), _int(i), _incVel(iVe), _incFue(iFu), 
-      _incDes(iDe), _incSue(iSu), _incVir(iVi), _incCon(iCo), _incInt(iIn) {}
-
+      _vir(vi), _con(c), _int(i), _incVel(iVe), _incFue(iFu), _incDes(iDe), 
+      _incSue(iSu), _incRes(iRe), _incVir(iVi), _incCon(iCo), _incInt(iIn) {}
+  
   /** 
    * 
    * Método <i>getter</i> para los puntos de vida.
