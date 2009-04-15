@@ -123,8 +123,6 @@ class Sprite{
   void dibujar(Uint32 i, SDL_Surface* dest, 
 	       Uint32 x, Uint32 y) const;
 
-
-
   //TODO Buscar mas funciones que definir e implementar. Cortar? 
 
   //private o protected? Si vemos que nadie hereda de sprite, cambiaremos

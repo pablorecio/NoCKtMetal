@@ -29,7 +29,6 @@
 
 #include "animacion.h"
 #include "sprite.h"
-#include "tile.h"
 
 /* 
  * @brief La clase Personaje hace de intermediario entre 
@@ -48,13 +47,21 @@ class Personaje {
   const Sprite& getSprite() const;
   void animadoPor(Animacion& a);
   void setPosicion(Uint32 x, Uint32 y);
+  /**
+   * @param desp Numero de casillas a desplazar
+   */
   void moverArriba();
   void moverAbajo();
   void moverIzda();
   void moverDcha();
  protected:
   Uint32 id_;
+  /* Coordenadas de la casilla en que se encuentra el personaje */
   Uint32 x_, y_;
+  /* Rango de casillas en pantalla en las que se puede mover
+   * el personaje: deben introducirse en animacion -> Movimiento restringido
+  Uint32 rango_ai, rango_ad, rango_bi, rango_bd;
+  */
   Animacion* anim_;
   Sprite sprite_;
 }
