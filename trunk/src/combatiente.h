@@ -40,14 +40,14 @@
 
 class Combatiente: public Atributos{
 public:
-    Combatiente(){}
-    Combatiente(std::string nombre, Uint32 id, AtributoBase atr, Uint32 exp = 0,
-                std::map<Uint32,Objeto*>& inventario); //TODO: grupo?
+  Combatiente(){}
+  Combatiente(std::string nombre, Uint32 id, AtributoBase atr, 
+	      std::map<Uint32,Objeto*>& inventario, Uint32 exp = 0); //TODO: grupo?
 
 
     std::string getNombre() const { return _nombre; }
     Uint32 getIdentificador() const { return _idCombatiente; }
-    const Habilidad& getHabilidad(Uint32 i) const { return _habilidades[i]; }
+    const Habilidad* getHabilidad(Uint32 i) const { return _habilidades.at(i); }
 
     void addHabilidad(Habilidad& h);
 
@@ -56,7 +56,7 @@ public:
             throw(Objeto::CantidadItemInsuficiente);
     Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
     Uint32 defenderse();
-    boolean huir();
+    bool huir();
 private:
     std::string _nombre;
     Uint32 _idCombatiente;

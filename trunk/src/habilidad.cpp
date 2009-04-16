@@ -21,5 +21,5 @@
 
 Habilidad::Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo,
                      Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE)
-  :Especial(nombre,id,tipo,cotaInf,cotaSup), _PEgastados(gastosPE) {}
+  :Especial(nombre,id,tipo,cotaInf,cotaSup), _PEgastados(gastoPE) {}
 

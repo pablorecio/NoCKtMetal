@@ -35,24 +35,19 @@
 
 class Objeto: public Especial {
 public:
-  class CantidadItemInsuficiente: public exception{
+  class CantidadItemInsuficiente: public std::exception{
   public:
-      CantidadItemInsuficiente() {}
-      CantidadItemInsuficiente(const Objeto& obj){
-          _obj = obj;
-      }
       const char* what() const throw(){
-          return "No hay suficiente cantidad del objeto " + _obj.getNombre();
+          return "No hay suficiente cantidad del objeto ";
       }
   private:
-      _obj;
   };
   
   Objeto() {}
   Objeto(std::string nombre, Uint32 id, tipoEspecial tipo,
          Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad);
 
-  Uint32 getCantidad() const { return_cantidad; }
+  Uint32 getCantidad() const { return _cantidad; }
   Uint32 usarObjeto() throw(CantidadItemInsuficiente);
 
   Objeto& operator --() throw(CantidadItemInsuficiente);

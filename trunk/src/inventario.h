@@ -38,13 +38,13 @@
 
 class Inventario {
 public:
-    class ObjetoEnInventario: public exception{
+  class ObjetoEnInventario: public std::exception{
         const char* what() const throw(){
             return "El objeto ya se encuentra en el inventario";
         }
     };
 
-    class ObjetoNoEnInventario: public exception{
+  class ObjetoNoEnInventario: public std::exception{
         const char* what() const throw(){
             return "El objeto no se encuentra en el inventario";
         }
@@ -53,9 +53,10 @@ public:
     Inventario(){}
 
     void addObjeto(const Objeto& obj) throw (ObjetoEnInventario);
-    Uint32 getObjeto(Uint32 i) throw (Objeto::CantidadItemInsuficiente);
+    const Objeto& getObjeto(Uint32 i) const throw (ObjetoNoEnInventario);
+    Objeto& getObjeto(Uint32 i) throw (ObjetoNoEnInventario);
 
-    void borrarObjeto(Uint32 i);
+    void borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario);
 private:
     std::map<Uint32,Objeto> _inventario;
 

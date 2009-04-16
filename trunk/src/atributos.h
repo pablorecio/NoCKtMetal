@@ -29,6 +29,7 @@
 
 #include <SDL/SDL.h>
 
+#include "atributos_base.h"
 #include "atributos.h"
 
 /** 

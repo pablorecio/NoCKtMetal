@@ -22,27 +22,29 @@
 #include "inventario.h"
 #include "objeto.h"
 
+using namespace std;
+
 void Inventario::addObjeto(const Objeto& obj) throw (ObjetoEnInventario){
-    if(_inventario.find(_obj) == _inventario.end())
-      _inventario.insert(new std::pair<Uint32,Objeto>(_obj.getCantidad(),_obj));
+  if(_inventario.find(obj.getIdentificador()) == _inventario.end())
+      _inventario.insert(make_pair(obj.getCantidad(),obj));
     else
         throw new ObjetoEnInventario();
 }
 
-const Objeto& Inventario::getObjeto(Uint32 i) throw (ObjetoNoEnInventario){
-    if(_inventario.find() == _inventario.end()) throw new ObjetoNoEnInventario();
+const Objeto& Inventario::getObjeto(Uint32 i) const throw (ObjetoNoEnInventario){
+    if(_inventario.find(i) == _inventario.end()) throw new ObjetoNoEnInventario();
 
-    return _inventario[i];
+    return _inventario.at(i);
 }
 
 Objeto& Inventario::getObjeto(Uint32 i) throw (ObjetoNoEnInventario){
-    if(_inventario.find() == _inventario.end()) throw new ObjetoNoEnInventario();
+    if(_inventario.find(i) == _inventario.end()) throw new ObjetoNoEnInventario();
 
-    return _inventario[i];
+    return _inventario.at(i);
 }
 
-void Inventario::borrarObjeto(Uint32 i){
-    if(_inventario.find() == _inventario.end()) throw new ObjetoNoEnInventario();
+void Inventario::borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario){
+    if(_inventario.find(i) == _inventario.end()) throw new ObjetoNoEnInventario();
 
     _inventario.erase(i);
 }

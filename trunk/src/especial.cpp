@@ -16,20 +16,21 @@
  *
  */
 
+#include <iostream>
+
 #include <cstdlib>
 #include <ctime>
 
 #include "especial.h"
 
 Especial::Especial(std::string nombre, Uint32 id, tipoEspecial tipo,
-		   Uint32 cotaInf, Uint32 cotaSup): _nombre(nombre), _idEspecial(id), 
-						    _tipoEsp(tipo) {
-  _rangoDamage = new std::pair<Uint32,Uint32>(contaInf,cotaSup);
+		   Uint32 cotaInf, Uint32 cotaSup): _nombre(nombre), _idEspecial(id), _tipoEsp(tipo) {
+  _rangoDamage = std::make_pair(cotaInf,cotaSup);
 }
 
 Uint32 Especial::calculaDamage() const{
   //srand(time(0));
-  return aleatorioRango(_rangoDamage->first, _rangoDamage->first);
+  return aleatorioRango(_rangoDamage.first, _rangoDamage.first);
 }
 
 Uint32 Especial::aleatorioRango(Uint32 a, Uint32 b) const{
