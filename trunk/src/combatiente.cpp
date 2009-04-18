@@ -16,26 +16,19 @@
  *
  */
 
+#include <iostream>
 #include <map>
-
 
 #include <SDL/SDL.h>
 
 #include "combatiente.h" //TODO: Implementar las funciones
-#include "grupo.h"
-
-Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-	      /*Grupo& g, */Uint32 exp): Atributos(atr,exp){
-    _nombre = nombre;
-    _idCombatiente = id;
-    //_grupo = *g;
-
-    //_inventario = new (std::map<Uint32,Objeto*>*);
-    //_inventario = _grupo->getInventario();
-}
-
-void Combatiente::addHabilidad(Habilidad& h){
-    //_inventario.insert(h);
-}
 
 
+ Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
+         Inventario &inv, Uint32 exp): Atributos(atr,exp),_nombre(nombre), _idCombatiente(id){
+     _inventario = &inv;
+ }
+
+ void Combatiente::addHabilidad(Habilidad& h){
+     _habilidades.insert(std::make_pair(h.getIdentificador(),&h));
+ }

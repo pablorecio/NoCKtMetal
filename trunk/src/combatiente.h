@@ -37,20 +37,25 @@
 #include "atributos_base.h"
 #include "habilidad.h"
 #include "objeto.h"
-#include "grupo.h"
+#include "inventario.h"
+//#include "grupo.h" //TODO: ¿Porqué da fallo en grupo.h añadir esta cabecera?
 
 class Combatiente: public Atributos{
 public:
   Combatiente(){}
   Combatiente(std::string nombre, Uint32 id, AtributoBase atr, 
-	      /*Grupo& g,*/ Uint32 exp = 0); //TODO: grupo?
+	      Inventario &inv, Uint32 exp = 0); //TODO: grupo?
 
 
     std::string getNombre() const { return _nombre; }
     Uint32 getIdentificador() const { return _idCombatiente; }
-    //const Habilidad* getHabilidad(Uint32 i) const { return _habilidades.at(i); }
+    const Habilidad& getHabilidad(Uint32 i) const { return *_habilidades.at(i); }
 
-    //const Grupo* getGrupo() const { return _grupo; }
+    //const Grupo& getGrupo() const { return _grupo; }
+    //Grupo& getGrupo() { return _grupo; }
+
+    const Inventario& getInventario() const { return *_inventario; }
+    Inventario& getInventario() { return *_inventario; }
 
     void addHabilidad(Habilidad& h);
 
@@ -63,8 +68,8 @@ public:
 private:
     std::string _nombre;
     Uint32 _idCombatiente;
-    //std::map<Uint32,Habilidad*> _habilidades;
-    //std::map<Uint32,Objeto*>* _inventario;
+    std::map<Uint32,Habilidad*> _habilidades;
+    Inventario *_inventario;
     //Grupo* _grupo;
 };
 

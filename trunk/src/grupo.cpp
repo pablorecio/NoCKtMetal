@@ -27,13 +27,13 @@
 
 
 Grupo::Grupo(Inventario& invent, bool contr): _controlable(contr){
-    *_inventario = invent;
+    _inventario = &invent;
     std::vector<Combatiente*> temp(4);
     _componentes = temp;
 }
 
 void Grupo::addCombatiente(Combatiente& comb) throw(GrupoLleno){
     if(_numComp == 4) throw(new GrupoLleno());
-    *_componentes.at(_numComp) = comb;
+    _componentes.at(_numComp) = &comb;
     _numComp++;
 }

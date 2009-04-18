@@ -42,6 +42,7 @@ using namespace std;
 class Grupo {
 public:
     class GrupoLleno: public exception{
+    public:
         const char* what() const throw(){
             return "Grupo lleno";
         }
@@ -52,8 +53,8 @@ public:
     const Inventario& getInventario() const { return *_inventario; }
     Inventario& getInventario() { return *_inventario; }
 
-    const Combatiente& getCombatiente(Uint32 i) const { return *_componentes.at(i); }
-    Combatiente& getCombatiente(Uint32 i) { return *_componentes.at(i); }
+    const Combatiente& getCombatiente(Uint32 i) const {return *(_componentes.at(i));}
+    Combatiente& getCombatiente(Uint32 i) {return *(_componentes.at(i));}
 
     Uint32 getNumeroCombatientes() const { return _numComp; }
 
@@ -73,6 +74,5 @@ private:
     vector<Combatiente*> _componentes;
     Uint32 _numComp;
 };
-
 #endif	/* _GRUPO_H */
 

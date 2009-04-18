@@ -32,12 +32,44 @@
 
 #include "especial.h"
 
+/**
+ *
+ * Clase que modela el comportamiento de las habilidades especiales de los
+ * distintos combatientes. Estas habilidades son una especialización de la clase
+ * Especial, ya que el comportamiento es muy similar.
+ *
+ * @see Especial
+ */
 class Habilidad: public Especial{
 public:
+  /**
+   * Constructor vacio, no hace nada.
+   */
   Habilidad() {}
+
+  /**
+   * Constructor de un objeto de la clase Habilidad. Este constructor recibe todos
+   * los parámetros para crear dicho objeto, y aprovecha el constructor
+   * de su clase padre "especial".
+   *
+   * @param nombre Cadena con el nombre identificativo del Objeto
+   * @param id Identificador único del Objeto
+   * @param tipo Tipo del Objeto
+   * @param cotaInf Cota inferior de daño
+   * @param cotaSup Cota superior de daño
+   * @param gastoPE Cantidad de puntos especiales que consume este ataque.
+   *
+   */
   Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo,
 	    Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE);
-  
+
+  /**
+   * Método <i>getter</i> que nos devuelve el número de puntos especiales
+   * que consume esta hábilidad especial.
+   *
+   * @return Valor entero sin signo de 32 bits con el número de PE consumidos
+   * por el atáque.
+   */
   Uint32 getGastoPE() { return _PEgastados; }
   
 private:

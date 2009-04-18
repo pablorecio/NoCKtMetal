@@ -110,6 +110,22 @@ public:
    */
   Objeto& getObjeto(Uint32 i) throw (ObjetoNoEnInventario);
 
+  /**
+   * Método <i>getter</i> para obtener acceso a la estructura de datos que contiene
+   * el inventario en si.
+   *
+   * @return Referencia constante al <code>map</code> con el inventario completo.
+   */
+  const std::map<Uint32,Objeto>& getInventarioCompleto() const { return _inventario; }
+
+  /**
+   * Método <i>getter</i> para obtener acceso a la estructura de datos que contiene
+   * el inventario en si.
+   *
+   * @return Referencia al <code>map</code> con el inventario completo.
+   */
+  std::map<Uint32,Objeto>& getInventarioCompleto() { return _inventario; }
+
   /** 
    * Método para borrar un objeto determinado del Inventario.
    * 
