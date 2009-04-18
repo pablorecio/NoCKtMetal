@@ -24,13 +24,38 @@
  * --------------------------------------------------------
  */
 
+#include <SDL/SDL_image.h>
 #include "pantalla.h"
 
+
+Pantalla::~Pantalla() {
+    SDL_FreeSurface(pantalla_);
+    SDL_FreeSurface(buffer_);
+    SDL_FreeSurface(fondo_);
+}
+
 Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof) {
-  /* Comprobamos que sea compatible el modo de video */
-  if(SDL_VideoModeOK(ancho, alto, prof, SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
-    cerr << "Modo no soportado: " << SDL_GetError() << endl;
-    exit(1);
-  }
-  pantalla = SDL_SetVideoMode(ancho, alto, prof, SDL_HWSURFACE|SDL_DOUBLEBUF);
+    /* Comprobamos que sea compatible el modo de video */
+    if(SDL_VideoModeOK(ancho, alto, prof, SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
+        cerr << "Modo no soportado: " << SDL_GetError() << endl;
+        exit(1);
+    }
+    pantalla_ = SDL_SetVideoMode(ancho, alto, prof, SDL_HWSURFACE|SDL_DOUBLEBUF);
+}
+
+Pantalla::setTitulo(const char *titulo, const char *icono) {
+    SDL_WM_SetCaption(titulo, icono);
+}
+
+void Pantalla::cargarImagen(SDL_Surface *p, const char *imagen) {
+    p = IMG_Load(imagen);
+}
+
+void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
+    SDL_BlitSurface(p1, NULL, p2, &(p1->clip_rect));
+    SDL_Flip(p2);
+}
+
+void Pantalla::cerrarPantalla() {
+    this->~Pantalla();
 }

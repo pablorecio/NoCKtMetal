@@ -30,20 +30,50 @@
 #include "SDL/SDL.h"
 
 /**
- * @brief Abstraccion de la clase pantalla de la SDL
+ * @brief Pantalla
+ * @author Noelia Sales Montes
+ * @date 18 04 2009
  */
 class Pantalla {
  public:
-  /**
-   * @brief Constructor de la clase Pantalla
-   * @param ancho Ancho de la pantalla
-   * @param alto Alto de la pantalla
-   * @param prof Profundidad de la pantalla
-   */
-  Pantalla(Uint32 ancho = 480, Uint32 alto = 360, Uint32 prof = 24);
+    /**
+     * @brief Constructor de la clase Pantalla
+     * @param ancho Ancho de la pantalla
+     * @param alto Alto de la pantalla
+     * @param prof Profundidad de la pantalla
+     */
+    Pantalla(Uint32 ancho = 480, Uint32 alto = 360, Uint32 prof = 24);
+    SDL_Surface* getBuffer() const;
+    SDL_Surface* getFondo() const;
+    Uint32 getAncho() const;
+    Uint32 getAlto() const;
+    Uint32 getProf() const;
+    void setTitulo(const char *titulo, const char *icono);
+    void cargarImagen(SDL_Surface *p, const char *imagen);
+    void volcarPantalla(SDL_Surface *p1, SDL_Surface *p2);
+    void cerrarPantalla();
  private:
-  /**
-   * Pantalla de la SDL
-   */
-  SDL_Surface *pantalla_;
-}
+    ~Pantalla();
+    /**
+     * Ventana de visualización: será una SDL_Surface especial, donde lo que
+     * dibujemos se mostrará por pantalla.
+     */
+    SDL_Surface *pantalla_;
+    /**
+     * Buffer donde dibujaremos antes de volcar a <code>pantalla_</code>
+     */
+    SDL_Surface *buffer_;
+    /**
+     * Fondo donde se dibujan los tiles
+     */
+    SDL_Surface *fondo_;
+    Uint32 ancho_;
+    Uint32 alto_;
+    Uint32 prof_;
+};
+
+inline SDL_Surface* Pantalla::getBuffer() const { return buffer_; }
+inline SDL_Surface* Pantalla::getFondo() const { return fondo_; }
+inline Uint32 Pantalla::getAncho() const { return ancho_; }
+inline Uint32 Pantalla::getAlto() const { return alto_; }
+inline Uint32 Pantalla::getProf() const { return prof_; }

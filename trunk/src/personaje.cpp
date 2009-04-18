@@ -17,11 +17,10 @@
 
  * Copyright (C) 2009, NoCKTMetal Team
  *
- * --------------------------------------------------------
  * Fichero: personaje.cpp
  * Autor: Noelia Sales Montes
- * Fecha: 14 / 04 / 2009
- * --------------------------------------------------------
+ * Fecha: 14 04 2009
+ * Proyecto: NoCKt Metal
  */
 
 #include <iostream>

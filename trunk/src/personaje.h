@@ -17,11 +17,10 @@
 
  * Copyright (C) 2009, NoCKTMetal Team
  *
- * --------------------------------------------------------
  * Fichero: personaje.h
  * Autor: Noelia Sales Montes
- * Fecha: 14 / 04 / 2009
- * --------------------------------------------------------
+ * Fecha: 14 04 2009
+ * Proyecto: NoCKt Metal
  */
 
 #ifndef _PERSONAJE_
@@ -33,6 +32,8 @@
 /**
  * @brief La clase Personaje hace de intermediario entre 
  * la clase Sprite y la clase Animacion.
+ * @author Noelia Sales Montes
+ * @date 14 04 2009
  * @see Sprite.h Animacion.h
  */
 class Personaje {
