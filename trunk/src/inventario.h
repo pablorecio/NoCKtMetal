@@ -36,30 +36,92 @@
 
 #include "objeto.h"
 
+/**
+ * Clase que utilzamos para encapsular un conjunto único de objetos, de forma
+ * que podamos modelar el inventario del que dispone un grupo, el cual es 
+ * accesible para cada uno de sus miembros.
+ */
 class Inventario {
 public:
+  /**
+   * Clase de excepción que nos servirá para indicar que el objeto al que 
+   * queremos acceder o insertar, ya se encuentra disponible en el inventario
+   */
   class ObjetoEnInventario: public std::exception{
-        const char* what() const throw(){
-            return "El objeto ya se encuentra en el inventario";
-        }
-    };
-
+  public:
+    const char* what() const throw(){
+      return "El objeto ya se encuentra en el inventario";
+    }
+  };
+  
+  /**
+   * Clase de excepción que nos servirá para indicar que el objeto al que 
+   * queremos acceder no se encuentra disponible en el inventario.
+   */
   class ObjetoNoEnInventario: public std::exception{
-        const char* what() const throw(){
-            return "El objeto no se encuentra en el inventario";
-        }
-    };
+  public:
+    const char* what() const throw(){
+      return "El objeto no se encuentra en el inventario";
+    }
+  };
 
-    Inventario(){}
+  /** 
+   * Constructor vacio, no hace nada. 
+   */  
+  Inventario(){}
+  
+  /** 
+   * Método que añade al inventario un objeto dado, copiándolo en
+   * memoria.
+   * 
+   * @param obj Referencia constante del objeto que queremos insertar
+   * en el inventario.
+   *
+   * @exception ObjetoEnInventario Lanza esta excepción si el objeto
+   * ya se encuentra disponible en el inventario
+   * @todo ¿Quitar excepción y aumentar la cantidad del objeto?
+   */
+  void addObjeto(const Objeto& obj) throw (ObjetoEnInventario);
 
-    void addObjeto(const Objeto& obj) throw (ObjetoEnInventario);
-    const Objeto& getObjeto(Uint32 i) const throw (ObjetoNoEnInventario);
-    Objeto& getObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+  /** 
+   * Método <i>getter</i> para acceder a un objeto determinado del 
+   * inventario, mediante una referencia constante.
+   * 
+   * @param i Identificador del objeto al cual queremos acceder
+   * 
+   * @return Referencia constante al objeto que tiene como 
+   * identificador <code>i</code> 
+   *
+   * @exception ObjetoNoEnInventario Lanza esta excepción si el objeto
+   * no se encuentra disponible en el inventario
+   */
+  const Objeto& getObjeto(Uint32 i) const throw (ObjetoNoEnInventario);
 
-    void borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+  /** 
+   * Método <i>getter</i> para acceder a un objeto determinado del 
+   * inventario, mediante una referencia.
+   * 
+   * @param i Identificador del objeto al cual queremos acceder
+   * 
+   * @return Referencia al objeto que tiene como identificador <code>i</code> 
+   *
+   * @exception ObjetoNoEnInventario Lanza esta excepción si el objeto
+   * no se encuentra disponible en el inventario
+   */
+  Objeto& getObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+
+  /** 
+   * Método para borrar un objeto determinado del Inventario.
+   * 
+   * @param i Identificador del objeto el cual queremos borrar.
+   *
+   * @exception ObjetoNoEnInventario Lanza esta excepción si el objeto
+   * no se encuentra disponible en el inventario
+   */  
+  void borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario);
 private:
-    std::map<Uint32,Objeto> _inventario;
-
+  std::map<Uint32,Objeto> _inventario;
+  
 };
 
 #endif	/* _INVENTARIO_H */

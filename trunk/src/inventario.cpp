@@ -26,7 +26,7 @@ using namespace std;
 
 void Inventario::addObjeto(const Objeto& obj) throw (ObjetoEnInventario){
   if(_inventario.find(obj.getIdentificador()) == _inventario.end())
-      _inventario.insert(make_pair(obj.getCantidad(),obj));
+      _inventario.insert(make_pair(obj.getIdentificador(),obj));
     else
         throw new ObjetoEnInventario();
 }

@@ -33,23 +33,101 @@
 
 #include "especial.h"
 
+/** 
+ * 
+ * Clase que modela el comportamiento de un Item. Consideramos un Item como una entidad la 
+ * cual es utilizable por un combatiente en un combate, es decir, pociones, bombas, antídotos,
+ * étcetera. Estos Item son una especialización de la clase Especial, aprovechando así 
+ * la definición e implementación de sus funciones, añadiendo ademas un controlador de la cantidad
+ * de la que disponemos del Item en cuestión.
+ *
+ * @see Especial
+ */
 class Objeto: public Especial {
 public:
-  class CantidadItemInsuficiente: public std::exception{
+  /**
+   *
+   * Clase de excepción que nos servirá para indicar cuando no tenemos la cantidad suficiente
+   * de un objeto determinado que queremos utilizar.
+   *
+   */
+  class CantidadItemInsuficiente: public std::exception{ //TODO: añadir referencia al objeto
   public:
-      const char* what() const throw(){
-          return "No hay suficiente cantidad del objeto ";
-      }
+    /** 
+     * 
+     * Método observador que nos indica el mensaje de porque ha sido lanzada la excepción
+     * 
+     * @return Cádena constante con el mensaje indicativo.
+     */
+    const char* what() const throw(){
+      return "No hay suficiente cantidad del objeto ";
+    }
   private:
   };
   
+  /** 
+   * 
+   * Constructor predeterminado, no hace nada.
+   * 
+   */
   Objeto() {}
+
+  /** 
+   * Constructor de un objeto de la clase Objeto. Este constructor recibe todos
+   * los parámetros para crear dicho objeto, y aprovecha el constructor
+   * de su clase padre "especial". 
+   * 
+   * @param nombre Cadena con el nombre identificativo del Objeto
+   * @param id Identificador único del Objeto
+   * @param tipo Tipo del Objeto
+   * @param cotaInf Cota inferior de daño
+   * @param cotaSup Cota superior de daño
+   * @param cantidad Número de objetos
+   * 
+   */
   Objeto(std::string nombre, Uint32 id, tipoEspecial tipo,
          Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad);
-
+  
+  /** 
+   * 
+   * Método <i>getter</i> para la cantidad del objeto
+   * 
+   * @return Valor entero sin signo de 32 bits con la cantidad disponible
+   * del objeto en cuestión
+   */
   Uint32 getCantidad() const { return _cantidad; }
+
+  /** 
+   * 
+   * Método usado para usar un Objeto en cuestión, de forma que obtenemos
+   * el daño que realiza el objeto, y decrementamos en uno su valor
+   * 
+   * @return Valor entero sin signo de 32 bits con el daño realizado
+   * por el objeto tras su uso.
+   *
+   * @exception CantidadItemInsuficiente Es lanzada cuando la cantidad
+   * necesaria para usar el objeto es menor que la cantidad disponible.
+   */
   Uint32 usarObjeto() throw(CantidadItemInsuficiente);
 
+  /** 
+   * Método que aumenta en <code>c</code> el número de Objetos del que 
+   * disponemos
+   * 
+   * @param c Valor entero sin signo de 32 bits que indica la cantidad a 
+   * aumentar
+   */
+  void addCantidad(Uint32 c) { _cantidad += c; }
+  
+  /** 
+   * Método que decrementa en uno la cantidad disponible del objeto.
+   * 
+   * 
+   * @return Referencia al objeto decrementado.
+   *
+   * @exception CantidadItemInsuficiente Es lanzada cuando la cantidad
+   * necesaria para usar el objeto es menor que la cantidad disponible.
+   */
   Objeto& operator --() throw(CantidadItemInsuficiente);
 private:
   Uint32 _cantidad;

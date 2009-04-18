@@ -89,10 +89,41 @@ public:
    * @return Cadena con el nombre del especial
    */
   std::string getNombre() const { return _nombre; }
+
+  /** 
+   * 
+   * Método <i>getter</i> del valor identificativo del objeto especial.
+   * 
+   * @return Valor entero sin signo de 32 bits con el valor identificativo.
+   */
   Uint32 getIdentificador() const { return _idEspecial; }
+
+  /** 
+   * 
+   * Método <i>getter</i> con el tipo de ataque al que pertenece este objeto especial.
+   * Esto es importante, pues según si es de tipo curativo u ofensivo, actuará de forma 
+   * distinta.
+   * 
+   * @return 0 si es de tipo Ofensivo, 1 si es de tipo Curativo, y 2 si es de tipo Cambio de Estado.
+   */
   tipoEspecial getTipoAtaque() const { return _tipoEsp; }
+
+  /** 
+   * 
+   * Método getter que devuelve el rango de daño que puede hacer este especial, acotado por [a,b]
+   * 
+   * @return Devuelve un <code>std::pair<Uint32,Uint32></code> en el que el primer valor es la cota
+   * inferior del daño del especial y el segundo es la cota superior.
+   */
   std::pair<Uint32, Uint32> getRangoAtaque() const { return _rangoDamage; }
   
+  /** 
+   * 
+   * Cálcula el daño que realiza el especial, siendo un valor aleatorio entre la cota de daño.
+   * 
+   * @return Valor entero sin signo de 32 bits con un valor pseudo-aleatorio entre el rango acotado por 
+   * _rangoDamage.
+   */
   Uint32 calculaDamage() const;
   
 protected:
