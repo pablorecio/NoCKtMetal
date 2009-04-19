@@ -31,37 +31,115 @@
 #include "personaje.h"
 #include "imagen.h"
 
+typedef enum Movimiento { ARRIBA, ABAJO, DERECHA, IZQUIERDA };
 
 /**
- * @brief
+ * @brief Clase que se encarga de inicializar los datos necesarios para
+ * un nivel del juego asi como controlar la gestion de eventos (con ayuda
+ * de la clase <code>Evento</code>) y el movimiento general de los elementos
+ * dinamicos.
  * @author Noelia Sales Montes
  * @date 19 de abril de 2009
  */
 class Animacion {
 public:
+    /**
+     * Constructor predeterminado de <code>Animacion</code>.
+     */
     Animacion();
+    /**
+     * Constructor de copia.
+     */
     Animacion(const Animacion& orig);
+
+    /**
+     * Metodo observador de la pantalla en la que se muestra la animacion.
+     * Sera la ventana del videojuego logicamente.
+     * @return Puntero a <code>Pantalla</code>.
+     */
     Pantalla* getPantalla();
-    Uint32 getTamCasilla() const;
+    /**
+     * Asociacion con la clase <code>Pantalla</code>.
+     * @param p Referencia a la pantalla que se desea asociar.
+     */
+    void animandoEn(Pantalla& p);
+    /**
+     * Uno de los metodos principales de Animacion.
+     * Ejecuta y controla el movimiento en el mapa.
+     */
     void animandoMapa();
+    /**
+     * Destructor de la clase Animacion.
+     */
     virtual ~Animacion();
 private:
-    /* Puntero a la pantalla general del juego */
-    Pantalla* _pantalla;
-    /* Equivalencia de un tile en pixels */
+
+    /**
+     * Metodo auxiliar que realiza un movimiento estatico desde el punto
+     * de vista del personaje.
+     * @param m Identificador de la direccion del movimiento.
+     */
+    void hacerMovimientoEstatico(Movimiento m);
+    /**
+     * Metodo auxiliar que realiza un movimiento dinamico desde el punto
+     * de vista del personaje.
+     * @param m Identificador de la direccion del movimiento.
+     */
+    void hacerMovimientoDinamico(Movimiento m);
+    /**
+     * Metodo auxiliar que realiza un movimiento simple del personaje.
+     * Sirve de ayuda a <code>hacerMovimientoEstatico</code> y
+     * <code>hacerMovimientoDinamico</code> que realizan el movimiento
+     * incluyendo el mapa.
+     * @param mov Identificador de la direccion del movimiento.
+     * @param sec Secuencia actual del movimiento.
+     * @param desp Desplazamiento. Por defecto 0.
+     */
+    void movimiento(Movimiento mov, Uint32 sec, Uint32 desp = 0);
+    /**
+     * Puntero a la pantalla general del juego.
+     */
+    Pantalla* _pant;
+    /**
+     * Puntero al personaje principal juego.
+     */
+    Personaje* _principal;
+    /**
+     * Equivalencia de un tile en pixels: En verdad no hace falta, porque
+     * se puede leer directamente de Imagen creo.
+     */
     Uint32 _tamCasilla;
+    /**
+     * Util al volcar la pantalla de movimiento en el buffer
+     * Tiene que coincidir con el rango definido en el PJ
+     * No se si es util o si mejor leerlo desde PJ
+     */
+    SDL_Rect _rangoPJ;
+    /**
+     * Numero de secuencias de movimiento; coincidente con
+     *  _principal->getSecuenciasMovimiento()
+     */
+    Uint32 _numSecuencias;
+    /**
+     * Desplazamiento igual a _numSecuencias/_tamCasilla
+     */
+    Uint32 _desp;
+    /**
+     * Matriz del mapa.
+     */
     Uint32** _matrizMapa;
+    /**
+     * Ancho del mapa.
+     */
     Uint32 _anchoMapa;
+    /**
+     * Alto del mapa.
+     */
     Uint32 _altoMapa;
 };
 
-inline Pantalla* Animacion::getPantalla() {
-    return _pantalla;
-}
-
-inline Uint32 Animacion::getTamCasilla() const {
-    return _tamCasilla;
-}
+/* Metodos inline */
+inline Pantalla* Animacion::getPantalla() { return _pantalla; }
 
 #endif	/* _ANIMACION_H */
 

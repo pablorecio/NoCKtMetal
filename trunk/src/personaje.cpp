@@ -27,28 +27,16 @@
 #include <SDL/SDL.h>
 
 #include "personaje.h"
-#include "pantalla.h"
 
 using namespace std;
 
 Personaje::Personaje() { }
 
-Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam): _id(i),
-_x(x), _y(y), _tamCasilla(tam), _rango_pX(0), _rango_pY(0), _rango_dX(0),
-_rango_dY(0), _p(0), _sprite(0) {
-    cout << "ID: " << _id << endl;
-    cout << "X: " << _x << endl;
-    cout << "Y: " << _y << endl;
-    cout << "RANGO PX: " << _rango_pX << endl;
-    cout << "RANGO PY: " << _rango_pY << endl;
-    cout << "RANGO DX: " << _rango_dX << endl;
-    cout << "RANGO DY: " << _rango_dY << endl;
-}
+Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y): _id(i), _x(x), _y(y),
+_rango(0), _existeRango(SDL_FALSE), _p(0), _sprite(0) { }
 
-Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y,
-                     Uint32 tam): _id(i),
-_x(x), _y(y), _tamCasilla(tam), _rango_pX(0), _rango_pY(0), _rango_dX(0),
-_rango_dY(0), _p(0) {
+Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y): _id(i),
+_x(x), _y(y), _rango(0), _existeRango(SDL_FALSE), _p(0) {
     Sprite s(sprite, 4, 4, 16);
     _sprite = &s;
 }
@@ -66,38 +54,35 @@ void Personaje::dibujadoPor(Sprite& s) {
 void Personaje::setPosicion(Uint32 x, Uint32 y) {
     _x = x;
     _y = y;
-    cout << "ID: " << _id << endl;
-    cout << "X: " << _x << endl;
-    cout << "Y: " << _y << endl;
-    cout << "RANGO PX: " << _rango_pX << endl;
-    cout << "RANGO PY: " << _rango_pY << endl;
-    cout << "RANGO DX: " << _rango_dX << endl;
-    cout << "RANGO DY: " << _rango_dY << endl;
 }
 
 void Personaje::setPosicion() {
     /* Si esta definido el rango, colocamos al personaje en el centro */
     if (existeRango()) {
-        _x = _rango_pX + _rango_dX / 2;
-        _y = _rango_pY + _rango_dY / 2;
+        _x = _rango.x + _rango.w / 2;
+        _y = _rango.y + _rango.h / 2;
     }
 }
 
-void Personaje::setRango(Uint32 margenIzdo, Uint32 margenArriba,
-                         Uint32 rangoAncho, Uint32 rangoAlto) {
-    _rango_pX = margenIzdo;
-    _rango_pY = margenArriba;
-    _rango_dX = rangoAncho;
-    _rango_dY = rangoAlto;
-    _existeRango = true;
+void Personaje::setRango(Uint16 margenIzdo, Uint16 margenArriba,
+                         Uint16 rangoAncho, Uint16 rangoAlto) {
+    _rango.x = margenIzdo;
+    _rango.y = margenArriba;
+    _rango.w = rangoAncho;
+    _rango.h = rangoAlto;
+    _existeRango = SDL_TRUE;
+}
+
+void Personaje::actualizarMapa(Uint32 mapaX, Uint32 mapaY) {
+    _mapaX = mapaX;
+    _mapaY = mapaY;
 }
 
 void Personaje::dibujarPosicionFrente() {
-    cout << "dibujarPosFrente" << endl;
     moverAbajo(0, 0);
 }
 
-void Personaje::dibujarPosicionEspaldas()  {
+void Personaje::dibujarPosicionEspaldas() {
     moverArriba(0, 0);
 }
 
@@ -109,74 +94,37 @@ void Personaje::dibujarPosicionLatDcha() {
     moverDcha(0, 0);
 }
 
-Uint32 Personaje::moverArriba(Uint32 mov, Uint32 desp) {
-    /* Dibujamos el personaje en la imagen de secuencia indicada, un
-     * poco mas avanzado */
-    _sprite->dibujar(_sprite->getMovArriba(), mov,
-                     _p->getMovimiento(), _x * _tamCasilla,
-                     _y * _tamCasilla - desp);
+void Personaje::moverArriba(Uint32 mov, Uint32 desp) {
+    /* Posicion en la pantalla actualizada */
+    _y = _y - desp;
+    /* Modificamos la posicion actual en la pantalla */
+    mover(_sprite->getMovAbajo(), mov);
+}
+
+void Personaje::moverAbajo(Uint32 mov, Uint32 desp) {
+    /* Posicion en la pantalla actualizada */
+    _y = _y + desp;
+    /* Modificamos la posicion actual en la pantalla */
+    mover(_sprite->getMovAbajo(), mov);
+}
+
+void Personaje::moverIzda(Uint32 mov, Uint32 desp) {
+    /* Posicion en la pantalla actualizada */
+    _x = _x - desp;
+    /* Modificamos la posicion actual en la pantalla */
+    mover(_sprite->getMovIzda(), mov);
+}
+
+void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
+    /* Posicion en la pantalla actualizada */
+    _x = _x + desp;
+    /* Modificamos la posicion actual en la pantalla */
+    mover(_sprite->getMovDcha(), mov);
+}
+
+void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
+    /* Dibujamos el personaje en la imagen de secuencia indicada en la
+     * posicion actualizada de pantalla */
+    _sprite->dibujar(movimiento, secuencia, _p->getMovimiento(), _x, _y);
     _p->volcarPantalla(_p->getMovimiento());
-    mov = (mov + 1) % _sprite->getColumnas();
-    return mov;
-}
-
-void Personaje::moverAbajo() {
-    mover(_sprite->getMovAbajo());
-}
-
-Uint32 Personaje::moverAbajo(Uint32 mov, Uint32 desp) {
-    /* Dibujamos el personaje en la imagen de secuencia indicada, un
-     * poco mas avanzado */
-    _sprite->dibujar(_sprite->getMovAbajo(), mov,
-                     _p->getMovimiento(), _x * _tamCasilla,
-                     _y * _tamCasilla + desp);
-    _p->volcarPantalla(_p->getMovimiento());
-    mov = (mov + 1) % _sprite->getColumnas();
-    return mov;
-}
-
-void Personaje::moverIzda() {
-    mover(_sprite->getMovIzda());
-}
-
-Uint32 Personaje::moverIzda(Uint32 mov, Uint32 desp) {
-    /* Dibujamos el personaje en la imagen de secuencia indicada, un
-     * poco mas avanzado */
-    _sprite->dibujar(_sprite->getMovIzda(), mov,
-                     _p->getMovimiento(), _x * _tamCasilla - desp,
-                     _y * _tamCasilla);
-    _p->volcarPantalla(_p->getMovimiento());
-    mov = (mov + 1) % _sprite->getColumnas();
-    return mov;
-}
-
-void Personaje::moverDcha() {
-    mover(_sprite->getMovDcha());
-}
-
-Uint32 Personaje::moverDcha(Uint32 mov, Uint32 desp) {
-    /* Dibujamos el personaje en la imagen de secuencia indicada, un
-     * poco mas avanzado */
-    _sprite->dibujar(_sprite->getMovDcha(), mov,
-                     _p->getMovimiento(), _x * _tamCasilla + desp,
-                     _y * _tamCasilla);
-    _p->volcarPantalla(_p->getMovimiento());
-    mov = (mov + 1) % _sprite->getColumnas();
-    return mov;
-}
-
-void Personaje::mover(Uint32 movimiento) {
-    /* Movimientos a realizar suponiendo que el sprite de movimiento
-     * esté organizado tal que cada fila corresponda a la secuencia de
-     * movimientos hacia una posicion determinada */
-    Uint32 movs = _sprite->getColumnas() - 1;
-
-    /* Dibujamos un desplazamiento estático */
-    for (Uint32 i = 0; i < movs; i++) {
-        _sprite->dibujar(movimiento, i,
-                         _p->getMovimiento(), _x * _tamCasilla,
-                         _y * _tamCasilla);
-        _p->volcarPantalla(_p->getMovimiento());
-        SDL_Delay(200);
-    }
 }
