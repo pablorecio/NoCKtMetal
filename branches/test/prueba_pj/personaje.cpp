@@ -109,6 +109,10 @@ void Personaje::dibujarPosicionLatDcha() {
     moverDcha(0, 0);
 }
 
+void Personaje::moverArriba() {
+    mover(_sprite->getMovArriba());
+}
+
 Uint32 Personaje::moverArriba(Uint32 mov, Uint32 desp) {
     /* Dibujamos el personaje en la imagen de secuencia indicada, un
      * poco mas avanzado */

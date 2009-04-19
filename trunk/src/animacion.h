@@ -50,6 +50,9 @@ private:
     Pantalla* _pantalla;
     /* Equivalencia de un tile en pixels */
     Uint32 _tamCasilla;
+    Uint32** _matrizMapa;
+    Uint32 _anchoMapa;
+    Uint32 _altoMapa;
 };
 
 inline Pantalla* Animacion::getPantalla() {
