@@ -17,11 +17,10 @@
 
  * Copyright (C) 2009, NoCKTMetal Team
  *
- * --------------------------------------------------------
  * Fichero: pantalla.h
  * Autor: Noelia Sales Montes
- * Fecha: 15 / 04 / 2009
- * --------------------------------------------------------
+ * Fecha: 18 04 2009
+ * Proyecto: NoCKt Metal
  */
 
 #ifndef _PANTALLA_
@@ -43,8 +42,12 @@ class Pantalla {
      * @param prof Profundidad de la pantalla
      */
     Pantalla(Uint32 ancho = 480, Uint32 alto = 360, Uint32 prof = 24);
+    /**
+     *
+     */
     SDL_Surface* getBuffer() const;
     SDL_Surface* getFondo() const;
+    SDL_Surface* getMovimiento() const;
     Uint32 getAncho() const;
     Uint32 getAlto() const;
     Uint32 getProf() const;
@@ -67,6 +70,7 @@ class Pantalla {
      * Fondo donde se dibujan los tiles
      */
     SDL_Surface *fondo_;
+    SDL_Surface *movimiento_;
     Uint32 ancho_;
     Uint32 alto_;
     Uint32 prof_;
@@ -74,6 +78,7 @@ class Pantalla {
 
 inline SDL_Surface* Pantalla::getBuffer() const { return buffer_; }
 inline SDL_Surface* Pantalla::getFondo() const { return fondo_; }
+inline SDL_Surface* Pantalla::getMovimiento() const { return movimiento_; }
 inline Uint32 Pantalla::getAncho() const { return ancho_; }
 inline Uint32 Pantalla::getAlto() const { return alto_; }
 inline Uint32 Pantalla::getProf() const { return prof_; }
