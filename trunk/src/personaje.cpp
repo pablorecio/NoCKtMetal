@@ -29,53 +29,60 @@
 #include "personaje.h"
 #include "pantalla.h"
 
-Personaje::Personaje() {}
+Personaje::Personaje() { }
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y): _id(i),
-        _x(x), _y(y), _rango_aX(0), _rango_aY(0), _rango_bX(0),
-        _rango_bY(0), _anim(0), _sprite(0) {}
+_x(x), _y(y), _rango_pX(0), _rango_pY(0), _rango_dX(0),
+_rango_dY(0), _anim(0), _sprite(0) { }
 
 Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y): _id(i),
-        _x(x), _y(y), _rango_aX(0), _rango_aY(0), _rango_bX(0),
-        _rango_bY(0), _anim(0), _sprite(0) {
+_x(x), _y(y), _rango_pX(0), _rango_pY(0), _rango_dX(0),
+_rango_dY(0), _anim(0), _sprite(0) {
     Sprite s = Sprite(sprite, 4, 4, 16);
 }
 
-Personaje::~Personaje() {}
-
+Personaje::~Personaje() { }
 
 void Personaje::animadoPor(Animacion& a) {
-  _anim = &a;
+    _anim = &a;
 }
 
 void Personaje::dibujadoPor(Sprite& s) {
-  _sprite = &s;
+    _sprite = &s;
 }
 
 void Personaje::setPosicion(Uint32 x, Uint32 y) {
-  _x = x;
-  _y = y;
+    _x = x;
+    _y = y;
+}
+
+void Personaje::setPosicion() {
+    /* Si esta definido el rango, colocamos al personaje en el centro */
+    if (existeRango()) {
+        _x = (_rango_bX - _rango_aX) / 2;
+        _y = (_rango_bY - _rango_aY) / 2;
+    }
 }
 
 void Personaje::setRango(Uint32 margenIzdo, Uint32 margenArriba,
                          Uint32 rangoAncho, Uint32 rangoAlto) {
-    _rango_aX = margenIzdo;
-    _rango_aY = margenArriba;
-    _rango_bX = margenIzdo + rangoAncho;
-    _rango_bY = margenArriba + rangoAlto;
+    _rango_pX = margenIzdo;
+    _rango_pY = margenArriba;
+    _rango_dX = rangoAncho;
+    _rango_dY = rangoAlto;
+    _existeRango = true;
 }
 
 void Personaje::moverArriba() {
     mover(_mov_arriba);
 }
 
-
 Uint32 Personaje::moverArriba(Uint32 mov, Uint32 desp) {
     /* Dibujamos el personaje en la imagen de secuencia indicada, un
      * poco mas avanzado */
-     _sprite->dibujar(_mov_arriba, mov, _anim->getPantalla()->getMovimiento(),
-                      _x, _y - desp);
-     mov = (mov + 1) % _sprite->getColumnas();
+    _sprite->dibujar(_mov_arriba, mov, _anim->getPantalla()->getMovimiento(),
+                     _x, _y - desp);
+    mov = (mov + 1) % _sprite->getColumnas();
 }
 
 void Personaje::moverAbajo() {
@@ -85,11 +92,11 @@ void Personaje::moverAbajo() {
 Uint32 Personaje::moverAbajo(Uint32 mov, Uint32 desp) {
     /* Dibujamos el personaje en la imagen de secuencia indicada, un
      * poco mas avanzado */
-     _sprite->dibujar(_mov_abajo, mov, _anim->getPantalla()->getMovimiento(),
-                      _x, _y + desp);
-     mov = (mov + 1) % _sprite->getColumnas();
+    _sprite->dibujar(_mov_abajo, mov, _anim->getPantalla()->getMovimiento(),
+                     _x, _y + desp);
+    mov = (mov + 1) % _sprite->getColumnas();
 }
-  
+
 void Personaje::moverIzda() {
     mover(_mov_izda);
 }
@@ -97,9 +104,9 @@ void Personaje::moverIzda() {
 Uint32 Personaje::moverIzda(Uint32 mov, Uint32 desp) {
     /* Dibujamos el personaje en la imagen de secuencia indicada, un
      * poco mas avanzado */
-     _sprite->dibujar(_mov_izda, mov, _anim->getPantalla()->getMovimiento(),
-                      _x - desp, _y);
-     mov = (mov + 1) % _sprite->getColumnas();
+    _sprite->dibujar(_mov_izda, mov, _anim->getPantalla()->getMovimiento(),
+                     _x - desp, _y);
+    mov = (mov + 1) % _sprite->getColumnas();
 }
 
 void Personaje::moverDcha() {
@@ -109,11 +116,10 @@ void Personaje::moverDcha() {
 Uint32 Personaje::moverDcha(Uint32 mov, Uint32 desp) {
     /* Dibujamos el personaje en la imagen de secuencia indicada, un
      * poco mas avanzado */
-     _sprite->dibujar(_mov_dcha, mov, _anim->getPantalla()->getMovimiento(),
-                      _x + desp, _y);
-     mov = (mov + 1) % _sprite->getColumnas();
+    _sprite->dibujar(_mov_dcha, mov, _anim->getPantalla()->getMovimiento(),
+                     _x + desp, _y);
+    mov = (mov + 1) % _sprite->getColumnas();
 }
-
 
 void Personaje::mover(Uint32 movimiento) {
     /* Movimientos a realizar suponiendo que el sprite de movimiento
@@ -123,7 +129,7 @@ void Personaje::mover(Uint32 movimiento) {
 
     /* Dibujamos un desplazamiento estático */
     for (int i = 0; i < movs; i++) {
-         _sprite->dibujar(movimiento, i,
-                          _anim->getPantalla()->getMovimiento(), _x, _y);
+        _sprite->dibujar(movimiento, i,
+                         _anim->getPantalla()->getMovimiento(), _x, _y);
     }
 }
