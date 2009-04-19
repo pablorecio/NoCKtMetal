@@ -38,39 +38,162 @@
 #include "habilidad.h"
 #include "objeto.h"
 #include "inventario.h"
-//#include "grupo.h" //TODO: ¿Porqué da fallo en grupo.h añadir esta cabecera?
+#include "grupo.h"
 
+/** 
+ * 
+ * Declaración adelantada de la clase <code>Grupo</code>, necesaria para la 
+ * relación entre ambas clases. 
+ * @see grupo.h
+ */
+class Grupo;
+
+/** 
+ * 
+ * Clase <code>Combatiente</code>, fundamental en el motor de combate. Esta clase 
+ * identifica a cada participante en una batalla. 
+ *
+ * Esta clase está fuertemente relacionadas con muchas otras como Grupo (al cual
+ * pertenece), a Habilidad (las que puede utilizar) y a Objeto e Inventario. Además,
+ * hereda de Atributos, ya que utilizaremos esos atributos y sus tiradas para modelar
+ * el comportamiento matemático y aleatorio del combatiente.
+ * 
+ * @todo Mirar si combiene una herencia protegida en vez de publica para Combatiente.
+ * @todo Objetos equipables como espadas, armaduras y accesorios.
+ */
 class Combatiente: public Atributos{
 public:
+  /** 
+   * 
+   * Constructor vacio, no hace nada.
+   * 
+   */
   Combatiente(){}
+
+  /** 
+   * Construye un objeto de la clase <code>Combatiente</code> con los parámetros dados
+   * 
+   * @param nombre Nombre del combatiente
+   * @param id Identificador único del combatiente
+   * @param atr Objeto con los atributos báse del combatiente
+   * @param grupo Referencia al grupo al que pertenece el combaitente
+   * @param exp Cantidad de puntos de experiencia, la cual define el nivel del combatiente.
+   */
   Combatiente(std::string nombre, Uint32 id, AtributoBase atr, 
-	      Inventario &inv, Uint32 exp = 0); //TODO: grupo?
+	      Grupo &grupo, Uint32 exp = 0); //TODO: grupo?
 
+  /** 
+   * 
+   * Método <i>getter</i> que obtiene el nombre del combatiente actual.
+   * 
+   * @return Cadena con el nombre del combatiente actual.
+   */
+  std::string getNombre() const { return _nombre; }
 
-    std::string getNombre() const { return _nombre; }
-    Uint32 getIdentificador() const { return _idCombatiente; }
-    const Habilidad& getHabilidad(Uint32 i) const { return *_habilidades.at(i); }
+  /** 
+   * 
+   * Método <i>getter</i> que obtiene el valor identificativo.
+   * 
+   * @return Entero sin signo de 32 bits con el identificador del combatiente
+   */
+  Uint32 getIdentificador() const { return _idCombatiente; }
 
-    //const Grupo& getGrupo() const { return _grupo; }
-    //Grupo& getGrupo() { return _grupo; }
+  /** 
+   * 
+   * Método <i>getter</i> que obtiene la habilidad con la clave <code>i</code>
+   * disponible del combatiente
+   *
+   * @param i Valor entero sin signo de 32 bits clave de una habilidad
+   * @return Referencia constante a la habilidad con la clave <code>i</code>
+   */
+  const Habilidad& getHabilidad(Uint32 i) const { return *_habilidades.at(i); }
 
-    const Inventario& getInventario() const { return *_inventario; }
-    Inventario& getInventario() { return *_inventario; }
+  /**
+   * Método <i>getter</i> para obtener acceso al grupo al que pertenece el combatiente
+   *
+   * @return Referencia constante al grupo.
+   */
+  const Grupo& getGrupo() const { return *_grupo; }
 
-    void addHabilidad(Habilidad& h);
+  /**
+   * Método <i>getter</i> para obtener acceso al grupo al que pertenece el combatiente
+   *
+   * @return Referencia al grupo.
+   */
+  Grupo& getGrupo() { return *_grupo; }
 
-    Uint32 ataqueSimple(Combatiente& objetivo);
-    Uint32 usarObjeto(Uint32 i, Combatiente& objetivo)
-            throw(Objeto::CantidadItemInsuficiente);
-    Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
-    Uint32 defenderse();
-    bool huir();
+  /**
+   * Método <i>getter</i> para obtener acceso al inventario disponible para el combatiente
+   *
+   * @return Referencia constante al inventario.
+   */
+  const Inventario& getInventario() const { return *_inventario; }
+
+  /**
+   * Método <i>getter</i> para obtener acceso al inventario disponible para el combatiente
+   *
+   * @return Referencia al inventario.
+   */
+  Inventario& getInventario() { return *_inventario; }
+  
+  /** 
+   * Método para añadir una habilidad determinada al combatiente.
+   * 
+   * @param h Referencia a una habilidad a añadir en el combatiente.
+   */
+  void addHabilidad(Habilidad& h);
+
+  /** 
+   * 
+   * 
+   * @param objetivo 
+   * 
+   * @return 
+   */
+  Uint32 ataqueSimple(Combatiente& objetivo);
+
+  /** 
+   * 
+   * 
+   * @param i 
+   * @param objetivo 
+   * 
+   * @return 
+   */
+  Uint32 usarObjeto(Uint32 i, Combatiente& objetivo)
+    throw(Objeto::CantidadItemInsuficiente);
+
+  /** 
+   * 
+   * 
+   * @param i 
+   * @param objetivo 
+   * 
+   * @return 
+   */
+  Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
+
+  /** 
+   * 
+   * 
+   * 
+   * @return 
+   */
+  Uint32 defenderse();
+
+  /** 
+   * 
+   * 
+   * 
+   * @return 
+   */
+  bool huir();
 private:
     std::string _nombre;
     Uint32 _idCombatiente;
     std::map<Uint32,Habilidad*> _habilidades;
     Inventario *_inventario;
-    //Grupo* _grupo;
+    Grupo* _grupo;
 };
 
 #endif	/* _COMBATIENTE_H */

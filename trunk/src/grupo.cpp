@@ -25,15 +25,20 @@
 #include "combatiente.h"
 #include "inventario.h"
 
-
 Grupo::Grupo(Inventario& invent, bool contr): _controlable(contr){
     _inventario = &invent;
     std::vector<Combatiente*> temp(4);
     _componentes = temp;
+    _numComp = 0;
 }
 
 void Grupo::addCombatiente(Combatiente& comb) throw(GrupoLleno){
     if(_numComp == 4) throw(new GrupoLleno());
     _componentes.at(_numComp) = &comb;
     _numComp++;
+}
+bool Grupo::vivo() const {
+    for (unsigned int i = 0 ; i < _componentes.size() ; i++)
+        if (_componentes.at(i)->getPV() != 0) return true;
+    return false;
 }

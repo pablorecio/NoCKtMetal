@@ -22,11 +22,14 @@
 #include <SDL/SDL.h>
 
 #include "combatiente.h" //TODO: Implementar las funciones
+#include "grupo.h"
 
 
  Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-         Inventario &inv, Uint32 exp): Atributos(atr,exp),_nombre(nombre), _idCombatiente(id){
-     _inventario = &inv;
+         Grupo &grupo, Uint32 exp): Atributos(atr,exp),_nombre(nombre), _idCombatiente(id){
+     _grupo = &grupo;
+     _inventario = &(_grupo->getInventario());
+     _grupo->addCombatiente(*this);//Añadimos el combatiente a su grupo
  }
 
  void Combatiente::addHabilidad(Habilidad& h){
