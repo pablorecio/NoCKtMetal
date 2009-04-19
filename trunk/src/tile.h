@@ -63,6 +63,7 @@ class Tile{
    * @return
    */
 
+  static Uint32 getAncho();
   Uint32 getAnchura();
 
 
@@ -71,6 +72,7 @@ class Tile{
    * @return 
    */
 
+  static Uint32 getAlto();
   Uint32 getAltura();
 
 
@@ -102,6 +104,9 @@ class Tile{
   Uint32 _colorkey;
   bool _colisionable;
   bool _interactuable;
+
+  static Uint32 _alto;
+  static Uint32 _ancho;
 
 };
 

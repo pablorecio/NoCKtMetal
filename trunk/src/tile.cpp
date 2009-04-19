@@ -12,6 +12,9 @@ Tile::Tile(char *ruta, bool col, bool inter){
 #endif
   
   _imagen = IMG_Load(ruta);
+
+  _alto = _imagen->h;
+  _ancho = _imagen->w;
   
   if(_imagen == NULL) {  
     cerr << "Error: " << SDL_GetError() << endl;;
@@ -43,11 +46,19 @@ Tile::~Tile() {
 #endif
 }
 
-Uint32 Tile::getAnchura() {
+static Uint32 Tile::getAncho() {
+  return _ancho;
+}
+
+static Uint32 Tile::getAlto() {
+  return _alto;
+}
+
+Uint32 Tile::getAnchura(){
   return _imagen->w;
 }
 
-Uint32 Tile::getAltura() {
+Uint32 Tile::getAltura(){
   return _imagen->h;
 }
 
