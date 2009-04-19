@@ -29,11 +29,6 @@
  * así como el dibujarlo sobre una SDL_Surface y demás.
  */
 
-/*-------- Clase en pruebas --------*/
-
-//TODO Acostumbrarnos a usar Uint32, Sint32, Uint16, etc... para independizar
-//de la plataforma lo mas posible.
-
 #ifndef _SPRITE_GENERICO_
 #define _SPRITE_GENERICO_
 
@@ -74,10 +69,9 @@ class Sprite{
    * @param num_c Numero de columnas de la tabla de sprites. Por defecto a 1
    * @param num_s Numero fijo de sprites. Por defecto a 1
    */
-  Sprite(std::string ruta_imagen,
-	 Uint32 num_f = 1, 
-	 Uint32 num_c = 1, 
-	 Uint32 num_s = 1);
+  Sprite(const char *ruta_imagen, Uint32 num_f = 1, Uint32 num_c = 1,
+	 Uint32 num_s = 1, Uint32 arriba = 0, Uint32 izda = 1,
+         Uint32 dcha = 2, Uint32 abajo = 3);
 
   /**
    * @brief Constructor de copia.
@@ -120,8 +114,7 @@ class Sprite{
    * @param x Desplazamiento horizontal en la superficie
    * @param y Desplazamiento vertical en la superficie
    */
-  void dibujar(Uint32 i, SDL_Surface* dest, 
-	       Uint32 x, Uint32 y) const;
+  void dibujar(Uint32 i, SDL_Surface* dest, Uint32 x, Uint32 y) const;
 
   //TODO Buscar mas funciones que definir e implementar. Cortar? 
 
@@ -141,30 +134,24 @@ class Sprite{
   Uint32 _filas;
   Uint32 _cols;
 
+  /**
+   * Correspondencia con el orden de los movimientos (fila que le
+   * corresponde a cada secuencia).
+   * Se supone que para cada movimiento se tienen tantos movimientos
+   * en dicha direccion como columnas haya en la matriz.
+   */
+  Uint32 _mov_arriba, _mov_izda, _mov_dcha, _mov_abajo;
+
   // Numero de sprites en la matriz.
   Uint32 _num;
 };
 
 //-- Funciones get inline, mas eficientes
 
-inline Uint32 Sprite::getAncho() const{
-  return _ancho;
-}
-
-inline Uint32 Sprite::getAlto() const{
-  return _alto;
-}
-
-inline Uint32 Sprite::getFilas() const{
-  return _filas;
-}
-
-inline Uint32 Sprite::getColumnas() const{
-  return _cols;
-}
-
-inline Uint32 Sprite::getNumSprites() const{
-  return _num;
-}
+inline Uint32 Sprite::getAncho() const { return _ancho; }
+inline Uint32 Sprite::getAlto() const { return _alto; }
+inline Uint32 Sprite::getFilas() const { return _filas; }
+inline Uint32 Sprite::getColumnas() const { return _cols; }
+inline Uint32 Sprite::getNumSprites() const { return _num; }
 
 #endif

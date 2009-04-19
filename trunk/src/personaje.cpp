@@ -27,48 +27,103 @@
 #include <SDL/SDL.h>
 
 #include "personaje.h"
+#include "pantalla.h"
 
 Personaje::Personaje() {}
 
-Personaje::Personaje(Uint32 i, Sprite s, Uint32 x, Uint32 y):
-  id_(i), sprite_(s), x_(x), y_(y) {}
+Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y): _id(i),
+        _x(x), _y(y), _rango_aX(0), _rango_aY(0), _rango_bX(0),
+        _rango_bY(0), _anim(0), _sprite(0) {}
+
+Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y): _id(i),
+        _x(x), _y(y), _rango_aX(0), _rango_aY(0), _rango_bX(0),
+        _rango_bY(0), _anim(0), _sprite(0) {
+    Sprite s = Sprite(sprite, 4, 4, 16);
+}
 
 Personaje::~Personaje() {}
 
 
 void Personaje::animadoPor(Animacion& a) {
-  anim_ = &a;
+  _anim = &a;
+}
+
+void Personaje::dibujadoPor(Sprite& s) {
+  _sprite = &s;
 }
 
 void Personaje::setPosicion(Uint32 x, Uint32 y) {
-  x_ = x;
-  y_ = y;
+  _x = x;
+  _y = y;
+}
+
+void Personaje::setRango(Uint32 margenIzdo, Uint32 margenArriba,
+                         Uint32 rangoAncho, Uint32 rangoAlto) {
+    _rango_aX = margenIzdo;
+    _rango_aY = margenArriba;
+    _rango_bX = margenIzdo + rangoAncho;
+    _rango_bY = margenArriba + rangoAlto;
 }
 
 void Personaje::moverArriba() {
-  /* Si estamos en la fila superior del mapa, no podemos subir mas */
-  if(y_ != 0) {
-    y_--;
-  }
+    mover(_mov_arriba);
+}
+
+
+Uint32 Personaje::moverArriba(Uint32 mov, Uint32 desp) {
+    /* Dibujamos el personaje en la imagen de secuencia indicada, un
+     * poco mas avanzado */
+     _sprite->dibujar(_mov_arriba, mov, _anim->getPantalla()->getMovimiento(),
+                      _x, _y - desp);
+     mov = (mov + 1) % _sprite->getColumnas();
 }
 
 void Personaje::moverAbajo() {
-  /* Si estamos en la fila inferior del mapa, no podemos subir mas */
-  if(y_ != anim_.tamMapaY()) {
-    y_++;
-  }
+    mover(_mov_abajo);
+}
+
+Uint32 Personaje::moverAbajo(Uint32 mov, Uint32 desp) {
+    /* Dibujamos el personaje en la imagen de secuencia indicada, un
+     * poco mas avanzado */
+     _sprite->dibujar(_mov_abajo, mov, _anim->getPantalla()->getMovimiento(),
+                      _x, _y + desp);
+     mov = (mov + 1) % _sprite->getColumnas();
 }
   
 void Personaje::moverIzda() {
-  /* Si estamos en la fila izquierda del mapa, no podemos avanzar mas */
-  if(x_ != 0) {
-    x_--;
-  }
+    mover(_mov_izda);
+}
+
+Uint32 Personaje::moverIzda(Uint32 mov, Uint32 desp) {
+    /* Dibujamos el personaje en la imagen de secuencia indicada, un
+     * poco mas avanzado */
+     _sprite->dibujar(_mov_izda, mov, _anim->getPantalla()->getMovimiento(),
+                      _x - desp, _y);
+     mov = (mov + 1) % _sprite->getColumnas();
 }
 
 void Personaje::moverDcha() {
-  /* Si estamos en la fila derecha del mapa, no podemos avanzar mas */
-  if(x_ != anim_.tamMapaX()) {
-    x_++;
-  }
+    mover(_mov_dcha);
+}
+
+Uint32 Personaje::moverDcha(Uint32 mov, Uint32 desp) {
+    /* Dibujamos el personaje en la imagen de secuencia indicada, un
+     * poco mas avanzado */
+     _sprite->dibujar(_mov_dcha, mov, _anim->getPantalla()->getMovimiento(),
+                      _x + desp, _y);
+     mov = (mov + 1) % _sprite->getColumnas();
+}
+
+
+void Personaje::mover(Uint32 movimiento) {
+    /* Movimientos a realizar suponiendo que el sprite de movimiento
+     * esté organizado tal que cada fila corresponda a la secuencia de
+     * movimientos hacia una posicion determinada */
+    Uint32 movs = _sprite->getColumnas() - 1;
+
+    /* Dibujamos un desplazamiento estático */
+    for (int i = 0; i < movs; i++) {
+         _sprite->dibujar(movimiento, i,
+                          _anim->getPantalla()->getMovimiento(), _x, _y);
+    }
 }

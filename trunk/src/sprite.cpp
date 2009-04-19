@@ -27,12 +27,17 @@ using namespace std;
 
 Sprite::Sprite(){}
 
-Sprite::Sprite(string ruta_imagen,
-	       int num_f,// = 1, 
-	       int num_c,// = 1, 
-	       int num_s/* = 1*/): _filas(num_f), _cols(num_c), _num(num_s){
+Sprite::Sprite(const char *ruta_imagen, Uint32 num_f, Uint32 num_c,
+               Uint32 num_s, Uint32 arriba, Uint32 izda, Uint32 dcha,
+               Uint32 abajo):
+               _filas(num_f), _cols(num_c), _num(num_s), _mov_arriba(arriba),
+               _mov_izda(izda), _mov_dcha(dcha), _mov_abajo(abajo) {
+    /* Constructor incompleto mal utilizado: Sprite ("cad", 4,4) */
+    if (_filas != 1 && _cols != 1 && _num == 1) {
+         _num = _filas * _cols;
+    }
   
-  _imagen = IMG_Load(ruta_imagen.c_str());
+  _imagen = IMG_Load(ruta_imagen);
 
   if( _imagen == NULL ) {
     cerr << "Error: " << SDL_GetError() << endl;;
@@ -60,39 +65,24 @@ Sprite::Sprite(string ruta_imagen,
   
 }
 
-Sprite::Sprite(const Sprite& otro){
-  SDL_Surface* _imagen = otro._imagen;
+Sprite::Sprite(const Sprite& otro) {
+  _imagen = otro._imagen;
 
-  int _ancho = otro._ancho;
-  int _alto = otro._alto;
+  _ancho = otro._ancho;
+  _alto = otro._alto;
 
-  int _filas = otro._filas;
-  int _cols = otro._cols;
+  _filas = otro._filas;
+  _cols = otro._cols;
 
-  int _num = otro._num;
+  _num = otro._num;
 }
 
 Sprite::~Sprite(){
   SDL_FreeSurface(_imagen);
 }
 
-void Sprite::dibujar(int fila,
-		     int columna, 
-		     SDL_Surface *dest, 
-		     int x, 
-		     int y) const{
- 
-  //TODO Usar SDL_BlitSurface
-  //El uso de SDL_BlitSurface:
-  //int SDL_BlitSurface(SDL_Surface *src, 
-                      //SDL_Rect *srcrect, 
-                      //SDL_Surface *dst, 
-                      //SDL_Rect *dstrect);
-
-  //La idea es (creo) dibujar el rectangulo srcrect de src en el rectangulo
-  //dstrect de dst
-
-  //Los rectangulos (SDL_Rect) tenemos que iniciarlos y colocarlos en pantalla
+void Sprite::dibujar(Uint32 fila, Uint32 columna, SDL_Surface *dest, Uint32 x,
+                     Uint32 y) const {
 
   if (fila < 0 || fila >= _filas || columna <0 || columna >= _cols){
       cerr << "sprite::dibujar = No existe la imagen en ("
@@ -119,17 +109,15 @@ void Sprite::dibujar(int fila,
     SDL_BlitSurface(_imagen, &src_rect, dest, &dst_rect);
 }
 
-void Sprite::dibujar(int i,
-		     SDL_Surface *dest, 
-		     int x, 
-		     int y) const{
+void Sprite::dibujar(Uint32 i, SDL_Surface *dest, Uint32 x, Uint32 y) const {
+
   if ( i < 0 || i >= _num){
     cerr << "Sprite::dibujar = No existe la imagen numero " 
 	 << i << endl;
     exit(1);
   }
   
-  int fila, columna;
+  Uint32 fila, columna;
 
   fila = i / _cols;
   columna = i % _cols;

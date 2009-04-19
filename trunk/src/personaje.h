@@ -51,11 +51,11 @@ class Personaje {
    * Este constructor crea un personaje en una posicion determinada
    * (casilla en un mapa, nada de pixels)
    * @param i Identificador del personaje
-   * @param s Sprite con el que esta relacionado el personaje
    * @param x Posicion horizontal
    * @param y Posicion vertical
    */
-  Personaje(Uint32 i, Sprite s, Uint32 x, Uint32 y);
+  Personaje(Uint32 i, Uint32 x, Uint32 y);
+  Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y);
   /**
    * @brief Destructor de Personaje
    * Destruye un objeto Personaje
@@ -77,65 +77,85 @@ class Personaje {
    */
   Uint32 getY() const;
   /**
-   * @brief Consultor del sprite del personaje
-   * @return Referencia constante al sprite de este personaje
+   * @brief Consultor de si la posicion dada se sale del rango de movimiento
+   * @param x Posición horizontal
+   * @param y Posición vertical
+   * @return <code>True</code> en caso de que la posición esté fuera de rango,
+   * y <code>false</code> en caso contrario.
    */
-  const Sprite& getSprite() const;
+  bool fueraRango(Uint32 x, Uint32 y) const;
   /**
    * @brief Asociacion con Animacion
    * Se asocia el objeto Personaje actual con un objeto Animacion
    */
   void animadoPor(Animacion& a);
+  void dibujadoPor(Sprite& s);
   /**
    * @brief Modificador de la posicion
    * @param x Posicion horizontal
    * @param y Posicion vertical
    */
   void setPosicion(Uint32 x, Uint32 y);
+  void setRango(Uint32 margenIzdo, Uint32 margenArriba, Uint32 rangoAncho,
+                Uint32 rangoAlto);
   /**
    * @brief Desplazamiento del personaje una posicion hacia arriba
    */
   void moverArriba();
   /**
+   * Sobrecarga de moverArriba que movera el personaje a pequeños pasos
+   * @param mov Movimiento a realizar
+   * @param desp Desplazamiento
+   * @return Entero que indica el movimiento que "toca" hacer a continuación
+   * (en funcion del lugar de dicho movimiento en la secuencia total)
+   */
+  Uint32 moverArriba(Uint32 mov, Uint32 desp);
+  /**
    * @brief Desplazamiento del personaje una posicion hacia abajo
    */
   void moverAbajo();
+  Uint32 moverAbajo(Uint32 mov, Uint32 desp);
   /**
    * @brief Desplazamiento del personaje una posicion hacia izquierda
    */
   void moverIzda();
+  Uint32 moverIzda(Uint32 mov, Uint32 desp);
   /**
    * @brief Desplazamiento del personaje una posicion hacia derecha
    */
   void moverDcha();
+  Uint32 moverDcha(Uint32 mov, Uint32 desp);
  protected:
+     void mover(Uint32 movimiento);
   /**
    * Identificador del personaje
    */
-  Uint32 id_;
+  Uint32 _id;
   /**
    * Coordenadas de la casilla en que se encuentra el personaje
    * */
-  Uint32 x_, y_;
-  /* Rango de casillas en pantalla en las que se puede mover
-   * el personaje: deben introducirse en animacion -> Movimiento restringido
-  Uint32 rango_ai, rango_ad, rango_bi, rango_bd;
-  */
+  Uint32 _x, _y;
+  /** Rango de casillas en pantalla en las que se puede mover
+   * el personaje: Movimiento restringido
+   */
+  Uint32 _rango_aX, _rango_aY, _rango_bX, _rango_bY;
   /**
    * Puntero a un objeto Animacion
    */
-  Animacion* anim_;
+  Animacion *_anim;
   /**
    * Composicion de sprite
    */
-  Sprite sprite_;
+  Sprite *_sprite;
 };
 
 
 /* Funciones get inline: eficiencia */
-inline Uint32 Personaje::getX() const { return id_; }
-inline Uint32 Personaje::getX() const { return x_; }
-inline Uint32 Personaje::getY() const { return y_; }
-inline const Sprite& getSprite() const { return sprite_; }
+inline Uint32 Personaje::getId() const { return _id; }
+inline Uint32 Personaje::getX() const { return _x; }
+inline Uint32 Personaje::getY() const { return _y; }
+inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
+    return (x < _rango_aX || x > _rango_bX || y < _rango_aY || y > _rango_bY);
+}
 
 #endif
