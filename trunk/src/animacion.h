@@ -110,12 +110,6 @@ private:
      */
     Uint32 _tamCasilla;
     /**
-     * Util al volcar la pantalla de movimiento en el buffer
-     * Tiene que coincidir con el rango definido en el PJ
-     * No se si es util o si mejor leerlo desde PJ
-     */
-    SDL_Rect _rangoPJ;
-    /**
      * Numero de secuencias de movimiento; coincidente con
      *  _principal->getSecuenciasMovimiento()
      */
@@ -124,10 +118,6 @@ private:
      * Desplazamiento igual a _numSecuencias/_tamCasilla
      */
     Uint32 _desp;
-    /**
-     * Matriz del mapa.
-     */
-    Uint32** _matrizMapa;
     /**
      * Ancho del mapa.
      */
@@ -142,4 +132,3 @@ private:
 inline Pantalla* Animacion::getPantalla() { return _pantalla; }
 
 #endif	/* _ANIMACION_H */
-

@@ -127,4 +127,7 @@ void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
      * posicion actualizada de pantalla */
     _sprite->dibujar(movimiento, secuencia, _p->getMovimiento(), _x, _y);
     _p->volcarPantalla(_p->getMovimiento());
+    /* Trastear cuanto tiempo es necesario para que no se vea raro, en
+     * de que no vaya ya demasiado lento */
+     SDL_Delay(10);
 }

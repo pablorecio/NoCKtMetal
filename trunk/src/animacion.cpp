@@ -35,6 +35,7 @@ Animacion::Animacion(const Animacion& orig) {
 Animacion::~Animacion() {
  }
 
+
 void Animacion::animandoEn(Pantalla& p) {
     _pant = &p;
 }
@@ -82,9 +83,6 @@ void Animacion::hacerMovimientoEstatico(Movimiento m) {
                               &_rangoPJ);
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
-        /* Trastear cuanto tiempo es necesario para que no se vea raro, en
-         * de que no vaya ya demasiado lento */
-        SDL_Delay(10);
     }
 }
 
@@ -100,9 +98,6 @@ void Animacion::hacerMovimientoDinamico(Movimiento m) {
                               &_rangoPJ);
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
-        /* Trastear cuanto tiempo es necesario para que no se vea raro, en
-         * de que no vaya ya demasiado lento */
-        SDL_Delay(10);
     }
 }
 
