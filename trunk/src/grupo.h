@@ -52,11 +52,19 @@ class Combatiente;
  * Estos grupos son los que se enfrentan en un combate. De esta forma, un grupo
  * tiene un inventario común, así como un conjunto de componentes, los cuales
  * son controlables desde el grupo.
+ *
+ * @author Pablo Recio Quijano 
+ *
+ * @date 16 de Abril de 2009
  */
 class Grupo {
 public:
   /** 
-   * Clase de excepción que modela el caso que el grupo esté lleno (4 componentes).
+   * Clase de excepción que modela el caso que el grupo esté lleno (4 componentes)
+   *
+   * @author Pablo Recio Quijano 
+   *
+   * @date 16 de Abril de 2009
    */
   class GrupoLleno: public exception{
   public:

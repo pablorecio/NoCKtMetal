@@ -46,6 +46,9 @@
  * Por ejemplo, consideramos que la matriz de sprites tiene 4 filas 
  * y 4 columnas.
  *
+ * @author Pablo Recio Quijano
+ *
+ * @date 26 de Marzo de 2009
  */
 class Sprite {
 public:

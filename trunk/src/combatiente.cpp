@@ -16,6 +16,9 @@
  *
  */
 
+#include "atributos.h"
+
+
 #include <iostream>
 #include <map>
 
@@ -23,15 +26,65 @@
 
 #include "combatiente.h" //TODO: Implementar las funciones
 #include "grupo.h"
+#include "inventario.h"
+#include "objeto.h"
 
+Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
+        Grupo &grupo, Uint32 exp) : Atributos(atr, exp), _nombre(nombre), _idCombatiente(id) {
+    _grupo = &grupo;
+    _inventario = &(_grupo->getInventario());
+    _grupo->addCombatiente(*this); //Añadimos el combatiente a su grupo
+    _pasarTurno = false;
+}
 
- Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-         Grupo &grupo, Uint32 exp): Atributos(atr,exp),_nombre(nombre), _idCombatiente(id){
-     _grupo = &grupo;
-     _inventario = &(_grupo->getInventario());
-     _grupo->addCombatiente(*this);//Añadimos el combatiente a su grupo
- }
+void Combatiente::addHabilidad(Habilidad& h) {
+    _habilidades.insert(std::make_pair(h.getIdentificador(), &h));
+}
 
- void Combatiente::addHabilidad(Habilidad& h){
-     _habilidades.insert(std::make_pair(h.getIdentificador(),&h));
- }
+Uint32 Combatiente::ataqueSimple(Combatiente& objetivo) throw(AtaqueFallado){
+    //Primero vemos si le damos
+    if(getAciertoArma() + tiradaDestreza() - (objetivo.tiradaDestreza() / 2)
+            > aleatorioRango(1,100)) throw(new AtaqueFallado());
+    else{
+        Uint32 damage = tiradaArma() + tiradaFuerza() - (objetivo.tiradaResistencia() / 2);
+        objetivo.decrementarPV(damage);
+        return damage;
+    }
+}
+
+Uint32 Combatiente::usarObjeto(Uint32 i, Combatiente& objetivo)
+        throw (Objeto::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente){
+    Objeto o = _inventario->getObjeto(i);
+    
+    Uint32 res;
+    if (o.getTipoAtaque() == CURATIVO){
+        res = o.calculaDamage();
+        objetivo.aumentarPV(res);
+    }
+    else if (o.getTipoAtaque() == ATAQUE){
+        res = o.calculaDamage();
+        objetivo.decrementarPV(res);
+    }
+    --o;
+    return res;
+}
+Uint32 Combatiente::ataqueEspecial(Uint32 i, Combatiente& objetivo){
+    Habilidad h = *_habilidades.at(i);
+
+    Uint32 res;
+    if(h.getTipoAtaque() == CURATIVO){
+        res = h.calculaDamage();
+        objetivo.aumentarPV(res);
+    }
+    else if (h.getTipoAtaque() == ATAQUE){
+        res = h.calculaDamage();
+        objetivo.decrementarPV(res);
+    }
+    decrementarPE(h.getGastoPE());
+    return res;
+}
+
+Uint32 Combatiente::defenderse(){
+    _pasarTurno = true;
+    //TODO: buscar forma de aumentar el parámetro para restaurarlo en el turno siguiente
+}

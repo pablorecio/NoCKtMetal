@@ -29,8 +29,10 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(ex
 
   float multiplicadorPV = _niv / 3; //provisional
   float multiplicadorPE = _niv / 3; //provisional
-  _PV = _base.getPV() + _con * multiplicadorPV;
-  _PE = _base.getPE() + _int * multiplicadorPE; 
+  _PVmax = _base.getPV() + _con * multiplicadorPV;
+  _PEmax = _base.getPE() + _int * multiplicadorPE;
+  _PV = _PVmax;
+  _PE = _PEmax;
 }
 
 void Atributos::addExperiencia(Uint32 exp){
@@ -86,8 +88,8 @@ void Atributos::subirNivel(){
 
   float multiplicadorPV = _niv / 3; //provisional
   float multiplicadorPE = _niv / 3; //provisional
-  _PV = _base.getPV() + _con * multiplicadorPV; 
-  _PE = _base.getPE() + _int * multiplicadorPE; 
+  _PVmax = _base.getPV() + _con * multiplicadorPV;
+  _PEmax = _base.getPE() + _int * multiplicadorPE;
 }
 
 Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
