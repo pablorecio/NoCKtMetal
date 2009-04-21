@@ -71,7 +71,7 @@ public:
 
     class AtaqueFallado: public std::exception{
     public:
-        const char* what() const{
+      const char* what() const throw(){
             return "¡El ataque ha fallado!";
         }
     };
@@ -204,7 +204,7 @@ public:
      * @return
      */
     Uint32 usarObjeto(Uint32 i, Combatiente& objetivo) //revisar si CantidadItem se lanza aqui
-            throw (Objeto::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente);
+      throw (Inventario::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente);
 
     /**
      *

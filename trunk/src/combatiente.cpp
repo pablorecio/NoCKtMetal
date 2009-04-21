@@ -53,7 +53,7 @@ Uint32 Combatiente::ataqueSimple(Combatiente& objetivo) throw(AtaqueFallado){
 }
 
 Uint32 Combatiente::usarObjeto(Uint32 i, Combatiente& objetivo)
-        throw (Objeto::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente){
+        throw (Inventario::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente){
     Objeto o = _inventario->getObjeto(i);
     
     Uint32 res;
@@ -87,4 +87,5 @@ Uint32 Combatiente::ataqueEspecial(Uint32 i, Combatiente& objetivo){
 Uint32 Combatiente::defenderse(){
     _pasarTurno = true;
     //TODO: buscar forma de aumentar el parámetro para restaurarlo en el turno siguiente
+    return _res /*+ ¿? */;
 }
