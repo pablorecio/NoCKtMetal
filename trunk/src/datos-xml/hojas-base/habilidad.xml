@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<Habilidad>
+  <Nombre valor="" />
+  <Identificador id="" />
+  <Tipo valor="" />
+  <Rango inferior="" superior="" />
+
+  <PEgastados valor="" />
+</Habilidad>
