@@ -32,6 +32,7 @@
  * @brief Pantalla
  * @author Noelia Sales Montes
  * @date 18 04 2009
+ * @note Parte del Proyecto NoCKt Metal
  */
 class Pantalla {
  public:
