@@ -31,6 +31,8 @@
 
 #include <SDL/SDL.h>
 
+#include "lib-es-xml/modulo_es.h"
+
 
 /**
  * Clase AtributoBase. Esta clase nos sirve para modelar los valores
@@ -66,6 +68,10 @@
  * También están los atributos de incremento, que definen el aumento de un atributo en
  * función del nivel, ya que no todos los personajes incrementarán los atributos de 
  * la misma manera.
+ *
+ * @author Pablo Recio Quijano
+ *
+ * @date 14 de Abril de 2009
  */
 class AtributoBase{
  public:
@@ -251,6 +257,7 @@ class AtributoBase{
    */
   double getIncrementoInteligencia() const {return _incInt;}
 
+  friend void lecturaAtributoBase(AtributoBase& atrB, const char* ficheroXML);
  protected:
   Uint32 _PV;
   Uint32 _PE;

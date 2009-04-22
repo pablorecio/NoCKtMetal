@@ -90,6 +90,8 @@ void Atributos::subirNivel(){
   float multiplicadorPE = _niv / 3; //provisional
   _PVmax = _base.getPV() + _con * multiplicadorPV;
   _PEmax = _base.getPE() + _int * multiplicadorPE;
+  _PV = _PVmax;
+  _PE = _PEmax;
 }
 
 Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
