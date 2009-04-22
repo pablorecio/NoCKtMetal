@@ -26,6 +26,7 @@
 #ifndef _PERSONAJE_
 #define _PERSONAJE_
 
+#include "animacion.h"
 #include "pantalla.h"
 #include "sprite.h"
 

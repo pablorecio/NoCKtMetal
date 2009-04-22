@@ -26,12 +26,10 @@
 #ifndef _ANIMACION_H
 #define	_ANIMACION_H
 
-/*#include "evento.h"*/
+#include "evento.h"
 #include "pantalla.h"
 #include "personaje.h"
 #include "imagen.h"
-
-typedef enum Movimiento { ARRIBA, ABAJO, DERECHA, IZQUIERDA };
 
 /**
  * @brief Clase que se encarga de inicializar los datos necesarios para
@@ -47,11 +45,7 @@ public:
      * Constructor predeterminado de <code>Animacion</code>.
      */
     Animacion();
-    /**
-     * Constructor de copia.
-     */
-    Animacion(const Animacion& orig);
-
+    
     /**
      * Metodo observador de la pantalla en la que se muestra la animacion.
      * Sera la ventana del videojuego logicamente.

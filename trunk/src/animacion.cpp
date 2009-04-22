@@ -25,11 +25,9 @@
 
 #include "animacion.h"
 #include "personaje.h"
+#include "imagen.h"
 
 Animacion::Animacion() {
- }
-
-Animacion::Animacion(const Animacion& orig) {
  }
 
 Animacion::~Animacion() {

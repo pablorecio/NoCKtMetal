@@ -31,7 +31,6 @@ using namespace std;
 
 Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof):
 _ancho(ancho), _alto(alto), _prof(prof) {
-
     atexit(SDL_Quit);
     
     /* Comprobamos que sea compatible el modo de video */
@@ -80,6 +79,10 @@ void Pantalla::cargarImagen(SDL_Surface *p, const char *imagen) {
     /* Cargamos la imagen en una surface auxiliar y la volcamos en p */
     SDL_Surface* img = IMG_Load(imagen);
     volcarPantalla(img, p);
+}
+
+void Pantalla::convertirPantalla(SDL_Surface* p1, SDL_Surface* p2) {
+    p1 = SDL_ConvertSurface(p1, p2->format);
 }
 
 void Pantalla::rellenarPantalla(SDL_Surface *p, Uint32 colorR, Uint32 colorG,

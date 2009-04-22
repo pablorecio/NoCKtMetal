@@ -33,7 +33,7 @@ Tile::Tile(char *ruta, bool col, bool inter){
   _colorkey = SDL_MapRGB(_imagen->format, 0, 255, 0);
   SDL_SetColorKey(_imagen, SDL_SRCCOLORKEY, _colorkey);
 
-  // para saber con que tipo de tile trabajamos. 
+  // para saber con que tipo de tile trabajamos.
   _colisionable=col;
   _interactuable=inter;
 }

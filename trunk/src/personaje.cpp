@@ -33,12 +33,12 @@ using namespace std;
 Personaje::Personaje() { }
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y): _id(i), _x(x), _y(y),
-_rango(0), _existeRango(SDL_FALSE), _p(0), _sprite(0) { }
+_rango(0), _existeRango(false), _p(0), _sprite(0) { }
 
 Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y): _id(i),
-_x(x), _y(y), _rango(0), _existeRango(SDL_FALSE), _p(0) {
-    Sprite s(sprite, 4, 4, 16);
-    _sprite = &s;
+_x(x), _y(y), _rango(0), _existeRango(false), _p(0) {
+    Sprite *s = new Sprite(sprite, 4, 4, 16);
+    _sprite = s;
 }
 
 Personaje::~Personaje() { }
@@ -70,7 +70,7 @@ void Personaje::setRango(Uint16 margenIzdo, Uint16 margenArriba,
     _rango.y = margenArriba;
     _rango.w = rangoAncho;
     _rango.h = rangoAlto;
-    _existeRango = SDL_TRUE;
+    _existeRango = true;
 }
 
 void Personaje::actualizarMapa(Uint32 mapaX, Uint32 mapaY) {
@@ -125,9 +125,9 @@ void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
 void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
      * posicion actualizada de pantalla */
-    _sprite->dibujar(movimiento, secuencia, _p->getMovimiento(), _x, _y);
-    _p->volcarPantalla(_p->getMovimiento());
+    _sprite->dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);
+    _p->volcarPantalla(_p->getBuffer());
     /* Trastear cuanto tiempo es necesario para que no se vea raro, en
      * de que no vaya ya demasiado lento */
-     SDL_Delay(10);
+     /*SDL_Delay(10);*/
 }
