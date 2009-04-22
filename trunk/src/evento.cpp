@@ -23,63 +23,55 @@
  * Proyecto: NoCKt Metal
  */
 
+#include <SDL/SDL_keysym.h>
+#include <SDL/SDL_events.h>
+
 #include "evento.h"
 
 Evento::Evento() {
     /* Evitar la autorepeticion de teclas */
-    SDL_EnableKeyRepeat(0,0);
+    SDL_EnableKeyRepeat(0, 0);
     /* Configuracion de eventos con las teclas que los activan */
     accion[SALIR] = SDLK_ESCAPE;
-    accion[MENU] = SDLK_UP;
+    accion[MENU] = SDLK_SPACE;
     accion[ACEPTAR] = SDLK_RETURN;
+    accion[ATRAS] = SDLK_BACKSPACE;
     accion[ARRIBA] = SDLK_UP;
     accion[ABAJO] = SDLK_DOWN;
     accion[IZQUIERDA] = SDLK_LEFT;
     accion[DERECHA] = SDLK_RIGHT;
- }
+    /** @todo Incluir definiciones de teclas alternativas en caso de querer
+     * probar con la PSP. (IFDEF.... blablabla) */
+}
 
 Evento::~Evento() {
- }
-
-tAccion Evento::getEvento() {
-    
-while (SDL_PollEvent(&evento))   //Poll our SDL key event for any keystrokes.
-{
-  switch(evento.type) {
-    case SDL_KEYDOWN:
-      switch(keyevent.key.keysym.sym){
-        case SDLK_LEFT:
-          charxvel = -1;
-          break;
-        case SDLK_RIGHT:
-          charxvel = 1;
-          break;
-        case SDLK_UP:
-          charyvel = -1;
-          break;
-        case SDLK_DOWN:
-          charyvel = 1;
-          break;
-        default:
-          break;
-       }
-    case SDL_KEYUP:
-      switch(keyevent.key.keysym.sym){
-        case SDLK_LEFT:
-          charxvel = 0;
-          break;
-        case SDLK_RIGHT:
-          charxvel = 0;
-          break;
-        case SDLK_UP:
-          charyvel = 0;
-          break;
-        case SDLK_DOWN:
-          charyvel = 0;
-          break;
-        default:
-          break;
-      }
-  }
+    evento.quit;
 }
+
+accion Evento::getEvento() const {
+    /* Esperamos a que se produzca el evento */
+    while (SDL_PollEvent(&evento)) {
+        /* Comprobamos que es uno de los eventos que esperamos:
+         *  - Tecla presionada en este instante
+         *  - Tecla presionada anteriormente
+         */
+        if (evento.type == SDL_KEYDOWN || evento.key.state == SDL_PRESSED) {
+            switch (evento.key.keysym.sym) {
+            /* Devolvemos el tipo de accion que se corresponde con el
+             * evento leido */
+            case accion[SALIR]: return SALIR;
+            case accion[MENU]: return MENU;
+            case accion[ACEPTAR]: return ACEPTAR;
+            case accion[ATRAS]: return ATRAS;
+            case accion[ARRIBA]: return ARRIBA;
+            case accion[ABAJO]: return ABAJO;
+            case accion[IZQUIERDA]: return IZQUIERDA;
+            case accion[DERECHA]: return DERECHA;
+            default: break;
+            }
+        }
+        if (evento.type == SDL_QUIT) {
+            return SALIR;
+        }
+    }
 }

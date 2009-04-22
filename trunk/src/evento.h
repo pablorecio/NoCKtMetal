@@ -23,10 +23,10 @@
  * Proyecto: NoCKt Metal
  */
 
-#ifndef _EVENTO_Hq
+#ifndef _EVENTO_H
 #define	_EVENTO_H
 
-enum tAccion {
+enum accion {
 	SALIR,
     MENU,
 	ACEPTAR,
@@ -37,21 +37,38 @@ enum tAccion {
 };
 
 /**
- * @brief
+ * @brief Clase de gestion de eventos.
+ * Abstrae los eventos (generados por el usuario) que dan lugar a determinadas
+ * acciones.
  * @author Noelia Sales Montes
  * @date 21 de abril de 2009
  * @note Parte del Proyecto NoCKt Metal
  */
 class Evento {
 public:
+    /**
+     * Constructor de la clase de gestion de eventos.
+     */
     Evento();
+    /**
+     * Metodo observador de la accion a realizar.
+     * @return Identificador de la accion a realizar de tipo <code>accion</code>
+     * definido especificamente para esta clase.
+     */
+    accion getEvento() const;
+    /**
+     * Destructor del evento generado.
+     */
     virtual ~Evento();
 private:
-    Uint8* estado;
+    /**
+     * Evento de la libreria SDL abstraido.
+     */
     SDL_Event evento;
-    /** Asocia las teclas que necesitamos a la constate SDL que la representa */
-    map<tAccion, SDLKey> accion;
+    /**
+     * Asocia las teclas que necesitamos a la constate SDL que la representa.
+     */
+    map<accion, SDLKey> accion;
 };
 
-#endif	/* _EVENTO_H */evewenv
-
+#endif	/* _EVENTO_H */
