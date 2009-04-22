@@ -35,8 +35,8 @@ class Imagen{
   Uint32 getAlto();
   Uint32 getAncho();
   Uint32** getMatriz();
-  Sint32 getCoorX(Uint32 x);
-  Sint32 getCoorY(Uint32 y);
+  Sint32 getCoorX();
+  Sint32 getCoorY();
   std::map<Uint32,Tile> getTiles();
 
   // modificadoras
@@ -70,9 +70,9 @@ inline Sint32 Imagen::getCoorY() { return _cY; }
 inline std::map<Uint32,Tile> Imagen::getTiles() { return _tiles; }
 
 inline void Imagen::setCoorX(Sint32 x) { _cX=x; }
-inline void Imagen:setCoorY(Sint32 y) { _cY=y; }
+inline void Imagen::setCoorY(Sint32 y) { _cY=y; }
 
-inline void Imagen::setTiles(std::map<Uint32,Tile*> conj_tiles) { _tiles= conj_tiles; }
+inline void Imagen::setTiles(std::map<Uint32,Tile> conj_tiles) { _tiles= conj_tiles; }
 
 
 #endif

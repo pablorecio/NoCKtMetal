@@ -84,27 +84,28 @@ void Pantalla::cargarImagen(SDL_Surface *p, const char *imagen) {
 
 void Pantalla::rellenarPantalla(SDL_Surface *p, Uint32 colorR, Uint32 colorG,
                                 Uint32 colorB, Uint32 colorA) {
-    SDL_FillRect(p, NULL, SDL_MapRGBA(p->format, colorR, colorG, colorB,
-                                      colorA));
+  SDL_FillRect(p, NULL, SDL_MapRGBA(p->format, colorR, colorG, colorB,
+				    colorA));
 }
 
 void Pantalla::volcarPantalla(SDL_Surface *p1) {
-    /* Copiar la surface completa p1 en la pantalla principal */
-    SDL_BlitSurface(p1, NULL, _pantalla, NULL);
-    SDL_Flip(_pantalla);
+  SDL_Flip(p1);
+  /* Copiar la surface completa p1 en la pantalla principal */
+  SDL_BlitSurface(p1, NULL, _pantalla, NULL);
+  SDL_Flip(_pantalla);
 }
 
 void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP2) {
-    SDL_BlitSurface(p1, NULL, _pantalla, rectP2);
-    SDL_Flip(_pantalla);
+  SDL_BlitSurface(p1, NULL, _pantalla, rectP2);
+  SDL_Flip(_pantalla);
 }
 
 void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
-    SDL_BlitSurface(p1, NULL, p2, &(p1->clip_rect));
-    SDL_Flip(p2);
+  SDL_BlitSurface(p1, NULL, p2, &(p1->clip_rect));
+  SDL_Flip(p2);
 }
 
 void Pantalla::cerrarPantalla() {
-    this->~Pantalla();
-    SDL_Quit();
+  this->~Pantalla();
+  SDL_Quit();
 }

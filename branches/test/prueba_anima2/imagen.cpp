@@ -24,7 +24,7 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto){
 Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 **matriz_completa){
   _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
   for(Uint32 i=0; i<ancho; i++)
-    _matrizOriginal[i]=(Uint32)malloc(sizeof(Uint32)*alto);
+    _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
 
   for(int i=0; i<ancho; i++)
     for(int j=0; j<alto; j++)
@@ -50,7 +50,7 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32** matriz_completa,
 
   _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
   for(Uint32 i=0; i<ancho; i++)
-    _matrizOriginal[i]=(Uint32)malloc(sizeof(Uint32)*alto);
+    _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
 
   for(int i=0; i<ancho; i++)
     for(int j=0; j<alto; j++)
@@ -73,7 +73,7 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz){
 
    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
   for(Uint32 i=0; i<ancho; i++)
-    _matrizOriginal[i]=(Uint32)malloc(sizeof(Uint32)*alto);
+    _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
 
   for(int i=0; i<ancho; i++)
     for(int j=0; j<alto; j++)
@@ -109,7 +109,7 @@ void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, SDL_Surface *pantalla){
       destino.x=(i-_cX)*_Tam_Tile;
       destino.y=(j-_cY)*_Tam_Tile;
       
-      SDL_BlitSurface(_tiles[_matrizOriginal[i][j]].getImagen(), 
+      SDL_BlitSurface((_tiles.at(_matrizOriginal[i][j])).getImagen(), 
 		      &origen, pantalla, &destino);
       
     }  

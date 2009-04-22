@@ -66,7 +66,7 @@ public:
      * @param x Posicion horizontal.
      * @param y Posicion vertical.
      */
-    Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y);
+    Personaje(Uint32 i, Sprite& sprite, Uint32 x, Uint32 y);
 
     /**
      * Destructor de Personaje

@@ -6,6 +6,8 @@
 #include <SDL/SDL.h>
 
 #include "imagen.h"
+#include "personaje.h"
+#include "pantalla.h"
 
 using namespace std;
 
@@ -16,19 +18,9 @@ int main () {
     exit(1);
   }
 
-  atexit(SDL_Quit);
-  if(SDL_VideoModeOK(480, 360, 24, SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
-    cerr << "Modo no soportado: " << SDL_GetError() << endl;
-    exit(1);
-  }
-
-  SDL_Surface *pantalla;
-  pantalla = SDL_SetVideoMode(480, 360, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
-  if(pantalla == NULL) {
-    cerr << "No se pudo establecer el modo de video: "
-	 << SDL_GetError() << endl;
-    exit(1);
-  }
+  Pantalla pant;
+  pant.rellenarPantalla(pant.getBuffer());
+  pant.volcarPantalla(pant.getBuffer());
 
   cout << "pantalla iniciada" << endl;
 
@@ -82,23 +74,32 @@ int main () {
 
   cout << "tiles relacionados" << endl;
 
-  i.dibujarFondo(5,0,pantalla);
+  i.dibujarFondo(5,0,pant.getBuffer());
+  pant.volcarPantalla(pant.getBuffer());
 
   cout << "dibujado en pantalla" << endl;
 
-  SDL_Flip(pantalla);
+  Sprite baldito("baldos.png",4,4,16);
+  Personaje baldos(0);
 
-  cout << "sdl_flip" << endl;
+  baldos.dibujadoPor(baldito);
+  baldos.animadoEn(pant);
+
+  baldos.setRango(3,3,4,4);
+
+  baldos.setPosicion();
+
 
   SDL_Event evento;
-  Uint32 time0 = SDL_GetTicks();
-  Uint32 time1;
-  int repeat = SDL_EnableKeyRepeat(10,100);
+
+  int repeat = SDL_EnableKeyRepeat(20,50);
+
   if(repeat < 0) {
     cerr << "No se pudo establecer el modo repetición "
 	 << SDL_GetError() << endl;
     exit(1);
   }
+
   else {
     cout << "Modo repetición activado:\n "
 	 << " Retardo: " << SDL_DEFAULT_REPEAT_DELAY
@@ -110,23 +111,56 @@ int main () {
   for( ; ; ) {
     while(SDL_PollEvent(&evento)) {  
       if(evento.type == SDL_KEYDOWN) {
-	SDL_FillRect(pantalla, NULL,SDL_MapRGB(pantalla->format, 0, 0, 0));
+
 	switch(evento.key.keysym.sym){
+
 	case SDLK_DOWN: 
-	  y++; // title abajo
-	  i.dibujarFondo(x,y,pantalla); break;
-	case SDLK_UP: 
-	  y--; // title arriba 
-	  i.dibujarFondo(x,y,pantalla); break;
+	  if(baldos.fueraRango(baldos.getX(), baldos.getY()+1)){
+	    y++; // title abajo
+	    i.dibujarFondo(x,y,pant.getMovimiento());
+	    baldos.dibujarPosicionFrente();
+	   }
+	  else{
+	    baldos.moverAbajo(0,1);
+	  }
+	  break;
+
+	case SDLK_UP:
+	  if(baldos.fueraRango(baldos.getX(), baldos.getY()-1)){
+	    y--; // title arriba 
+	    i.dibujarFondo(x,y,pant.getMovimiento());
+	    baldos.dibujarPosicionEspaldas();
+	  }
+	  else{
+	    baldos.moverArriba(0,1);
+	  }
+	  break;
+	  
 	case SDLK_RIGHT: 
-	  x++; // title derecha
-	  i.dibujarFondo(x,y,pantalla); break;
+	  if(baldos.fueraRango(baldos.getX()+1, baldos.getY())){
+	    x++; // title derecha
+	    i.dibujarFondo(x,y,pant.getMovimiento());
+	    baldos.dibujarPosicionLatDcha();
+	  }
+	  else{
+	    baldos.moverDcha(0,1);
+	  }
+	  break;
+
 	case SDLK_LEFT: 
-	  x--; // title izquierda
-	  i.dibujarFondo(x,y,pantalla); break;
+	  if(baldos.fueraRango(baldos.getX()-1, baldos.getY())){
+	    x--; // title izquierda
+	    i.dibujarFondo(x,y,pant.getMovimiento());
+	    baldos.dibujarPosicionLatIzda();
+	  }
+	  else{
+	    baldos.moverIzda(0,1);
+	  }
+	  break;
+
 	default: break;
 	}
-	SDL_Flip(pantalla);
+	pant.volcarPantalla(pant.getMovimiento());
 	
 	if(evento.key.keysym.sym == SDLK_ESCAPE)
 	  return 0;
