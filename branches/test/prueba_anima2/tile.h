@@ -41,76 +41,46 @@
 
 /** 
  * Clase que abstrae el concepto de tile como mínima imagen que utilizaremos en este videojuego.
- * 
  * @author Rosa María Durante Lerate 
  */
 
 class Tile{
  public:
 
-
-  /** 
-   * @brief
-   * @param ruta
-   * @param col
-   * @param inter
-   */
-
+  // constructores, operador de asignación y destructor.
   Tile(char *ruta, bool col=false, bool inter=false);
-
-
-  /** 
-   * @brief
-   */
-
+  Tile(const Tile& otro);
+  Tile& operator =(const Tile& otro);
   ~Tile();
 
-
-  /** 
-   * @brief
-   * @return
-   */
-
-  Uint32 getAnchura();
-
-
-  /** 
-   * @brief
-   * @return 
-   */
-
-  Uint32 getAltura();
-
-
-  /** 
-   * @brief
-   * @return
-   */
-
+  // construcción de un SDL_Surface que se utilizará en la clase imagen.
   SDL_Surface* getImagen();
-  
 
-  /** 
-   * @brief
-   * @return
-   */
-
+  // observadoras
+  char* getRuta();
   bool isColisionable();
-
-
-  /** 
-   * @brief
-   * @return 
-   */
-
   bool isInteractuable();
 
- private:
-  SDL_Surface *_imagen;
-  Uint32 _colorkey;
+  // modificadoras
+  void setRuta(char* ruta);
+  void setColisionable(bool var);
+  void setInteractuable(bool var);
+
+protected:
+  char * _ruta;
   bool _colisionable;
   bool _interactuable;
 
 };
+
+
+inline char* Tile::getRuta() { return _ruta; }
+
+inline bool Tile::isColisionable() { return _colisionable; }
+inline bool Tile::isInteractuable() { return _interactuable; }
+
+inline void Tile::setColisionable(bool var) { _colisionable=var; }
+inline void Tile::setInteractuable(bool var) { _interactuable=var; }
+
 
 #endif

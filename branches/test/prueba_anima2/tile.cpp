@@ -1,17 +1,60 @@
 
 #include<iostream>
+#include<cstring>
+
 #include<SDL/SDL_image.h>
+
 #include"tile.h"
 
 using namespace std;
 
 Tile::Tile(char *ruta, bool col, bool inter){
-
-#ifdef DEBUG
-  cout << "-> Cargando" <<  ruta << endl;
-#endif
   
-  _imagen = IMG_Load(ruta);
+  _ruta = (char*)malloc(sizeof(char)*(strlen(ruta)+1));
+  strcpy(_ruta,ruta);
+  _ruta[strlen(ruta)]='\0';
+  
+  // para saber con que tipo de tile trabajamos. 
+  _colisionable=col;
+  _interactuable=inter;
+}
+
+Tile::Tile(const Tile& otro){
+
+  _ruta= (char*)malloc(sizeof(char)*(strlen(otro._ruta)+1));
+  strcpy(_ruta, otro._ruta);
+  _ruta[strlen(otro._ruta)]='\0';
+
+  _colisionable=otro._colisionable;
+  _interactuable = otro._interactuable;
+  
+}
+
+
+Tile& Tile::operator =(const Tile& otro){
+  
+  if(this != &otro){
+    free(_ruta);
+    _ruta= (char*)malloc(sizeof(char)*(strlen(otro._ruta)+1));
+    strcpy(_ruta, otro._ruta);
+    _ruta[strlen(otro._ruta)]='\0';
+    
+    _colisionable=otro._colisionable;
+    _interactuable = otro._interactuable;
+  }
+
+  return *this;
+}
+
+
+Tile::~Tile() {
+  free(_ruta);
+}
+
+
+SDL_Surface* Tile::getImagen(){
+  
+  SDL_Surface *_imagen = IMG_Load(_ruta);
 
   if(_imagen == NULL) {  
     cerr << "Error: " << SDL_GetError() << endl;;
@@ -26,39 +69,18 @@ Tile::Tile(char *ruta, bool col, bool inter){
     cerr << "Error: " << SDL_GetError() << endl;
     exit(1);
   }
-  
-  _colorkey = SDL_MapRGB(_imagen->format, 0, 255, 0);
+
+  Uint32 _colorkey = SDL_MapRGB(_imagen->format, 0, 255, 0);
   SDL_SetColorKey(_imagen, SDL_SRCCOLORKEY, _colorkey);
 
-  // para saber con que tipo de tile trabajamos. 
-  _colisionable=col;
-  _interactuable=inter;
-}
-
-Tile::~Tile() {
-
-  SDL_FreeSurface(_imagen);
-#ifdef DEBUG    
-  cout << "<- Liberando imagen" << endl;
-#endif
-}
-
-Uint32 Tile::getAnchura(){
-  return _imagen->w;
-}
-
-Uint32 Tile::getAltura(){
-  return _imagen->h;
-}
-
-SDL_Surface* Tile::getImagen() {
   return _imagen;
 }
 
-bool Tile::isColisionable() {
-  return _colisionable;
+void Tile::setRuta(char* ruta) {
+  
+  free(_ruta);
+  _ruta = (char*)malloc(sizeof(char)*(strlen(ruta)+1));
+  strcpy(_ruta,ruta);
+  _ruta[strlen(ruta)]='\0';
 }
 
-bool Tile::isInteractuable() {
-  return _interactuable;
-}

@@ -33,7 +33,6 @@ class Animacion {
   Animacion();
   Animacion(Imagen *i, Personaje *p, Pantalla *s);
 
-
   // Función para inicializar el fondo y el personaje.
   // La pantalla ya está inicializada.
   // Tomaremos los ficheros necesarios para cargar la animación.
@@ -52,6 +51,9 @@ class Animacion {
   void iniciarPersonaje(char* ruta_spr);
 
   void setMovimientoPersonaje(Pantalla *s, Personaje *p);
+
+  void moverMapa();
+  void moverPersonaje(char direccion);
 
 };
 

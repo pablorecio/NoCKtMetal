@@ -17,8 +17,8 @@
 
  * Copyright (C) 2009, NoCKTMetal Team
  *
- * Fichero: pantalla.h
- * Autor: Noelia Sales Montes
+ * Fichero: Animacion_2.cpp
+ * Autor: Rosa María Durante Lerate
  * Fecha: 18 04 2009
  * Proyecto: NoCKt Metal
  */
