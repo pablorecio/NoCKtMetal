@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<Grupo>
+  <Controlable valor="" />
+  <Inventario ruta="" />
+  <Componentes c1="" c2="" c3="" c4="" /> <!-- rutas a los combatientes
+					    -- no necesariamente 4 -->
+</Grupo>
