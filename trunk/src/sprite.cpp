@@ -43,10 +43,10 @@ Sprite::Sprite(const char *ruta_imagen, Uint32 numFil, Uint32 numCol,
     }
 
     /* Convertir a formato de pantalla */
-    SDL_Surface *tmp = _imagen;
-    _imagen = SDL_DisplayFormat(tmp);
+    SDL_Surface *tmp = IMG_Load(ruta_imagen);
+    _imagen = SDL_DisplayFormatAlpha(tmp);
     SDL_FreeSurface(tmp);
-
+    
     if (_imagen == NULL) {
         cerr << "Error: " << SDL_GetError() << endl;
         exit(1);

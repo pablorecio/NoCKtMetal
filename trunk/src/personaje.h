@@ -26,7 +26,6 @@
 #ifndef _PERSONAJE_
 #define _PERSONAJE_
 
-#include "animacion.h"
 #include "pantalla.h"
 #include "sprite.h"
 
@@ -123,7 +122,7 @@ public:
      * Metodo observador del rango de movimiento del personaje en la pantalla.
      * @return Puntero a <code>SDL_Rect</code>.
      */
-    SDL_Rect* getRango() const;
+    const SDL_Rect& getRango() const;
 
     /**
      * Asociacion con la clase <code>Pantalla</code>.
@@ -283,13 +282,13 @@ inline Uint32 Personaje::getX() const { return _x; }
 inline Uint32 Personaje::getY() const { return _y; }
 inline Uint32 Personaje::getMapaX() const { return _x; }
 inline Uint32 Personaje::getMapaY() const { return _y; }
-inline SDL_Rect* getRango() const { return _rango; }
+inline const SDL_Rect& Personaje::getRango() const { return _rango; }
 inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
     return (existeRango() && (x < _rango.x || x > _rango.x + _rango.w ||
             y < _rango.y || y > _rango.y + _rango.h));
 }
 inline bool Personaje::existeRango() const { return _existeRango; }
-inline bool Personaje::getSecuenciasMovimiento() const {
+inline Uint32 Personaje::getSecuenciasMovimiento() const {
     return _sprite->getColumnas();
 }
 

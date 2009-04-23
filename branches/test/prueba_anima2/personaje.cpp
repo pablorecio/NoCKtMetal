@@ -27,18 +27,18 @@
 #include <SDL/SDL.h>
 
 #include "personaje.h"
-#include "tile.h"
 
 using namespace std;
 
 Personaje::Personaje() { }
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y): _id(i), _x(x), _y(y),
-_rango(), _existeRango(false), _p(0), _sprite(0) { }
+_existeRango(false), _p(0), _sprite(0) { }
 
-Personaje::Personaje(Uint32 i, Sprite& sprite, Uint32 x, Uint32 y): _id(i),
-_x(x), _y(y), _rango(), _existeRango(false), _p(0) {
-    _sprite = &sprite;
+Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y): _id(i),
+_x(x), _y(y), _existeRango(false), _p(0) {
+    Sprite *s = new Sprite(sprite, 4, 4, 16);
+    _sprite = s;
 }
 
 Personaje::~Personaje() { }
@@ -95,29 +95,29 @@ void Personaje::dibujarPosicionLatDcha() {
 }
 
 void Personaje::moverArriba(Uint32 mov, Uint32 desp) {
-  /* Posicion en la pantalla actualizada */
-  _y = _y - desp;     // ahora son TILES
-  /* Modificamos la posicion actual en la pantalla */
-  mover(_sprite->getMovArriba(), mov);
+    /* Posicion en la pantalla actualizada */
+    _y = _y - desp;
+    /* Modificamos la posicion actual en la pantalla */
+    mover(_sprite->getMovAbajo(), mov);
 }
 
 void Personaje::moverAbajo(Uint32 mov, Uint32 desp) {
     /* Posicion en la pantalla actualizada */
-  _y = _y + desp;    //TILES
+    _y = _y + desp;
     /* Modificamos la posicion actual en la pantalla */
     mover(_sprite->getMovAbajo(), mov);
 }
 
 void Personaje::moverIzda(Uint32 mov, Uint32 desp) {
     /* Posicion en la pantalla actualizada */
-  _x = _x - desp;   //TILES
+    _x = _x - desp;
     /* Modificamos la posicion actual en la pantalla */
     mover(_sprite->getMovIzda(), mov);
 }
 
 void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
     /* Posicion en la pantalla actualizada */
-  _x = _x + desp;  //TILES
+    _x = _x + desp;
     /* Modificamos la posicion actual en la pantalla */
     mover(_sprite->getMovDcha(), mov);
 }
@@ -125,11 +125,9 @@ void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
 void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
      * posicion actualizada de pantalla */
-    _sprite->dibujar(movimiento, secuencia, _p->getMovimiento(), _x*_Tam_Tile,
-		     _y*_Tam_Tile);  // EL movimiento en tiles.
-    SDL_Flip(_p->getMovimiento());
-    _p->volcarPantalla(_p->getMovimiento());
+    _sprite->dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);
+    _p->volcarPantalla(_p->getBuffer());
     /* Trastear cuanto tiempo es necesario para que no se vea raro, en
      * de que no vaya ya demasiado lento */
-     SDL_Delay(10);
+     /*SDL_Delay(10);*/
 }

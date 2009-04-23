@@ -101,13 +101,13 @@ void Animacion::hacerMovimientoDinamico(Movimiento m) {
 
 void Animacion::movimiento(Movimiento mov, Uint32 sec, Uint32 desp) {
     switch (mov) {
-    case ARRIBA: _principal->moverArriba(mov, sec, desp);
+    case ARRIBA: _principal->moverArriba(sec, desp);
         break;
-    case ABAJO: _principal->moverAbajo(mov, sec, desp);
+    case ABAJO: _principal->moverAbajo(sec, desp);
         break;
-    case IZDA: _principal->moverIzda(mov, sec, desp);
+    case IZDA: _principal->moverIzda(sec, desp);
         break;
-    case DCHA: _principal->moverDcha(mov, sec, desp);
+    case DCHA: _principal->moverDcha(sec, desp);
         break;
     default: break;
     }

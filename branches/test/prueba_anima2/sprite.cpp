@@ -37,6 +37,7 @@ Sprite::Sprite(const char *ruta_imagen, Uint32 num_f, Uint32 num_c,
          _num = _filas * _cols;
     }
   
+  /*
   _imagen = IMG_Load(ruta_imagen);
 
   if( _imagen == NULL ) {
@@ -44,10 +45,11 @@ Sprite::Sprite(const char *ruta_imagen, Uint32 num_f, Uint32 num_c,
     SDL_Quit();
     exit(1); //TODO Excepciones en vez de exit(1)
   }
+*/
 
   // Convertir a formato de pantalla
-  SDL_Surface *tmp = _imagen;
-  _imagen = SDL_DisplayFormat(tmp);
+  SDL_Surface *tmp = IMG_Load(ruta_imagen);
+  _imagen = SDL_DisplayFormatAlpha(tmp);
   SDL_FreeSurface(tmp);
 
   if(_imagen == NULL) {

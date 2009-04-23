@@ -33,10 +33,10 @@ using namespace std;
 Personaje::Personaje() { }
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y): _id(i), _x(x), _y(y),
-_rango(0), _existeRango(false), _p(0), _sprite(0) { }
+_existeRango(false), _p(0), _sprite(0) { }
 
 Personaje::Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y): _id(i),
-_x(x), _y(y), _rango(0), _existeRango(false), _p(0) {
+_x(x), _y(y), _existeRango(false), _p(0) {
     Sprite *s = new Sprite(sprite, 4, 4, 16);
     _sprite = s;
 }
