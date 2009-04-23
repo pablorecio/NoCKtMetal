@@ -13,25 +13,29 @@
 
 using namespace std;
 
-void guardar_atributosBase(const AtributoBase &a, const char *fichero);
-//void cargar_atributosBase(AtributoBase &a, const char *fichero);
-void guardar_atributos(const Atributos &a, const char *fichero);
+template <typename T>
+void guardar_XML(const T &a, const char *fichero);
+
+template <typename T>
+void cargar_XML(T &a, const char *fichero);
 
 void mostrarAtributos(Atributos atr);
 void mostrarAtributosBase(AtributoBase atr);
 
 int main(){
-  AtributoBase base(20,4,7,8,6,6,12,9,12,5,0.4,0.6,0.3,0.8,0.4,0.4,0.7,0.2);
-  //AtributoBase base;
-  guardar_atributosBase(base,"AtrB1.xml");
+  //AtributoBase base(20,4,7,8,6,6,12,9,12,5,0.4,0.6,0.3,0.8,0.4,0.4,0.7,0.2);
+  AtributoBase base;
+  cargar_XML(base,"AtrB1.xml");
+  //cargar_atributosBase(base,"AtrB1.xml");
   cout << "Base iniciado" << endl;
   //lecturaAtributoBase(base,"base1.xml");
   cout << "XML leido" << endl;
 
   mostrarAtributosBase(base);
 
-  Atributos atr(base,4000);
-  guardar_atributos(atr,"Atr1.xml");
+  Atributos atr;//(base,4000);
+  cargar_XML(atr,"Atr1.xml");
+  guardar_XML(atr,"Atr1.xml");
 
   mostrarAtributos(atr);
   cout << "1001 puntos de experiencia" << endl << endl;
@@ -113,18 +117,34 @@ void mostrarAtributosBase(AtributoBase atr){
   cout << "Inteligencia: " << atr.getInteligencia() << endl;
 }
 
-void guardar_atributosBase(const AtributoBase &a, const char *fichero){
+template <typename T>
+void guardar_XML(const T &a, const char *fichero){
   std::ofstream sal(fichero);
   assert(sal.good());
   boost::archive::xml_oarchive xml_sal(sal);
   xml_sal << BOOST_SERIALIZATION_NVP(a);
 }
 
-void guardar_atributos(const Atributos &a, const char *fichero){
-  std::ofstream sal(fichero);
-  assert(sal.good());
-  boost::archive::xml_oarchive xml_sal(sal);
-  xml_sal << BOOST_SERIALIZATION_NVP(a);
+template <typename T>
+void cargar_XML(T &a, const char *fichero){
+  std::ifstream ent(fichero);
+  assert(ent.good());
+  boost::archive::xml_iarchive xml_ent(ent);
+  xml_ent >> BOOST_SERIALIZATION_NVP(a);
 }
 
+// void guardar_atributos(const Atributos &a, const char *fichero){
+//   std::ofstream sal(fichero);
+//   assert(sal.good());
+//   boost::archive::xml_oarchive xml_sal(sal);
+//   xml_sal << BOOST_SERIALIZATION_NVP(a);
+// }
+
+
+// void cargar_atributos(Atributos &a, const char *fichero){
+//   std::ifstream ent(fichero);
+//   assert(ent.good());
+//   boost::archive::xml_iarchive xml_ent(ent);
+//   xml_ent >> BOOST_SERIALIZATION_NVP(a);
+// }
 
