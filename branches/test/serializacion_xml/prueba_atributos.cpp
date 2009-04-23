@@ -35,7 +35,7 @@ int main(){
 
   Atributos atr;//(base,4000);
   cargar_XML(atr,"Atr1.xml");
-  guardar_XML(atr,"Atr1.xml");
+  //guardar_XML(atr,"Atr1.xml");
 
   mostrarAtributos(atr);
   cout << "1001 puntos de experiencia" << endl << endl;

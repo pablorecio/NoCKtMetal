@@ -31,7 +31,6 @@ using namespace std;
 
 Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof):
 _ancho(ancho), _alto(alto), _prof(prof) {
-
     atexit(SDL_Quit);
     
     /* Comprobamos que sea compatible el modo de video */
@@ -60,13 +59,7 @@ _ancho(ancho), _alto(alto), _prof(prof) {
                                        _alto, _prof, 0, 0, 0, 0);
 }
 
-Pantalla::~Pantalla() {
-    /* Liberamos la memoria de las pantallas creadas */
-    SDL_FreeSurface(_buffer);
-    SDL_FreeSurface(_fondo);
-    SDL_FreeSurface(_movimiento);
-    SDL_FreeSurface(_pantalla);
-}
+Pantalla::~Pantalla() {}
 
 void Pantalla::setTitulo(const char *titulo, const char *icono) {
     /* Configuramos el titulo */
@@ -95,7 +88,7 @@ void Pantalla::volcarPantalla(SDL_Surface *p1) {
 }
 
 void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP2) {
-    SDL_BlitSurface(p1, NULL, _pantalla, rectP2);
+    SDL_BlitSurface(p1, rectP2, _pantalla, rectP2);
     SDL_Flip(_pantalla);
 }
 
@@ -105,6 +98,11 @@ void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
 }
 
 void Pantalla::cerrarPantalla() {
-    this->~Pantalla();
+    /* Liberamos la memoria de las pantallas creadas */
+    SDL_FreeSurface(_buffer);
+    SDL_FreeSurface(_fondo);
+    SDL_FreeSurface(_movimiento);
+    SDL_FreeSurface(_pantalla);
+    /* Quitamos la SDL */
     SDL_Quit();
 }

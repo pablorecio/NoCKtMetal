@@ -50,15 +50,6 @@ public:
     /**
      * Constructor de un objeto <i>Personaje</i>.
      * Este constructor crea un personaje en una posicion determinada
-     * (casilla en un mapa, nada de pixels)
-     * @param i Identificador del personaje.
-     * @param x Posicion horizontal.
-     * @param y Posicion vertical.
-     */
-    Personaje(Uint32 i, Uint32 x = 0, Uint32 y = 0);
-    /**
-     * Constructor de un objeto <i>Personaje</i>.
-     * Este constructor crea un personaje en una posicion determinada
      * (casilla en un mapa, nada de pixels) y asociado a un sprite.
      * @param i Identificador del personaje.
      * @param sprite Cadena de bajo nivel que representa la ruta donde se
@@ -66,7 +57,11 @@ public:
      * @param x Posicion horizontal.
      * @param y Posicion vertical.
      */
-    Personaje(Uint32 i, const char* sprite, Uint32 x, Uint32 y);
+    Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p, const char* sprite,
+                     Uint32 f = 4, Uint32 c = 4);
+    Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
+                     Uint32 tam, Pantalla* p, const char* sprite, Uint32 f = 4,
+                Uint32 c = 4);
 
     /**
      * Destructor de Personaje
@@ -101,6 +96,8 @@ public:
      * @return Indice y de la casilla del mapa en que se encuentra el personaje.
      */
     Uint32 getMapaY() const;
+    Uint32 getPantX() const;
+    Uint32 getPantY() const;
     /**
      * Metodo observador que consulta si la posicion dada se sale del rango
      * de movimiento.
@@ -111,7 +108,7 @@ public:
      * @note En caso de que el rango no este definido se entiende que no es
      * esta fuera del rango.
      */
-    bool fueraRango(Uint32 x, Uint32 y) const;
+    bool fueraRango(Sint32 x, Sint32 y) const;
     /**
      * Metodo observador del numero de movimientos que tiene cada secuencia
      * para el sprite relacionado con el personaje.
@@ -131,16 +128,8 @@ public:
      * pantalla secundaria dedicada al movimiento.
      * @param p Referencia a la pantalla.
      * @see Pantalla
-     */
-    void animadoEn(Pantalla& p);
-    /**
-     * Asociacion con la clase <code>Sprite</code>.
-     * Se asocia el personaje actual con el sprite que lo representa
-     * graficamente.
-     * @param s Referencia al sprite.
-     * @see Sprite
-     */
-    void dibujadoPor(Sprite& s);
+     
+    void animadoEn(Pantalla& p);*/
 
     /**
      * Metodo modificador de la posicion en pantalla (en <i>pixels</i>).
@@ -163,12 +152,29 @@ public:
      */
     void setRango(Uint16 margenIzdo, Uint16 margenArriba, Uint16 rangoAncho,
                   Uint16 rangoAlto);
+    void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
+    void setTam(Uint32 tam);
+
     /**
      * Metodo modificador de la posicion en el mapa.
-     * @param mapaX Posicion horizontal de la casilla en el mapa.
-     * @param mapaY Posicion vertical de la casilla en el mapa.
+     * Sube una casilla hacia arriba.
      */
-    void actualizarMapa(Uint32 mapaX, Uint32 mapaY);
+    void subirEnMapa();
+    /**
+     * Metodo modificador de la posicion en el mapa.
+     * Sube una casilla hacia abajo.
+     */
+    void bajarEnMapa();
+    /**
+     * Metodo modificador de la posicion en el mapa.
+     * Sube una casilla hacia la izquierda.
+     */
+    void izdaEnMapa();
+    /**
+     * Metodo modificador de la posicion en el mapa.
+     * Sube una casilla hacia la derecha.
+     */
+    void dchaEnMapa();
 
     /**
      * Metodo modificador que dibuja en la pantalla de movimiento el personaje
@@ -234,8 +240,8 @@ protected:
      * personaje.
      * @return <code>True</code> si esta definido el rango, <code>false</code>
      * en caso contrario.
-     */
-    bool existeRango() const;
+     
+    bool existeRango() const;*/
     /**
      * Identificador del personaje.
      */
@@ -259,37 +265,54 @@ protected:
      */
     Uint32 _y;
     /**
+     * Indice horizontal de la casilla en que se encuentra el personaje en
+     * la pantalla.
+     */
+    Uint32 _pantX;
+    /**
+     * Indice vertical de la casilla en que se encuentra el personaje en
+     * la pantalla.
+     */
+    Uint32 _pantY;
+    /** 
+     * Correspondencia pixels-casilla
+     */
+    Uint32 _tam;
+    /**
      * Rango rectangular en pantalla en el que se puede mover el personaje.
      */
     SDL_Rect _rango;
     /**
      * Booleano que indica la definicion del rango restrictivo de movimiento.
-     */
-    bool _existeRango;
+     
+    bool _existeRango;*/
     /**
      * Puntero a un objeto <code>Pantalla</code>.
      */
     Pantalla* _p;
     /**
-     * Puntero a un objet <code>Sprite</code>.
+     * Objeto <code>Sprite</code> contenido en nuestro Personaje. No tiene
+     * sentido su existencia individual en nuestro motor.
      */
-    Sprite* _sprite;
+    Sprite _sprite;
 };
 
 /* Metodos inline */
 inline Uint32 Personaje::getId() const { return _id; }
 inline Uint32 Personaje::getX() const { return _x; }
 inline Uint32 Personaje::getY() const { return _y; }
-inline Uint32 Personaje::getMapaX() const { return _x; }
-inline Uint32 Personaje::getMapaY() const { return _y; }
+inline Uint32 Personaje::getMapaX() const { return _mapaX; }
+inline Uint32 Personaje::getMapaY() const { return _mapaY; }
+inline Uint32 Personaje::getPantX() const { return _pantX; }
+inline Uint32 Personaje::getPantY() const { return _pantY; }
 inline const SDL_Rect& Personaje::getRango() const { return _rango; }
-inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
-    return (existeRango() && (x < _rango.x || x > _rango.x + _rango.w ||
-            y < _rango.y || y > _rango.y + _rango.h));
+inline bool Personaje::fueraRango(Sint32 x, Sint32 y) const {
+    return (x < _rango.x || x > _rango.x + _rango.w ||
+            y < _rango.y || y > _rango.y + _rango.h);
 }
-inline bool Personaje::existeRango() const { return _existeRango; }
+/*inline bool Personaje::existeRango() const { return _existeRango; }*/
 inline Uint32 Personaje::getSecuenciasMovimiento() const {
-    return _sprite->getColumnas();
+    return _sprite.getColumnas();
 }
 
 #endif

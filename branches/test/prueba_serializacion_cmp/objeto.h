@@ -152,14 +152,14 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    std::cout << "Objeto::serialize(Archive &ar, const unsigned int version)" 
-	      << std::endl;
-    //ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
-    std::cout << "ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));" 
-	      << std::endl;
+    //std::cout << "Objeto::serialize(Archive &ar, const unsigned int version)" 
+    //	      << std::endl;
+    ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
+    //std::cout << "ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));" 
+    //	      << std::endl;
     ar & BOOST_SERIALIZATION_NVP(_cantidad);
-    std::cout << "ar & BOOST_SERIALIZATION_NVP(_cantidad);" 
-	      << std::endl;
+    //std::cout << "ar & BOOST_SERIALIZATION_NVP(_cantidad);" 
+    //	      << std::endl;
   }
 };
 

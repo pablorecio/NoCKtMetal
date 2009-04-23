@@ -59,13 +59,7 @@ _ancho(ancho), _alto(alto), _prof(prof) {
                                        _alto, _prof, 0, 0, 0, 0);
 }
 
-Pantalla::~Pantalla() {
-    /* Liberamos la memoria de las pantallas creadas */
-    SDL_FreeSurface(_buffer);
-    SDL_FreeSurface(_fondo);
-    SDL_FreeSurface(_movimiento);
-    SDL_FreeSurface(_pantalla);
-}
+Pantalla::~Pantalla() {}
 
 void Pantalla::setTitulo(const char *titulo, const char *icono) {
     /* Configuramos el titulo */
@@ -81,10 +75,6 @@ void Pantalla::cargarImagen(SDL_Surface *p, const char *imagen) {
     volcarPantalla(img, p);
 }
 
-void Pantalla::convertirPantalla(SDL_Surface* p1, SDL_Surface* p2) {
-    p1 = SDL_ConvertSurface(p1, p2->format);
-}
-
 void Pantalla::rellenarPantalla(SDL_Surface *p, Uint32 colorR, Uint32 colorG,
                                 Uint32 colorB, Uint32 colorA) {
     SDL_FillRect(p, NULL, SDL_MapRGBA(p->format, colorR, colorG, colorB,
@@ -98,7 +88,7 @@ void Pantalla::volcarPantalla(SDL_Surface *p1) {
 }
 
 void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP2) {
-    SDL_BlitSurface(p1, NULL, _pantalla, rectP2);
+    SDL_BlitSurface(p1, rectP2, _pantalla, rectP2);
     SDL_Flip(_pantalla);
 }
 
@@ -108,6 +98,11 @@ void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
 }
 
 void Pantalla::cerrarPantalla() {
-    this->~Pantalla();
+    /* Liberamos la memoria de las pantallas creadas */
+    SDL_FreeSurface(_buffer);
+    SDL_FreeSurface(_fondo);
+    SDL_FreeSurface(_movimiento);
+    SDL_FreeSurface(_pantalla);
+    /* Quitamos la SDL */
     SDL_Quit();
 }

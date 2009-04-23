@@ -96,7 +96,6 @@ class Pantalla {
      */
     void cargarImagen(SDL_Surface *p, const char *imagen);
 
-    SDL_Surface* convertirPantalla(SDL_Surface* p1, SDL_Surface* p2);
     /**
      * Metodo modificador que rellena una pantalla completa de un color
      * determinado.
