@@ -31,6 +31,13 @@
 #include <SDL/SDL.h>
 #include <iostream>
 
+#include <boost/serialization/string.hpp>
+
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+
 /** 
  * Enumerado para indicar que tipos de especiales hay.
  * 
@@ -59,6 +66,8 @@ enum tipoEspecial {
  * <UL>
  *
  * @author Pablo Recio Quijano 
+ *
+ * @date 15 de Abril de 2009
  */
 class Especial {
 public:
@@ -132,6 +141,17 @@ protected:
   tipoEspecial _tipoEsp;
   
   std::pair<Uint32, Uint32> _rangoDamage; //first cota inferior - second cota superior
+
+  friend class boost::serialization::access;
+  /// Serialization function
+  template<class Archive>
+  void serialize(Archive& ar, const unsigned int version)
+  {
+    ar & BOOST_SERIALIZATION_NVP(_nombre);
+    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
+    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
+    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
+  }
   
 private:
   Uint32 aleatorioRango(Uint32 a, Uint32 b) const;

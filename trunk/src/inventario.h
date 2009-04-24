@@ -30,22 +30,36 @@
 
 #include <iostream>
 #include <map>
+#include <boost/serialization/map.hpp>
+
 #include <exception>
 
 #include <SDL/SDL.h>
 
 #include "objeto.h"
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
 
 /**
  * Clase que utilzamos para encapsular un conjunto único de objetos, de forma
  * que podamos modelar el inventario del que dispone un grupo, el cual es 
  * accesible para cada uno de sus miembros.
+ *
+ * @author Pablo Recio Quijano 
+ *
+ * @date 16 de Abril de 2009
  */
 class Inventario {
 public:
   /**
    * Clase de excepción que nos servirá para indicar que el objeto al que 
    * queremos acceder o insertar, ya se encuentra disponible en el inventario
+   *
+   * @author Pablo Recio Quijano 
+   *
+   * @date 16 de Abril de 2009
    */
   class ObjetoEnInventario: public std::exception{
   public:
@@ -57,6 +71,10 @@ public:
   /**
    * Clase de excepción que nos servirá para indicar que el objeto al que 
    * queremos acceder no se encuentra disponible en el inventario.
+   *
+   * @author Pablo Recio Quijano 
+   *
+   * @date 16 de Abril de 2009
    */
   class ObjetoNoEnInventario: public std::exception{
   public:
@@ -138,6 +156,13 @@ public:
 private:
   std::map<Uint32,Objeto> _inventario;
   
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    // serialize base class information
+    ar & BOOST_SERIALIZATION_NVP(_inventario);
+  }
 };
 
 #endif	/* _INVENTARIO_H */

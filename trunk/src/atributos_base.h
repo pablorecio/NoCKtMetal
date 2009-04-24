@@ -31,7 +31,10 @@
 
 #include <SDL/SDL.h>
 
-#include "lib-es-xml/modulo_es.h"
+#include <boost/config.hpp>
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
 
 
 /**
@@ -257,7 +260,6 @@ class AtributoBase{
    */
   double getIncrementoInteligencia() const {return _incInt;}
 
-  friend void lecturaAtributoBase(AtributoBase& atrB, const char* ficheroXML);
  protected:
   Uint32 _PV;
   Uint32 _PE;
@@ -278,6 +280,31 @@ class AtributoBase{
   double _incVir;
   double _incCon;
   double _incInt;
+
+  friend class boost::serialization::access;
+  /// Serialization function
+  template<class Archive>
+  void serialize(Archive& ar, const unsigned int version)
+  {
+    ar & BOOST_SERIALIZATION_NVP(_PV);
+    ar & BOOST_SERIALIZATION_NVP(_PE);
+    ar & BOOST_SERIALIZATION_NVP(_vel);
+    ar & BOOST_SERIALIZATION_NVP(_fue);
+    ar & BOOST_SERIALIZATION_NVP(_des);
+    ar & BOOST_SERIALIZATION_NVP(_sue);
+    ar & BOOST_SERIALIZATION_NVP(_res);
+    ar & BOOST_SERIALIZATION_NVP(_vir);
+    ar & BOOST_SERIALIZATION_NVP(_con);
+    ar & BOOST_SERIALIZATION_NVP(_int);
+    ar & BOOST_SERIALIZATION_NVP(_incVel);
+    ar & BOOST_SERIALIZATION_NVP(_incFue);
+    ar & BOOST_SERIALIZATION_NVP(_incDes);
+    ar & BOOST_SERIALIZATION_NVP(_incSue);
+    ar & BOOST_SERIALIZATION_NVP(_incRes);
+    ar & BOOST_SERIALIZATION_NVP(_incVir);
+    ar & BOOST_SERIALIZATION_NVP(_incCon);
+    ar & BOOST_SERIALIZATION_NVP(_incInt);
+  }
 };
 
 #endif

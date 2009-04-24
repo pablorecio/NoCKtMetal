@@ -29,6 +29,12 @@
 
 #include <SDL/SDL.h>
 
+#include <boost/config.hpp>
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+
 #include "atributos_base.h"
 #include "atributos.h"
 
@@ -308,11 +314,35 @@ protected:
     Uint32 _con;
     Uint32 _int;
 
-    Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
-    void subirNivel();
-    //TODO calcular los coeficientes correctamente, provisionales
-    double coeficiente(double n, double a = 0.1, double b = 0.002) const;
-    Uint32 experienciaParaNivel(Uint32 n) const;
+friend class boost::serialization::access;
+  /// Serialization function
+  template<class Archive>
+  void serialize(Archive& ar, const unsigned int version){
+    ar & BOOST_SERIALIZATION_NVP(_base);
+    ar & BOOST_SERIALIZATION_NVP(_exp);
+    ar & BOOST_SERIALIZATION_NVP(_niv);
+    ar & BOOST_SERIALIZATION_NVP(_expSigNiv);
+    ar & BOOST_SERIALIZATION_NVP(_PV);
+    ar & BOOST_SERIALIZATION_NVP(_PVmax);
+    ar & BOOST_SERIALIZATION_NVP(_PE);
+    ar & BOOST_SERIALIZATION_NVP(_PEmax);
+    ar & BOOST_SERIALIZATION_NVP(_vel);
+    ar & BOOST_SERIALIZATION_NVP(_fue);
+    ar & BOOST_SERIALIZATION_NVP(_des);
+    ar & BOOST_SERIALIZATION_NVP(_sue);
+    ar & BOOST_SERIALIZATION_NVP(_res);
+    ar & BOOST_SERIALIZATION_NVP(_vir);
+    ar & BOOST_SERIALIZATION_NVP(_con);
+    ar & BOOST_SERIALIZATION_NVP(_int);
+  }
+
+  Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
+  void subirNivel();
+  //TODO calcular los coeficientes correctamente, provisionales
+  double coeficiente(double n, double a = 0.1, double b = 0.002) const;
+  Uint32 experienciaParaNivel(Uint32 n) const;
+  
+  
 };
 
 inline Uint32 Atributos::aumentarPV(Uint32 pv){

@@ -30,6 +30,7 @@
 
 #include <iostream>
 #include <map>
+#include <boost/serialization/map.hpp>
 
 #include <SDL/SDL.h>
 #include <exception>
@@ -40,6 +41,13 @@
 #include "objeto.h"
 #include "inventario.h"
 #include "grupo.h"
+
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+
+#include <boost/serialization/base_object.hpp>
 
 /** 
  * 
@@ -243,6 +251,38 @@ private:
     Uint32 _aciertoArma;
     Uint32 _armadura;
     std::pair<Uint32, Uint32> _rangoArma;
+
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    // serialize base class information
+    ar & BOOST_SERIALIZATION_NVP(_base);
+    ar & BOOST_SERIALIZATION_NVP(_exp);
+    ar & BOOST_SERIALIZATION_NVP(_niv);
+    ar & BOOST_SERIALIZATION_NVP(_expSigNiv);
+    ar & BOOST_SERIALIZATION_NVP(_PV);
+    ar & BOOST_SERIALIZATION_NVP(_PVmax);
+    ar & BOOST_SERIALIZATION_NVP(_PE);
+    ar & BOOST_SERIALIZATION_NVP(_PEmax);
+    ar & BOOST_SERIALIZATION_NVP(_vel);
+    ar & BOOST_SERIALIZATION_NVP(_fue);
+    ar & BOOST_SERIALIZATION_NVP(_des);
+    ar & BOOST_SERIALIZATION_NVP(_sue);
+    ar & BOOST_SERIALIZATION_NVP(_res);
+    ar & BOOST_SERIALIZATION_NVP(_vir);
+    ar & BOOST_SERIALIZATION_NVP(_con);
+    ar & BOOST_SERIALIZATION_NVP(_int);
+    ar & BOOST_SERIALIZATION_NVP(_nombre);
+    ar & BOOST_SERIALIZATION_NVP(_idCombatiente);
+    ar & BOOST_SERIALIZATION_NVP(_habilidades);
+    ar & BOOST_SERIALIZATION_NVP(_inventario);
+    ar & BOOST_SERIALIZATION_NVP(_grupo);
+    ar & BOOST_SERIALIZATION_NVP(_pasarTurno);
+    ar & BOOST_SERIALIZATION_NVP(_aciertoArma);
+    ar & BOOST_SERIALIZATION_NVP(_armadura);
+    ar & BOOST_SERIALIZATION_NVP(_rangoArma);
+  }
 };
 
 #endif	/* _COMBATIENTE_H */

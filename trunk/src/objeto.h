@@ -31,6 +31,16 @@
 #include <SDL/SDL.h>
 #include <exception>
 
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/string.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+
+#include <boost/serialization/base_object.hpp>
+
 #include "especial.h"
 
 /** 
@@ -42,6 +52,10 @@
  * de la que disponemos del Item en cuestión.
  *
  * @see Especial
+ *
+ * @author Pablo Recio Quijano 
+ *
+ * @date 15 de Abril de 2009
  */
 class Objeto: public Especial {
 public:
@@ -50,6 +64,10 @@ public:
    * Clase de excepción que nos servirá para indicar cuando no tenemos la cantidad suficiente
    * de un objeto determinado que queremos utilizar.
    *
+   *
+   * @author Pablo Recio Quijano 
+   *
+   * @date 15 de Abril de 2009
    */
   class CantidadItemInsuficiente: public std::exception{ //TODO: añadir referencia al objeto
   public:
@@ -131,6 +149,26 @@ public:
   Objeto& operator --() throw(CantidadItemInsuficiente);
 private:
   Uint32 _cantidad;
+
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    std::cout << "Objeto::serialize(Archive &ar, const unsigned int version)" 
+    	      << std::endl;
+    
+    ar & BOOST_SERIALIZATION_NVP(_nombre);
+    //std::cout << "ar & BOOST_SERIALIZATION_NVP(Especial::_nombre);" 
+    //	      << std::endl;
+    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
+    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
+    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
+    //std::cout << "ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));" 
+    //	      << std::endl;
+    ar & BOOST_SERIALIZATION_NVP(_cantidad);
+    //std::cout << "ar & BOOST_SERIALIZATION_NVP(_cantidad);" 
+    //	      << std::endl;
+  }
 };
 
 #endif	/* _OBJETO_H */

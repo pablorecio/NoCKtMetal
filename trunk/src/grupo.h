@@ -30,12 +30,18 @@
 
 #include <iostream>
 #include <vector>
+#include <boost/serialization/vector.hpp>
 #include <exception>
 
 #include <SDL/SDL.h>
 
 #include "inventario.h"
 #include "combatiente.h"
+
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
 
 using namespace std;
 
@@ -157,6 +163,16 @@ private:
   Inventario* _inventario;
   vector<Combatiente*> _componentes;
   Uint32 _numComp;
+
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    ar & BOOST_SERIALIZATION_NVP(_controlable);
+    ar & BOOST_SERIALIZATION_NVP(_inventario);
+    ar & BOOST_SERIALIZATION_NVP(_componentes);
+    ar & BOOST_SERIALIZATION_NVP(_numComp);
+  }
 };
 #endif	/* _GRUPO_H */
 

@@ -30,6 +30,13 @@
 
 #include <SDL/SDL.h>
 
+#include <boost/serialization/access.hpp>
+
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+
+#include <boost/serialization/base_object.hpp>
+
 #include "especial.h"
 
 /**
@@ -39,6 +46,10 @@
  * Especial, ya que el comportamiento es muy similar.
  *
  * @see Especial
+ *
+ * @author Pablo Recio Quijano 
+ *
+ * @date 15 de Abril de 2009
  */
 class Habilidad: public Especial{
 public:
@@ -73,7 +84,25 @@ public:
   Uint32 getGastoPE() { return _PEgastados; }
   
 private:
+  //hay que añadir las funciones de serializacion, hay que ver como
+  //son para clases heredadas
+  friend class boost::serialization::access;
+  template<class Archive>
+  void serialize(Archive & ar, const unsigned int version)
+  {
+    // serialize base class information
+    //ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
+
+    ar & BOOST_SERIALIZATION_NVP(_nombre);
+    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
+    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
+    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
+    ar & BOOST_SERIALIZATION_NVP(_PEgastados);
+  }
+
+
   Uint32 _PEgastados;
+
 };
 
 #endif	/* _HABILIDAD_H */
