@@ -257,7 +257,22 @@ private:
   void serialize(Archive & ar, const unsigned int version)
   {
     // serialize base class information
-    ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Atributos>(*this));
+    ar & BOOST_SERIALIZATION_NVP(_base);
+    ar & BOOST_SERIALIZATION_NVP(_exp);
+    ar & BOOST_SERIALIZATION_NVP(_niv);
+    ar & BOOST_SERIALIZATION_NVP(_expSigNiv);
+    ar & BOOST_SERIALIZATION_NVP(_PV);
+    ar & BOOST_SERIALIZATION_NVP(_PVmax);
+    ar & BOOST_SERIALIZATION_NVP(_PE);
+    ar & BOOST_SERIALIZATION_NVP(_PEmax);
+    ar & BOOST_SERIALIZATION_NVP(_vel);
+    ar & BOOST_SERIALIZATION_NVP(_fue);
+    ar & BOOST_SERIALIZATION_NVP(_des);
+    ar & BOOST_SERIALIZATION_NVP(_sue);
+    ar & BOOST_SERIALIZATION_NVP(_res);
+    ar & BOOST_SERIALIZATION_NVP(_vir);
+    ar & BOOST_SERIALIZATION_NVP(_con);
+    ar & BOOST_SERIALIZATION_NVP(_int);
     ar & BOOST_SERIALIZATION_NVP(_nombre);
     ar & BOOST_SERIALIZATION_NVP(_idCombatiente);
     ar & BOOST_SERIALIZATION_NVP(_habilidades);

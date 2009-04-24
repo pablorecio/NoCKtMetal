@@ -92,6 +92,11 @@ private:
   {
     // serialize base class information
     //ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
+
+    ar & BOOST_SERIALIZATION_NVP(_nombre);
+    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
+    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
+    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
     ar & BOOST_SERIALIZATION_NVP(_PEgastados);
   }
 

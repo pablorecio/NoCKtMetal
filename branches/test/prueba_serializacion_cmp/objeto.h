@@ -34,6 +34,8 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/access.hpp>
 
+#include <boost/serialization/string.hpp>
+
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 
@@ -152,9 +154,15 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    //std::cout << "Objeto::serialize(Archive &ar, const unsigned int version)" 
+    std::cout << "Objeto::serialize(Archive &ar, const unsigned int version)" 
+    	      << std::endl;
+    
+    ar & BOOST_SERIALIZATION_NVP(_nombre);
+    //std::cout << "ar & BOOST_SERIALIZATION_NVP(Especial::_nombre);" 
     //	      << std::endl;
-    ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
+    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
+    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
+    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
     //std::cout << "ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));" 
     //	      << std::endl;
     ar & BOOST_SERIALIZATION_NVP(_cantidad);

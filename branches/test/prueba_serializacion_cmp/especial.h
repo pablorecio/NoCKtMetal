@@ -147,15 +147,10 @@ protected:
   template<class Archive>
   void serialize(Archive& ar, const unsigned int version)
   {
-    std::cout << "comienza" << std::endl;
     ar & BOOST_SERIALIZATION_NVP(_nombre);
-    std::cout << "lee _nombre" << std::endl;
     ar & BOOST_SERIALIZATION_NVP(_idEspecial);
-    std::cout << "lee _idEspecial" << std::endl;
     ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
-    std::cout << "lee _tipoEsp" << std::endl;
     ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
-    std::cout << "lee _rangoDamage" << std::endl;
   }
   
 private:

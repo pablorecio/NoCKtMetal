@@ -24,7 +24,6 @@
 #include <boost/serialization/export.hpp>
 
 #include "especial.h"
-BOOST_CLASS_EXPORT(Especial)
 
 Especial::Especial(std::string nombre, Uint32 id, tipoEspecial tipo,
 		   Uint32 cotaInf, Uint32 cotaSup): _nombre(nombre), _idEspecial(id), _tipoEsp(tipo) {
