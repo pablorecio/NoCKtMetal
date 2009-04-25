@@ -20,13 +20,13 @@ int main() {
 
     cout << "pantalla iniciada" << endl;
 
-    Personaje baldos(1, 0, 0, &p, "./baldos.png");
+    Personaje baldos(1, 1, 1, 30, &p, "./baldos.png");
 
-    baldos.setRango();
+    baldos.setRango(6,6);
     baldos.setPosicion();
 
     /* Creamos un fondo liso */
-    p.rellenarPantalla(p.getFondo(), 50, 50, 0, 0);
+    p.cargarImagen(p.getFondo(), "./fondo.png");
     p.volcarPantalla(p.getFondo(), p.getBuffer());
 
     baldos.dibujarPosicionFrente();
@@ -38,7 +38,6 @@ int main() {
     for (Uint32 i = 0; i < 3; i++) {
         desp = 7;
         for (Uint32 sec = 4; sec > 0; sec--) {
-            cout << "SEC " << sec << endl;
             if (sec < 3) desp = 8;
             /* Volcar fondo en buffer */
             p.volcarPantalla(p.getFondo(), p.getBuffer());
@@ -54,7 +53,6 @@ int main() {
         desp = 7;
         for (Uint32 sec = 4; sec > 0; sec--) {
             if (sec < 3) desp = 8;
-
             /* Volcar fondo en buffer */
             p.volcarPantalla(p.getFondo(), p.getBuffer());
             /* Realizar movimiento del PJ (en buffer) */
@@ -69,7 +67,6 @@ int main() {
         desp = 7;
         for (Uint32 sec = 4; sec > 0; sec--) {
             if (sec < 3) desp = 8;
-
             /* Volcar fondo en buffer */
             p.volcarPantalla(p.getFondo(), p.getBuffer());
             /* Realizar movimiento del PJ (en buffer) */
@@ -84,7 +81,6 @@ int main() {
         desp = 7;
         for (Uint32 sec = 4; sec > 0; sec--) {
             if (sec < 3) desp = 8;
-
             /* Volcar fondo en buffer */
             p.volcarPantalla(p.getFondo(), p.getBuffer());
             /* Realizar movimiento del PJ (en buffer) */
@@ -98,7 +94,6 @@ int main() {
     for (Uint32 i = 0; i < 8; i++) {
         desp = 7;
         for (Uint32 sec = 4; sec > 0; sec--) {
-            cout << "SEC " << sec << endl;
             if (sec < 3) desp = 8;
             /* Volcar fondo en buffer */
             p.volcarPantalla(p.getFondo(), p.getBuffer());
@@ -109,8 +104,6 @@ int main() {
             SDL_Delay(50);
         }
     }
-
-
 
     cout << "Saliendo de la pantalla" << endl;
     p.cerrarPantalla();

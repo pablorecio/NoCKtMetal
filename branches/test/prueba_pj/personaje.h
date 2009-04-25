@@ -59,9 +59,11 @@ public:
      */
     Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p, const char* sprite,
                      Uint32 f = 4, Uint32 c = 4);
+    Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
+              const char* sprite, Uint32 f = 4, Uint32 c = 4);
     Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
-                     Uint32 tam, Pantalla* p, const char* sprite, Uint32 f = 4,
-                Uint32 c = 4);
+              Uint32 tam, Pantalla* p, const char* sprite, Uint32 f = 4,
+              Uint32 c = 4);
 
     /**
      * Destructor de Personaje
@@ -175,6 +177,11 @@ public:
      * Sube una casilla hacia la derecha.
      */
     void dchaEnMapa();
+
+    void subirEnPantalla();
+    void bajarEnPantalla();
+    void izdaEnPantalla();
+    void dchaEnPantalla();
 
     /**
      * Metodo modificador que dibuja en la pantalla de movimiento el personaje
