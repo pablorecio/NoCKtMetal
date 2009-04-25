@@ -95,19 +95,23 @@ int main() {
         }
     }
 
-
-    /*
-      for (Uint32 i = 0; i < 10; i++) {
-        Uint32 mov = 1, res = 0;
-        while (mov != 0) {
-          mov = baldos.moverAbajo(res,8);
-          res = mov;
-          SDL_Delay(1000);
+    for (Uint32 i = 0; i < 8; i++) {
+        desp = 7;
+        for (Uint32 sec = 4; sec > 0; sec--) {
+            cout << "SEC " << sec << endl;
+            if (sec < 3) desp = 8;
+            /* Volcar fondo en buffer */
+            p.volcarPantalla(p.getFondo(), p.getBuffer());
+            /* Realizar movimiento del PJ (en buffer) */
+            baldos.moverAbajo(sec-1, desp);
+            /* Volcar buffer en pantalla */
+            p.volcarPantalla(p.getBuffer());
+            SDL_Delay(50);
         }
-        p.rellenarPantalla(p.getFondo(),0, 0, 100, 0);
-      }
-     */
+    }
+
+
+
     cout << "Saliendo de la pantalla" << endl;
     p.cerrarPantalla();
-
 }
