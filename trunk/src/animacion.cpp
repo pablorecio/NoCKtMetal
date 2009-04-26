@@ -33,9 +33,7 @@ Animacion::Animacion() {
     evento = Evento();
 }
 
-Animacion::Animacion(Pantalla *p): _pant(p) {
-    cout << "CONSTRUCTOR DE ANIMACION" << endl;
-}
+Animacion::Animacion(Pantalla *p): _pant(p) {}
 
 Animacion::~Animacion() { }
 
@@ -48,7 +46,7 @@ void Animacion::inicializarAnimacion() {
 
     for (Uint32 i = 0; i < 48; i++) {
         for (Uint32 j = 0; j < 36; j++) {
-            if ((i % 6 < 4) && (j % 6 > 4)) {
+            if ((i % 6 < 2) && (j % 6 > 2)) {
                 matriz[i][j] = 0;
             } else {
                 matriz[i][j] = 1;
@@ -84,12 +82,15 @@ void Animacion::inicializarAnimacion() {
 }
 
 bool Animacion::procesarAccion() {
+    /* Cargamos las posiciones iniciales del personaje y del fondo */
     Uint32 x = _principal->getPantX();
     Uint32 y = _principal->getPantY();
     Sint32 cx = _imag->getCX();
     Sint32 cy = _imag->getCY();
+    /* Movimiento actual tomado como NULO */ 
     _mov = NULO;
 
+    /* Lectura del nuevo evento */
     switch (evento.getEvento()) {
     case SALIR:
         cout << "Saliendo de la ejecucion del programa" << endl;
@@ -128,16 +129,16 @@ bool Animacion::procesarAccion() {
     default: break;
     }
 
-    /* Si la opcion elegida es realizar un movimiento... */
+    /* Si la opción elegida es realizar un movimiento... */
     if (_mov != NULO) {
-        /* Si el movimiento queda fuera del rango de pantalla del PJ,
-         * se movera de forma estatica, desplazandose el fondo por debajo */
+        /* Si el movimiento queda fuera del rango de pantalla del personaje,
+         * se moverá de forma estática, desplazándose el fondo por debajo */
         if (_principal->fueraRango(x, y)) {
             hacerMovimientoEstatico(cx, cy);
-        } else {
-            /* En caso de que se desplace el PJ, el fondo quedara tal y como estaba
-             * por lo que solo tendremos que pintarlo una vez y volcarlo las veces
-             * que haga falta */
+        } else {            
+            /* En caso de que se desplace el personaje, el fondo quedará tal y
+             * como estaba (por lo que no tendremos que pintarlo de nuevo,
+             * tan sólo hemos de volcarlo repetidas veces desde el buffer). */
             hacerMovimientoDinamico();
         }
     }
@@ -145,15 +146,15 @@ bool Animacion::procesarAccion() {
 }
 
 void Animacion::hacerMovimientoEstatico(Uint32 x, Uint32 y) {
-    /* Mientras necesitemos mover al PJ */
+    /* Mientras necesitemos mover al personaje */
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
-        /* Desplazar el mapa en _desp pixels y volcarlo en fondo*/
+        /* Desplazamos el mapa */
         _imag->dibujarFondo(x, y, _principal->getSecuenciasMovimiento() - sec,
                             _principal->getSecuenciasMovimiento());
         /* Volcar fondo en buffer */
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
-        /* Mover el PJ (autovolcado en buffer) */
+        /* Mover el personaje (autovolcado en buffer) */
         mover(sec, 0);
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
@@ -161,7 +162,7 @@ void Animacion::hacerMovimientoEstatico(Uint32 x, Uint32 y) {
 }
 
 void Animacion::hacerMovimientoDinamico() {
-    /* Mientras necesitemos mover al PJ */
+    /* Mientras necesitemos mover al personaje */
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
         /* Volcar fondo en buffer */
@@ -171,6 +172,9 @@ void Animacion::hacerMovimientoDinamico() {
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
     }
+    
+    /* En función de la orientación del movimiento, indicamos que se ha
+     * producido una variación en la posición de pantalla medida en casillas */
     switch (_mov) {
     case SUBIR:
         _principal->subirEnPantalla();
@@ -192,15 +196,19 @@ void Animacion::hacerMovimientoDinamico() {
 void Animacion::mover(Uint32 sec, Uint32 desp) {
     switch (_mov) {
     case SUBIR:
+        _principal->subirEnPantalla();
         _principal->moverArriba(sec, desp);
         break;
     case BAJAR:
+        _principal->bajarEnPantalla();
         _principal->moverAbajo(sec, desp);
         break;
     case IZDA:
+        _principal->izdaEnPantalla();
         _principal->moverIzda(sec, desp);
         break;
     case DCHA:
+        _principal->dchaEnPantalla();
         _principal->moverDcha(sec, desp);
         break;
     default:

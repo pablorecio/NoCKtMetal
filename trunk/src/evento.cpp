@@ -29,9 +29,10 @@
 #include "evento.h"
 
 Evento::Evento() {
-    /* Evitar la autorepeticion de teclas */
+    /* Evitar la autorepetición de teclas */
     SDL_EnableKeyRepeat(0, 0);
-    /* Configuracion de eventos con las teclas que los activan */
+    
+    /* Configuración de acciones con los eventos que las activan */
     _accion[SDLK_ESCAPE] = SALIR;
     _accion[SDLK_SPACE] = MENU;
     _accion[SDLK_RETURN] = ACEPTAR;
@@ -40,7 +41,8 @@ Evento::Evento() {
     _accion[SDLK_DOWN] = ABAJO;
     _accion[SDLK_LEFT] = IZQUIERDA;
     _accion[SDLK_RIGHT] = DERECHA;
-    /* Todas las teclas desactivadas en un principio */
+    
+    /* Todas las acciones desactivadas en un principio */
     _activa[SALIR] = false;
     _activa[MENU] = false;
     _activa[ACEPTAR] = false;
@@ -49,9 +51,6 @@ Evento::Evento() {
     _activa[ABAJO] = false;
     _activa[IZQUIERDA] = false;
     _activa[DERECHA] = false;
-
-    /** @todo Incluir definiciones de teclas alternativas en caso de querer
-     * probar con la PSP. (IFDEF.... blablabla) */
 }
 
 Evento::~Evento() { }
@@ -60,8 +59,9 @@ void Evento::actualizar() {
     /* Esperamos a que se produzca el evento */
     while (SDL_PollEvent(&_evento)) {
         /* Comprobamos que es uno de los eventos que esperamos:
-         *  - Tecla presionada en este instante
-         *  - Tecla presionada anteriormente
+         *  - Tecla presionada
+         *  - Tecla soltada
+         *  - Salida de la SDL
          */
         if (_evento.type == SDL_KEYDOWN) {
             map<SDLKey, accion>::iterator aux = _accion.find(_evento.key.keysym.sym);
@@ -78,7 +78,9 @@ void Evento::actualizar() {
 }
 
 accion Evento::getEvento() {
+    /* Actualizamos el estado de los eventos */
     actualizar();
+    /* Identificamos cuál es la acción que ha sido activada y la devolvemos */
     for (map < accion, bool>::iterator i = _activa.begin();
          i != _activa.end(); ++i) {
         if (i->second == true) {

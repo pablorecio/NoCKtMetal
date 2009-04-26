@@ -31,7 +31,10 @@
 #include "personaje.h"
 #include "imagen.h"
 
-
+/**
+ * Tipo <i>Movimiento</i>, que representa la orientación del movimiento a
+ * realizar.
+ */
 enum Movimiento {
     NULO = 0,
     SUBIR,
@@ -41,12 +44,15 @@ enum Movimiento {
 };
 
 /**
- * @brief Clase que se encarga de inicializar los datos necesarios para
- * un nivel del juego asi como controlar la gestion de eventos (con ayuda
- * de la clase <code>Evento</code>) y el movimiento general de los elementos
- * dinamicos.
+ * @brief Clase controladora de un nivel de juego.
+ * Se encarga de inicializar los datos necesarios para un nivel del juego, así
+ * como de controlar la gestión de eventos (con ayuda de la clase 
+ * <code>Evento</code>) y el movimiento general de los elementos
+ * dinámicos, en principio, el <i>fondo</i> y un <i>personaje principal</i>.
  * @author Noelia Sales Montes
  * @date 19 de abril de 2009
+ * @note Parte del Proyecto NoCKt Metal
+ * @see evento.h imagen.h personaje.h pantalla.h
  */
 class Animacion {
 public:
@@ -54,22 +60,33 @@ public:
      * Constructor predeterminado de <code>Animacion</code>.
      */
     Animacion();
+    /**
+     * Constructor de un nivel del juego, cuyos elementos se representarán
+     * en la pantalla dada.
+     * @param p Puntero al objeto que representa la pantalla principal del 
+     * juego.
+     */
     Animacion(Pantalla *p);
 
     /**
-     * Metodo observador de la pantalla en la que se muestra la animacion.
-     * Sera la ventana del videojuego logicamente.
-     * @return Puntero a <code>Pantalla</code>.
+     * Función que se encarga de inicializar el nivel actual.
+     * @note Al encontrarnos aún en una versión <i>alpha</i> del proyecto,
+     * esta función es un tanto burda
+     * No se comporta abstrayendo absolutamente nada, puesto que aún no 
+     * se ha incluido en el motor de movimiento la sección correspondiente a
+     * lectura/escritura en XML.
      */
-    Pantalla* getPantalla();
-
     void inicializarAnimacion();
     /**
-     * Uno de los metodos principales de Animacion.
+     * Método modificador de animacion, donde se reune el comportamiento
+     * principal de esta clase.
      * Ejecuta y controla el movimiento en el mapa.
-     * @return Booleano que controla la accion procesada. Si la accion elegida es
-     * salir del programa, se devuelve <code>true</code>; <code>false</code>
-     * en caso contrario.
+     * @note De momento tan solo se refiere al movimiento solicitado por el
+     * usuario, pero en versiones posteriores se pretende añadir más elementos
+     * bajo control ajeno a éste.
+     * @return Valor lógico que controla la acción procesada. Si la acción 
+     * elegida es salir del programa, se devuelve <code>true</code>; 
+     * <code>false</code> en caso contrario.
      */
     bool procesarAccion();
     /**
@@ -79,23 +96,23 @@ public:
 private:
 
     /**
-     * Metodo auxiliar que realiza un movimiento estatico desde el punto
-     * de vista del personaje.
+     * Método auxiliar que dibuja un movimiento estático <i>desde el punto
+     * de vista del personaje</i>.
      * @param m Identificador de la direccion del movimiento.
      */
     void hacerMovimientoEstatico(Uint32 cx, Uint32 cy);
     /**
-     * Metodo auxiliar que realiza un movimiento dinamico desde el punto
-     * de vista del personaje.
-     * @param m Identificador de la direccion del movimiento.
+     * Método auxiliar que realiza un movimiento dinámico <i>desde el punto
+     * de vista del personaje</i>.
+     * @param m Identificador de la dirección del movimiento.
      */
     void hacerMovimientoDinamico();
     /**
-     * Metodo auxiliar que realiza un movimiento simple del personaje.
+     * Método auxiliar que realiza un movimiento simple del personaje.
      * Sirve de ayuda a <code>hacerMovimientoEstatico</code> y
      * <code>hacerMovimientoDinamico</code> que realizan el movimiento
-     * incluyendo el mapa.
-     * @param mov Identificador de la direccion del movimiento.
+     * intercalándolo con el del mapa.
+     * @param mov Identificador de la dirección del movimiento.
      * @param sec Secuencia actual del movimiento.
      * @param desp Desplazamiento. Por defecto 0.
      */
@@ -104,16 +121,26 @@ private:
      * Puntero a la pantalla general del juego.
      */
     Pantalla* _pant;
+    /**
+     * Objeto de la clase evento que controlará las acciones solicitadas por el
+     * usuario.
+     */
     Evento evento;
     /**
-     * Puntero al personaje principal del juego.
+     * Puntero al personaje principal del nivel.
      */
     Personaje* _principal;
+    /**
+     * Puntero al elemento que controla el fondo y las imágenes de este nivel.
+     */
     Imagen* _imag;
+    /**
+     * Identificador que se corresponde con la orientación del movimiento a
+     * ejecutar con el personaje.
+     * Se corresponde con <code>subir</code>, <code>bajar</code>,
+     * <code>izda</code> y <code>dcha</code>.
+     */
     Movimiento _mov;
 };
-
-/* Metodos inline */
-inline Pantalla* Animacion::getPantalla() { return _pant; }
 
 #endif	/* _ANIMACION_H */

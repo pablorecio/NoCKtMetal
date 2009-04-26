@@ -20,16 +20,15 @@
  * Proyecto: NoCKt Metal
  */
 
-#ifndef _SPRITE_GENERICO_
-#define _SPRITE_GENERICO_
+#ifndef _SPRITE_H
+#define _SPRITE_H
 
 #include <SDL/SDL.h>
 
 /**
- * @brief Clase que abstrae el manejo de los sprites.
- * Con ella conseguiremos abstraer un poco las funciones de la SDL para
- * cargar las páginas de sprites y acceder a cada sprite individual de una
- * forma mas intuitiva.
+ * @brief Clase que abstrae el manejo de los <i>sprites</i>.
+ * Abstrae la carga y el manejo de estas imágenes, debido a que se comportan
+ * de forma un tanto más compleja que una imagen simple.
  * @author Noelia Sales Montes
  * @date 26 de Marzo de 2009
  * @note Parte del Proyecto NoCKt Metal
@@ -43,11 +42,11 @@ public:
     Sprite();
     /**
      * @brief Constructor de un objeto tipo sprite.
-     * Este constructor toma el numero de filas del sprite
-     * @param ruta_imagen Cadena con la direccion de la tabla de sprites a cargar
-     * @param numFil Numero de filas de la matriz de sprites.
-     * @param numCol Numero de columnas de la matriz de sprites.
-     * @param numEl Numero de elementos del sprite.
+     * @param ruta_imagen Cadena con la dirección de la tabla de sprites a
+     * cargar.
+     * @param numFil Número de filas de la matriz de sprites.
+     * @param numCol Número de columnas de la matriz de sprites.
+     * @param numEl Número de elementos del sprite.
      */
     Sprite(const char *ruta_imagen, Uint32 numFil = 1, Uint32 numCol = 1,
                Uint32 numEl = 1);
@@ -57,67 +56,69 @@ public:
     ~Sprite();
 
     /**
-     * Metodo observador del ancho de un elemento del sprite.
+     * Método observador del ancho de <b>un</b> elemento del sprite.
      */
     Uint32 getAncho() const;
     /**
-     * Metodo observador del alto de un elemento del sprite.
+     * Método observador de la altura de <b>un</b> elemento del sprite.
      */
     Uint32 getAlto() const;
     /**
-     * Metodo observador del numero de filas de la matriz del sprite.
+     * Método observador del número de filas de la matriz del sprite.
      */
     Uint32 getFilas() const;
     /**
-     * Metodo observador del numero de columnas de la matriz del sprite.
+     * Método observador del número de columnas de la matriz del sprite.
      */
     Uint32 getColumnas() const;
     /**
-     * Metodo observador del numero de elementos del sprite.
+     * Método observador del número de elementos del sprite.
      */
     Uint32 getNumSprites() const;
 
     /**
-     * Metodo observador del codigo asociado al movimiento hacia arriba.
+     * Método observador del código asociado al movimiento hacia arriba.
      */
     Uint32 getMovArriba() const;
     /**
-     * Metodo observador del codigo asociado al movimiento hacia la izquierda.
+     * Método observador del código asociado al movimiento hacia la izquierda.
      */
     Uint32 getMovIzda() const;
     /**
-     * Metodo observador del codigo asociado al movimiento hacia la derecha.
+     * Método observador del código asociado al movimiento hacia la derecha.
      */
     Uint32 getMovDcha() const;
     /**
-     * Metodo observador del codigo asociado al movimiento hacia abajo.
+     * Método observador del código asociado al movimiento hacia abajo.
      */
     Uint32 getMovAbajo() const;
 
     /**
-     * @brief Función que nos dibuja un sprite determinado de una superficie
-     * de la SDL.
-     * @param fila Fila donde esta situado el sprite
-     * @param columna Columna donde esta situado el sprite
-     * @param dest Superficie de destino donde vamos a dibujar el sprite
-     * @param x Desplazamiento horizontal en la superficie
-     * @param y Desplazamiento vertical en la superficie
+     * @brief Función que dibuja un sprite determinado de una superficie de
+     * la SDL.
+     * @param fila Fila donde esta situado el sprite.
+     * @param columna Columna donde esta situado el sprite.
+     * @param dest Superficie donde se dibujará el sprite.
+     * @param x Desplazamiento horizontal en la superficie.
+     * @param y Desplazamiento vertical en la superficie.
      */
     void dibujar(Uint32 fila, Uint32 columna,
                  SDL_Surface* p, Uint32 x, Uint32 y) const;
     /**
-     * @brief Función que nos dibuja un sprite determinado de una superficie
+     * @brief Función que dibuja un sprite determinado de una superficie
      * de la SDL.
-     * @param n Numero de sprite de 0 a n-1.
-     * @param dest Superficie de destino donde vamos a dibujar el sprite
-     * @param x Desplazamiento horizontal en la superficie
-     * @param y Desplazamiento vertical en la superficie
+     * @param n Número de sprite de 0 a n-1.
+     * @param dest Superficie donde se dibujará el sprite.
+     * @param x Desplazamiento horizontal en la superficie.
+     * @param y Desplazamiento vertical en la superficie.
+     * @note Es completamente análoga a la anterior, salvo en la identificación
+     * del sprite a dibujar.
      */
     void dibujar(Uint32 i, SDL_Surface* p, Uint32 x, Uint32 y) const;
 protected:
 
     /**
-     * Pantalla de la libreria SDL donde se almacena la matriz de sprites.
+     * Superficie de la librería SDL donde se almacena la matriz de sprites.
      */
     SDL_Surface* _imagen;
     /**
@@ -125,34 +126,55 @@ protected:
      */
     Uint32 _ancho;
     /**
-     * Alto de un elemento individual del sprite.
+     * Altura de un elemento individual del sprite.
      */
     Uint32 _alto;
     /**
-     * Numero de filas de la matriz del sprite.
+     * Número de filas de la matriz del sprite.
      */
     Uint32 _filas;
     /**
-     * Numero de columnas de la matriz del sprite.
+     * Número de columnas de la matriz del sprite.
      */
     Uint32 _columnas;
     /**
-     * Numero de sprites en la matriz de movimiento.
-     * @note Generalmente suele ser igual a la multiplicacion de filas por
+     * Número de sprites en la matriz de movimiento.
+     * @note Generalmente suele ser igual a la multiplicación de filas por
      * columnas, pero se almacena puesto que hay casos en que existen filas
      * incompletas, etc.
      */
     Uint32 _num;    
     /**
-     * Correspondencia con el orden de los movimientos (fila que le
-     * corresponde a cada secuencia).
-     * @note Se supone que para cada movimiento se tienen tantos movimientos
-     * en dicha direccion como columnas haya en la matriz.
+     * Correspondencia con el orden del movimiento hacia abajo (índice de la 
+     * fila que se corresponde con la secuncia de éste movimiento).
+     * @note Se supone que para cada movimiento se tienen tantos
+     * movimientos en dicha dirección como columnas haya en la matriz.
      */
-    Uint32 _mov_abajo, _mov_izda, _mov_dcha, _mov_arriba;
+    Uint32 _mov_abajo;    
+    /**
+     * Correspondencia con el orden del movimiento hacia la izquierda (índice
+     * de la fila que se corresponde con la secuncia de éste movimiento).
+     * @note Se supone que para cada movimiento se tienen tantos
+     * movimientos en dicha dirección como columnas haya en la matriz.
+     */
+    Uint32 _mov_izda;    
+    /**
+     * Correspondencia con el orden del movimiento hacia la derecha (índice
+     * de la fila que se corresponde con la secuncia de éste movimiento).
+     * @note Se supone que para cada movimiento se tienen tantos
+     * movimientos en dicha dirección como columnas haya en la matriz.
+     */
+    Uint32 _mov_dcha;    
+    /**
+     * Correspondencia con el orden del movimiento hacia arriba (índice de la
+     * fila que se corresponde con la secuncia de éste movimiento).
+     * @note Se supone que para cada movimiento se tienen tantos
+     * movimientos en dicha dirección como columnas haya en la matriz.
+     */
+    Uint32 _mov_arriba;
 };
 
-/* Metodos inline */
+/* Métodos inline */
 inline Uint32 Sprite::getAncho() const { return _ancho; }
 inline Uint32 Sprite::getAlto() const { return _alto; }
 inline Uint32 Sprite::getFilas() const { return _filas; }

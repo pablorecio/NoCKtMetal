@@ -34,239 +34,292 @@
 using namespace std;
 
 /**
- * @brief La clase <code>Personaje</code> hace de intermediario entre la clase
- * <code>Sprite</code> y la clase <code>Animacion</code>. Ademas controla el
+ * @brief La clase <code>Personaje</code> hace de intermediario entre la
+ * clase <code>Sprite</code> y las demás clases por encima a nivel de
+ * abstracción (como la clase <code>Animacion</code>).
+ * Su comportamiento principal y más importante es el control del
  * movimiento restringido del personaje en el mapa.
  * @author Noelia Sales Montes
  * @date 14 04 2009
+ * @note Parte del Proyecto NoCKt Metal
  * @see sprite.h animacion.h
  */
 class Personaje {
 public:
 
     /**
-     * Constructor vacio.
-     * Este constructor no hace nada, y además no da lugar a un personaje
-     * utilizable posteriormente. Es necesaria para poder definir vectores
-     * y otros elementos.
+     * Constructor vacío de la clase <code>Personaje</code>.
+     * Este constructor no hace nada: no crea un personaje utilizable
+     * posteriormente. Es necesaria para poder definir vectores y otros 
+     * elementos similares.
      */
     Personaje();
     /**
      * Constructor de un objeto <i>Personaje</i>.
-     * Este constructor crea un personaje en una posicion determinada
-     * (casilla en un mapa, nada de pixels) y asociado a un sprite.
+     * Este constructor crea un personaje en una posición determinada
+     * (casilla en la pantalla, nada de pixels) junto con su <i>sprite</i> asociado.
      * @param i Identificador del personaje.
+     * @param x Posición horizontal.
+     * @param y Posición vertical.
+     * @param p Puntero a la pantalla en que se dibujará el personaje.
      * @param sprite Cadena de bajo nivel que representa la ruta donde se
-     * encuentra la imagen del sprite a crear y relacionar con el Personaje.
-     * @param x Posicion horizontal.
-     * @param y Posicion vertical.
+     * encuentra la imagen del sprite a crear dentro del personaje.
+     * @param f Número de filas del sprite, cuyo valor por defecto es 4.
+     * @param c Número de columnas del sprite, cuyo valor por defecto es 4.
      */
     Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p, const char* sprite,
                      Uint32 f = 4, Uint32 c = 4);
+    /**
+     * Constructor de un objeto <i>Personaje</i>.
+     * Este constructor crea un personaje en una posición determinada
+     * (casilla en la pantalla, nada de pixels) junto con su <i>sprite</i> asociado.
+     * @param i Identificador del personaje.
+     * @param x Posición horizontal.
+     * @param y Posición vertical.
+     * @param tam Tamaño de las casillas en las que "viaja" nuestro personaje.
+     * @param p Puntero a la pantalla en que se dibujará el personaje.
+     * @param sprite Cadena de bajo nivel que representa la ruta donde se
+     * encuentra la imagen del sprite a crear dentro del personaje.
+     * @param f Número de filas del sprite, cuyo valor por defecto es 4.
+     * @param c Número de columnas del sprite, cuyo valor por defecto es 4.
+     */                     
     Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
               const char* sprite, Uint32 f = 4, Uint32 c = 4);
+    /**
+     * Constructor de un objeto <i>Personaje</i>.
+     * Este constructor crea un personaje en una posición determinada
+     * (casilla en un mapa, nada de pixels) junto con su <i>sprite</i> asociado.
+     * @param i Identificador del personaje.
+     * @param x Posición horizontal en la pantalla.
+     * @param y Posición vertical en la pantalla.
+     * @param mapax Posición horizontal en el mapa.
+     * @param mapax Posición vertical en el mapa.
+     * @param tam Tamaño de las casillas en las que "viaja" nuestro personaje.
+     * @param p Puntero a la pantalla en que se dibujará el personaje.
+     * @param sprite Cadena de bajo nivel que representa la ruta donde se
+     * encuentra la imagen del sprite a crear dentro del personaje.
+     * @param f Número de filas del sprite, cuyo valor por defecto es 4.
+     * @param c Número de columnas del sprite, cuyo valor por defecto es 4.
+     */                     
     Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
               Uint32 tam, Pantalla* p, const char* sprite, Uint32 f = 4,
               Uint32 c = 4);
 
     /**
-     * Destructor de Personaje
-     * Destruye un objeto Personaje
+     * Destructor de la clase Personaje.
      */
     ~Personaje();
 
     /**
-     * Metodo observador de identificador de personaje.
+     * Método observador del identificador de personaje.
      * @return Valor del identificador del personaje.
      */
     Uint32 getId() const;
     /**
-     * Metodo observador de la posicion horizontal del personaje en la pantalla.
-     * @return Posicion horizontal en que se encuentra el personaje en la
-     * pantalla.
+     * Método observador de la posición horizontal del personaje en la pantalla
+     * medida en pixels.
+     * @return Posición horizontal del personaje en la pantalla.
      */
     Uint32 getX() const;
     /**
-     * Metodo observador de la posicion vertical del personaje en la pantalla.
-     * @return Posicion vertical en que se encuentra el personaje en la
-     * pantalla.
+     * Método observador de la posición vertical del personaje en la pantalla.
+     * @return Posición vertical del personaje en la pantalla.
      */
     Uint32 getY() const;
     /**
-     * Metodo observador de la posicion horizontal del personaje en la pantalla.
-     * @return Indice x de la casilla del mapa en que se encuentra el personaje.
+     * Método observador de la posición horizontal del personaje en el mapa.
+     * @return Índice x de la casilla del mapa en que se encuentra el personaje.
      */
     Uint32 getMapaX() const;
     /**
-     * Metodo observador de la posicion vertical del personaje en la pantalla.
-     * @return Indice y de la casilla del mapa en que se encuentra el personaje.
+     * Método observador de la posición vertical del personaje en el mapa.
+     * @return Índice y de la casilla del mapa en que se encuentra el personaje.
      */
     Uint32 getMapaY() const;
+    /**
+     * Método observador de la posición horizontal del personaje en la pantalla.
+     * @return Índice x de la casilla de la pantalla en que se encuentra el 
+     * personaje.
+     */
     Uint32 getPantX() const;
+    /**
+     * Método observador de la posición vertical del personaje en la pantalla.
+     * @return Índice y de la casilla de la pantalla en que se encuentra el 
+     * personaje.
+     */
     Uint32 getPantY() const;
+    /**
+     * Método observador del desplazamiento a realizar en la secuencia <i>i</i>
+     * de un movimiento cualquiera.
+     */
     Uint32 getDesp(Uint32 i) const;
     /**
-     * Metodo observador que consulta si la posicion dada se sale del rango
+     * Método observador que consulta si la posición dada se sale del rango
      * de movimiento.
-     * @param x Posición horizontal en pixels.
-     * @param y Posición vertical en pixels.
-     * @return <code>True</code> en caso de que la posición esté fuera de rango,
-     * y <code>false</code> en caso contrario.
-     * @note En caso de que el rango no este definido se entiende que no es
-     * esta fuera del rango.
+     * @param x Posición horizontal en casillas.
+     * @param y Posición vertical en casillas.
+     * @return <code>True</code> en caso de que la posición esté fuera de 
+     * rango, y <code>false</code> en caso contrario.
      */
     bool fueraRango(Uint32 x, Uint32 y) const;
     /**
-     * Metodo observador del numero de movimientos que tiene cada secuencia
-     * para el sprite relacionado con el personaje.
+     * Método observador del número de movimientos dentro de la secuencia
+     * que tiene cada secuencia de desplazamiento para el sprite relacionado
+     * con el personaje.
      * @return Entero que se corresponde con el numero de movimientos.
      */
     Uint32 getSecuenciasMovimiento() const;
     /**
-     * Metodo observador del rango de movimiento del personaje en la pantalla.
+     * Método observador del rango de movimiento del personaje en la pantalla.
      * @return Puntero a <code>SDL_Rect</code>.
      */
     const SDL_Rect& getRango() const;
 
     /**
-     * Asociacion con la clase <code>Pantalla</code>.
-     * Se asocia el personaje actual con la pantalla principal de nuestro
-     * juego. Dentro de ella, nuestro personaje se dibujara sobre la
-     * pantalla secundaria dedicada al movimiento.
-     * @param p Referencia a la pantalla.
-     * @see Pantalla
-     
-    void animadoEn(Pantalla& p);*/
-
-    /**
-     * Metodo modificador de la posicion en pantalla (en <i>pixels</i>).
-     * @param x Posicion horizontal.
-     * @param y Posicion vertical.
+     * Método modificador de la posición en pantalla (en <i>casillas</i>).
+     * @param x Posición horizontal.
+     * @param y Posición vertical.
      */
     void setPosicion(Uint32 x, Uint32 y);
     /**
-     * Metodo modificador de la posicion en pantalla (en <i>pixels</i>) que
-     * coloca el personaje en la posicion central dentro de su rango de
-     * movimiento.
+     * Método modificador de la posicion en pantalla que coloca el personaje
+     * en la posición central dentro de su rango de movimiento.
      */
     void setPosicion();
     /**
-     * Metodo modificador del rango de movimiento del personaje.
-     * @param margenIzdo Margen izquierdo del rango.
+     * Método modificador del rango de movimiento del personaje.
+     * @param margenIzdo Margen izquierdo del rango
      * @param margenArriba Margen superior del rango.
      * @param rangoAncho Ancho del rango.
      * @param rangoAlto Alto del rango.
+     * @note Todos los rangos será medidos en casillas.
      */
     void setRango(Uint16 margenIzdo, Uint16 margenArriba, Uint16 rangoAncho,
                   Uint16 rangoAlto);
-    void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
-    /*
-    void setTam(Uint32 tam);
+    /**
+     * Método modificador del rango de movimiento del personaje, que 
+     * generará un nuevo rango central del tamaño dado.
+     * @param margenIzdo Ancho del rango en casillas.
+     * @param margenArriba Alto del rango en casillas.
      */
+    void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
 
     /**
-     * Metodo modificador de la posicion en el mapa.
-     * Sube una casilla hacia arriba.
+     * Método modificador de la posición en el mapa.
+     * Se desplaza una casilla hacia arriba.
      */
     void subirEnMapa();
     /**
-     * Metodo modificador de la posicion en el mapa.
-     * Sube una casilla hacia abajo.
+     * Método modificador de la posición en el mapa.
+     * Se desplaza una casilla hacia abajo.
      */
     void bajarEnMapa();
     /**
-     * Metodo modificador de la posicion en el mapa.
-     * Sube una casilla hacia la izquierda.
+     * Método modificador de la posición en el mapa.
+     * Se desplaza una casilla hacia la izquierda.
      */
     void izdaEnMapa();
     /**
-     * Metodo modificador de la posicion en el mapa.
-     * Sube una casilla hacia la derecha.
+     * Método modificador de la posición en el mapa.
+     * Se desplaza una casilla hacia la derecha.
      */
     void dchaEnMapa();
 
+    /**
+     * Método modificador de la posición en la pantalla.
+     * Se desplaza una casilla hacia arriba.
+     */
     void subirEnPantalla();
+    /**
+     * Método modificador de la posición en la pantalla.
+     * Se desplaza una casilla hacia abajo.
+     */
     void bajarEnPantalla();
+    /**
+     * Método modificador de la posición en la pantalla.
+     * Se desplaza una casilla hacia la izquierda.
+     */
     void izdaEnPantalla();
+    /**
+     * Método modificador de la posición en la pantalla.
+     * Se desplaza una casilla hacia la derecha.
+     */
     void dchaEnPantalla();
 
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento el personaje
-     * en la posicion actual de frente.
+     * Método modificador que dibuja en la pantalla de buffer el personaje en
+     * la posición actual de frente.
      */
     void dibujarPosicionFrente();
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento el personaje
-     * en la posicion actual de espaldas.
+     * Método modificador que dibuja en la pantalla de buffer el personaje en
+     * la posición actual de espaldas.
      */
     void dibujarPosicionEspaldas();
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento el personaje
-     * en la posicion actual mirando hacia la izquierda.
+     * Método modificador que dibuja en la pantalla de buffer el personaje en
+     * la posición actual mirando hacia la izquierda.
      */
     void dibujarPosicionLatIzda();
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento el personaje
-     * en la posicion actual mirando hacia la derecha.
+     * Método modificador que dibuja en la pantalla de buffer el personaje en
+     * la posición actual mirando hacia la derecha.
      */
     void dibujarPosicionLatDcha();
     
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento un movimiento
+     * Método modificador que dibuja en la pantalla de buffer un movimiento
      * simple dentro de la secuencia hacia arriba.
-     * @param mov Identificado del movimiento a realizar dentro de la secuencia.
+     * @param mov Identificador del movimiento a realizar dentro de la
+     * secuencia.
      * @param desp Desplazamiento, por defecto 0.
      */
     void moverArriba(Uint32 mov, Uint32 desp = 0);
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento un movimiento
+     * Método modificador que dibuja en la pantalla de buffer un movimiento
      * simple dentro de la secuencia hacia abajo.
-     * @param mov Identificado del movimiento a realizar dentro de la secuencia.
+     * @param mov Identificador del movimiento a realizar dentro de la
+     * secuencia.
      * @param desp Desplazamiento, por defecto 0.
      */
     void moverAbajo(Uint32 mov, Uint32 desp = 0);
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento un movimiento
-     * simple dentro de la secuencia hacia izquierda.
-     * @param mov Identificado del movimiento a realizar dentro de la secuencia.
+     * Método modificador que dibuja en la pantalla de buffer un movimiento
+     * simple dentro de la secuencia hacia la izquierda.
+     * @param mov Identificador del movimiento a realizar dentro de la
+     * secuencia.
      * @param desp Desplazamiento, por defecto 0.
      */
     void moverIzda(Uint32 mov, Uint32 desp = 0);
     /**
-     * Metodo modificador que dibuja en la pantalla de movimiento un movimiento
-     * simple dentro de la secuencia hacia derecha.
-     * @param mov Identificado del movimiento a realizar dentro de la secuencia.
+     * Método modificador que dibuja en la pantalla de buffer un movimiento
+     * simple dentro de la secuencia hacia la derecha.
+     * @param mov Identificador del movimiento a realizar dentro de la
+     * secuencia.
      * @param desp Desplazamiento, por defecto 0.
      */
     void moverDcha(Uint32 mov, Uint32 desp = 0);
 protected:
 
     /**
-     * Metodo auxiliar que dibuja en la pantalla de movimiento especifico
+     * Método auxiliar que dibuja en la pantalla de movimiento específico
      * que se reciba.
-     * @param movimiento ARRIBA, ABAJO, IZQUIERDA o DERECHA en funcion
-     * de los valores del sprite.
+     * @param movimiento ARRIBA, ABAJO, IZQUIERDA o DERECHA en
+     * función de los valores del sprite.
      * @param secuencia Movimiento de la secuencia.
      */
     void mover(Uint32 movimiento, Uint32 secuencia);
-    /**
-     * Metodo auxiliar que consulta si se ha definido un rango para este
-     * personaje.
-     * @return <code>True</code> si esta definido el rango, <code>false</code>
-     * en caso contrario.
-     
-    bool existeRango() const;*/
     /**
      * Identificador del personaje.
      */
     Uint32 _id;
     /**
-     * Indice horizontal de la casilla en que se encuentra el personaje en
+     * Índice horizontal de la casilla en que se encuentra el personaje en
      * el mapa.
      */
     Uint32 _mapaX;
     /**
-     * Indice vertical de la casilla en que se encuentra el personaje en
+     * Índice vertical de la casilla en que se encuentra el personaje en
      * el mapa.
      */
     Uint32 _mapaY;
@@ -279,12 +332,12 @@ protected:
      */
     Uint32 _y;
     /**
-     * Indice horizontal de la casilla en que se encuentra el personaje en
+     * Índice horizontal de la casilla en que se encuentra el personaje en
      * la pantalla.
      */
     Uint32 _pantX;
     /**
-     * Indice vertical de la casilla en que se encuentra el personaje en
+     * Índice vertical de la casilla en que se encuentra el personaje en
      * la pantalla.
      */
     Uint32 _pantY;
@@ -298,21 +351,17 @@ protected:
      */
     SDL_Rect _rango;
     /**
-     * Booleano que indica la definicion del rango restrictivo de movimiento.
-     
-    bool _existeRango;*/
-    /**
-     * Puntero a un objeto <code>Pantalla</code>.
+     * Puntero a la ventana principal del videojuego.
      */
     Pantalla* _p;
     /**
-     * Objeto <code>Sprite</code> contenido en nuestro Personaje. No tiene
-     * sentido su existencia individual en nuestro motor.
+     * Objeto <code>Sprite</code> contenido en nuestro Personaje.
+     * No tiene sentido su existencia individual en nuestro motor.
      */
     Sprite _sprite;
 };
 
-/* Metodos inline */
+/* Métodos inline */
 inline Uint32 Personaje::getId() const { return _id; }
 inline Uint32 Personaje::getX() const { return _x; }
 inline Uint32 Personaje::getY() const { return _y; }
@@ -328,7 +377,6 @@ inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
             (_pantY * _tam) < (Uint32)_rango.y ||
             (_pantY * _tam) >= ((Uint32)_rango.y + _rango.h));
 }
-/*inline bool Personaje::existeRango() const { return _existeRango; }*/
 inline Uint32 Personaje::getSecuenciasMovimiento() const {
     return _sprite.getColumnas();
 }

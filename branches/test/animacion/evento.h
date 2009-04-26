@@ -31,6 +31,10 @@
 
 using namespace std;
 
+/**
+ * Tipo <i>accion</i>, que representa la acción que se ha sido activada,
+ * mediante un evento determinado.
+ */
 enum accion {
     NULA = 0,
     SALIR,
@@ -44,7 +48,7 @@ enum accion {
 };
 
 /**
- * @brief Clase de gestion de eventos.
+ * @brief Clase de gestión de eventos.
  * Abstrae los eventos (generados por el usuario) que dan lugar a determinadas
  * acciones.
  * @author Noelia Sales Montes
@@ -54,35 +58,46 @@ enum accion {
 class Evento {
 public:
     /**
-     * Constructor de la clase de gestion de eventos.
+     * Constructor predeterminado de la clase <code>Evento</code>.
      */
     Evento();
     /**
-     * Metodo actualizador del controlador de eventos.
+     * Método actualizador del controlador de eventos.
      * Es utilizado en el metodo observador para poder leer los eventos del
      * instante actual sin detener el movimiento en caso de que se mantuviera
      * presionada una tecla.
+     * @todo Intentar buscar la forma de expandir o retrasar el intervalo de
+     * tiempo en que el bucle de espera se repite. (Demasiadas veces)
+     * @todo Incluir definiciones de teclas alternativas en caso de querer
+     * probar con la PSP.
      */
     void actualizar();
     /**
-     * Metodo observador de la accion a realizar.
-     * @return Identificador de la accion a realizar de tipo <code>accion</code>
-     * definido especificamente para esta clase.
+     * Método observador de la acción a realizar.
+     * @return Identificador de la acción de tipo <code>accion</code>,
+     * definido específicamente para esta clase.
      */
     accion getEvento();
     /**
-     * Destructor del evento generado.
+     * Destructor de la clase <code>Evento</code>.
      */
     virtual ~Evento();
 private:
     /**
-     * Evento de la libreria SDL abstraido.
+     * Evento de la librería SDL que esta clase permite abstraer.
      */
     SDL_Event _evento;
     /**
-     * Asocia las teclas que necesitamos a la constate SDL que la representa.
+     * Par <i>tecla-accion</i>, que asocia los eventos (teclas 
+     * <code>SDLKey</code> que pulsa el usuario) a la acción que
+     * activarán, de tipo <code>accion</code>.
      */
     map<SDLKey, accion> _accion;
+    /**
+     * Par <i>accion-valor lógico</i>, que asocia cada acción con un valor
+     * lógico que se activa (<code>true</code>) en caso de que haya sido
+     * efectuado el evento que provocará dicha acción.
+     */
     map<accion, bool> _activa;
 };
 

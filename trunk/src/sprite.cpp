@@ -17,10 +17,10 @@
  */
 
 #include <iostream>
-
-#include "sprite.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+
+#include "sprite.h"
 
 using namespace std;
 
@@ -52,7 +52,7 @@ Sprite::Sprite(const char *ruta_imagen, Uint32 numFil, Uint32 numCol,
         exit(1);
     }
  
-    /* Definicion del color transparente */
+    /* Definición del color transparente */
     Uint32 colorkey = SDL_MapRGB(_imagen->format, 0, 255, 0);
     SDL_SetColorKey(_imagen, SDL_SRCCOLORKEY, colorkey);
 
@@ -88,7 +88,7 @@ void Sprite::dibujar(Uint32 i, SDL_Surface *p, Uint32 x, Uint32 y) const {
     fila = i / _columnas;
     columna = i % _columnas;
 
-    /* Utilizamos la funcion anterior como auxiliar puesto que la ejecucion
+    /* Utilizamos la función anterior como auxiliar puesto que la ejecución
      * es la misma */
     dibujar(fila, columna, p, x, y);
 }

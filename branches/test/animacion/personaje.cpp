@@ -31,7 +31,7 @@
 
 using namespace std;
 
-Personaje::Personaje() { }
+Personaje::Personaje() {}
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p,
                      const char* sprite, Uint32 f, Uint32 c):
@@ -41,13 +41,15 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p,
     _rango.y = 0;
     _rango.w = _p->getAncho();
     _rango.h = _p->getAlto();
+    
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = _sprite.getAncho();
-    /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
+    
+    /* Y el vector de desplazamiento se calcula en función de ese tamaño */
     _desp = vector<Uint32>(getSecuenciasMovimiento());
     for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
         _desp.at(i) = _tam/getSecuenciasMovimiento();
-        /* Si la division en pixels no es exacta hay que rellenar pixels
+        /* Si la división en pixels no es exacta hay que rellenar pixels
          * de forma equitativa */
         if (i < _tam % getSecuenciasMovimiento()) {
             _desp.at(i)++;
@@ -63,13 +65,15 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
     _rango.y = 0;
     _rango.w = _p->getAncho();
     _rango.h = _p->getAlto();
+    
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = tam;
+    
     /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
     _desp = vector<Uint32>(getSecuenciasMovimiento());
     for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
         _desp.at(i) = _tam/getSecuenciasMovimiento();
-        /* Si la division en pixels no es exacta hay que rellenar pixels
+        /* Si la división en pixels no es exacta hay que rellenar pixels
          * de forma equitativa */
         if (i < _tam % getSecuenciasMovimiento()) {
             _desp.at(i)++;
@@ -86,53 +90,8 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
     _rango.y = 0;
     _rango.w = _p->getAncho();
     _rango.h = _p->getAlto();
-    /* Colocacion correcta de los sprites en las casillas */
-    /* Colocacion horizontal */
-    Sint32 dif = 0;
-    if (_tam != _sprite.getAncho()) {
-        /* Si el ancho del sprite es distinto, hay que centrarlo
-         * horizontalmente en la casilla  */
-        dif = _tam - _sprite.getAncho()/2;
-    }
-    _x = x * _tam + dif;
-    /* Colocacion vertical */
-    /* De forma general el sprite se colocara con su borde inferior alineado
-     * con el borde inferior del tile */
-    dif = _tam - _sprite.getAlto();
-    if (_tam > _sprite.getAlto()) {
-        /* Si el alto del sprite es mayor hay que centrarlo */
-        dif = (_tam - _sprite.getAlto())/2;
-    }
-    _y = y * _tam + dif;
-
-    /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
-    _desp = vector<Uint32>(getSecuenciasMovimiento());
-    for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
-        _desp.at(i) = _tam/getSecuenciasMovimiento();
-        /* Si la division en pixels no es exacta hay que rellenar pixels
-         * de forma equitativa */
-        if (i < _tam % getSecuenciasMovimiento()) {
-            _desp.at(i)++;
-        }
-    }
-}
-
-Personaje::~Personaje() { }
-
-/*
-void Personaje::animadoEn(Pantalla& p) {
-    _p = &p;
-}*/
-
-void Personaje::setPosicion(Uint32 x, Uint32 y) {
-    /* Colocacion en la casilla de la pantalla indicada */
-    _pantX = x;
-    _pantY = y;
-    /* Colocacion en pixel correspondiente a la casilla dada */
-    _x = _pantX * _tam;
-    _y = _pantY * _tam;
-
-    /* Colocacion en pixels correcta de los sprites en las casillas */
+    
+    /* Colocación en pixels correcta de los sprites en las casillas */
     if (_tam != _sprite.getAncho()) {
         if (_tam < _sprite.getAncho()) {
             /* Si el ancho del sprite es distinto, hay que centrarlo
@@ -144,13 +103,60 @@ void Personaje::setPosicion(Uint32 x, Uint32 y) {
             _x += (_tam - _sprite.getAncho())/2;
         }
     }
-    /* Colocacion vertical */
+    
+    /* Colocación vertical */
     if (_tam > _sprite.getAlto()) {
         /* Si el alto del sprite es mayor hay que centrarlo */
         _y += _tam - _sprite.getAlto()/2;
     } else {
-        /* De forma general el sprite se colocara con su borde inferior alineado
-         * con el borde inferior del tile */
+        /* De forma general el sprite se colocará con su borde inferior alineado
+         * con el borde inferior de la casilla */
+        _y += _tam - _sprite.getAlto();
+    }
+
+    /* El vector de desplazamiento se calcula en función del tamaño */
+    _desp = vector<Uint32>(getSecuenciasMovimiento());
+    for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
+        _desp.at(i) = _tam/getSecuenciasMovimiento();
+        /* Si la división en pixels no es exacta hay que rellenar pixels
+         * de forma equitativa */
+        if (i < _tam % getSecuenciasMovimiento()) {
+            _desp.at(i)++;
+        }
+    }
+}
+
+Personaje::~Personaje() { }
+
+void Personaje::setPosicion(Uint32 x, Uint32 y) {
+    /* Colocación en la casilla de la pantalla indicada */
+    _pantX = x;
+    _pantY = y;
+    
+    /* Colocación en pixels correspondiente a la casilla dada */
+    _x = _pantX * _tam;
+    _y = _pantY * _tam;
+
+    /* Colocación en pixels correcta de los sprites en las casillas */
+    if (_tam != _sprite.getAncho()) {
+        if (_tam < _sprite.getAncho()) {
+            /* Si el ancho del sprite es distinto, hay que centrarlo
+             * horizontalmente en la casilla */
+            _x -= (_sprite.getAncho() - _tam)/2;
+        } else {
+            /* Si el ancho del sprite es distinto, hay que centrarlo
+             * horizontalmente en la casilla */
+            _x += (_tam - _sprite.getAncho())/2;
+        }
+    }
+    
+    /* Colocación vertical */
+    if (_tam > _sprite.getAlto()) {
+        /* Si el alto del sprite es mayor hay que centrarlo */
+        _y += _tam - _sprite.getAlto()/2;
+    } else {
+        /* De forma general el sprite se colocará con su borde inferior alineado
+         * con el borde inferior de la casilla */
         _y += _tam - _sprite.getAlto();
     }
 }
@@ -165,12 +171,13 @@ void Personaje::setPosicion() {
     cout << "RANGO Y: " << _rango.y << endl;
     cout << "RANGO W: " << _rango.w << endl;
     cout << "RANGO H: " << _rango.h << endl;
-    /* Colocamos tambien su posicion en pixels */
+    
+    /* Colocamos también su posición en pixels */
     _x = _pantX * _tam;
     _y = _pantY * _tam;
 
-    /* Colocacion en pixels correcta de los sprites en las casillas */
-    /* Colocacion horizontal */
+
+    /* Colocación en pixels correcta de los sprites en las casillas */
     if (_tam != _sprite.getAncho()) {
         if (_tam < _sprite.getAncho()) {
             /* Si el ancho del sprite es distinto, hay que centrarlo
@@ -182,13 +189,14 @@ void Personaje::setPosicion() {
             _x += (_tam - _sprite.getAncho())/2;
         }
     }
-    /* Colocacion vertical */
+    
+    /* Colocación vertical */
     if (_tam > _sprite.getAlto()) {
         /* Si el alto del sprite es mayor hay que centrarlo */
         _y += _tam - _sprite.getAlto()/2;
     } else {
-        /* De forma general el sprite se colocara con su borde inferior alineado
-         * con el borde inferior del tile */
+        /* De forma general el sprite se colocará con su borde inferior alineado
+         * con el borde inferior de la casilla */
         _y += _tam - _sprite.getAlto();
     }
 }
@@ -211,11 +219,7 @@ void Personaje::setRango(Uint16 rangoAncho, Uint16 rangoAlto) {
     _rango.x = (_p->getAncho() - _rango.w)/2;
     _rango.y = (_p->getAlto() - _rango.h)/2;
 }
-/*
-void Personaje::setTam(Uint32 tam) {
-    _tam = tam;
-}
-*/
+
 void Personaje::subirEnMapa() {
     _mapaY--;
 }
@@ -265,39 +269,39 @@ void Personaje::dibujarPosicionLatDcha() {
 }
 
 void Personaje::moverArriba(Uint32 mov, Uint32 desp) {
-    /* Posicion en la pantalla actualizada */
+    /* Posición en la pantalla actualizada */
     _y = _y - desp;
-    /* Modificamos la posicion actual en la pantalla */
+    /* Modificamos la posición actual en la pantalla */
     mover(_sprite.getMovArriba(), mov);
 }
 
 void Personaje::moverAbajo(Uint32 mov, Uint32 desp) {
-    /* Posicion en la pantalla actualizada */
+    /* Posición en la pantalla actualizada */
     _y = _y + desp;
-    /* Modificamos la posicion actual en la pantalla */
+    /* Modificamos la posición actual en la pantalla */
     mover(_sprite.getMovAbajo(), mov);
 }
 
 void Personaje::moverIzda(Uint32 mov, Uint32 desp) {
-    /* Posicion en la pantalla actualizada */
+    /* Posición en la pantalla actualizada */
     _x = _x - desp;
-    /* Modificamos la posicion actual en la pantalla */
+    /* Modificamos la posición actual en la pantalla */
     mover(_sprite.getMovIzda(), mov);
 }
 
 void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
-    /* Posicion en la pantalla actualizada */
+    /* Posición en la pantalla actualizada */
     _x = _x + desp;
-    /* Modificamos la posicion actual en la pantalla */
+    /* Modificamos la posición actual en la pantalla */
     mover(_sprite.getMovDcha(), mov);
 }
 
 void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
     SDL_Delay(50);
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
-     * posicion actualizada de pantalla */
+     * posición actualizada de pantalla */
     _sprite.dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);
     _p->volcarPantalla(_p->getBuffer(), &_rango);
-    /* Trastear cuanto tiempo es necesario para que no se vea raro, en
-     * de que no vaya ya demasiado lento */
+    /* Trastear cuánto tiempo es necesario para que no se vea raro:
+     * que no vaya ya demasiado lento */
 }

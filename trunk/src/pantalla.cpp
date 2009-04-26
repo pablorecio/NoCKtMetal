@@ -33,24 +33,24 @@ Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof):
 _ancho(ancho), _alto(alto), _prof(prof) {
     atexit(SDL_Quit);
     
-    /* Comprobamos que sea compatible el modo de video */
+    /* Comprobamos que sea compatible el modo de vídeo */
     if(SDL_VideoModeOK(_ancho, _alto, _prof,
                        SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
         cerr << "Modo no soportado: " << SDL_GetError() << endl;
         exit(1);
     }
+    
     /* Entrar en el modo gráfico: pantalla principal */
     _pantalla = SDL_SetVideoMode(_ancho, _alto, _prof,
                                  SDL_HWSURFACE|SDL_DOUBLEBUF);
 
     if(_pantalla == NULL) {
-        cerr << "Error al entrar a modo grafico: " << SDL_GetError() << endl;
+        cerr << "Error al entrar a modo gráfico: " << SDL_GetError() << endl;
         exit(1);
     }
 
-    /* Definimos las surfaces de trabajo como transparentes, despues de
-     * llamar a SetVideoMode (en caso de hacerlo antes provocaremos
-     * que glibc tenga que venir a ayudarnos...) */
+    /* Definimos las surfaces de trabajo como transparentes, después de
+     * llamar a SetVideoMode */
     _buffer = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho, _alto,
                                   _prof, 0, 0, 0, 0);
     _fondo = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho, _alto,
@@ -62,9 +62,10 @@ _ancho(ancho), _alto(alto), _prof(prof) {
 Pantalla::~Pantalla() {}
 
 void Pantalla::setTitulo(const char *titulo, const char *icono) {
-    /* Configuramos el titulo */
+    /* Configuramos el título */
     SDL_WM_SetCaption(titulo, titulo);
-    /* Y el icono que se asignara a nuestra ventana principal */
+    
+    /* Y el icono que se asignará a nuestra ventana principal */
     SDL_Surface* imgIcono = IMG_Load(icono);
     SDL_WM_SetIcon(imgIcono, NULL);
 }
