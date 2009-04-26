@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project name="" company="" manager="" phase="" project-start="20090303T000000Z" mrproject-version="2" calendar="1">
+  <properties/>
+  <phases/>
+  <calendars>
+    <day-types>
+      <day-type id="0" name="Obra realiz&#xE1;ndose" description="Un d&#xED;a de trabajo predeterminado"/>
+      <day-type id="1" name="Jornada de descanso" description="Un d&#xED;a predeterminado de descanso"/>
+      <day-type id="2" name="Usar base" description="Usar d&#xED;a del calendario base"/>
+    </day-types>
+    <calendar id="1" name="Predeterminado">
+      <default-week mon="0" tue="0" wed="0" thu="0" fri="0" sat="1" sun="1"/>
+      <overridden-day-types>
+        <overridden-day-type id="0">
+          <interval start="0800" end="1200"/>
+          <interval start="1300" end="1700"/>
+        </overridden-day-type>
+      </overridden-day-types>
+      <days/>
+    </calendar>
+  </calendars>
+  <tasks>
+    <task id="1" name="Toma de requisitos primarios" note="Realizaci&#xF3;n de una toma de requisitos b&#xE1;sica para &#10;el motor gr&#xE1;fico de la aplicaci&#xF3;n.&#10;(Planteamiento de un &quot;enunciado&quot; b&#xE1;sico del problema)&#10;&#10;Encargados:&#10;Rosa Mar&#xED;a Durante Lerate.&#10;Noelia Sales Montes." work="288000" start="20090304T000000Z" end="20090317T170000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="must-start-on" time="20090304T000000Z"/>
+    </task>
+    <task id="2" name="MySQL (ampliaci&#xF3;n)" note="Realizar una ampliaci&#xF3;n de los conocimientos de &#10;MySQL en cuanto a la modificaci&#xF3;n, inserci&#xF3;n y&#10;eliminaci&#xF3;n de datos en una base de datos.&#10;Tambi&#xE9;n es conveniente realizar trabajos de enlace&#10;entre MySQL y C y aprender a manejar los datos&#10;de las consultas en C.&#10;&#10;Realizaci&#xF3;n:&#10;Pablo Recio Quijano." work="374400" start="20090304T000000Z" end="20090313T170000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20090304T000000Z"/>
+      <task id="3" name="DML" note="Ampliaci&#xF3;n de los conocimientos de MySQL &#10;dirigido a la modificaci&#xF3;n, inserci&#xF3;n y eliminaci&#xF3;n&#10;de datos.&#10;&#10;Realizaci&#xF3;n: &#10;Pablo Recio Quijano." work="201600" start="20090304T000000Z" end="20090312T170000Z" work-start="20090304T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20090304T000000Z"/>
+      </task>
+      <task id="4" name="MySQL &amp; C" note="Realizaci&#xF3;n de enlaces entre una base de datos &#10;con MySQL y C y aprender a usar los datos obtenidos&#10;de las consultas en C.&#10;&#10;Realizaci&#xF3;n:&#10;Pablo Recio Quijano" work="172800" start="20090306T000000Z" end="20090313T170000Z" work-start="20090306T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+        <constraint type="start-no-earlier-than" time="20090306T000000Z"/>
+      </task>
+    </task>
+    <task id="5" name="Motor" note="Buscar y analizar motores gr&#xE1;ficos para juegos&#10;RPG obteniendo una orientaci&#xF3;n de c&#xF3;mo y de qu&#xE9; &#10;forma debemos plantear la aplicaci&#xF3;n.&#10;&#10;Realizaci&#xF3;n:&#10;Rosa Mar&#xED;a Durante Lerate.&#10;Pablo Recio Quijano.&#10;Noelia Sales Montes." work="86400" start="20090313T000000Z" end="20090317T170000Z" work-start="20090313T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20090313T000000Z"/>
+    </task>
+    <task id="6" name="SDL" note="Tener un primer contacto con SDL. Leer &#10;documentaci&#xF3;n, mirar programas sencillos... &#10;Puesta en com&#xFA;n de dudas.&#10;&#10;Realizaci&#xF3;n:&#10;Rosa Mar&#xED;a Durante Lerate.&#10;Pablo Recio Quijano.&#10;Noelia Sales Montes." work="201600" start="20090312T000000Z" end="20090320T170000Z" work-start="20090312T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20090312T000000Z"/>
+    </task>
+    <task id="7" name="Juego (Estad&#xED;sticas)" note="Realizaci&#xF3;n de las reglas del juego junto con las &#10;estad&#xED;sticas de cada personaje (tanto en batalla&#10;como caracter&#xED;sticas de los propios personajes)&#10;&#10;Realizaci&#xF3;n:&#10;Pablo Recio Quijano. " work="172800" start="20090313T000000Z" end="20090320T170000Z" work-start="20090313T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <constraint type="start-no-earlier-than" time="20090313T000000Z"/>
+    </task>
+  </tasks>
+  <resource-groups/>
+  <resources/>
+  <allocations/>
+</project>

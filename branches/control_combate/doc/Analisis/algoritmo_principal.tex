@@ -1,0 +1,128 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[spanish]{babel}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2.5cm,top=3.5cm,right=2.5cm,bottom=3.5cm]{geometry}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{float}
+
+\title{Diseño de Videojuegos \\ Algoritmo Principal}
+\author{Rosa María Durante Lerate\\Pablo Recio Quijano\\Noelia Sales Montes}
+
+\begin{document}
+\maketitle
+
+\noindent Se ejecuta el programa. \\
+Se cargan los ficheros de configuración. \\
+Se inicia el videojuego mostrando el menú principal.
+
+\begin{itemize}
+\item El jugador elige jugar.\\
+Se muestra en pantalla las opciones de crear nuevo juego o cargar uno existente.
+
+\begin{itemize}
+\item El jugador crea un nuevo juego. \\
+Se cargan los ficheros iniciales. \\
+Se muestra
+  una animación de la introducción del juego.
+
+\item El jugador elige  cargar un juego existente. \\
+Se cargan los ficheros configurados
+  para el usuario.
+\end{itemize}
+
+El usuario comienza a jugar (con el motor de movimiento).\\ 
+El jugador mueve el personaje.
+
+\begin{itemize}
+\item El personaje se mueve sin ningún inconveniente.
+\item El personaje no se puede mover (colisiona con un objeto).
+\item El personaje no se puede mover pero si interactuar:
+
+\begin{itemize}
+\item Comienza un combate.
+
+\item Interactua con un objeto.
+
+\item Dialoga con otro personaje.  
+
+\end{itemize}
+
+\end{itemize}
+
+El jugador entra en el inventario.
+
+\begin{itemize}
+\item Visualiza la pestaña contenedora del estado de los personajes.
+\item Visualiza la pestaña contenedora de los objetos que tiene el grupo.
+\item Visualiza la pestaña que contiene las opciónes Guardar y Salir.
+
+\begin{itemize}
+\item El usuario guarda el juego. \\ El sistema guarda el estado del juego.
+\item El usuario sale del juego. \\ El sistema destruye la memoria dinámica utilizada y
+  sale del programa.
+
+\end{itemize}
+\end{itemize}
+
+\item El jugador elige salir. \\ El sistema sale del programa.
+\end{itemize}
+
+\clearpage
+
+\paragraph*{Combate}
+\noindent El sistema carga la apariencia y los ficheros necesarios. \\
+El sistema calcula los turnos en el combate. \\
+Mientras que uno de los dos grupos no muera o nuestro grupo no escape:
+
+\begin{itemize}
+\item Indica el tipo de ataque que vaya a realizar.
+\item Se realiza.
+\item Se calcula el daño causado decrementando la vida del personaje que lo recibió y
+  calcula el número de puntos especiales (si es el caso) y se decrementa.
+\item Comprobamos el estado de los equimos.
+\end{itemize}
+
+\begin{itemize}
+\item Si nuestro equipo ha ganado:
+\begin{itemize}
+\item Se calcula y añade la experiencia obtenida. Si algún personaje alcanza el número de
+  puntos de experiencia necesarios para pasar de nivel se notifica al usuario y se
+  redefinen  las características de dicho personaje.
+\end{itemize}
+
+\item Si nuestro equipo ha muerto:
+\begin{itemize}
+\item El sistema da la posibilidad al usuario de volver a combatir o de volver al estado
+  de antes de comenzar el combate, por si quisiera evitarlo. Cuando sea un combate de
+  historia sólo podrá combatir de nuevo, y no evitarlo.
+\end{itemize}
+
+\item Si nuestro equipo huye:
+\begin{itemize}
+\item Vuelve al estado anterior al combate.
+\end{itemize}
+
+\end{itemize}
+
+
+\paragraph*{Interacción con un objeto}
+
+\noindent El sistema muestra la acción que puede realizar con el objeto.
+\begin{itemize}
+\item El personaje realiza dicha acción. El objeto se guarda en el inventario y se quita
+  de la pantalla. (Es en este momento cuando ya se puede atravesar).
+\item El personaje no realiza ninguna acción. El objeto queda en pantalla para que pueda
+  realizar la acción más tarde (si el jugador quisiera). 
+\end{itemize}
+
+\paragraph*{Diálogo con un personaje}
+El sistema indica el diálogo con un personaje no jugable.
+\begin{itemize}
+\item Al final del diálogo entra en combate con el personaje no jugable.
+\item Al final del diálogo regala un objeto a nuestro personaje.
+\end{itemize}
+
+\end{document}
+

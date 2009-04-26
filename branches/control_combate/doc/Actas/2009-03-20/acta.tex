@@ -1,0 +1,85 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage[left=2.5cm,top=3.5cm,right=2.5cm,bottom=3.5cm]{geometry}
+
+\usepackage{array}
+
+\usepackage{graphicx} 
+
+\begin{document}
+
+\includegraphics[scale=0.6]{../uca.png}
+
+\begin{center}
+  \noindent \huge\textbf{ Acta de reunión de grupo}\\
+\end{center}
+
+\noindent Día 20 de Marzo del 2009\\
+
+\noindent Asisten:
+
+\begin{center}
+\begin{tabular}{|m{5.2cm}|m{5.2cm}|m{5.2cm}|}
+  \hline
+  Rosa María Durante Lerate & Pablo Recio Quijano & Noelia Sales Montes\\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  Fdo: & Fdo: & Fdo: \\
+  \hline
+\end{tabular}
+\end{center}
+
+\noindent Acuerdos:\\
+
+\noindent La reunión tubo los siguientes puntos del dia:
+
+\begin{itemize}
+\item Concretar estilo de juego
+\item Definir funcionalidades del motor (motores) del juego
+\item Concretar diseño de los personajes
+\item Primera aproximación al diagrama ERe de la Base de Datos
+\end{itemize}
+
+\noindent El primer punto surge a raiz de la conversación con Alejo
+Acevedo y David Ballesteros, ya que comenzamos a plantearnos la
+posibilidad de modificar algo el enfoque del juego, y en lugar
+realizar un jRPG, hacer un Action RPG (estilo Zelda), de forma que
+solo tubieramos que implementar uno de los dos motores del juego.\\
+
+\noindent Sin embargo, pensamos que se podrían reutilizar clases de
+ambos motores, por lo que continuamos con la idea del jRPG al estilo
+FF, Chrono Trigger y demás clásicos.\\
+
+\noindent Con respecto al segundo punto, definimos totalmente las
+acciones de los dos motores del juego, sin embargo no están plasmados
+en este acta, pues no es el cometido de la misma. Sin embargo, se debe
+hacer una excepción y explicar muy brevemente los sistemas de
+juego. 
+
+\noindent Nuestro juego va a estar dividido en dos motores o entornos:
+uno será el denominado de 'movimiento' ya que en este entorno el
+usuario tendrá el manejo del personaje para moverlo por el mapa, bajo
+una vista cenital.
+
+\noindent El segundo sistema o motor, denominado 'de batalla', permitirá
+al jugador enfrentarse con los enemigos que se oportunen en un entorno
+de visión lateral. \\
+
+\noindent El tercer punto viene a raiz de si realizar personajes
+humanoides, o abstacciones pelotudas de dichos humanoides para
+simplificación de la parte gráfica del juego. \\
+
+\noindent El último punto del día hace referencia a la primera
+aproximación de la base de datos que debe sostener el juego. La
+intención es tener claro qué entidades pertenecerán al sistema y qué
+requisistos (en conocimiento sobre el juego) necesitamos para
+completar dicha base de datos. \\
+
+\end{document}
