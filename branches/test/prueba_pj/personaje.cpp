@@ -94,9 +94,9 @@ void Personaje::animadoEn(Pantalla& p) {
 }*/
 
 void Personaje::setPosicion(Uint32 x, Uint32 y) {
-    /* Colocacion en la casilla de la pantalla indicada (ojo que empieza por 0) */
-    _pantX = x - 1;
-    _pantY = y - 1;
+    /* Colocacion en la casilla de la pantalla indicada */
+    _pantX = x;
+    _pantY = y;
     /* Colocacion en pixel correspondiente a la casilla dada */
     _x = _pantX * _tam;
     _y = _pantY * _tam;
@@ -128,6 +128,12 @@ void Personaje::setPosicion() {
     /* Colocamos al personaje en la casilla central del rango */
     _pantX = (_rango.x / _tam) + (_rango.w / _tam)/2 -1;
     _pantY = (_rango.y / _tam) + (_rango.h / _tam)/2 -1;
+    cout << "PANT X: " << _pantX << endl;
+    cout << "PANT Y: " << _pantY << endl;
+    cout << "RANGO X: " << _rango.x << endl;
+    cout << "RANGO Y: " << _rango.y << endl;
+    cout << "RANGO W: " << _rango.w << endl;
+    cout << "RANGO H: " << _rango.h << endl;
     /* Colocamos tambien su posicion en pixels */
     _x = _pantX * _tam;
     _y = _pantY * _tam;

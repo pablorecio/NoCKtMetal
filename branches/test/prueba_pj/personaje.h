@@ -110,7 +110,7 @@ public:
      * @note En caso de que el rango no este definido se entiende que no es
      * esta fuera del rango.
      */
-    bool fueraRango(Sint32 x, Sint32 y) const;
+    bool fueraRango(Uint32 x, Uint32 y) const;
     /**
      * Metodo observador del numero de movimientos que tiene cada secuencia
      * para el sprite relacionado con el personaje.
@@ -313,9 +313,11 @@ inline Uint32 Personaje::getMapaY() const { return _mapaY; }
 inline Uint32 Personaje::getPantX() const { return _pantX; }
 inline Uint32 Personaje::getPantY() const { return _pantY; }
 inline const SDL_Rect& Personaje::getRango() const { return _rango; }
-inline bool Personaje::fueraRango(Sint32 x, Sint32 y) const {
-    return (x < _rango.x || x > _rango.x + _rango.w ||
-            y < _rango.y || y > _rango.y + _rango.h);
+inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
+    return ((_pantX * _tam)  < (Uint32)_rango.x ||
+            (_pantX * _tam) >= ((Uint32)_rango.x + _rango.w) ||
+            (_pantY * _tam) < (Uint32)_rango.y ||
+            (_pantY * _tam) >= ((Uint32)_rango.y + _rango.h));
 }
 /*inline bool Personaje::existeRango() const { return _existeRango; }*/
 inline Uint32 Personaje::getSecuenciasMovimiento() const {
