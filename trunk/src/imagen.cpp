@@ -1,114 +1,210 @@
 
-
 #include <iostream>
 #include <SDL/SDL_image.h>
 
 #include <cmath>
+#include <map>
 
 #include "tile.h"
 #include "imagen.h"
+#include "pantalla.h"
 
 using namespace std;
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto){
-  _alto=alto; 
+
+Imagen::Imagen(){}
+
+Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32** matriz_tiles, 
+	       Uint32** matriz_col, Uint32** matriz_inter ){
+
   _ancho=ancho;
-  
-  _cX=0; 
+  _alto=alto;
+
+  _cX=0;
   _cY=0;
+
+  if(matriz_tiles != NULL){
+    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizOriginal[i][j] = matriz_tiles[i][j];
+    
+  }
   
-  _matrizOriginal=NULL;
+  if(matriz_col != NULL){
+    _matrizColision= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizColision[i][j] = matriz_col[i][j];
+  }
+
+  if(matriz_inter != NULL){
+    _matrizInteractual= (Uint32**)malloc(sizeof(Uint32*)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizInteractual[i][j] = matriz_inter[i][j];
+  }
+
+  
+
 }
 
-  // creamos un objeto imagen a partir de la matriz completa
-Imagen::Imagen(Uint32 **matriz_completa, Uint32 ancho, Uint32 alto){
-  _matrizOriginal=matriz_completa;
-  
-  _alto=alto; 
+Imagen::Imagen(map<Uint32,Tile*> imagenes, Uint32 ancho, Uint32 alto, 
+       Uint32** matriz_tiles, Uint32** matriz_col, 
+       Uint32** matriz_inter){
+
   _ancho=ancho;
-  
-  _cX=0; 
+  _alto=alto;
+
+  _cX=0;
   _cY=0;
-}
+
+  _tiles = imagenes;
+
+  if(matriz_tiles != NULL){
+    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizOriginal[i][j] = matriz_tiles[i][j];
+    
+  }
   
-  // creamos un objeto imagen a partir de los tamaños y los tiles.
-Imagen::Imagen(Uint32 ancho, Uint32 alto, std::vector<Tile*> imagenes){
-  _tiles=imagenes;
-  
-  _alto=alto; 
-  _ancho=ancho;
-  
-  _cX=0; 
-  _cY=0;
+  if(matriz_col != NULL){
+    _matrizColision= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizColision[i][j] = matriz_col[i][j];
+  }
+
+  if(matriz_inter != NULL){
+    _matrizInteractual= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizInteractual[i][j] = matriz_inter[i][j];
+  }
 }
 
-  // se introducirá en el final del vector.
-  // hay que tener en cuenta los índices para luego poder 
-  // realizar la imagen correctamente.
-void Imagen::relacionarTile(Tile *t){
-  _tiles.push_back(t);
+
+void Imagen::relacionarTile(Uint32 id, Tile& t){
+  _tiles.insert(make_pair(id,&t));
 }
 
-  // Para cambiar o inicializar la matriz
-void Imagen::inicializarMatrizCompleta(Uint32 **matriz, 
-				       Uint32 ancho, Uint32 alto){
-  _matrizOriginal=matriz;
-  _alto=alto; 
+void Imagen::relacionarPantalla(Pantalla& p)
+{
+  _p = &p;
+}
+
+void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz, 
+		       Uint32** colisionable, Uint32** interactuable){
   _ancho=ancho;
+  _alto=alto;
+  
+  _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
+  for(Uint32 i=0; i<ancho; i++)
+    _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+  
+  for(int i=0; i<ancho; i++)
+    for(int j=0; j<alto; j++)
+      _matrizOriginal[i][j] = matriz[i][j];
+  
+  if(colisionable != NULL){
+    _matrizColision= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizColision[i][j] = colisionable[i][j];
+  }
+
+  if(interactuable != NULL){
+    _matrizInteractual= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    for(Uint32 i=0; i<ancho; i++)
+      _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    
+    for(int i=0; i<ancho; i++)
+      for(int j=0; j<alto; j++)
+	_matrizInteractual[i][j] = interactuable[i][j];
+  }
+    
+  
 }
 
   // Conviete la matriz completa en el dibujo con tiles sobre una Surface.
   // Necesitamos saber desde que coordenada de la matriz completa comenzamos
   // a dibujar. El final/tamaño nos lo proporciona la Surface.
-void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, SDL_Surface *pantalla){
 
-  SDL_Rect origen,destino;
 
-  _cX=cx;
-  _cY=cy;
+void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia, 
+			       Uint32 vez){
 
-  cout << "coordenadas: (" << _alto << "," << _ancho << "). ";
-  cout << "coordenadas: (" << _cX << "," << _cY << ")." << endl;
+  SDL_Rect origen, destino;
+
+  double trozo_dibujo = Secuencia/vez;
+
+  cout << "trozo dibujo: " << trozo_dibujo << endl;
 
   origen.x=0;
   origen.y=0;
-  
-  // suponemos que todos los tiles tienen el mismo tamaño.
-  // TODO: poner en la clase tile una función estática que nos diga los 
-  // pixeles o el tamaño de dicho tile, y lógicamente, ya que la función
-  // es estática es pork todos los tiles son iguales en tamaño.
-  Uint32 aux_h = _cY+(pantalla->h/_tiles[0]->altura());
-  Uint32 aux_w = _cX+(pantalla->w/_tiles[0]->anchura());
-  
-  cout << "aux_w && aux_h: " << aux_w << " && " << aux_h << endl;
-  
-  for(Uint32 i=_cX; i<aux_w && i<_ancho; i++){
-    for(Uint32 j=_cY; j<aux_h && j<_alto; j++){
-	
-	cout << "(i,j): ("<< i << "," << j <<")." << endl;
-	
-        origen.h = _tiles[_matrizOriginal[i][j]]->altura();
-	origen.w = _tiles[_matrizOriginal[i][j]]->anchura();
-	
-	destino.x=(i-_cX)*(_tiles[_matrizOriginal[i][j]]->anchura());
-	destino.y=(j-_cY)*(_tiles[_matrizOriginal[i][j]]->altura());
-	
-	SDL_BlitSurface(_tiles[_matrizOriginal[i][j]]->imagen(), 
-			&origen, pantalla, &destino);
 
-      }
-  }
-    
+  origen.h=_Tam_Tile * trozo_dibujo;
+  origen.w=_Tam_Tile * trozo_dibujo;
+
+  cout << "origen.h, origen.w: " << origen.h << endl;
+  
+  _cX=cx * trozo_dibujo;
+  _cY=cy * trozo_dibujo;
+
+  Uint32 ancho_aux=_p->getAncho();
+  Uint32 alto_aux=_p->getAlto();
+
+  cout << "_cX,_cY: (" << _cX << "," << _cY << ")" << endl;
+  cout << "cuenta_h: " << alto_aux << endl;
+  cout << "cuenta_w: " << _p->getFondo()->w << endl;
+  
+  Uint32 aux_h = _cX+(_p->getFondo()->h/_Tam_Tile); 
+  // número de tiles de la pantalla (alto) + coordY
+  Uint32 aux_w = _cY+(_p->getFondo()->w/_Tam_Tile); 
+  // número de tiles de la pantalla (ancho) + coordX
+
+  cout << "aux_h,aux_w: (" << aux_h << "," << aux_w << ")" << endl;
+  
+  for(Uint32 i=_cX; (i<aux_w && i<_ancho); i++)
+    for(Uint32 j=_cY;(j<aux_h && j<_alto); j++){
+
+      cout << "coordenadas: ("<< i << "," << j << ")" << endl;
+      
+      destino.x=((i-_cX)*_Tam_Tile) * trozo_dibujo;
+      destino.y=((j-_cY)*_Tam_Tile) * trozo_dibujo;
+      
+      SDL_BlitSurface((_tiles.at(_matrizOriginal[i][j]))->getImagen(), 
+		      &origen, _p->getFondo(), &destino);
+      
+    }
+
+  _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
+
+
 }
 
   // TODO: hacer que los bordes (arriba y izquierda) también salgan en negro
   // cuando se necesite, es decir, por ejemplo, cuando el muñeco quiera acceder
   // hasta el límite superior del mapa
-
-  
-Uint32 Imagen::getAlto(){ return _alto;}
-Uint32 Imagen::getAncho(){ return _ancho;}
-Uint32 Imagen::getCoorX(){ return _cX;}
-Uint32 Imagen::getCoorY(){ return _cY;}
-std::vector<Tile*> Imagen::getTiles(){ return _tiles;}
- 
