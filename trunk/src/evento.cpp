@@ -32,46 +32,40 @@ Evento::Evento() {
     /* Evitar la autorepeticion de teclas */
     SDL_EnableKeyRepeat(0, 0);
     /* Configuracion de eventos con las teclas que los activan */
-    accion[SALIR] = SDLK_ESCAPE;
-    accion[MENU] = SDLK_SPACE;
-    accion[ACEPTAR] = SDLK_RETURN;
-    accion[ATRAS] = SDLK_BACKSPACE;
-    accion[ARRIBA] = SDLK_UP;
-    accion[ABAJO] = SDLK_DOWN;
-    accion[IZQUIERDA] = SDLK_LEFT;
-    accion[DERECHA] = SDLK_RIGHT;
+    _accion[SALIR] = SDLK_ESCAPE;
+    _accion[MENU] = SDLK_SPACE;
+    _accion[ACEPTAR] = SDLK_RETURN;
+    _accion[ATRAS] = SDLK_BACKSPACE;
+    _accion[ARRIBA] = SDLK_UP;
+    _accion[ABAJO] = SDLK_DOWN;
+    _accion[IZQUIERDA] = SDLK_LEFT;
+    _accion[DERECHA] = SDLK_RIGHT;
     /** @todo Incluir definiciones de teclas alternativas en caso de querer
      * probar con la PSP. (IFDEF.... blablabla) */
 }
 
-Evento::~Evento() {
-    evento.quit;
-}
+Evento::~Evento() {}
 
-accion Evento::getEvento() const {
+accion Evento::getEvento() {
     /* Esperamos a que se produzca el evento */
-    while (SDL_PollEvent(&evento)) {
+    while (SDL_PollEvent(&_evento)) {
         /* Comprobamos que es uno de los eventos que esperamos:
          *  - Tecla presionada en este instante
          *  - Tecla presionada anteriormente
          */
-        if (evento.type == SDL_KEYDOWN || evento.key.state == SDL_PRESSED) {
-            switch (evento.key.keysym.sym) {
+        if (_evento.type == SDL_KEYDOWN || _evento.key.state == SDL_PRESSED) {
             /* Devolvemos el tipo de accion que se corresponde con el
              * evento leido */
-            case accion[SALIR]: return SALIR;
-            case accion[MENU]: return MENU;
-            case accion[ACEPTAR]: return ACEPTAR;
-            case accion[ATRAS]: return ATRAS;
-            case accion[ARRIBA]: return ARRIBA;
-            case accion[ABAJO]: return ABAJO;
-            case accion[IZQUIERDA]: return IZQUIERDA;
-            case accion[DERECHA]: return DERECHA;
-            default: break;
+            for (map<accion,SDLKey>::iterator i = _accion.begin();
+            i != _accion.end(); ++i) {
+                if (_evento.key.keysym.sym == i->second) {
+                    return i->first;
+                }
             }
         }
-        if (evento.type == SDL_QUIT) {
+        if (_evento.type == SDL_QUIT) {
             return SALIR;
         }
     }
+    return NULA;
 }

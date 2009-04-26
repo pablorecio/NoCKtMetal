@@ -160,7 +160,9 @@ public:
     void setRango(Uint16 margenIzdo, Uint16 margenArriba, Uint16 rangoAncho,
                   Uint16 rangoAlto);
     void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
+    /*
     void setTam(Uint32 tam);
+     */
 
     /**
      * Metodo modificador de la posicion en el mapa.

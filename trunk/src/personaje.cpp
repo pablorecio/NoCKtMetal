@@ -211,11 +211,11 @@ void Personaje::setRango(Uint16 rangoAncho, Uint16 rangoAlto) {
     _rango.x = (_p->getAncho() - _rango.w)/2;
     _rango.y = (_p->getAlto() - _rango.h)/2;
 }
-
+/*
 void Personaje::setTam(Uint32 tam) {
     _tam = tam;
 }
-
+*/
 void Personaje::subirEnMapa() {
     _mapaY--;
 }

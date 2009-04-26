@@ -28,6 +28,7 @@
 #include "imagen.h"
 
 Animacion::Animacion() {
+    evento = Evento();
 }
 
 Animacion::~Animacion() {
@@ -38,24 +39,39 @@ void Animacion::animandoEn(Pantalla& p) {
     _pant = &p;
 }
 
-void Animacion::animandoMapa() {
+bool Animacion::procesarAccion() {
+    accion a = evento.getEvento();
     Uint32 x, y;
-
     x = _principal->getPantX();
     y = _principal->getPantY();
+    bool mover = false;
 
-    switch (mov) {
+    switch (a) {
+    case SALIR: cout << "Saliendo de la ejecucion del programa" << endl;
+    return true;
+    case MENU: cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
+    break;
+    case ACEPTAR: cout << "Ha aceptado algo... Pero aqui no sirve de nada... eso solo vale en los menus..." << endl;
+    break;
+    case ATRAS : cout << "Ha rechazado algo... eso solo sirve en un menu... " << endl;
+    break;
     case ARRIBA: y--;
+        mover = true;
         break;
     case ABAJO: y++;
+        mover = true;
         break;
     case IZDA: x--;
+        mover = true;
         break;
     case DCHA: x++;
+        mover = true;
         break;
     default: break;
-    }
+        }
 
+    /* Si la opcion elegida es realizar un movimiento... */
+    if(mover) {
     /* Si el movimiento queda fuera del rango de pantalla del PJ,
      * se movera de forma estatica, desplazandose el fondo por debajo */
     if (_principal->fueraRango(x, y)) {
@@ -67,18 +83,17 @@ void Animacion::animandoMapa() {
         hacerMovimientoDinamico(mov);
     }
 }
+    return false;
+}
 
 void Animacion::hacerMovimientoEstatico(Movimiento m) {
     /* Mientras necesitemos mover al PJ */
-    for (Uint32 sec = _principal->getSecuenciasMovimiento(); sec > 0; sec--) {
+    for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0; --sec) {
         /* Desplazar el mapa en _desp pixels y volcarlo en fondo*/
-        /* Mover el PJ (autovolcado en movimiento) */
-        movimiento(m, sec, 0);
         /* Volcar fondo en buffer */
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
-        /* Volcar seccion de movimiento del PJ en buffer */
-        _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer(),
-                              &_rangoPJ);
+        /* Mover el PJ (autovolcado en buffer) */
+        movimiento(m, sec, 0);
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
     }
@@ -87,15 +102,24 @@ void Animacion::hacerMovimientoEstatico(Movimiento m) {
 void Animacion::hacerMovimientoDinamico(Movimiento m) {
     /* Pintar el fondo en fondo (valga la redundancia) */
     /* Mientras necesitemos mover al PJ */
-    for (Uint32 i = 0; i < _numSecuencias; i++) {
-        movimiento(m, i);
+    for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0; --sec) {
         /* Volcar fondo en buffer */
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
         /* Volcar seccion de movimiento del PJ en buffer */
-        _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer(),
-                              &_rangoPJ);
+        movimiento(m, sec, _principal->getDesp(sec));
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
+    }
+    switch (mov) {
+    case ARRIBA: _principal->subirEnPantalla();
+        break;
+    case ABAJO: _principal->bajarEnPantalla();
+        break;
+    case IZDA: _principal->izdaEnPantalla();
+        break;
+    case DCHA: _principal->dchaEnPantalla();
+        break;
+    default: break;
     }
 }
 

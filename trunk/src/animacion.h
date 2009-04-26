@@ -60,8 +60,11 @@ public:
     /**
      * Uno de los metodos principales de Animacion.
      * Ejecuta y controla el movimiento en el mapa.
+     * @return Booleano que controla la accion procesada. Si la accion elegida es
+     * salir del programa, se devuelve <code>true</code>; <code>false</code>
+     * en caso contrario.
      */
-    void animandoMapa();
+    bool procesarAccion();
     /**
      * Destructor de la clase Animacion.
      */
@@ -94,6 +97,7 @@ private:
      * Puntero a la pantalla general del juego.
      */
     Pantalla* _pant;
+    Evento evento;
     /**
      * Puntero al personaje principal del juego.
      */
@@ -103,10 +107,6 @@ private:
      * se puede leer directamente de Imagen creo.
      */
     Uint32 _tamCasilla;
-    /**
-     * Desplazamiento igual a _numSecuencias/_tamCasilla
-     */
-    Uint32 _desp;
     /**
      * Ancho del mapa.
      */

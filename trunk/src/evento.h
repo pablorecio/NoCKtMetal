@@ -26,10 +26,17 @@
 #ifndef _EVENTO_H
 #define	_EVENTO_H
 
+#include <SDL/SDL.h>
+#include <map>
+
+using namespace std;
+
 enum accion {
-	SALIR,
+    NULA = 0,
+    SALIR,
     MENU,
 	ACEPTAR,
+    ATRAS,
     ARRIBA,
     ABAJO,
 	IZQUIERDA,
@@ -55,7 +62,7 @@ public:
      * @return Identificador de la accion a realizar de tipo <code>accion</code>
      * definido especificamente para esta clase.
      */
-    accion getEvento() const;
+    accion getEvento();
     /**
      * Destructor del evento generado.
      */
@@ -64,11 +71,11 @@ private:
     /**
      * Evento de la libreria SDL abstraido.
      */
-    SDL_Event evento;
+    SDL_Event _evento;
     /**
      * Asocia las teclas que necesitamos a la constate SDL que la representa.
      */
-    map<accion, SDLKey> accion;
+    map<accion, SDLKey> _accion;
 };
 
 #endif	/* _EVENTO_H */
