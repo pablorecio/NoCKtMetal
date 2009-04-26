@@ -1,174 +1,161 @@
-// Listado: main.cpp
-//
-// Programa de prueba de la clase Imagen
-
 #include <iostream>
 #include <SDL/SDL.h>
 
-#include "imagen.h"
+#include "sprite.h"
 #include "personaje.h"
 #include "pantalla.h"
+#include "imagen.h"
+#include "tile.h"
 
 using namespace std;
 
-int main () {
 
-  if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-    cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
-    exit(1);
-  }
 
-  Pantalla pant;
-  pant.rellenarPantalla(pant.getBuffer());
-  pant.volcarPantalla(pant.getBuffer());
+void MovimientoEstatico(char direccion, Uint32 cx, Uint32 cy,
+			Imagen& imag, Personaje& pers, Pantalla& pant);
 
-  cout << "pantalla iniciada" << endl;
+void MovimientoDinamico(char direccion, Imagen& imag, Personaje& pers,
+			Pantalla& pant);
 
-  Uint32 **matriz_para_dibujar;
-  matriz_para_dibujar= (Uint32**)malloc(sizeof(Uint32*)*48);
-  for(Uint32 i=0; i<48; i++){
-    matriz_para_dibujar[i] = (Uint32*)malloc(sizeof(Uint32)*36);
-  }
-  
-  cout << "matriz creada" << endl;
+int main() {
 
-  for(Uint32 i=0; i<48; i++){
-    for(Uint32 j=0; j<36; j++){
-      if(i < 24){
-	if(j < 18)
-	  matriz_para_dibujar[i][j]=0;
-	else
-	  matriz_para_dibujar[i][j]=1;
-      }
-      else{
-	if(j < 18)
-	  matriz_para_dibujar[i][j] = 2;
-	else
-	  matriz_para_dibujar[i][j] = 3;
-      }
-	 
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
+        exit(1);
     }
-  }
 
-  cout << "matriz inicializada" << endl;
-  /*for(Uint32 i=0; i<5; i++){
-    for(Uint32 j=0; j<5; j++)
-      cout << matriz_para_dibujar[i][j] << endl;
-      }*/
+    Pantalla p = Pantalla();
+    p.setTitulo("NoCKt Metal", "./logo.png");
 
-  Tile t1("../prueba_tiles/suelo.png");
-  Tile t2("../prueba_tiles/piedra3.png");
-  Tile t3("../prueba_tiles/tierra.png");
-  Tile t4("../prueba_tiles/oscuro.png");
+    cout << "pantalla iniciada" << endl;
 
-  cout << "tiles creados" << endl;
-  
-  Imagen i((Uint32)48, (Uint32)36, matriz_para_dibujar);
-  
-  cout << "imagen creada" << endl;
+    Personaje baldos(1, 1, 1, 30, &p, "./baldos.png");
 
-  i.relacionarTile(0,t1);
-  i.relacionarTile(1,t2);
-  i.relacionarTile(2,t3);
-  i.relacionarTile(3,t4);
+    baldos.setRango(6,6);
+    baldos.setPosicion();
 
-  cout << "tiles relacionados" << endl;
+    /* Creamos un fondo liso */
+    //    p.cargarImagen(p.getFondo(), "./fondo.png");
+    //    p.volcarPantalla(p.getFondo(), p.getBuffer());
 
-  i.dibujarFondo(5,0,pant.getBuffer());
-  pant.volcarPantalla(pant.getBuffer());
+    /*Creamos la matriz*/
+    Uint32** matriz = (Uint32**)malloc(sizeof(Uint32*)*48);
+    for(Uint32 i=0; i<48; i++)
+      matriz[i]=(Uint32*)malloc(sizeof(Uint32)*36);
 
-  cout << "dibujado en pantalla" << endl;
+    for(Uint32 i=0; i<48; i++)
+      for(Uint32 j=0; j<36; j++)
+	matriz[i][j]=0;
+    
+    cout << "matriz creada." << endl;
 
-  Sprite baldito("baldos.png",4,4,16);
-  Personaje baldos(0);
+    Imagen imag(48,36,matriz);
+    Tile til("arena.png");
+    cout << "imagen y tile creado" << endl;
 
-  baldos.dibujadoPor(baldito);
-  baldos.animadoEn(pant);
+    imag.relacionarTile(0,til);
+    cout << "relación del tile" << endl;
+    imag.relacionarPantalla(p);
 
-  baldos.setRango(3,3,4,4);
+    imag.dibujarFondo(0,0);
+    cout << " imagen dibujada (en buffer)" << endl;
 
-  baldos.setPosicion();
+    baldos.setPosicion();
+    baldos.dibujarPosicionFrente();
+    p.volcarPantalla(p.getBuffer());
+    SDL_Delay(50);
+    
 
+    SDL_Event evento;
 
-  SDL_Event evento;
+    for( ; ; ) {
+      while(SDL_PollEvent(&evento)) {  
+	if(evento.type == SDL_KEYDOWN) {
+	  //SDL_FillRect(pantalla, NULL,SDL_MapRGB(pantalla->format, 0, 0, 0));
 
-  int repeat = SDL_EnableKeyRepeat(20,50);
+	  switch(evento.key.keysym.sym){
+	  case SDLK_DOWN: 
+	    if(baldos.fueraRango(baldos.getX(), baldos.getY()+1))
+	      MovimientoEstatico('d',imag.getCX(), imag.getCY()+1, 
+				 imag, baldos,p);
+	    else
+	      MovimientoDinamico('d',imag,baldos,p);
+	    break;
 
-  if(repeat < 0) {
-    cerr << "No se pudo establecer el modo repetición "
-	 << SDL_GetError() << endl;
-    exit(1);
-  }
+	  case SDLK_UP: 
+	    if(baldos.fueraRango(baldos.getX(), baldos.getY()-1))
+	      MovimientoEstatico('u',imag.getCX(), imag.getCY()-1, 
+				 imag, baldos,p);
+	    else
+	      MovimientoDinamico('u',imag,baldos,p);
+	    break;
+	    
+	  case SDLK_RIGHT:
+	    if(baldos.fueraRango(baldos.getX()+1, baldos.getY()))
+	      MovimientoEstatico('r',imag.getCX()-1, imag.getCY(), 
+				 imag, baldos,p);
+	    else
+	      MovimientoDinamico('r',imag,baldos,p);
+	    break;
+	    
+	  case SDLK_LEFT:
+	    if(baldos.fueraRango(baldos.getX()-1, baldos.getY()))
+	      MovimientoEstatico('l',imag.getCX()-1, imag.getCY(), 
+				 imag, baldos,p);
+	    else
+	      MovimientoDinamico('l',imag,baldos,p);
+	    break;
 
-  else {
-    cout << "Modo repetición activado:\n "
-	 << " Retardo: " << SDL_DEFAULT_REPEAT_DELAY
-	 << "\nIntervalo: " <<SDL_DEFAULT_REPEAT_INTERVAL << endl;
-  }
-  
-  int x=0, y=0;
-
-  for( ; ; ) {
-    while(SDL_PollEvent(&evento)) {  
-      if(evento.type == SDL_KEYDOWN) {
-
-	switch(evento.key.keysym.sym){
-
-	case SDLK_DOWN: 
-	  if(baldos.fueraRango(baldos.getX(), baldos.getY()+1)){
-	    y++; // title abajo
-	    i.dibujarFondo(x,y,pant.getMovimiento());
-	    baldos.dibujarPosicionFrente();
-	   }
-	  else{
-	    baldos.moverAbajo(0,1);
+	  default: break;
 	  }
-	  break;
-
-	case SDLK_UP:
-	  if(baldos.fueraRango(baldos.getX(), baldos.getY()-1)){
-	    y--; // title arriba 
-	    i.dibujarFondo(x,y,pant.getMovimiento());
-	    baldos.dibujarPosicionEspaldas();
-	  }
-	  else{
-	    baldos.moverArriba(0,1);
-	  }
-	  break;
 	  
-	case SDLK_RIGHT: 
-	  if(baldos.fueraRango(baldos.getX()+1, baldos.getY())){
-	    x++; // title derecha
-	    i.dibujarFondo(x,y,pant.getMovimiento());
-	    baldos.dibujarPosicionLatDcha();
-	  }
-	  else{
-	    baldos.moverDcha(0,1);
-	  }
-	  break;
-
-	case SDLK_LEFT: 
-	  if(baldos.fueraRango(baldos.getX()-1, baldos.getY())){
-	    x--; // title izquierda
-	    i.dibujarFondo(x,y,pant.getMovimiento());
-	    baldos.dibujarPosicionLatIzda();
-	  }
-	  else{
-	    baldos.moverIzda(0,1);
-	  }
-	  break;
-
-	default: break;
+	  if(evento.key.keysym.sym == SDLK_ESCAPE)
+	    return 0;
 	}
-	pant.volcarPantalla(pant.getMovimiento());
-	
-	if(evento.key.keysym.sym == SDLK_ESCAPE)
+	if(evento.type == SDL_QUIT)
 	  return 0;
       }
-      if(evento.type == SDL_QUIT)
-	return 0;
     }
+  
+
+    cout << "Saliendo de la pantalla" << endl;
+    p.cerrarPantalla();
+}
+
+
+void MovimientoEstatico(char direccion, Uint32 cx, Uint32 cy,
+			Imagen& imag, Personaje& pers, Pantalla& pant){
+  
+  Uint32 num_mov = 4;
+  for(int i=num_mov; i>0; i--){
+    imag.dibujarFondo(cx,cy,num_mov-i+1,num_mov);
+    switch(direccion){
+    case 'u': pers.moverArriba(i-1,0); break;
+    case 'd': pers.moverAbajo(i-1,0); break;
+    case 'l': pers.moverIzda(i-1,0); break;
+    case 'r': pers.moverDcha(i-1,0); break;
+    default: break;
+    }
+    pant.volcarPantalla(pant.getBuffer());
   }
+}
 
 
+void MovimientoDinamico(char direccion, Imagen& imag, Personaje& pers,
+			Pantalla& pant){
+  
+  Uint32 desp = 7;
+  Uint32 num_mov=4;
+  for(int i=num_mov; i>0; i--){
+    pant.volcarPantalla(pant.getFondo(), pant.getBuffer());
+    if(i > 3) desp = 8;
+    switch(direccion){
+    case 'u': pers.moverArriba(i-1,desp); break;
+    case 'd': pers.moverAbajo(i-1,desp); break;
+    case 'l': pers.moverIzda(i-1,desp); break;
+    case 'r': pers.moverDcha(i-1,desp); break;
+    default: break;
+    }
+    desp=7;
+  }
 }

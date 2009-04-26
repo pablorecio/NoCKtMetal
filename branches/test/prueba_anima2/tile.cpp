@@ -8,6 +8,8 @@
 
 using namespace std;
 
+Tile::Tile(){}
+
 Tile::Tile(char *ruta, bool col, bool inter){
   
   _ruta = (char*)malloc(sizeof(char)*(strlen(ruta)+1));
@@ -62,16 +64,13 @@ SDL_Surface* Tile::getImagen(){
   }
 
   SDL_Surface *tmp = _imagen; 
-  _imagen = SDL_DisplayFormat(tmp);
+  _imagen = SDL_DisplayFormatAlpha(tmp);
   SDL_FreeSurface(tmp);
 
   if(_imagen == NULL) {
     cerr << "Error: " << SDL_GetError() << endl;
     exit(1);
   }
-
-  Uint32 _colorkey = SDL_MapRGB(_imagen->format, 0, 255, 0);
-  SDL_SetColorKey(_imagen, SDL_SRCCOLORKEY, _colorkey);
 
   return _imagen;
 }
