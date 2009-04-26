@@ -26,8 +26,12 @@
 #ifndef _PERSONAJE_
 #define _PERSONAJE_
 
+#include <SDL/SDL.h>
+#include <vector>
 #include "pantalla.h"
 #include "sprite.h"
+
+using namespace std;
 
 /**
  * @brief La clase <code>Personaje</code> hace de intermediario entre la clase
@@ -100,6 +104,7 @@ public:
     Uint32 getMapaY() const;
     Uint32 getPantX() const;
     Uint32 getPantY() const;
+    Uint32 getDesp(Uint32 i) const;
     /**
      * Metodo observador que consulta si la posicion dada se sale del rango
      * de movimiento.
@@ -285,6 +290,7 @@ protected:
      * Correspondencia pixels-casilla
      */
     Uint32 _tam;
+    vector<Uint32> _desp;
     /**
      * Rango rectangular en pantalla en el que se puede mover el personaje.
      */
@@ -312,6 +318,7 @@ inline Uint32 Personaje::getMapaX() const { return _mapaX; }
 inline Uint32 Personaje::getMapaY() const { return _mapaY; }
 inline Uint32 Personaje::getPantX() const { return _pantX; }
 inline Uint32 Personaje::getPantY() const { return _pantY; }
+inline Uint32 Personaje::getDesp(Uint32 i) const { return _desp.at(i); }
 inline const SDL_Rect& Personaje::getRango() const { return _rango; }
 inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
     return ((_pantX * _tam)  < (Uint32)_rango.x ||

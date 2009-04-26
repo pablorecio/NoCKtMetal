@@ -23,8 +23,9 @@
  * Proyecto: NoCKt Metal
  */
 
-#include <iostream>
 #include <SDL/SDL.h>
+#include <iostream>
+#include <vector>
 
 #include "personaje.h"
 
@@ -42,6 +43,16 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p,
     _rango.h = _p->getAlto();
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = _sprite.getAncho();
+    /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
+    _desp = vector<Uint32>(getSecuenciasMovimiento());
+    for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
+        _desp.at(i) = _tam/getSecuenciasMovimiento();
+        /* Si la division en pixels no es exacta hay que rellenar pixels
+         * de forma equitativa */
+        if (i < _tam % getSecuenciasMovimiento()) {
+            _desp.at(i)++;
+        }
+    }
 }
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
@@ -54,7 +65,16 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
     _rango.h = _p->getAlto();
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = tam;
-}
+    /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
+    _desp = vector<Uint32>(getSecuenciasMovimiento());
+    for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
+        _desp.at(i) = _tam/getSecuenciasMovimiento();
+        /* Si la division en pixels no es exacta hay que rellenar pixels
+         * de forma equitativa */
+        if (i < _tam % getSecuenciasMovimiento()) {
+            _desp.at(i)++;
+        }
+    }}
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
                      Uint32 tam, Pantalla* p, const char* sprite, Uint32 f,
@@ -69,21 +89,32 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
     /* Colocacion correcta de los sprites en las casillas */
     /* Colocacion horizontal */
     Sint32 dif = 0;
-    if (tam != _sprite.getAncho()) {
+    if (_tam != _sprite.getAncho()) {
         /* Si el ancho del sprite es distinto, hay que centrarlo
          * horizontalmente en la casilla  */
-        dif = tam - _sprite.getAncho()/2;
+        dif = _tam - _sprite.getAncho()/2;
     }
-    _x = x * tam + dif;
+    _x = x * _tam + dif;
     /* Colocacion vertical */
     /* De forma general el sprite se colocara con su borde inferior alineado
      * con el borde inferior del tile */
-    dif = tam - _sprite.getAlto();
-    if (tam > _sprite.getAlto()) {
+    dif = _tam - _sprite.getAlto();
+    if (_tam > _sprite.getAlto()) {
         /* Si el alto del sprite es mayor hay que centrarlo */
-        dif = (tam - _sprite.getAlto())/2;
+        dif = (_tam - _sprite.getAlto())/2;
     }
-    _y = y * tam + dif;
+    _y = y * _tam + dif;
+
+    /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
+    _desp = vector<Uint32>(getSecuenciasMovimiento());
+    for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
+        _desp.at(i) = _tam/getSecuenciasMovimiento();
+        /* Si la division en pixels no es exacta hay que rellenar pixels
+         * de forma equitativa */
+        if (i < _tam % getSecuenciasMovimiento()) {
+            _desp.at(i)++;
+        }
+    }
 }
 
 Personaje::~Personaje() { }

@@ -28,10 +28,10 @@
 #include "imagen.h"
 
 Animacion::Animacion() {
- }
+}
 
 Animacion::~Animacion() {
- }
+}
 
 
 void Animacion::animandoEn(Pantalla& p) {
@@ -41,8 +41,8 @@ void Animacion::animandoEn(Pantalla& p) {
 void Animacion::animandoMapa() {
     Uint32 x, y;
 
-    x = _principal->getX() / _tamCasilla;
-    y = _principal->getY() / _tamCasilla;
+    x = _principal->getPantX();
+    y = _principal->getPantY();
 
     switch (mov) {
     case ARRIBA: y--;
@@ -70,10 +70,10 @@ void Animacion::animandoMapa() {
 
 void Animacion::hacerMovimientoEstatico(Movimiento m) {
     /* Mientras necesitemos mover al PJ */
-    for (Uint32 i = 0; i < _numSecuencias; i++) {
+    for (Uint32 sec = _principal->getSecuenciasMovimiento(); sec > 0; sec--) {
         /* Desplazar el mapa en _desp pixels y volcarlo en fondo*/
         /* Mover el PJ (autovolcado en movimiento) */
-        movimiento(m, i, 0);
+        movimiento(m, sec, 0);
         /* Volcar fondo en buffer */
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
         /* Volcar seccion de movimiento del PJ en buffer */

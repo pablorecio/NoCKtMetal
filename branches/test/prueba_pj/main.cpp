@@ -40,14 +40,13 @@ int main() {
     cout << baldos.getPantX() << " " << baldos.getPantY() << " posicion baldos" << endl;
 
     for (Uint32 i = 0; i < 3; i++) {
-        desp = 7;
         for (Uint32 sec = 4; sec > 0; sec--) {
-            if (sec < 3) desp = 8;
             /* Volcar fondo en buffer */
             p.volcarPantalla(p.getFondo(), p.getBuffer());
             /* Realizar movimiento del PJ (en buffer) */
-            baldos.moverAbajo(sec - 1, desp);
-            graimito.moverAbajo(sec - 1, desp);
+            baldos.moverAbajo(sec - 1, baldos.getDesp(sec-1));
+            cout << " sec = " << sec << "; desp(sec) = " << baldos.getDesp(sec-1) << endl; 
+            graimito.moverAbajo(sec - 1, graimito.getDesp(sec-1));
             /* Volcar buffer en pantalla */
             p.volcarPantalla(p.getBuffer());
             SDL_Delay(50);

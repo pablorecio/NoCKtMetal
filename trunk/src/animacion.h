@@ -95,7 +95,7 @@ private:
      */
     Pantalla* _pant;
     /**
-     * Puntero al personaje principal juego.
+     * Puntero al personaje principal del juego.
      */
     Personaje* _principal;
     /**
@@ -103,11 +103,6 @@ private:
      * se puede leer directamente de Imagen creo.
      */
     Uint32 _tamCasilla;
-    /**
-     * Numero de secuencias de movimiento; coincidente con
-     *  _principal->getSecuenciasMovimiento()
-     */
-    Uint32 _numSecuencias;
     /**
      * Desplazamiento igual a _numSecuencias/_tamCasilla
      */
