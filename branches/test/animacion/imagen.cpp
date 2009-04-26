@@ -155,38 +155,25 @@ void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia,
 
   double trozo_dibujo = Secuencia/vez;
 
-  cout << "trozo dibujo: " << trozo_dibujo << endl;
-
   origen.x=0;
   origen.y=0;
 
   origen.h=_Tam_Tile * trozo_dibujo;
   origen.w=_Tam_Tile * trozo_dibujo;
 
-  cout << "origen.h, origen.w: " << origen.h << " " << origen.w << endl;
-  
   _cX=cx * trozo_dibujo;
   _cY=cy * trozo_dibujo;
 
   Uint32 ancho_aux=_p->getAncho();
   Uint32 alto_aux=_p->getAlto();
 
-  cout << "_cX,_cY: (" << _cX << "," << _cY << ")" << endl;
-  cout << "cuenta_h: " << alto_aux << endl;
-  cout << "cuenta_w: " << _p->getFondo()->w << endl;
-  
   Uint32 aux_h = _cX+(_p->getFondo()->h/_Tam_Tile); 
   // número de tiles de la pantalla (alto) + coordY
   Uint32 aux_w = _cY+(_p->getFondo()->w/_Tam_Tile); 
   // número de tiles de la pantalla (ancho) + coordX
 
-  cout << "aux_h,aux_w: (" << aux_h << "," << aux_w << ")" << endl;
-  
   for(Uint32 i=_cX; (i<aux_w && i<_ancho); i++)
-    for(Uint32 j=_cY;(j<aux_h && j<_alto); j++){
-
-      cout << "coordenadas: ("<< i << "," << j << ")" << endl;
-      
+    for(Uint32 j=_cY;(j<aux_h && j<_alto); j++){      
       destino.x=((i-_cX)*_Tam_Tile) * trozo_dibujo;
       destino.y=((j-_cY)*_Tam_Tile) * trozo_dibujo;
       
@@ -194,10 +181,9 @@ void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia,
 		      &origen, _p->getFondo(), &destino);
       
     }
-
+  cout << "PREVOLCADO" << endl;
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
-
-
+  cout << "POSTVOLCADO" << endl;
 }
 
   // TODO: hacer que los bordes (arriba y izquierda) también salgan en negro

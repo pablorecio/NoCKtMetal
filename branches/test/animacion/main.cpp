@@ -16,7 +16,6 @@ int main() {
 
     Pantalla p = Pantalla();
     p.setTitulo("NoCKt Metal", "./logo.png");
-    cout << "pantalla iniciada" << endl;
 
     Animacion a = Animacion(&p);
     a.inicializarAnimacion();

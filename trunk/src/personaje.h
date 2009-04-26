@@ -372,10 +372,10 @@ inline Uint32 Personaje::getPantY() const { return _pantY; }
 inline Uint32 Personaje::getDesp(Uint32 i) const { return _desp.at(i); }
 inline const SDL_Rect& Personaje::getRango() const { return _rango; }
 inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
-    return ((_pantX * _tam)  < (Uint32)_rango.x ||
-            (_pantX * _tam) >= ((Uint32)_rango.x + _rango.w) ||
-            (_pantY * _tam) < (Uint32)_rango.y ||
-            (_pantY * _tam) >= ((Uint32)_rango.y + _rango.h));
+    return ((x < (Uint32)_rango.x/_tam) ||
+            (x >= ((Uint32)_rango.x/_tam + _rango.w/_tam)) ||
+            (y < (Uint32)_rango.y/_tam) ||
+            (y >= ((Uint32)_rango.y/_tam + _rango.h/_tam)));
 }
 inline Uint32 Personaje::getSecuenciasMovimiento() const {
     return _sprite.getColumnas();

@@ -78,7 +78,8 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
         if (i < _tam % getSecuenciasMovimiento()) {
             _desp.at(i)++;
         }
-    }}
+    }
+}
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
                      Uint32 tam, Pantalla* p, const char* sprite, Uint32 f,
@@ -218,6 +219,12 @@ void Personaje::setRango(Uint16 rangoAncho, Uint16 rangoAlto) {
     _rango.h = rangoAlto * _tam;
     _rango.x = (_p->getAncho() - _rango.w)/2;
     _rango.y = (_p->getAlto() - _rango.h)/2;
+    cout << "PANT X: " << _pantX << endl;
+    cout << "PANT Y: " << _pantY << endl;
+    cout << "RANGO X: " << _rango.x << endl;
+    cout << "RANGO Y: " << _rango.y << endl;
+    cout << "RANGO W: " << _rango.w << endl;
+    cout << "RANGO H: " << _rango.h << endl;
 }
 
 void Personaje::subirEnMapa() {
