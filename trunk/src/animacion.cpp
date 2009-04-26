@@ -23,116 +23,187 @@
  * Proyecto: NoCKt Metal
  */
 
+#include <SDL/SDL.h>
+#include <iostream>
 #include "animacion.h"
-#include "personaje.h"
-#include "imagen.h"
+
+using namespace std;
 
 Animacion::Animacion() {
     evento = Evento();
 }
 
-Animacion::~Animacion() {
+Animacion::Animacion(Pantalla *p): _pant(p) {
+    cout << "CONSTRUCTOR DE ANIMACION" << endl;
 }
 
+Animacion::~Animacion() { }
 
-void Animacion::animandoEn(Pantalla& p) {
-    _pant = &p;
+void Animacion::inicializarAnimacion() {
+    /* Inicializamos el mapa */
+    Uint32** matriz = (Uint32**) malloc(sizeof (Uint32*) * 48);
+    for (Uint32 i = 0; i < 48; i++) {
+        matriz[i] = (Uint32*) malloc(sizeof (Uint32)*36);
+    }
+
+    for (Uint32 i = 0; i < 48; i++) {
+        for (Uint32 j = 0; j < 36; j++) {
+            if ((i % 6 < 4) && (j % 6 > 4)) {
+                matriz[i][j] = 0;
+            } else {
+                matriz[i][j] = 1;
+            }
+        }
+    }
+
+    cout << "matriz creada." << endl;
+
+    _imag = new Imagen(48, 36, _pant, matriz);
+    Tile arena("arena.png");
+    Tile acero("acero.png");
+
+    cout << "imagen y tiles creado" << endl;
+
+    _imag->relacionarTile(0, arena);
+    _imag->relacionarTile(1, acero);
+    cout << "relación de los tiles" << endl;
+
+    _imag->dibujarFondo(0, 0);
+    cout << " imagen dibujada (en buffer)" << endl;
+
+    /* Personaje */
+    _principal = new Personaje(1, 1, 1, 30, _pant, "./baldos.png");
+    _principal->setRango(8,8);
+    _principal->setPosicion();
+    cout << "Personaje nuevo" << endl;
+
+    /* Dibujamos la pantalla inicial */
+    _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
+    _principal->dibujarPosicionFrente();
+    _pant->volcarPantalla(_pant->getBuffer());
 }
 
 bool Animacion::procesarAccion() {
-    accion a = evento.getEvento();
-    Uint32 x, y;
-    x = _principal->getPantX();
-    y = _principal->getPantY();
-    bool mover = false;
+    Uint32 x = _principal->getPantX();
+    Uint32 y = _principal->getPantY();
+    Sint32 cx = _imag->getCX();
+    Sint32 cy = _imag->getCY();
+    _mov = NULO;
 
-    switch (a) {
-    case SALIR: cout << "Saliendo de la ejecucion del programa" << endl;
-    return true;
-    case MENU: cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
-    break;
-    case ACEPTAR: cout << "Ha aceptado algo... Pero aqui no sirve de nada... eso solo vale en los menus..." << endl;
-    break;
-    case ATRAS : cout << "Ha rechazado algo... eso solo sirve en un menu... " << endl;
-    break;
-    case ARRIBA: y--;
-        mover = true;
+    switch (evento.getEvento()) {
+    case SALIR:
+        cout << "Saliendo de la ejecucion del programa" << endl;
+        return true;
+    case MENU:
+        cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
         break;
-    case ABAJO: y++;
-        mover = true;
+    case ACEPTAR:
+        cout << "Ha aceptado algo... Pero aqui no sirve de nada... "
+                << " eso solo vale en los menus..." << endl;
         break;
-    case IZDA: x--;
-        mover = true;
+    case ATRAS:
+        cout << "Ha rechazado algo... eso solo sirve en un menu... "
+                << endl;
         break;
-    case DCHA: x++;
-        mover = true;
+    case ARRIBA:
+        y--;
+        cy--;
+        _mov = SUBIR;
+        break;
+    case ABAJO:
+        y++;
+        cy++;
+        _mov = BAJAR;
+        break;
+    case IZQUIERDA:
+        x--;
+        cx--;
+        _mov = IZDA;
+        break;
+    case DERECHA:
+        x++;
+        cx++;
+        _mov = DCHA;
         break;
     default: break;
-        }
+    }
 
     /* Si la opcion elegida es realizar un movimiento... */
-    if(mover) {
-    /* Si el movimiento queda fuera del rango de pantalla del PJ,
-     * se movera de forma estatica, desplazandose el fondo por debajo */
-    if (_principal->fueraRango(x, y)) {
-        hacerMovimientoEstatico(mov);
-    } else {
-        /* En caso de que se desplace el PJ, el fondo quedara tal y como estaba
-         * por lo que solo tendremos que pintarlo una vez y volcarlo las veces
-         * que haga falta */
-        hacerMovimientoDinamico(mov);
+    if (_mov != NULO) {
+        /* Si el movimiento queda fuera del rango de pantalla del PJ,
+         * se movera de forma estatica, desplazandose el fondo por debajo */
+        if (_principal->fueraRango(x, y)) {
+            hacerMovimientoEstatico(cx, cy);
+        } else {
+            /* En caso de que se desplace el PJ, el fondo quedara tal y como estaba
+             * por lo que solo tendremos que pintarlo una vez y volcarlo las veces
+             * que haga falta */
+            hacerMovimientoDinamico();
+        }
     }
-}
     return false;
 }
 
-void Animacion::hacerMovimientoEstatico(Movimiento m) {
+void Animacion::hacerMovimientoEstatico(Uint32 x, Uint32 y) {
     /* Mientras necesitemos mover al PJ */
-    for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0; --sec) {
+    for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
+         --sec) {
         /* Desplazar el mapa en _desp pixels y volcarlo en fondo*/
+        _imag->dibujarFondo(x, y, _principal->getSecuenciasMovimiento() - sec,
+                            _principal->getSecuenciasMovimiento());
         /* Volcar fondo en buffer */
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
         /* Mover el PJ (autovolcado en buffer) */
-        movimiento(m, sec, 0);
+        mover(sec, 0);
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
     }
 }
 
-void Animacion::hacerMovimientoDinamico(Movimiento m) {
-    /* Pintar el fondo en fondo (valga la redundancia) */
+void Animacion::hacerMovimientoDinamico() {
     /* Mientras necesitemos mover al PJ */
-    for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0; --sec) {
+    for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
+         --sec) {
         /* Volcar fondo en buffer */
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
         /* Volcar seccion de movimiento del PJ en buffer */
-        movimiento(m, sec, _principal->getDesp(sec));
+        mover(sec, _principal->getDesp(sec));
         /* Volcar buffer en pantalla */
         _pant->volcarPantalla(_pant->getBuffer());
     }
-    switch (mov) {
-    case ARRIBA: _principal->subirEnPantalla();
+    switch (_mov) {
+    case SUBIR:
+        _principal->subirEnPantalla();
         break;
-    case ABAJO: _principal->bajarEnPantalla();
+    case BAJAR:
+        _principal->bajarEnPantalla();
         break;
-    case IZDA: _principal->izdaEnPantalla();
+    case IZDA:
+        _principal->izdaEnPantalla();
         break;
-    case DCHA: _principal->dchaEnPantalla();
+    case DCHA:
+        _principal->dchaEnPantalla();
         break;
-    default: break;
+    default:
+        break;
     }
 }
 
-void Animacion::movimiento(Movimiento mov, Uint32 sec, Uint32 desp) {
-    switch (mov) {
-    case ARRIBA: _principal->moverArriba(sec, desp);
+void Animacion::mover(Uint32 sec, Uint32 desp) {
+    switch (_mov) {
+    case SUBIR:
+        _principal->moverArriba(sec, desp);
         break;
-    case ABAJO: _principal->moverAbajo(sec, desp);
+    case BAJAR:
+        _principal->moverAbajo(sec, desp);
         break;
-    case IZDA: _principal->moverIzda(sec, desp);
+    case IZDA:
+        _principal->moverIzda(sec, desp);
         break;
-    case DCHA: _principal->moverDcha(sec, desp);
+    case DCHA:
+        _principal->moverDcha(sec, desp);
         break;
-    default: break;
+    default:
+        break;
     }
 }

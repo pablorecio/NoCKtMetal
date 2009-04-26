@@ -16,7 +16,7 @@ class Imagen{
 
   // creamos un objeto imagen a partir del tamaño de la matriz completa.
 
-  Imagen(Uint32 ancho, Uint32 alto, Uint32** matriz_tiles = NULL, 
+  Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles = NULL,
 	 Uint32** matriz_col = NULL, Uint32** matriz_inter = NULL);
 
   Imagen(std::map<Uint32, Tile*> imagenes, Uint32 ancho, Uint32 alto, 

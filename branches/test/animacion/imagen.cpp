@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
 #include <cmath>
@@ -14,22 +15,17 @@ using namespace std;
 
 Imagen::Imagen(){}
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32** matriz_tiles, 
-	       Uint32** matriz_col, Uint32** matriz_inter ){
-
-  _ancho=ancho;
-  _alto=alto;
-
-  _cX=0;
-  _cY=0;
+Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
+	       Uint32** matriz_col, Uint32** matriz_inter ):
+_alto(alto), _ancho(ancho), _cX(0), _cY(0), _p(p) {
 
   if(matriz_tiles != NULL){
     _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
     for(Uint32 i=0; i<ancho; i++)
       _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizOriginal[i][j] = matriz_tiles[i][j];
     
   }
@@ -39,8 +35,8 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32** matriz_tiles,
     for(Uint32 i=0; i<ancho; i++)
       _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizColision[i][j] = matriz_col[i][j];
   }
 
@@ -49,8 +45,8 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32** matriz_tiles,
     for(Uint32 i=0; i<ancho; i++)
       _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizInteractual[i][j] = matriz_inter[i][j];
   }
 
@@ -75,8 +71,8 @@ Imagen::Imagen(map<Uint32,Tile*> imagenes, Uint32 ancho, Uint32 alto,
     for(Uint32 i=0; i<ancho; i++)
       _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizOriginal[i][j] = matriz_tiles[i][j];
     
   }
@@ -86,8 +82,8 @@ Imagen::Imagen(map<Uint32,Tile*> imagenes, Uint32 ancho, Uint32 alto,
     for(Uint32 i=0; i<ancho; i++)
       _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizColision[i][j] = matriz_col[i][j];
   }
 
@@ -96,12 +92,11 @@ Imagen::Imagen(map<Uint32,Tile*> imagenes, Uint32 ancho, Uint32 alto,
     for(Uint32 i=0; i<ancho; i++)
       _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizInteractual[i][j] = matriz_inter[i][j];
   }
 }
-
 
 void Imagen::relacionarTile(Uint32 id, Tile& t){
   _tiles.insert(make_pair(id,&t));
@@ -121,8 +116,8 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
   for(Uint32 i=0; i<ancho; i++)
     _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
   
-  for(int i=0; i<ancho; i++)
-    for(int j=0; j<alto; j++)
+  for(Uint32 i=0; i<ancho; i++)
+    for(Uint32 j=0; j<alto; j++)
       _matrizOriginal[i][j] = matriz[i][j];
   
   if(colisionable != NULL){
@@ -130,8 +125,8 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
     for(Uint32 i=0; i<ancho; i++)
       _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizColision[i][j] = colisionable[i][j];
   }
 
@@ -140,8 +135,8 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
     for(Uint32 i=0; i<ancho; i++)
       _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
-    for(int i=0; i<ancho; i++)
-      for(int j=0; j<alto; j++)
+    for(Uint32 i=0; i<ancho; i++)
+      for(Uint32 j=0; j<alto; j++)
 	_matrizInteractual[i][j] = interactuable[i][j];
   }
     
@@ -168,7 +163,7 @@ void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia,
   origen.h=_Tam_Tile * trozo_dibujo;
   origen.w=_Tam_Tile * trozo_dibujo;
 
-  cout << "origen.h, origen.w: " << origen.h << endl;
+  cout << "origen.h, origen.w: " << origen.h << " " << origen.w << endl;
   
   _cX=cx * trozo_dibujo;
   _cY=cy * trozo_dibujo;

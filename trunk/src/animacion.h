@@ -31,6 +31,15 @@
 #include "personaje.h"
 #include "imagen.h"
 
+
+enum Movimiento {
+    NULO = 0,
+    SUBIR,
+    BAJAR,
+	IZDA,
+	DCHA
+};
+
 /**
  * @brief Clase que se encarga de inicializar los datos necesarios para
  * un nivel del juego asi como controlar la gestion de eventos (con ayuda
@@ -45,18 +54,16 @@ public:
      * Constructor predeterminado de <code>Animacion</code>.
      */
     Animacion();
-    
+    Animacion(Pantalla *p);
+
     /**
      * Metodo observador de la pantalla en la que se muestra la animacion.
      * Sera la ventana del videojuego logicamente.
      * @return Puntero a <code>Pantalla</code>.
      */
     Pantalla* getPantalla();
-    /**
-     * Asociacion con la clase <code>Pantalla</code>.
-     * @param p Referencia a la pantalla que se desea asociar.
-     */
-    void animandoEn(Pantalla& p);
+
+    void inicializarAnimacion();
     /**
      * Uno de los metodos principales de Animacion.
      * Ejecuta y controla el movimiento en el mapa.
@@ -76,13 +83,13 @@ private:
      * de vista del personaje.
      * @param m Identificador de la direccion del movimiento.
      */
-    void hacerMovimientoEstatico(Movimiento m);
+    void hacerMovimientoEstatico(Uint32 cx, Uint32 cy);
     /**
      * Metodo auxiliar que realiza un movimiento dinamico desde el punto
      * de vista del personaje.
      * @param m Identificador de la direccion del movimiento.
      */
-    void hacerMovimientoDinamico(Movimiento m);
+    void hacerMovimientoDinamico();
     /**
      * Metodo auxiliar que realiza un movimiento simple del personaje.
      * Sirve de ayuda a <code>hacerMovimientoEstatico</code> y
@@ -92,7 +99,7 @@ private:
      * @param sec Secuencia actual del movimiento.
      * @param desp Desplazamiento. Por defecto 0.
      */
-    void movimiento(Movimiento mov, Uint32 sec, Uint32 desp = 0);
+    void mover(Uint32 sec, Uint32 desp = 0);
     /**
      * Puntero a la pantalla general del juego.
      */
@@ -102,22 +109,11 @@ private:
      * Puntero al personaje principal del juego.
      */
     Personaje* _principal;
-    /**
-     * Equivalencia de un tile en pixels: En verdad no hace falta, porque
-     * se puede leer directamente de Imagen creo.
-     */
-    Uint32 _tamCasilla;
-    /**
-     * Ancho del mapa.
-     */
-    Uint32 _anchoMapa;
-    /**
-     * Alto del mapa.
-     */
-    Uint32 _altoMapa;
+    Imagen* _imag;
+    Movimiento _mov;
 };
 
 /* Metodos inline */
-inline Pantalla* Animacion::getPantalla() { return _pantalla; }
+inline Pantalla* Animacion::getPantalla() { return _pant; }
 
 #endif	/* _ANIMACION_H */

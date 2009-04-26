@@ -10,7 +10,7 @@ using namespace std;
 
 Tile::Tile(){}
 
-Tile::Tile(char *ruta, bool col, bool inter){
+Tile::Tile(const char *ruta, bool col, bool inter){
   
   _ruta = (char*)malloc(sizeof(char)*(strlen(ruta)+1));
   strcpy(_ruta,ruta);

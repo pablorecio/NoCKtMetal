@@ -49,7 +49,7 @@ class Tile{
 
   Tile();
   // constructores, operador de asignación y destructor.
-  Tile(char *ruta, bool col=false, bool inter=false);
+  Tile(const char *ruta, bool col=false, bool inter=false);
   Tile(const Tile& otro);
   Tile& operator =(const Tile& otro);
   ~Tile();

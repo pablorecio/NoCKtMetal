@@ -58,6 +58,13 @@ public:
      */
     Evento();
     /**
+     * Metodo actualizador del controlador de eventos.
+     * Es utilizado en el metodo observador para poder leer los eventos del
+     * instante actual sin detener el movimiento en caso de que se mantuviera
+     * presionada una tecla.
+     */
+    void actualizar();
+    /**
      * Metodo observador de la accion a realizar.
      * @return Identificador de la accion a realizar de tipo <code>accion</code>
      * definido especificamente para esta clase.
@@ -75,7 +82,8 @@ private:
     /**
      * Asocia las teclas que necesitamos a la constate SDL que la representa.
      */
-    map<accion, SDLKey> _accion;
+    map<SDLKey, accion> _accion;
+    map<accion, bool> _activa;
 };
 
 #endif	/* _EVENTO_H */
