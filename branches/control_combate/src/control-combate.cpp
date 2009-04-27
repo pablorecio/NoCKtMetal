@@ -49,19 +49,12 @@
 
 using namespace std;
 
-bool operator <(const Combatiente& C1, const Combatiente& C2){
-    return C1.tiradaVelocidad() > C2.tiradaVelocidad();
-}
-
-template <typename I>
-void Seleccion(I i, I j)
-{
-  for (I k = i ; k != j; ++k){
-    I p = min_element(k,j);
-    iter_swap(p,k);
-  }
-}
-
+class ObjetoComparacion{
+public:
+    bool operator() (Combatiente* C1, Combatiente* C2){
+        return (C1->tiradaVelocidad() > C2->tiradaVelocidad());
+    }
+};
 
 ControlCombate::ControlCombate(){}
 
@@ -71,7 +64,6 @@ ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
 }
 
 Uint32 ControlCombate::iniciarCombate(){
-    cout << "Uint8 ControlCombate::iniciarCombate()" << endl;
     while(_g1->vivo() && _g2->vivo()){
         ControlTurno actual(*this);
         while(!actual.finTurno()){
@@ -102,7 +94,7 @@ ControlTurno::ControlTurno(ControlCombate &comb){
         auxiliar.push_back(_comb->_g2->getCombatientes().at(i));
     }
 
-    sort(auxiliar.begin(),auxiliar.end());
+    sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
 
     for(size_t i = 0 ; i < auxiliar.size() ; i++){
         cout << auxiliar.at(i)->getNombre() << " - Velocidad: "
@@ -125,7 +117,7 @@ ControlTurno::ControlTurno(ControlCombate &comb){
             }
 
             _turno.push(auxiliar.at(i));
-            cout << "Insertado " << auxiliar.at(i)->getNombre() << endl;
+            //cout << "Insertado " << auxiliar.at(i)->getNombre() << endl;
         }
         i++;
     }
@@ -136,20 +128,16 @@ Uint32 ControlTurno::iteracionTurno(){
     Combatiente *actual;
     Combatiente *objetivo;
 
-    cout << "Tam antes -> " << _turno.size() << endl;
     do{
         actual = _turno.front();
         _turno.pop();
     }while(actual->getPV() == 0);
-    cout << "Tam despues -> " << _turno.size() << endl;
-    cout << "Le toca a " << actual->getNombre() << endl;
 
     if(actual->getGrupo().controlable()){ //CONTROLABLE
         switch(seleccionaAccion(*actual)){
             case 1:
                 cout << "Objetivos:" << endl;
-                seleccionarObjetivo(*actual, objetivo);
-                cout << "Direccion obtenida -> " << objetivo << endl;
+                objetivo = seleccionarObjetivo(*actual);
                 try{
                     cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
                          << " infligiendole " << actual->ataqueSimple(*objetivo) << endl;
@@ -164,7 +152,7 @@ Uint32 ControlTurno::iteracionTurno(){
                 cout << "Seleccione una habilidad (clave): ";
                 cin >> sel;
                 cout << "Objetivos:" << endl;
-                seleccionarObjetivo(*actual, objetivo);
+                objetivo = seleccionarObjetivo(*actual);
 
                 cout << actual->getNombre() << " ataca a " ;
                 cout << objetivo->getNombre() << " con ";
@@ -177,7 +165,7 @@ Uint32 ControlTurno::iteracionTurno(){
                 cout << "Seleccione un objeto (clave): ";
                 cin >> sel;
                 cout << "Objetivos:" << endl;
-                seleccionarObjetivo(*actual, objetivo);
+                objetivo = seleccionarObjetivo(*actual);
                 cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
                      << " con " << actual->getInventario().getObjeto(sel).getNombre()
                      << " infligiendole " << actual->usarObjeto(sel,*objetivo) << endl;
@@ -255,21 +243,18 @@ void ControlTurno::mostrarObjetivos(const Combatiente& c){
                  << combG2.at(i)->getNombre() << endl;
 }
 
-void ControlTurno::seleccionarObjetivo(const Combatiente& c, Combatiente* objetivo)
+Combatiente* ControlTurno::seleccionarObjetivo(const Combatiente& c)
         throw(Grupo::NoExisteCombatiente){ //falla ¬¬
 
+    Combatiente* objetivo;
     vector<Combatiente*> auxiliar;
 
     for(size_t i = 0 ; i < _comb->_g1->getNumeroCombatientes() ; i++){
         auxiliar.push_back(_comb->_g1->getCombatientes().at(i));
-        cout << "Direccion de memoria de " << _comb->_g1->getCombatientes().at(i)->getNombre()
-             << ": " << _comb->_g1->getCombatientes().at(i) << "/" << auxiliar.back() << endl;
     }
 
     for(size_t i = 0 ; i < _comb->_g2->getNumeroCombatientes() ; i++){
         auxiliar.push_back(_comb->_g2->getCombatientes().at(i));
-        cout << "Direccion de memoria de " << _comb->_g2->getCombatientes().at(i)->getNombre()
-             << ": " << _comb->_g2->getCombatientes().at(i) << "/" << auxiliar.back() << endl;
     }
 
     mostrarObjetivos(c);
@@ -277,15 +262,14 @@ void ControlTurno::seleccionarObjetivo(const Combatiente& c, Combatiente* objeti
     Uint32 clave;
     cin >> clave;
 
-    bool encontrado = false;
+    //bool encontrado = false;
 
-    for(size_t i = 0 ; i < auxiliar.size() && !encontrado ; i++){
+    for(size_t i = 0 ; i < auxiliar.size() ; i++){
         if(auxiliar.at(i)->getIdentificador() == clave){
             objetivo = (auxiliar.at(i));
-            cout << "Seleccionado " << objetivo->getNombre() << endl;
-            cout << "Direccion de memoria a devolver: " << objetivo << endl;
-            encontrado = true;
+            return objetivo;
         }
     }
-    if(!encontrado) throw(Grupo::NoExisteCombatiente());
+    //if(!encontrado)
+    throw(Grupo::NoExisteCombatiente());
 }

@@ -71,7 +71,7 @@ private:
     void mostrarInventario(const Combatiente& c);
     void mostrarObjetivos(const Combatiente& c);
 
-    void seleccionarObjetivo(const Combatiente& c, Combatiente* objetivo)
+    Combatiente* seleccionarObjetivo(const Combatiente& c)
         throw(Grupo::NoExisteCombatiente);
 };
 

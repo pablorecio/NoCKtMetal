@@ -68,6 +68,10 @@ Uint32 Combatiente::usarObjeto(Uint32 i, Combatiente& objetivo)
         res = o.calculaDamage();
         objetivo.decrementarPV(res);
     }
+    else if(o.getTipoAtaque() == CAMBIO_ESTADO){
+        res = o.calculaDamage();
+        objetivo.aumentarPE(res);
+    }
     --o;
     return res;
 }
