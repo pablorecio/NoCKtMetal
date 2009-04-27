@@ -153,10 +153,7 @@ private:
   friend class boost::serialization::access;
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
-  {
-    std::cout << "Objeto::serialize(Archive &ar, const unsigned int version)" 
-    	      << std::endl;
-    
+  {    
     ar & BOOST_SERIALIZATION_NVP(_nombre);
     //std::cout << "ar & BOOST_SERIALIZATION_NVP(Especial::_nombre);" 
     //	      << std::endl;

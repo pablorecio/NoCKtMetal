@@ -12,15 +12,10 @@ using namespace std;
 
 template <typename T>
 void guardar_XML(const T &a, const char *fichero){
-  cout << "void guardar_XML(const T &a, const char *fichero)" << endl;
   std::ofstream sal(fichero);
-  cout << "std::ofstream sal(fichero);" << endl;
   assert(sal.good());
-  cout << "assert(sal.good());" << endl;  
   boost::archive::xml_oarchive xml_sal(sal);
-  cout << "boost::archive::xml_oarchive xml_sal(sal);" << endl;
   xml_sal << BOOST_SERIALIZATION_NVP(a);
-  cout << "xml_sal << BOOST_SERIALIZATION_NVP(a);" << endl;
 }
 
 template <typename T>

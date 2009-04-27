@@ -78,7 +78,13 @@ public:
       return "Grupo lleno";
     }
   };
-  
+
+  class NoExisteCombatiente: public exception{
+  public:
+    const char* what() const throw(){
+      return "No existe combatiente con esa clave";
+    }
+  };
   /** 
    * Constructor vacio, no hace nada.
    */
@@ -108,12 +114,12 @@ public:
    */
   Inventario& getInventario() { return *_inventario; }
 
-  const std::vector<Combatiente*>& getCombatientes(){
-    return *_combatientes;
+  const std::vector<Combatiente*>& getCombatientes() const{
+    return _componentes;
   }
 
   std::vector<Combatiente*>& getCombatientes(){
-    return *_combatientes;
+    return _componentes;
   }  
 
   /**
@@ -121,14 +127,14 @@ public:
    *
    * @return Referencia constante al combatiente con la clave <code>i</code>
    */
-  const Combatiente& getCombatiente(Uint32 i) const {return *(_componentes.at(i));}
+  const Combatiente& getCombatiente(Uint32 i) const throw(NoExisteCombatiente);
 
   /**
    * Método <i>getter</i> para obtener acceso al componente con la clave dada.
    *
    * @return Referencia al combatiente con la clave <code>i</code>
    */
-  Combatiente& getCombatiente(Uint32 i) {return *(_componentes.at(i));}
+  Combatiente& getCombatiente(Uint32 i) throw(NoExisteCombatiente);
 
   /** 
    * 
@@ -165,6 +171,8 @@ public:
    * en otro caso.
    */
   bool vivo() const;
+
+  void mostrarGrupo() const;
   
 private:
   bool _controlable;

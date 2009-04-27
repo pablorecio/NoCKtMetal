@@ -30,7 +30,10 @@
 #include "objeto.h"
 
 Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-        Grupo &grupo, Uint32 exp) : Atributos(atr, exp), _nombre(nombre), _idCombatiente(id) {
+                         Grupo &grupo, std::pair<Uint32,Uint32> rangoArma,
+                         Uint32 exp, Uint32 aciertoArma, Uint32 armadura):
+            Atributos(atr, exp), _nombre(nombre), _idCombatiente(id), _rangoArma(rangoArma),
+            _aciertoArma(aciertoArma), _armadura(armadura){
     _grupo = &grupo;
     _inventario = &(_grupo->getInventario());
     _grupo->addCombatiente(*this); //Añadimos el combatiente a su grupo
@@ -88,4 +91,9 @@ Uint32 Combatiente::defenderse(){
     _pasarTurno = true;
     //TODO: buscar forma de aumentar el parámetro para restaurarlo en el turno siguiente
     return _res /*+ ¿? */;
+}
+
+bool Combatiente::huir(){
+    cout << "Función no implementada aun. Pierdes el turno xP" << endl;
+    return true;
 }
