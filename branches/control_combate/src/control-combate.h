@@ -71,7 +71,8 @@ private:
     void mostrarInventario(const Combatiente& c);
     void mostrarObjetivos(const Combatiente& c);
 
-    Combatiente& seleccionarObjetivo(const Combatiente& c) throw(Grupo::NoExisteCombatiente);
+    void seleccionarObjetivo(const Combatiente& c, Combatiente* objetivo)
+        throw(Grupo::NoExisteCombatiente);
 };
 
 #endif	/* _CONTROLCOMBATE_H */

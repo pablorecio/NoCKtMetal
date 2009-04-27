@@ -47,7 +47,7 @@ void Combatiente::addHabilidad(Habilidad& h) {
 Uint32 Combatiente::ataqueSimple(Combatiente& objetivo) throw(AtaqueFallado){
     //Primero vemos si le damos
     if(getAciertoArma() + tiradaDestreza() - (objetivo.tiradaDestreza() / 2)
-            > aleatorioRango(1,100)) throw(new AtaqueFallado());
+            > aleatorioRango(1,100)) throw(AtaqueFallado());
     else{
         Uint32 damage = tiradaArma() + tiradaFuerza() - (objetivo.tiradaResistencia() / 2);
         objetivo.decrementarPV(damage);

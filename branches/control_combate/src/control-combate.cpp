@@ -132,7 +132,6 @@ ControlTurno::ControlTurno(ControlCombate &comb){
 }
 
 Uint32 ControlTurno::iteracionTurno(){
-    Uint32 obj = 0;
     Uint32 sel = 0;
     Combatiente *actual;
     Combatiente *objetivo;
@@ -149,13 +148,15 @@ Uint32 ControlTurno::iteracionTurno(){
         switch(seleccionaAccion(*actual)){
             case 1:
                 cout << "Objetivos:" << endl;
-                //mostrarObjetivos(*actual);
-                //cout << "Selecciona un objetivo (clave): ";
-                //cin >> obj;
-                *objetivo = seleccionarObjetivo(*actual);
-                cout << "¿Selecciona?" << endl;
-                cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
-                     << " infligiendole " << actual->ataqueSimple(*objetivo) << endl;
+                seleccionarObjetivo(*actual, objetivo);
+                cout << "Direccion obtenida -> " << objetivo << endl;
+                try{
+                    cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
+                         << " infligiendole " << actual->ataqueSimple(*objetivo) << endl;
+                }
+                catch(...){
+                    cout << actual->getNombre() << " falló el ataque!" << endl;
+                }
                 break;
             case 2:
                 cout << "Habilidades: " << endl;
@@ -163,17 +164,12 @@ Uint32 ControlTurno::iteracionTurno(){
                 cout << "Seleccione una habilidad (clave): ";
                 cin >> sel;
                 cout << "Objetivos:" << endl;
-                mostrarObjetivos(*actual);
-                cout << "Selecciona un objetivo (clave): ";
-                cin >> obj;
-                try{
-                    *objetivo = _comb->_g1->getCombatiente(obj);
-                }catch(Grupo::NoExisteCombatiente n){
-                    *objetivo = _comb->_g2->getCombatiente(obj);
-                }
-                cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
-                     << " con " << actual->getHabilidad(sel).getNombre()
-                     << " infligiendole " << actual->ataqueEspecial(sel,*objetivo) << endl;
+                seleccionarObjetivo(*actual, objetivo);
+
+                cout << actual->getNombre() << " ataca a " ;
+                cout << objetivo->getNombre() << " con ";
+                cout << actual->getHabilidad(sel).getNombre() << " infligiendole ";
+                cout << actual->ataqueEspecial(sel,*objetivo) << endl;
                 break;
             case 3:
                 cout << "Objetos: " << endl;
@@ -181,14 +177,7 @@ Uint32 ControlTurno::iteracionTurno(){
                 cout << "Seleccione un objeto (clave): ";
                 cin >> sel;
                 cout << "Objetivos:" << endl;
-                mostrarObjetivos(*actual);
-                cout << "Selecciona un objetivo (clave): ";
-                cin >> obj;
-                try{
-                    *objetivo = _comb->_g1->getCombatiente(obj);
-                }catch(Grupo::NoExisteCombatiente n){
-                    *objetivo = _comb->_g2->getCombatiente(obj);
-                }
+                seleccionarObjetivo(*actual, objetivo);
                 cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
                      << " con " << actual->getInventario().getObjeto(sel).getNombre()
                      << " infligiendole " << actual->usarObjeto(sel,*objetivo) << endl;
@@ -237,7 +226,7 @@ void ControlTurno::mostrarHabilidades(const Combatiente& c){
     for(map<Uint32,Habilidad*>::iterator i = auxiliar.begin() ;
         i != auxiliar.end() ; i++){
         cout << i->second->getIdentificador() << " - " << i->second->getNombre()
-             << endl << " - PE: " << i->second->getGastoPE() << endl;
+             << " - PE: " << i->second->getGastoPE() << endl;
     }
 }
 
@@ -247,7 +236,7 @@ void ControlTurno::mostrarInventario(const Combatiente& c){
     for(map<Uint32,Objeto>::iterator i = auxiliar.begin() ;
         i != auxiliar.end() ; i++){
         cout << i->second.getIdentificador() << " - " << i->second.getNombre()
-             << endl << " - Cantidad: " << i->second.getCantidad() << endl;
+             << " - Cantidad: " << i->second.getCantidad() << endl;
     }
 }
 
@@ -266,17 +255,21 @@ void ControlTurno::mostrarObjetivos(const Combatiente& c){
                  << combG2.at(i)->getNombre() << endl;
 }
 
-Combatiente& ControlTurno::seleccionarObjetivo(const Combatiente& c)
+void ControlTurno::seleccionarObjetivo(const Combatiente& c, Combatiente* objetivo)
         throw(Grupo::NoExisteCombatiente){ //falla ¬¬
 
     vector<Combatiente*> auxiliar;
 
     for(size_t i = 0 ; i < _comb->_g1->getNumeroCombatientes() ; i++){
         auxiliar.push_back(_comb->_g1->getCombatientes().at(i));
+        cout << "Direccion de memoria de " << _comb->_g1->getCombatientes().at(i)->getNombre()
+             << ": " << _comb->_g1->getCombatientes().at(i) << "/" << auxiliar.back() << endl;
     }
 
     for(size_t i = 0 ; i < _comb->_g2->getNumeroCombatientes() ; i++){
         auxiliar.push_back(_comb->_g2->getCombatientes().at(i));
+        cout << "Direccion de memoria de " << _comb->_g2->getCombatientes().at(i)->getNombre()
+             << ": " << _comb->_g2->getCombatientes().at(i) << "/" << auxiliar.back() << endl;
     }
 
     mostrarObjetivos(c);
@@ -284,11 +277,15 @@ Combatiente& ControlTurno::seleccionarObjetivo(const Combatiente& c)
     Uint32 clave;
     cin >> clave;
 
-    for(size_t i = 0 ; i < auxiliar.size() ; i++){
+    bool encontrado = false;
+
+    for(size_t i = 0 ; i < auxiliar.size() && !encontrado ; i++){
         if(auxiliar.at(i)->getIdentificador() == clave){
-            cout << "Seleccionado " << auxiliar.at(i)->getNombre() << endl;
-            return *(auxiliar.at(i));
+            objetivo = (auxiliar.at(i));
+            cout << "Seleccionado " << objetivo->getNombre() << endl;
+            cout << "Direccion de memoria a devolver: " << objetivo << endl;
+            encontrado = true;
         }
     }
-    throw(new Grupo::NoExisteCombatiente());
+    if(!encontrado) throw(Grupo::NoExisteCombatiente());
 }
