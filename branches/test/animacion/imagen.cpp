@@ -6,6 +6,7 @@
 
 #include <cmath>
 #include <map>
+#include <vector>
 
 #include "tile.h"
 #include "imagen.h"
@@ -18,7 +19,7 @@ Imagen::Imagen(){}
 
 Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
 	       Uint32** matriz_col, Uint32** matriz_inter ):
-_alto(alto), _ancho(ancho), _cX(0), _cY(0), _p(p) {
+  _alto(alto), _ancho(ancho), _cX(0), _cY(0),_cXt(0), _cYt(0), _p(p) {
 
   if(matriz_tiles != NULL){
     _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
@@ -64,6 +65,9 @@ Imagen::Imagen(map<Uint32,Tile> imagenes, Uint32 ancho, Uint32 alto,
 
   _cX=0;
   _cY=0;
+
+  _cXt=0;
+  _cYt=0;
 
   _tiles = imagenes;
 
@@ -149,124 +153,98 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
   // a dibujar. El final/tamaño nos lo proporciona la Surface.
 
 
-void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia, 
-			       Uint32 vez){
+void Imagen::dibujarFondo(){
 
   SDL_Rect origen, destino;
 
-  double dibujar = (double)Secuencia/(double)vez;
-
+  _imagenAux = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho*Tile::getTam(),
+				    _alto*Tile::getTam(), 24, 0, 0, 0, 0);
   origen.x=0; origen.y=0;
   origen.h=Tile::getTam();
   origen.w=Tile::getTam();
 
-  _cX = cx; // tiles
-  _cY = cy; // tiles 
+  destino.w= _ancho*Tile::getTam();
+  destino.h= _alto*Tile::getTam();
 
-  destino.w=_p->getAncho()/Tile::getTam() ;
-  destino.h=_p->getAlto()/Tile::getTam() ;
+  for(Uint32 i=0; i<destino.w; i=i+Tile::getTam())
+    for(Uint32 j=0; j<destino.h; j=j+Tile::getTam()){
 
-  Uint32 aux_ancho = _cX + (_p->getAncho()/Tile::getTam()); // tiles
-  Uint32 aux_alto = _cY + (_p->getAlto()/Tile::getTam()); // tiles
-
-  for(Uint32 i=_cX; i<aux_ancho; i++)
-    for(Uint32 j=_cY; j<aux_alto; j++){
-      destino.x=(i-_cX) * Tile::getTam();
-      destino.y=(j-_cY) * Tile::getTam();
+      destino.x=i;
+      destino.y=j;
       
       cout << "(i,j): (" << i << "," << j << ")" << endl;
-      cout << "matriz: " << _matrizOriginal[i][j] << endl;
 
-      Tile t = _tiles.find(_matrizOriginal[i][j])->second;
-      cout << "tile tomado;" << endl;
-      cout << _tiles.find(_matrizOriginal[i][j])->first << endl;
-      cout << (_tiles.find(_matrizOriginal[i][j])->second).getRuta() << endl;
+      Tile t = _tiles.find(_matrizOriginal[i/Tile::getTam()]
+			   [j/Tile::getTam()])->second;
 
       SDL_BlitSurface(t.getImagen(),
-      		      &origen, _p->getFondo(), &destino);
+      		      &origen, _imagenAux, &destino);
 
       cout << "dibujado" << endl;
     }
+
+  _p->volcarPantalla(_imagenAux, _p->getFondo());
+
+  cout << "(_cXt,_cYt): (" << _cXt << "," << _cYt << ")" << endl;
+  
+  _cX=_cXt*Tile::getTam();
+  _cY=_cYt*Tile::getTam();
+
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
 
 }
-
-
-  /*
-  cout << "(secuencia,vez): (" << Secuencia << "," << vez << ")" << endl;
-
-  double trozo_dibujo = (double)Secuencia/vez;
-  cout << "trozo_dib: " << trozo_dibujo << endl;
-
-  origen.x=0;
-  origen.y=0;
-  
-  origen.h = Tile::getTam() * trozo_dibujo;
-  origen.w = Tile::getTam() * trozo_dibujo;
-
-  cout << "_cX : " << cx* (double)Tile::getTam()*trozo_dibujo << endl;
-  cout << "_cY : " << cy* (double)Tile::getTam()*trozo_dibujo << endl;
-  cout << "tamaño tile: " << Tile::getTam() << endl; 
-
-  _cX=(double)cx * (double)Tile::getTam() * trozo_dibujo;
-  _cY=(double)cy * (double)Tile::getTam() * trozo_dibujo;
-
-  cout << "cX: " << _cX << endl;
-  cout << "cY: " << _cY << endl;
-
-  Uint32 ancho_aux=_p->getAncho();
-  Uint32 alto_aux=_p->getAlto();
-
-  Uint32 aux_h = _cX+(_p->getFondo()->h/Tile::getTam());
-  // número de tiles de la pantalla (alto) + coordY
-  Uint32 aux_w = _cY+(_p->getFondo()->w/Tile::getTam());
-  // número de tiles de la pantalla (ancho) + coordX
-
-  cout << "ancho: " << aux_h << endl;
-  cout << "alto: " << aux_w << endl;
-
-  for(Uint32 i=(Uint32)_cX; (i < aux_w && i < _ancho); i++){
-    cout << "i: " << i << endl;
-    for(Uint32 j=(Uint32)_cY;(j < aux_h && j < _alto); j++){
-      cout << "(i,j): (" << i << "," << j << ")" << endl;
-      destino.x=(double)(i-_cX)*(double)Tile::getTam() * trozo_dibujo;
-      destino.y=(double)(j-_cY)*(double)Tile::getTam() * trozo_dibujo;
-
-      cout << "destino x e y: " << destino.x << " " << destino.y << endl;
-      cout << "(i,j) matriz: (" << i/Tile::getTam() << "," 
-	   << j/Tile::getTam() << ")" << endl;
-
-      map<Uint32, Tile*>::iterator aux = 
-	_tiles.find(_matrizOriginal[i][j]);
-
-      cout << "tile encontrado iterador" << endl;
-
-      Tile* t ;
-      t= aux->second;
-      cout << "RUTA: " << t->getRuta() << endl;
-
-      cout << "MATRIZ ORIGINAL: " << _matrizOriginal[i][j] << endl;
-      
-      Tile* aux2 = _tiles.at(_matrizOriginal[i][j]);
-      //cout << "RUTA: " << aux2->getRuta() << endl;
-      cout << "Colisionable?: " << aux2->isColisionable() << endl;
-
-      SDL_BlitSurface(t->getImagen(),
-		      &origen, _p->getFondo(), &destino);      
-    }
-    cout << endl;
-  }
-
-
-  
-  cout << "PREVOLCADO" << endl;
-  _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
-  cout << "POSTVOLCADO" << endl;
-
-  
-}
-  */
 
   // TODO: hacer que los bordes (arriba y izquierda) también salgan en negro
   // cuando se necesite, es decir, por ejemplo, cuando el muñeco quiera acceder
   // hasta el límite superior del mapa
+
+void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces){
+
+  vector<Uint32> _pixels(veces);
+  for(Uint32 i=0; i<veces; i++){
+    _pixels.at(i)= Tile::getTam()/veces;
+    if(i < Tile::getTam()%veces)
+      _pixels.at(i)++;
+  }
+
+  SDL_Rect origen, destino;
+  destino.x = destino.y = 0;
+  origen.h = destino.h = _p->getAlto();
+  origen.w = destino.w = _p->getAncho();
+
+  switch(dir){
+  case 'u': // muñeco arriba, mapa abajo.
+    origen.x = _cX = _cX;
+    origen.y = _cY = _cY+_pixels.at(secuencia-1);
+    break;
+  case 'd': // muñeco abajo, mapa arriba.
+    origen.x = _cX = _cX;
+    origen.y = _cY = _cY-_pixels.at(secuencia-1);
+    break;
+  case 'l': // muñeco a la izquierda, mapa hacia la derecha.
+    origen.x = _cX = _cX - _pixels.at(secuencia-1);
+    origen.y = _cY = _cY;
+    break;
+  case 'r': // muñeco a la derecha, mapa hacia la izquierda.
+    origen.x = _cX = _cX + _pixels.at(secuencia-1);
+    origen.y = _cY = _cY;
+    break;
+  default: break;
+  }
+
+  SDL_BlitSurface(_imagenAux, &origen, _p->getFondo(), &destino);
+
+  _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
+
+  if(secuencia == veces){
+    cout << "antes! " << _cXt << " " << _cYt << endl;
+
+    _cXt = _cX/Tile::getTam();
+    _cYt = _cY/Tile::getTam();
+  
+    cout << "despues! " << _cXt << " " << _cYt << endl;
+
+    //dibujarFondo(_cXt, _cYt);
+  }
+
+}

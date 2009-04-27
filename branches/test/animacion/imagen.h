@@ -29,7 +29,9 @@ class Imagen{
   // Necesitamos saber desde que coordenada de la matriz completa comenzamos
   // a dibujar. El final/tamaño nos lo proporciona la Surface.
 
-  void dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia=1, Uint32 vez=1);
+  void dibujarFondo();
+
+  void dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces);
   
   // get!!
   Uint32 getAlto();
@@ -58,10 +60,13 @@ class Imagen{
   Uint32 **_matrizInteractual;
   Uint32 _alto,_ancho;
   Sint32 _cX, _cY; 
+  Sint32 _cXt, _cYt;
   // coordenadas tomadas de la matriz original 
   // desde donde se es visible la matriz secundaria en pantalla.  
 
   Pantalla *_p;
+
+  SDL_Surface* _imagenAux;
   
   
 };
@@ -74,13 +79,13 @@ inline Uint32** Imagen::getMatrizImagenes() { return _matrizOriginal; }
 inline Uint32** Imagen::getMatrizColision() { return _matrizColision; }
 inline Uint32** Imagen::getMatrizInteractual() { return _matrizInteractual; } 
 
-inline Sint32 Imagen::getCX() { return _cX; }
-inline Sint32 Imagen::getCY() { return _cY; }
+inline Sint32 Imagen::getCX() { return _cXt; }
+inline Sint32 Imagen::getCY() { return _cYt; }
 
 inline std::map<Uint32,Tile> Imagen::getTiles() { return _tiles; }
 
-inline void Imagen::setCX(Sint32 x) { _cX=x; }
-inline void Imagen::setCY(Sint32 y) { _cY=y; }
+inline void Imagen::setCX(Sint32 x) { _cXt=x; }
+inline void Imagen::setCY(Sint32 y) { _cYt=y; }
 
 inline void Imagen::setTiles(std::map<Uint32,Tile> conj_tiles) { _tiles= conj_tiles; }
 

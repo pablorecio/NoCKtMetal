@@ -67,7 +67,7 @@ void Animacion::inicializarAnimacion() {
     _imag->relacionarTile(1, piedra);
     _imag->relacionarTile(2, tierra);
 
-    _imag->dibujarFondo(0, 0);
+    _imag->dibujarFondo();
 
     /* Personaje */
     _principal = new Personaje(1, 1, 1, 30, _pant, "./baldos.png");
@@ -151,12 +151,12 @@ bool Animacion::procesarAccion() {
 
 void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y) {
     /* Mientras necesitemos mover al personaje */
+  
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
       /* Desplazamos el mapa */
       //cout << "secuencia: " << _principal->getSecuenciasMovimiento() << endl; 
-      _imag->dibujarFondo(x, y,(Uint32)(_principal->getSecuenciasMovimiento()
-					- sec), _principal->getSecuenciasMovimiento());
+      _imag->dibujarSecuencia('r', _principal->getSecuenciasMovimiento() - sec, _principal->getSecuenciasMovimiento());
       /* Volcar fondo en buffer */
       //_pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
       /* Mover el personaje (autovolcado en buffer) */
