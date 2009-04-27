@@ -154,33 +154,54 @@ void Imagen::dibujarFondo(Sint32 cx, Sint32 cy, Uint32 Secuencia,
   SDL_Rect origen, destino;
 
   double trozo_dibujo = Secuencia/vez;
+  cout << "trozo_dib: " << Secuencia/vez << endl;
 
   origen.x=0;
   origen.y=0;
+  
+  origen.h = Tile::getTam() * trozo_dibujo;
+  origen.w = Tile::getTam() * trozo_dibujo;
 
-  origen.h=_Tam_Tile * trozo_dibujo;
-  origen.w=_Tam_Tile * trozo_dibujo;
-
+  
   _cX=cx * trozo_dibujo;
   _cY=cy * trozo_dibujo;
+
+  cout << "cX: " << _cX << endl;
+  cout << "cY: " << _cY << endl;
 
   Uint32 ancho_aux=_p->getAncho();
   Uint32 alto_aux=_p->getAlto();
 
-  Uint32 aux_h = _cX+(_p->getFondo()->h/_Tam_Tile); 
+  Uint32 aux_h = _cX+(_p->getFondo()->h/Tile::getTam());
   // número de tiles de la pantalla (alto) + coordY
-  Uint32 aux_w = _cY+(_p->getFondo()->w/_Tam_Tile); 
+  Uint32 aux_w = _cY+(_p->getFondo()->w/Tile::getTam());
   // número de tiles de la pantalla (ancho) + coordX
 
-  for(Uint32 i=_cX; (i<aux_w && i<_ancho); i++)
-    for(Uint32 j=_cY;(j<aux_h && j<_alto); j++){      
-      destino.x=((i-_cX)*_Tam_Tile) * trozo_dibujo;
-      destino.y=((j-_cY)*_Tam_Tile) * trozo_dibujo;
-      
-      SDL_BlitSurface((_tiles.at(_matrizOriginal[i][j]))->getImagen(), 
-		      &origen, _p->getFondo(), &destino);
-      
+  cout << "ancho: " << aux_h << endl;
+  cout << "alto: " << aux_w << endl;
+
+  for(Uint32 i=(Uint32)_cX; (i < aux_w && i < _ancho); i++){
+    for(Uint32 j=(Uint32)_cY;(j < aux_h && j < _alto); j++){
+      destino.x=((i-_cX)*Tile::getTam()) * trozo_dibujo;
+      destino.y=((j-_cY)*Tile::getTam()) * trozo_dibujo;
+      map<Uint32, Tile*>::iterator aux = _tiles.find(_matrizOriginal[i][j]);
+      Tile* t = aux->second;
+      cout << "RUTA: " << t->getRuta() << endl;
+
+
+
+      cout << "i: " << i << endl;
+      cout << "j: " << j << endl;
+      cout << "MATRIZ ORIGINAL: " << _matrizOriginal[i][j] << endl;
+      Tile* aux2 = _tiles.at(_matrizOriginal[i][j]);
+      cout << "RUTA: " << aux2->getRuta() << endl;
+      cout << "Colisionable?: " << aux2->isColisionable() << endl;
+
+      SDL_BlitSurface(t->getImagen(),
+		      &origen, _p->getFondo(), &destino);      
     }
+    cout << endl;
+  }
   cout << "PREVOLCADO" << endl;
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
   cout << "POSTVOLCADO" << endl;

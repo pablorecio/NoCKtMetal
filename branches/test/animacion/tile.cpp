@@ -8,9 +8,11 @@
 
 using namespace std;
 
+Uint32 Tile::_tam = 30;
+
 Tile::Tile(){}
 
-Tile::Tile(const char *ruta, bool col, bool inter){
+Tile::Tile(const char *ruta, bool col, bool inter) {
   
   _ruta = (char*)malloc(sizeof(char)*(strlen(ruta)+1));
   strcpy(_ruta,ruta);
@@ -19,9 +21,10 @@ Tile::Tile(const char *ruta, bool col, bool inter){
   // para saber con que tipo de tile trabajamos. 
   _colisionable=col;
   _interactuable=inter;
+
 }
 
-Tile::Tile(const Tile& otro){
+Tile::Tile(const Tile& otro) {
 
   _ruta= (char*)malloc(sizeof(char)*(strlen(otro._ruta)+1));
   strcpy(_ruta, otro._ruta);

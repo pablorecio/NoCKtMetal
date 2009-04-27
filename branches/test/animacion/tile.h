@@ -25,14 +25,6 @@
  * Fecha = 15 / 04 / 2009
  */
 
-#ifndef _TAM_TILE_
-#define _TAM_TILE_
-
-#define _Tam_Tile 30
-
-#endif
-
-
 #ifndef _TILE_H_
 #define _TILE_H_
 
@@ -59,6 +51,7 @@ class Tile{
 
   // observadoras
   char* getRuta();
+  static Uint32 getTam();
   bool isColisionable();
   bool isInteractuable();
 
@@ -66,16 +59,18 @@ class Tile{
   void setRuta(char* ruta);
   void setColisionable(bool var);
   void setInteractuable(bool var);
+  static void setTam(Uint32 tam);
 
 protected:
   char * _ruta;
   bool _colisionable;
   bool _interactuable;
-
+  static Uint32 _tam;
 };
 
-
 inline char* Tile::getRuta() { return _ruta; }
+inline Uint32 Tile::getTam() { return _tam; }
+inline void Tile::setTam(Uint32 tam) { _tam = tam; }
 
 inline bool Tile::isColisionable() { return _colisionable; }
 inline bool Tile::isInteractuable() { return _interactuable; }

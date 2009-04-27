@@ -100,7 +100,7 @@ private:
      * de vista del personaje</i>.
      * @param m Identificador de la direccion del movimiento.
      */
-    void hacerMovimientoEstatico(Uint32 cx, Uint32 cy);
+    void hacerMovimientoEstatico(Sint32 cx, Sint32 cy);
     /**
      * Método auxiliar que realiza un movimiento dinámico <i>desde el punto
      * de vista del personaje</i>.
