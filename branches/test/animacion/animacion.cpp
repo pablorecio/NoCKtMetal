@@ -153,15 +153,16 @@ void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y) {
     /* Mientras necesitemos mover al personaje */
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
-        /* Desplazamos el mapa */
-        /*_imag->dibujarFondo(x, y,
-                            (Uint32)(_principal->getSecuenciasMovimiento() - sec));*/
-        /* Volcar fondo en buffer */
-        _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
-        /* Mover el personaje (autovolcado en buffer) */
-        mover(sec, 0);
-        /* Volcar buffer en pantalla */
-        _pant->volcarPantalla(_pant->getBuffer());
+      /* Desplazamos el mapa */
+      //cout << "secuencia: " << _principal->getSecuenciasMovimiento() << endl; 
+      _imag->dibujarFondo(x, y,(Uint32)(_principal->getSecuenciasMovimiento()
+					- sec), _principal->getSecuenciasMovimiento());
+      /* Volcar fondo en buffer */
+      //_pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
+      /* Mover el personaje (autovolcado en buffer) */
+      mover(sec, 0);
+      /* Volcar buffer en pantalla */
+      _pant->volcarPantalla(_pant->getBuffer());
     }
 }
 

@@ -19,13 +19,9 @@ class Imagen{
   Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles = NULL,
 	 Uint32** matriz_col = NULL, Uint32** matriz_inter = NULL);
 
-  Imagen(std::map<Uint32, Tile*> imagenes, Uint32 ancho, Uint32 alto, 
+  Imagen(std::map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto, 
 	 Uint32** matriz_tiles = NULL,Uint32** matriz_col = NULL, 
 	 Uint32** matriz_inter = NULL);
-
-  // se introducirá en el final del vector.
-  // hay que tener en cuenta los índices para luego poder 
-  // realizar la imagen correctamente.
 
   void relacionarTile(Uint32 id, Tile& t);
   void relacionarPantalla(Pantalla &p);
@@ -43,18 +39,18 @@ class Imagen{
   Uint32** getMatrizInteractual();
   Sint32 getCX();
   Sint32 getCY();
-  std::map<Uint32,Tile*> getTiles();
+  std::map<Uint32,Tile> getTiles();
 
   // modificadoras
   void setCX(Sint32 x);
   void setCY(Sint32 y);
-  void setTiles(std::map<Uint32,Tile*> conjTiles);
+  void setTiles(std::map<Uint32,Tile> conjTiles);
   void setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz, 
 		 Uint32** colisionable=NULL, Uint32** interactuable=NULL);
 
  private:
 
-  std::map<Uint32,Tile*> _tiles;
+  std::map<Uint32,Tile> _tiles;
   
   // matriz rellena de índices del vector de tiles.
   Uint32 **_matrizOriginal;
@@ -81,12 +77,12 @@ inline Uint32** Imagen::getMatrizInteractual() { return _matrizInteractual; }
 inline Sint32 Imagen::getCX() { return _cX; }
 inline Sint32 Imagen::getCY() { return _cY; }
 
-inline std::map<Uint32,Tile*> Imagen::getTiles() { return _tiles; }
+inline std::map<Uint32,Tile> Imagen::getTiles() { return _tiles; }
 
 inline void Imagen::setCX(Sint32 x) { _cX=x; }
 inline void Imagen::setCY(Sint32 y) { _cY=y; }
 
-inline void Imagen::setTiles(std::map<Uint32,Tile*> conj_tiles) { _tiles= conj_tiles; }
+inline void Imagen::setTiles(std::map<Uint32,Tile> conj_tiles) { _tiles= conj_tiles; }
 
 
 #endif
