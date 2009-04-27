@@ -30,7 +30,10 @@
 #include "objeto.h"
 
 Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-        Grupo &grupo, Uint32 exp) : Atributos(atr, exp), _nombre(nombre), _idCombatiente(id) {
+                         Grupo &grupo, std::pair<Uint32,Uint32> rangoArma,
+                         Uint32 exp, Uint32 aciertoArma, Uint32 armadura):
+            Atributos(atr, exp), _nombre(nombre), _idCombatiente(id), _rangoArma(rangoArma),
+            _aciertoArma(aciertoArma), _armadura(armadura){
     _grupo = &grupo;
     _inventario = &(_grupo->getInventario());
     _grupo->addCombatiente(*this); //Añadimos el combatiente a su grupo
@@ -44,7 +47,7 @@ void Combatiente::addHabilidad(Habilidad& h) {
 Uint32 Combatiente::ataqueSimple(Combatiente& objetivo) throw(AtaqueFallado){
     //Primero vemos si le damos
     if(getAciertoArma() + tiradaDestreza() - (objetivo.tiradaDestreza() / 2)
-            > aleatorioRango(1,100)) throw(new AtaqueFallado());
+            > aleatorioRango(1,100)) throw(AtaqueFallado());
     else{
         Uint32 damage = tiradaArma() + tiradaFuerza() - (objetivo.tiradaResistencia() / 2);
         objetivo.decrementarPV(damage);
@@ -64,6 +67,10 @@ Uint32 Combatiente::usarObjeto(Uint32 i, Combatiente& objetivo)
     else if (o.getTipoAtaque() == ATAQUE){
         res = o.calculaDamage();
         objetivo.decrementarPV(res);
+    }
+    else if(o.getTipoAtaque() == CAMBIO_ESTADO){
+        res = o.calculaDamage();
+        objetivo.aumentarPE(res);
     }
     --o;
     return res;
@@ -88,4 +95,9 @@ Uint32 Combatiente::defenderse(){
     _pasarTurno = true;
     //TODO: buscar forma de aumentar el parámetro para restaurarlo en el turno siguiente
     return _res /*+ ¿? */;
+}
+
+bool Combatiente::huir(){
+    cout << "Función no implementada aun. Pierdes el turno xP" << endl;
+    return true;
 }

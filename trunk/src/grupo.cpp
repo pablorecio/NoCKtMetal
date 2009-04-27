@@ -37,8 +37,34 @@ void Grupo::addCombatiente(Combatiente& comb) throw(GrupoLleno){
     _componentes.at(_numComp) = &comb;
     _numComp++;
 }
+
+const Combatiente& Grupo::getCombatiente(Uint32 i) const throw(NoExisteCombatiente){
+    for(size_t j = 0 ; j < _componentes.size() ; j++){
+        if(_componentes.at(j)->getIdentificador() == i)
+            return *(_componentes.at(j));
+    }
+    throw(new NoExisteCombatiente());
+}
+
+Combatiente& Grupo::getCombatiente(Uint32 i) throw(NoExisteCombatiente){
+    for(size_t j = 0 ; j < _componentes.size() ; j++){
+        if(_componentes.at(j)->getIdentificador() == i)
+            return *(_componentes.at(j));
+    }
+    throw(new NoExisteCombatiente());
+}
+
 bool Grupo::vivo() const {
     for (unsigned int i = 0 ; i < _componentes.size() ; i++)
         if (_componentes.at(i)->getPV() != 0) return true;
     return false;
+}
+
+void Grupo::mostrarGrupo() const {
+    cout << "void Grupo::mostrarGrupo() const" << endl;
+    cout << "_numComp = " << _numComp << endl;
+    for(size_t i = 0; i < _numComp ; i++)
+    cout << _componentes.at(i)->getIdentificador() << " - " << _componentes.at(i)->getNombre()
+            << " -- PV: " << _componentes.at(i)->getPV() << "/" << _componentes.at(i)->getPVMax()
+            << " -- PE: " << _componentes.at(i)->getPE() << "/" << _componentes.at(i)->getPEMax() << endl;
 }

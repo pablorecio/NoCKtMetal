@@ -98,10 +98,14 @@ public:
      * @param id Identificador único del combatiente
      * @param atr Objeto con los atributos báse del combatiente
      * @param grupo Referencia al grupo al que pertenece el combaitente
+     * @param rangoArma (TEMPORAL) Rango de daño del arma del personaje
      * @param exp Cantidad de puntos de experiencia, la cual define el nivel del combatiente.
+     * @param aciertoArma
+     * @param armadura
      */
     Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-            Grupo &grupo, Uint32 exp = 0); //TODO: grupo?
+            Grupo &grupo, std::pair<Uint32,Uint32> rangoArma,
+            Uint32 exp = 0, Uint32 aciertoArma = 15, Uint32 armadura = 20);
 
     /**
      *
@@ -170,6 +174,14 @@ public:
     Inventario& getInventario() {
         return *_inventario;
     }
+
+  const std::map<Uint32, Habilidad*>& getHabilidades() const{
+    return _habilidades;
+  }
+
+  std::map<Uint32, Habilidad*>& getHabilidades(){
+    return _habilidades;
+  }
 
     Uint32 getAciertoArma() {
         return _aciertoArma;
@@ -248,9 +260,9 @@ private:
     bool _pasarTurno;
 
     //temporal:
+    std::pair<Uint32, Uint32> _rangoArma;
     Uint32 _aciertoArma;
     Uint32 _armadura;
-    std::pair<Uint32, Uint32> _rangoArma;
 
   friend class boost::serialization::access;
   template<class Archive>
