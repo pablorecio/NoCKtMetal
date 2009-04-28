@@ -89,6 +89,8 @@ bool Animacion::procesarAccion() {
     /* Movimiento actual tomado como NULO */ 
     _mov = NULO;
 
+    char dir=' ';
+
     /* Lectura del nuevo evento */
     switch (evento.getEvento()) {
     case SALIR:
@@ -106,24 +108,28 @@ bool Animacion::procesarAccion() {
                 << endl;
         break;
     case ARRIBA:
+      dir='u';
         y = _principal->getPantY() -1;
         cy = _imag->getCY() -1;
         _mov = SUBIR;
         cout << "ARRIBA" << endl;
         break;
     case ABAJO:
+      dir='d';
         y = _principal->getPantY() +1;
         cy = _imag->getCY() +1;
         _mov = BAJAR;
         cout << "ABAJO" << endl;
         break;
     case IZQUIERDA:
+      dir='l';
         x = _principal->getPantX() -1;
         cx = _imag->getCX() -1;
         _mov = IZDA;
         cout << "IZDA" << endl;
         break;
     case DERECHA:
+      dir='r';
         x = _principal->getPantX() +1;
         cx = _imag->getCX() +1;
         _mov = DCHA;
@@ -138,7 +144,7 @@ bool Animacion::procesarAccion() {
         /* Si el movimiento queda fuera del rango de pantalla del personaje,
          * se moverá de forma estática, desplazándose el fondo por debajo */
         if (_principal->fueraRango(x, y)) {
-            hacerMovimientoEstatico(cx, cy);
+	  hacerMovimientoEstatico(cx, cy, dir);
         } else {
             /* En caso de que se desplace el personaje, el fondo quedará tal y
              * como estaba (por lo que no tendremos que pintarlo de nuevo,
@@ -149,14 +155,14 @@ bool Animacion::procesarAccion() {
     return false;
 }
 
-void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y) {
+void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y, char dir) {
     /* Mientras necesitemos mover al personaje */
   
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
       /* Desplazamos el mapa */
       //cout << "secuencia: " << _principal->getSecuenciasMovimiento() << endl; 
-      _imag->dibujarSecuencia('r', _principal->getSecuenciasMovimiento() - sec, _principal->getSecuenciasMovimiento());
+      _imag->dibujarSecuencia(dir, _principal->getSecuenciasMovimiento() - sec, _principal->getSecuenciasMovimiento());
       /* Volcar fondo en buffer */
       //_pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
       /* Mover el personaje (autovolcado en buffer) */

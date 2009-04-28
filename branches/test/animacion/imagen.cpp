@@ -217,11 +217,11 @@ void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces){
   switch(dir){
   case 'u': // muñeco arriba, mapa abajo.
     origen.x = _cX = _cX;
-    origen.y = _cY = _cY+_pixels.at(secuencia-1);
+    origen.y = _cY = _cY-_pixels.at(secuencia-1);
     break;
   case 'd': // muñeco abajo, mapa arriba.
     origen.x = _cX = _cX;
-    origen.y = _cY = _cY-_pixels.at(secuencia-1);
+    origen.y = _cY = _cY+_pixels.at(secuencia-1);
     break;
   case 'l': // muñeco a la izquierda, mapa hacia la derecha.
     origen.x = _cX = _cX - _pixels.at(secuencia-1);
