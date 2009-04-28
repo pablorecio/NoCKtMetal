@@ -251,7 +251,7 @@ public:
 
     /**
      *
-     * @brief Método que realiza una tirada de suerte.
+     * Método que realiza una tirada de suerte.
      *
      * Esta tirada es algo particular con respecto a las demás. Realmente consiste en un sistema
      * similar a las tiradas de los juegos de rol-mesa. Se realiza una tirada aleatoria entre 1 y 100.
@@ -263,34 +263,235 @@ public:
      */
     Uint32 tiradaSuerte() const;
 
+    /**
+     *
+     * Método que realiza una tirada de velocidad
+     *
+     * @return Devuelve el valor de la velocidad, si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaVelocidad() const;
+
+    /**
+     *
+     * Método que realiza una tirada de fuerza
+     *
+     * @return Devuelve el valor de la fuerza, si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaFuerza() const;
+
+    /**
+     *
+     * Método que realiza una tirada de destreza
+     *
+     * @return Devuelve el valor de la destreza si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaDestreza() const;
+
+    /**
+     *
+     * Método que realiza una tirada de resistencia
+     *
+     * @return Devuelve el valor de la resistencia, si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaResistencia() const;
+
+    /**
+     *
+     * Método que realiza una tirada de virtuosidad
+     *
+     * @return Devuelve el valor de la virtuosidad, si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaVirtuosidad() const;
+
+    /**
+     *
+     * Método que realiza una tirada de constitucion
+     *
+     * @return Devuelve el valor de la constitucion, si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaConstitucion() const;
+
+    /**
+     *
+     * Método que realiza una tirada de inteligencia
+     *
+     * @return Devuelve el valor de la inteligencia, si es una tirada normal, o
+     * el doble si ha tenido suerte.
+     */
     Uint32 tiradaInteligencia() const;
 
+    /**
+     * Aumenta el valor del PV máximo
+     *
+     * @return El valor incrementado del PV máximo
+     */
+    Uint32 aumentarPVMax(Uint32 pv);
+
+    /**
+     * Aumenta el valor del PV
+     *
+     * @return El valor incrementado del PV
+     */
     Uint32 aumentarPV(Uint32 pv);
+    
+    /**
+     * Aumenta el valor del PE máximo
+     *
+     * @return El valor incrementado del PE máximo
+     */
+    Uint32 aumentarPEMax(Uint32 pe);
+
+    /**
+     * Aumenta el valor del PE
+     *
+     * @return El valor incrementado del PE
+     */
     Uint32 aumentarPE(Uint32 pe);
+
+    /**
+     * Aumenta el valor de la velocidad
+     *
+     * @return El valor incrementado de la velocidad
+     */
     Uint32 aumentarVelocidad(Uint32 v);
+
+    /**
+     * Aumenta el valor de la fuerza
+     *
+     * @return El valor incrementado de la fuerza
+     */
     Uint32 aumentarFuerza(Uint32 f);
+
+    /**
+     * Aumenta el valor de la destreza
+     *
+     * @return El valor incrementado de la destreza
+     */
     Uint32 aumentarDestreza(Uint32 d);
+
+    /**
+     * Aumenta el valor de la suerte
+     *
+     * @return El valor incrementado de la suerte
+     */
     Uint32 aumentarSuerte(Uint32 s);
+
+    /**
+     * Aumenta el valor de la resistencia
+     *
+     * @return El valor incrementado de la resistencia
+     */
     Uint32 aumentarResistencia(Uint32 r);
+
+    /**
+     * Aumenta el valor de la virtuosidad
+     *
+     * @return El valor incrementado de la virtuosidad
+     */
     Uint32 aumentarVirtuosidad(Uint32 v);
+
+    /**
+     * Aumenta el valor de la constitucion
+     *
+     * @return El valor incrementado de la constitucion
+     */
     Uint32 aumentarConstitucion(Uint32 c);
+
+    /**
+     * Aumenta el valor de la inteligencia
+     *
+     * @return El valor incrementado de la inteligencia
+     */
     Uint32 aumentarInteligencia(Uint32 i);
 
+    /**
+     * Decrementa el valor del PV máximo
+     *
+     * @return El valor decrementado del PV máximo
+     */
+    Uint32 decrementarPVMax(Uint32);
+
+    /**
+     * Decrementa el valor del PV
+     *
+     * @return El valor decrementado del PV
+     */
     Uint32 decrementarPV(Uint32 pv);
+    
+    /**
+     * Decrementa el valor del PE máximo
+     *
+     * @return El valor decrementado del PE máximo
+     */
+    Uint32 decrementarPEMax(Uint32);
+
+    /**
+     * Decrementa el valor del PE
+     *
+     * @return El valor decrementado del PE
+     */
     Uint32 decrementarPE(Uint32 pe);
+
+    /**
+     * Decrementa el valor de la velocidad
+     *
+     * @return El valor decrementado de la velocidad
+     */
     Uint32 decrementarVelocidad(Uint32 v);
+
+    /**
+     * Decrementa el valor de la fuerza
+     *
+     * @return El valor decrementado de la fuerza
+     */
     Uint32 decrementarFuerza(Uint32 f);
+
+    /**
+     * Decrementa el valor de la destreza
+     *
+     * @return El valor decrementado de la destreza
+     */
     Uint32 decrementarDestreza(Uint32 d);
+
+    /**
+     * Decrementa el valor de la suerte
+     *
+     * @return El valor decrementado de la suerte
+     */
     Uint32 decrementarSuerte(Uint32 s);
+
+    /**
+     * Decrementa el valor de la resistencia
+     *
+     * @return El valor decrementado de la resistencia
+     */
     Uint32 decrementarResistencia(Uint32 r);
+
+    /**
+     * Decrementa el valor de la virtuosidad
+     *
+     * @return El valor decrementado de la virtuosidad
+     */
     Uint32 decrementarVirtuosidad(Uint32 v);
+
+    /**
+     * Decrementa el valor de la constitución
+     *
+     * @return El valor decrementado de la constitución
+     */
     Uint32 decrementarConstitucion(Uint32 c);
+
+    /**
+     * Decrementa el valor de la inteligencia
+     *
+     * @return El valor decrementado de la inteligencia
+     */
     Uint32 decrementarInteligencia(Uint32 i);
 
 protected:
@@ -355,6 +556,10 @@ inline Uint32 Atributos::aumentarPV(Uint32 pv){
     }
 }
 
+inline Uint32 Atributos::aumentarPVMax(Uint32 pv){
+    return (_PVmax += pv);
+}
+
 inline Uint32 Atributos::aumentarPE(Uint32 pe){
     if(_PE+pe > _PEmax){
         _PE = _PEmax;
@@ -363,6 +568,10 @@ inline Uint32 Atributos::aumentarPE(Uint32 pe){
     else{
         return (_PE += pe);
     }
+}
+
+inline Uint32 Atributos::aumentarPEMax(Uint32 pe){
+    return (_PEmax += pe);
 }
 
 inline Uint32 Atributos::aumentarVelocidad(Uint32 v){
@@ -397,6 +606,10 @@ inline Uint32 Atributos::aumentarInteligencia(Uint32 i){
     return (_int += i);
 }
 
+inline Uint32 Atributos::decrementarPVMax(Uint32 pv){
+    return (_PVmax += pv);
+}
+
 inline Uint32 Atributos::decrementarPV(Uint32 pv){
     if (_PV - pv < 0){
         _PV = 0;
@@ -404,6 +617,10 @@ inline Uint32 Atributos::decrementarPV(Uint32 pv){
     }
     else
         return (_PV -= pv);
+}
+
+inline Uint32 Atributos::decrementarPEMax(Uint32 pe){
+    return (_PEmax -= pe);
 }
 
 inline Uint32 Atributos::decrementarPE(Uint32 pe){

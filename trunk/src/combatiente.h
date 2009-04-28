@@ -67,7 +67,6 @@ class Grupo;
  * hereda de Atributos, ya que utilizaremos esos atributos y sus tiradas para modelar
  * el comportamiento matemático y aleatorio del combatiente.
  * 
- * @todo Mirar si combiene una herencia protegida en vez de publica para Combatiente.
  * @todo Objetos equipables como espadas, armaduras y accesorios.
  *
  * @author Pablo Recio Quijano
@@ -77,12 +76,14 @@ class Grupo;
 class Combatiente : public Atributos {
 public:
 
-    class AtaqueFallado: public std::exception{
+    class AtaqueFallado : public std::exception {
     public:
-      const char* what() const throw(){
+
+        const char* what() const throw () {
             return "¡El ataque ha fallado!";
         }
     };
+
     /**
      *
      * Constructor vacio, no hace nada.
@@ -100,11 +101,11 @@ public:
      * @param grupo Referencia al grupo al que pertenece el combaitente
      * @param rangoArma (TEMPORAL) Rango de daño del arma del personaje
      * @param exp Cantidad de puntos de experiencia, la cual define el nivel del combatiente.
-     * @param aciertoArma
-     * @param armadura
+     * @param aciertoArma (TEMPORAL) Valor de acierto con el arma que porta el combatiente
+     * @param armadura (TEMPORAL) Valor de la armadura equipada del combatiente
      */
     Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-            Grupo &grupo, std::pair<Uint32,Uint32> rangoArma,
+            Grupo &grupo, std::pair<Uint32, Uint32> rangoArma,
             Uint32 exp = 0, Uint32 aciertoArma = 15, Uint32 armadura = 20);
 
     /**
@@ -175,28 +176,61 @@ public:
         return *_inventario;
     }
 
-  const std::map<Uint32, Habilidad*>& getHabilidades() const{
-    return _habilidades;
-  }
+    /**
+     * Método <i>getter</i> para obtener acceso a todas las habilidades 
+     * disponibles para el combatiente.
+     *
+     * @return Referencia constante al <code>map</code> de habilidades.
+     */
+    const std::map<Uint32, Habilidad*>& getHabilidades() const {
+        return _habilidades;
+    }
 
-  std::map<Uint32, Habilidad*>& getHabilidades(){
-    return _habilidades;
-  }
+    /**
+     * Método <i>getter</i> para obtener acceso a todas las habilidades 
+     * disponibles para el combatiente.
+     *
+     * @return Referencia al <code>map</code> de habilidades.
+     */
+    std::map<Uint32, Habilidad*>& getHabilidades() {
+        return _habilidades;
+    }
 
-    Uint32 getAciertoArma() {
+    /**
+     * Método <i>getter</i> para obtener el valor del acierto del arma del
+     * combatiente
+     *
+     * @return Valor entero sin signo de 32 bits con el acierto del arma del combatiente.
+     */
+    Uint32 getAciertoArma() const {
         return _aciertoArma;
     }
 
-    Uint32 getArmadura() {
+    /**
+     * Método <i>getter</i> para obtener el valor de la armadura equipada del combatiente
+     *
+     * @return Valor entero sin signo de 32 bits con la armadura del combatiente
+     */
+    Uint32 getArmadura() const {
         return _armadura;
     }
 
-    std::pair<Uint32, Uint32> getRangoArma() {
+    /**
+     * Método <i>getter</i> para obtener el rango de daño del arma equipada
+     *
+     * @return Par de enteros sin signo de 32 bits con el rango de daño del arma.
+     */
+    std::pair<Uint32, Uint32> getRangoArma() const {
         return _rangoArma;
     }
 
-    Uint32 tiradaArma(){
-        return aleatorioRango(_rangoArma.first,_rangoArma.second);
+    /**
+     * Método que calcula el valor de una tirada del arma
+     *
+     * @return Entero sin signo de 32 bits con el valor de una tirada del arma
+     */
+    Uint32 tiradaArma() const {
+        return aleatorioRango(_rangoArma.first, _rangoArma.second);
     }
 
     /**
@@ -207,32 +241,48 @@ public:
     void addHabilidad(Habilidad& h);
 
     /**
+     * Este método modela el comportamiento y el alcance de un ataque simple de
+     * un combatiente. Se realizan dos tiradas, una para comprobar si se acierta
+     * el golpe, y otra para calcular el daño causado en dicho golpe.
+     * Estas tiradas dependen de los valores de destreza y fuerza del atacante,
+     * y de los valores de destreza y resistencia del objetivo, así com también
+     * influyen la armadura y las armas usadas.
      *
+     * @param objetivo Referencia al objetivo del ataque.
      *
-     * @param objetivo
-     *
-     * @return
+     * @return El valor del daño realizado en el golpe, por si se quisiera
+     * mostrar dicho valor.
+     * @except AtaqueFallado Es lanzada si la tirada para ver si acierta el golpe
+     * falla, por lo que el golpe se erra.
      */
     Uint32 ataqueSimple(Combatiente& objetivo) throw (AtaqueFallado);
 
     /**
+     * Método que modela el comportamiento y repercusión del uso de un objeto
+     * en el inventario accesible al combatiente.
      *
+     * @param i Clave del objeto que se quiere utilizar
+     * @param objetivo Referencia al objetivo del ataque.
      *
-     * @param i
-     * @param objetivo
-     *
-     * @return
+     * @return El valor del daño realizado por el objeto, por si se quisiera
+     * mostrar dicho valor.
+     * @except Inventario::ObjetoNoEnInventario Es lanzada si el objeto al cual
+     * se quiere acceder, no se encuentra en el inventario.
+     * @except Objeto::CantidadItemInsuficiente Es lanzada si no tenemos suficientes
+     * items disponibles en el inventario.
      */
     Uint32 usarObjeto(Uint32 i, Combatiente& objetivo) //revisar si CantidadItem se lanza aqui
-      throw (Inventario::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente);
+    throw (Inventario::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente);
 
     /**
+     * Método que modela el comportamiento y repercusión del uso de una habilidad
+     * especial del combatiente.
      *
+     * @param i Clave de la habilidad que se quiere utilizar
+     * @param objetivo Referencia al objetivo del ataque.
      *
-     * @param i
-     * @param objetivo
-     *
-     * @return
+     * @return El valor del daño realizado por la habilidad, por si se quisiera
+     * mostrar dicho valor.
      */
     Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
 
@@ -264,37 +314,37 @@ private:
     Uint32 _aciertoArma;
     Uint32 _armadura;
 
-  friend class boost::serialization::access;
-  template<class Archive>
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    // serialize base class information
-    ar & BOOST_SERIALIZATION_NVP(_base);
-    ar & BOOST_SERIALIZATION_NVP(_exp);
-    ar & BOOST_SERIALIZATION_NVP(_niv);
-    ar & BOOST_SERIALIZATION_NVP(_expSigNiv);
-    ar & BOOST_SERIALIZATION_NVP(_PV);
-    ar & BOOST_SERIALIZATION_NVP(_PVmax);
-    ar & BOOST_SERIALIZATION_NVP(_PE);
-    ar & BOOST_SERIALIZATION_NVP(_PEmax);
-    ar & BOOST_SERIALIZATION_NVP(_vel);
-    ar & BOOST_SERIALIZATION_NVP(_fue);
-    ar & BOOST_SERIALIZATION_NVP(_des);
-    ar & BOOST_SERIALIZATION_NVP(_sue);
-    ar & BOOST_SERIALIZATION_NVP(_res);
-    ar & BOOST_SERIALIZATION_NVP(_vir);
-    ar & BOOST_SERIALIZATION_NVP(_con);
-    ar & BOOST_SERIALIZATION_NVP(_int);
-    ar & BOOST_SERIALIZATION_NVP(_nombre);
-    ar & BOOST_SERIALIZATION_NVP(_idCombatiente);
-    ar & BOOST_SERIALIZATION_NVP(_habilidades);
-    ar & BOOST_SERIALIZATION_NVP(_inventario);
-    ar & BOOST_SERIALIZATION_NVP(_grupo);
-    ar & BOOST_SERIALIZATION_NVP(_pasarTurno);
-    ar & BOOST_SERIALIZATION_NVP(_aciertoArma);
-    ar & BOOST_SERIALIZATION_NVP(_armadura);
-    ar & BOOST_SERIALIZATION_NVP(_rangoArma);
-  }
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version) {
+        // serialize base class information
+        ar & BOOST_SERIALIZATION_NVP(_base);
+        ar & BOOST_SERIALIZATION_NVP(_exp);
+        ar & BOOST_SERIALIZATION_NVP(_niv);
+        ar & BOOST_SERIALIZATION_NVP(_expSigNiv);
+        ar & BOOST_SERIALIZATION_NVP(_PV);
+        ar & BOOST_SERIALIZATION_NVP(_PVmax);
+        ar & BOOST_SERIALIZATION_NVP(_PE);
+        ar & BOOST_SERIALIZATION_NVP(_PEmax);
+        ar & BOOST_SERIALIZATION_NVP(_vel);
+        ar & BOOST_SERIALIZATION_NVP(_fue);
+        ar & BOOST_SERIALIZATION_NVP(_des);
+        ar & BOOST_SERIALIZATION_NVP(_sue);
+        ar & BOOST_SERIALIZATION_NVP(_res);
+        ar & BOOST_SERIALIZATION_NVP(_vir);
+        ar & BOOST_SERIALIZATION_NVP(_con);
+        ar & BOOST_SERIALIZATION_NVP(_int);
+        ar & BOOST_SERIALIZATION_NVP(_nombre);
+        ar & BOOST_SERIALIZATION_NVP(_idCombatiente);
+        ar & BOOST_SERIALIZATION_NVP(_habilidades);
+        ar & BOOST_SERIALIZATION_NVP(_inventario);
+        ar & BOOST_SERIALIZATION_NVP(_grupo);
+        ar & BOOST_SERIALIZATION_NVP(_pasarTurno);
+        ar & BOOST_SERIALIZATION_NVP(_aciertoArma);
+        ar & BOOST_SERIALIZATION_NVP(_armadura);
+        ar & BOOST_SERIALIZATION_NVP(_rangoArma);
+    }
 };
 
 #endif	/* _COMBATIENTE_H */

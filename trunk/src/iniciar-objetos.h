@@ -27,7 +27,11 @@
 #ifndef _INICIAR_OBJETOS_H
 #define	_INICIAR_OBJETOS_H
 
-Uint8 crearFicheros();
+/**
+ * Función que crea los ficheros XML necesarios para un combate de prueba.
+ *
+ */
+Uint32 crearFicheros();
 
 #endif	/* _INICIAR_OBJETOS_H */
 
