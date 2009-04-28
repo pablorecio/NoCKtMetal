@@ -98,6 +98,13 @@ void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
     SDL_Flip(p2);
 }
 
+void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP1, SDL_Surface *p2,
+                        SDL_Rect *rectP2) {
+    SDL_BlitSurface(p1, rectP1, p2, rectP2);
+    SDL_Flip(p2);
+}
+
+
 void Pantalla::cerrarPantalla() {
     /* Liberamos la memoria de las pantallas creadas */
     SDL_FreeSurface(_buffer);

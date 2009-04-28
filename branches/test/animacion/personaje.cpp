@@ -304,11 +304,11 @@ void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
 }
 
 void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
-    SDL_Delay(50);
+    /* Trastear cuánto tiempo es necesario para que no se vea raro:
+     * que no vaya ya demasiado lento */
+    SDL_Delay(60);
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
      * posición actualizada de pantalla */
     _sprite.dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);
-    _p->volcarPantalla(_p->getBuffer(), &_rango);
-    /* Trastear cuánto tiempo es necesario para que no se vea raro:
-     * que no vaya ya demasiado lento */
+    _p->volcarPantalla(_p->getBuffer());
 }

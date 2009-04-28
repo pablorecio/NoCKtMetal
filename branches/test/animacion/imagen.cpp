@@ -159,6 +159,7 @@ void Imagen::dibujarFondo(){
 
   _imagenAux = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho*Tile::getTam(),
 				    _alto*Tile::getTam(), 24, 0, 0, 0, 0);
+                    
   origen.x=0; origen.y=0;
   origen.h=Tile::getTam();
   origen.w=Tile::getTam();
@@ -178,8 +179,8 @@ void Imagen::dibujarFondo(){
 
       Tile t = _tiles.find(_matrizOriginal[i][j])->second;
 
-      SDL_BlitSurface(t.getImagen(),
-      		      &origen, _imagenAux, &destino);
+      /*SDL_BlitSurface(t.getImagen(), &origen, _imagenAux, &destino);*/
+      _p->volcarPantalla(t.getImagen(), &origen, _imagenAux, &destino);
 
       cout << "dibujado" << endl;
     }
@@ -216,25 +217,25 @@ void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces){
 
   switch(dir){
   case 'u': // muñeco arriba, mapa abajo.
-    origen.x = _cX = _cX;
+    origen.x = _cX;
     origen.y = _cY = _cY-_pixels.at(secuencia-1);
     break;
   case 'd': // muñeco abajo, mapa arriba.
-    origen.x = _cX = _cX;
+    origen.x = _cX;
     origen.y = _cY = _cY+_pixels.at(secuencia-1);
     break;
   case 'l': // muñeco a la izquierda, mapa hacia la derecha.
     origen.x = _cX = _cX - _pixels.at(secuencia-1);
-    origen.y = _cY = _cY;
+    origen.y = _cY;
     break;
   case 'r': // muñeco a la derecha, mapa hacia la izquierda.
     origen.x = _cX = _cX + _pixels.at(secuencia-1);
-    origen.y = _cY = _cY;
+    origen.y = _cY;
     break;
   default: break;
   }
 
-  SDL_BlitSurface(_imagenAux, &origen, _p->getFondo(), &destino);
+  _p->volcarPantalla( _imagenAux, &origen, _p->getFondo(), &destino);
 
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
 

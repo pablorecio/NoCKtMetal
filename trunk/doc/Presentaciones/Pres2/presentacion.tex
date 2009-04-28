@@ -18,12 +18,23 @@
 % Entorno matemático
 \everymath{\displaystyle}
 % -------------------------------------------------------------------
-\subtitle{El avance del proyecto}
+\subtitle{El proyecto contraataca}
 % -------------------------------------------------------------------
 % Fondo blanco: primera página
 % ------------------------------------------------------------------
 
 \beamersetaveragebackground{white}
+
+\begin{frame}
+ \thispagestyle{empty}
+ \begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.4]{./Imagenes/logo_cachimba.pdf}
+
+\noindent \Huge Presenta...
+\end{figure}
+\end{frame}
+
 
 \begin{frame}
  \thispagestyle{empty}
@@ -58,7 +69,7 @@
 
 % Transparencia de índice
 \begin{frame}{Índice} 
- \transboxin
+ \transdissolve
  \tableofcontents
 \end{frame}
   
@@ -68,7 +79,6 @@
   \subsection{Actualización de la planificación}
   
   \begin{frame}{Diagrama de Gannt}
-   \transdissolve
    
    \begin{figure}[t]
     \includegraphics[scale=0.27]{./Imagenes/gannt.pdf}
@@ -127,7 +137,6 @@
   \subsection{Ingeniería del software}
   
   \begin{frame}{Modelo incremental aplicado al proyecto}   
-   \transdissolve
    
    Basándonos en nuestra experiencia, está resultando bastante apropiado.
    
@@ -302,9 +311,11 @@
      \begin{column}{3cm}
       \begin{block}{Motor de combate}
        \begin{itemize}
-	\item Atributos
-	\item Atributos-base
+	\item Atributos(temp)
+	\item AtributoBase
 	\item Combatiente
+	\item ControlCombate
+	\item ControlTurno
 	\item Especial
 	\item Grupo
 	\item Habilidad
