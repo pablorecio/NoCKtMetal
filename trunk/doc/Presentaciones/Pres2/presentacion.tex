@@ -82,22 +82,22 @@
    Actualmente centrándonos en la implementación:
    
    \begin{block}{Motor de combate}
-    \begin{itemize}
-     \item Desarrollador principal: Pablo.
-     \item Estado actual: versión de prueba de combate sin gráficos.
-     \item A completar: parte gráfica.
-    \end{itemize}
+    \begin{description}
+     \item[Desarrollador principal:] Pablo.
+     \item[Estado actual:] versión de prueba de combate sin gráficos.
+     \item[A completar:] parte gráfica.
+    \end{description}
    \end{block}
 
    \begin{block}{Motor de movimiento}
-    \begin{itemize}
-     \item Desarrolladoras principales: Rosa y Noelia.
-     \item Estado actual: finalizados los elementos necesarios para el 
-	   movimiento básico y la visualización de gráficos, así como los de 
-	   gestion de eventos externos. 
-     \item A completar: sección correspondiente a los menús y a la
+    \begin{description}
+     \item[Desarrolladoras principales:] Rosa y Noelia.
+     \item[Estado actual:] finalizados los elementos necesarios para el 
+		movimiento básico y la visualización de gráficos, así
+		como los de gestión de eventos externos. 
+     \item[A completar:] sección correspondiente a los menús y a la
 	   carga/guardado de niveles.
-    \end{itemize}
+    \end{description}
    \end{block}
     
   \end{frame}
@@ -109,9 +109,10 @@
    \begin{frame}{Modificaciones y justificaciones}
     
     \begin{block}{Utilización de ficheros XML}
-     Para guardar la configuración del juego, así como para ``diseñar'' y
-     mantener en un formato simple la distribución de los diferentes
+     Para guardar la configuración del juego, así como para ``diseñar''
+     y mantener en un formato simple la distribución de los diferentes
      niveles de juego.\\
+     \vspace*{0.5cm}
      
      Potenciamos así la posibilidad de que se incrementen los niveles del
      juego.
@@ -137,6 +138,7 @@
    
   \end{frame}
   
+  
   \subsection{Ejemplo: Análisis y diseño del motor gráfico}
   
   \begin{frame}{Diagrama de Casos de Uso}
@@ -150,59 +152,57 @@
   
   \begin{frame}{Ejemplo: Descripción Caso de Uso}
    
-   Movimiento del personaje.
+   \textbf{Caso de Uso:} \textsc{Movimiento del personaje}
    
-   \begin{itemize}
-    \item \textbf{Caso de Uso:} Movimiento del personaje.
-    \item \textbf{Descripción:} El jugador podrá realizar cuatro tipos de
+   \begin{description}
+    \item[Caso de Uso:] Movimiento del personaje.
+    \item[Descripción:] El jugador podrá realizar cuatro tipos de
 	  movimientos con el personaje principal: trasladar el personaje
 	  hacia arriba, hacia abajo, hacia la derecha o hacia la
 	  izquierda del mapa.
-    \item \textbf{Actores:} Usuario o jugador del videojuego.
-    \item \textbf{Precondiciones:} El videojuego está iniciado y está
+    \item[Actores:] Usuario o jugador del videojuego.
+    \item[Precond:] El videojuego está iniciado y está
 	  cargado todo el motor de movimiento sin errores.
-    \item \textbf{Postcondiciones:} Ninguna.
-    \item \textbf{Escenario principal:} \\
-	  
-	  \begin{enumerate}
-	   \item El jugador pulsa la tecla 'up' del teclado.
-	   \item El sistema mueve el personaje del juego hacia arriba
-		 del mapa.
-	   \item El jugador colisiona con un objeto. \textbf{Include:
-		 Colisiones entre objetos.}
-	  \end{enumerate}
-   \end{itemize}
+    \item[Postcond:] Ninguna.
+    \item[Escenario principal:] $\quad$	  
+	       \begin{enumerate}
+		\item El jugador pulsa la tecla 'up' del teclado.
+		\item El sistema mueve el personaje del juego hacia arriba
+		      del mapa.
+		\item El jugador colisiona con un objeto. \textbf{Include:
+		      Colisiones entre objetos.}
+	       \end{enumerate}
+   \end{description}
   \end{frame}
   
   
   \begin{frame}{Ejemplo: Descripción Caso de Uso}
-   \begin{itemize}
-    
-    \item \textbf{Escenarios alternativos o de error:} \\
-	  \begin{itemize}
-	   \item \textbf{1a} El jugador pulsa la tecla 'down' del teclado.
-	   \item \textbf{  } El sistema mueve el personaje del juego
-		 hacia abajo del mapa.
-	   \item \textbf{1b} El jugador pulsa la tecla 'left' del teclado.
-	   \item \textbf{  } El sistema mueve el personaje del juego
-		 hacia la izquierda del mapa.
-	   \item \textbf{1c} El jugador pulsa la tecla 'right' del teclado.
-	   \item \textbf{  } El sistema mueve el personaje del juego
-		 hacia la derecha del mapa.
-	   \item \textbf{1d} El personaje se encuentra en un borde de la
-		 pantalla y quiere avanzar (cualquier dirección).
-	   \item \textbf{ 1} El sistema comprueba que existe más mapa
-		 fuera de la pantalla y hace que el personaje acceda a
-		 esa porción del mapa.
-	   \item \textbf{ 2} El sistema comprueba que no existe más mapa
-		 para visualizar en dicha dirección y deja al personaje
-		 en la misma posición.
-	  \end{itemize}
-   \end{itemize}
-   
-   
+
+   \begin{description}    
+    \item[Escenarios alternativos o de error:] $\quad$	       
+	       \begin{itemize}
+		\item El jugador pulsa la tecla 'down' del teclado.
+		      El sistema mueve el personaje del juego hacia
+		      abajo del mapa.
+		\item El jugador pulsa la tecla 'left' del teclado.
+		      El sistema mueve el personaje del juego
+		      hacia la izquierda del mapa.
+		\item El jugador pulsa la tecla 'right' del teclado.
+		      El sistema mueve el personaje del juego
+		      hacia la derecha del mapa.
+		\item El personaje se encuentra en un borde de la
+		      pantalla y quiere avanzar (cualquier dirección).
+		      \begin{enumerate}
+		       \item El sistema comprueba que existe más mapa
+			     fuera de la pantalla y hace que el
+			     personaje acceda a esa porción del mapa.
+		       \item El sistema comprueba que no existe más mapa
+			     para visualizar en dicha dirección y deja
+			     al personaje en la misma posición.
+		      \end{enumerate}
+	       \end{itemize}
+   \end{description} 
   \end{frame}
-  
   
   
   \begin{frame}{Diagrama de Casos de Uso}
@@ -219,72 +219,77 @@
 
   \begin{frame}{Algoritmo}
    
-   \noindent Se ejecuta el programa. \\
-   Se cargan los ficheros de configuración. \\
-   Se inicia el videojuego mostrando el menú principal.
-   
-   \begin{itemize}
-    \item El jugador elige jugar.\\
-	  Se muestra en pantalla las opciones de crear nuevo juego o
-	  cargar uno existente.
-	   
-	  \begin{itemize}
-	   \item El jugador crea un nuevo juego. \\
-		 Se cargan los ficheros iniciales. \\
-		 Se muestra
-		 una animación de la introducción del juego.
-		 
-	   \item El jugador elige  cargar un juego existente. \\
-		 Se cargan los ficheros configurados
-		 para el usuario.
-	  \end{itemize}
-   \end{itemize}
+   \begin{description}
+    \item[1.] Se ejecuta el programa.
+    \item[2.] Se cargan los ficheros de configuración.
+    \item[3.] Se inicia el videojuego mostrando el menú principal.
+	  
+	       \begin{itemize}
+		\item El jugador elige jugar.\\
+		      Se muestra en pantalla las opciones de crear nuevo
+		      juego o cargar uno existente.
+		      
+		      \begin{itemize}
+		       \item El jugador crea un nuevo juego. \\
+			     Se cargan los ficheros iniciales. \\
+			     Se muestra una animación de la introducción
+			     del juego.			     
+		       \item El jugador elige  cargar un juego existente. \\
+			     Se cargan los ficheros configurados
+			     para el usuario.
+		      \end{itemize}
+	       \end{itemize}
+   \end{description}
    
   \end{frame}
 
   \begin{frame}{Algoritmo}
-    
-   El usuario comienza a jugar (con el motor de movimiento).\\ 
-   El jugador mueve el personaje.
-   
-   \begin{itemize}
-    \item El personaje se mueve sin ningún inconveniente.
-    \item El personaje no se puede mover (colisiona con un objeto).
-    \item El personaje no se puede mover pero si interactuar:
+
+   \begin{description}
+    \item[4.] El usuario comienza a jugar (con el motor de movimiento).
+    \item[5.] El jugador mueve el personaje.
 	  
 	  \begin{itemize}
-	   \item Comienza un combate.		  
-	   \item Interactúa con un objeto.
-	   \item Dialoga con otro personaje.  
+	   \item El personaje se mueve sin ningún inconveniente.
+	   \item El personaje no se puede mover (colisiona con un objeto).
+	   \item El personaje no se puede mover, pero sí interactuar:	 
+		 \begin{itemize}
+		  \item Comienza un combate.		  
+		  \item Interactúa con un objeto.
+		  \item Dialoga con otro personaje.			
+		 \end{itemize}
 		 
 	  \end{itemize}
-	  
-   \end{itemize}
+   \end{description}
+
   \end{frame}
   
   
   \begin{frame}{Algoritmo}
-   El jugador entra en el inventario.
-   
-   \begin{itemize}
-    \item Visualiza la pestaña contenedora del estado de los
-	  personajes.
-    \item Visualiza la pestaña contenedora de los objetos que tiene el
-	  grupo.
-    \item Visualiza la pestaña que contiene las opciónes Guardar y
-	  Salir.
+
+   \begin{description}
+    \item[5.1.] El jugador entra en el inventario.
 	  
 	  \begin{itemize}
-	   \item El usuario guarda el juego.\\
-		 El sistema guarda el estado del juego.
-	   \item El usuario sale del juego.\\
-		 El sistema destruye la memoria dinámica utilizada y
-		 sale del programa.		  
+	   \item Visualiza la pestaña contenedora del estado de los
+		 personajes.
+	   \item Visualiza la pestaña contenedora de los objetos que tiene el
+		  grupo.
+	   \item Visualiza la pestaña que contiene las opciones Guardar y
+		 Salir.
+	  
+		 \begin{enumerate}
+		  \item El usuario guarda el juego.\\
+			El sistema guarda el estado del juego.
+		  \item El usuario sale del juego.\\
+			El sistema destruye la memoria dinámica
+			utilizada y sale del programa.		  
+		 \end{enumerate}
 	  \end{itemize}
-   \end{itemize}
-    
-   El jugador elige salir.\\
-   El sistema sale del programa.
+	  
+    \item[6.] El jugador elige salir.
+    \item[7.] El sistema sale del programa.	  
+   \end{description}
   \end{frame}
     
     
@@ -328,8 +333,9 @@
   
   \begin{frame}{Para muestra...}
    
-   No vamos a enseñar el código puesto que sería entrar demasiado en
+   No vamos a enseñar el código, puesto que sería entrar demasiado en
    materia.\\
+   \vspace*{0.5cm}
    
    Resulta más efectivo, y más entretenido ver como funciona.
    
@@ -337,53 +343,122 @@
   
   
   \subsection{Multimedia}
+
   
-  \begin{frame}{Imagenes}
-   TILES (Fuente: Battle for Wesnoth (GPL) - modificados)
+  \begin{frame}{Imágenes}
+
+   Además de los sprites de movimiento, hemos seguido desarrollando y
+   buscando más imágenes que nos puedan ser útiles.\\
+
+   \begin{itemize}
+    \item Iconos de origen propio.\\
+	  A utilizar en algun menú\footnote{Todavía por considerar}.
+	  
+	  \begin{figure}[t]
+	   \includegraphics[scale=0.6]{./Imagenes/iconos.pdf}
+	  \end{figure}
+	  
+   \end{itemize}
+
+  \end{frame}
+
+  
+  \begin{frame}{Imágenes}
    
-   OBJETOS (Fuente: Battle for Wesnoth)
+   \begin{itemize}
+    \item Menú de inicio del juego\footnote{Lógicamente es el esquema
+	  conceptual: lo que se ha diseñado son los elementos y el fondo
+	  por separado.} de origen propio.
+	  
+	  \begin{figure}[t]
+	   \includegraphics[scale=0.15]{./Imagenes/menu.pdf}
+	  \end{figure}
+   \end{itemize}
    
-   SPRITES BASICOS + MENU + BOTONES + CURSOR (FLECHA) (Fuente: Propios)
   \end{frame}
   
+  
+  
+  \begin{frame}{Imágenes}
+   
+   \begin{itemize}
+    \item Objetos varios incluidos en \textit{Battle for Wesnoth} bajo
+	  GPLv3\\
+	  \url{http://www.gnu.org/licenses/gpl-3.0.html}
+	  
+	  \begin{figure}[t]
+	   \includegraphics[scale=0.5]{./Imagenes/objetos.pdf}
+	  \end{figure}
+	  
+   \end{itemize}
+   
+  \end{frame}
+  
+  
+  
+  \begin{frame}{Imágenes}
+   
+   \begin{itemize}	  
+    \item Tiles varios, algunos de origen propio, otros incluidos en
+	  \textit{Battle for Wesnoth} bajo GPLv3\\
+	  \url{http://www.gnu.org/licenses/gpl-3.0.html}
+	  
+	  \begin{figure}[t]
+	   \includegraphics[scale=0.5]{./Imagenes/tiles.pdf}
+	  \end{figure}
+	  
+   \end{itemize}
+   
+  \end{frame}
+  
+  
   \begin{frame}{Audio}
-   BSO: 
-   
-   Sonidos: Fuente: Battle for Wesnoth
-   
-   + Creative Commons
+   \begin{itemize}
+    \item \textit{The Slip} $\longrightarrow$ \textit{Nine Inch Nails}
+	  bajo Creative Commons\\
+	  \textsc{Attribution-Noncommercial-Share Alike 3.0}\\
+	  \url{http://creativecommons.org/licenses/by-nc-sa/3.0/us/}\\
+	  
+    \item Efectos de sonido de \textit{Battle for Wesnoth} bajo GPLv3\\
+	  \url{http://www.gnu.org/licenses/gpl-3.0.html}\\
+	  
+    \item Posibilidad de incluir música variada (encuadrada bajo el
+	  estilo metal) bajo Creative Commons.
+	  \url{www.soundclick.com}\\
+	  \url{www.jamendo.com}
+   \end{itemize}
   \end{frame}
   
   
  \section{Metodología de trabajo}
  
   \subsection{SVN y forja}
-  
+
   \begin{frame}{Trabajando en grupo}
-   Revisión: 100\\
    
-   Listas de correo para actualizaciones/commits importantes
-  \end{frame}
-  
-  
-  
-  \subsection{Aplicaciones extras}
-  
-  \begin{frame}{Aplicaciones y elementos extras}
    \begin{itemize}
-    \item Doxygen
-    \item Netbeans
+    \item Actualmente llevamos más de 100 revisiones desde que se inició
+	  el desarrollo en el repositorio de la forja.
+	  
+    \item Nos servimos de las listas de correo para
+	  actualizaciones/commits importantes. Así nos aseguramos que el
+	  resto del grupo tiene noticia de la aparición o solución de un
+	  bug.
+	  
+    \item Consenso en el estilo de programación, así como en la
+	  utilización de unos parámetros fijos en la documentación de
+	  Doxygen (como @todo).
    \end{itemize}
   \end{frame}
   
-
-  \subsection{Adorno del proyecto}
+  
+  \subsection{Elementos extras del proyecto}
   
   \begin{frame}{Elementos extras}
    \begin{itemize}
     \item Página web
     \item Documentación actualizada a diario
-    \item Manual de usuario en desarrollo ya colgado
+    \item Manual de usuario (enfocado al jugador principiante)
    \end{itemize}
   \end{frame}
 
