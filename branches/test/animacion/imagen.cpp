@@ -163,25 +163,27 @@ void Imagen::dibujarFondo(){
   origen.h=Tile::getTam();
   origen.w=Tile::getTam();
 
-  destino.w= _ancho*Tile::getTam();
-  destino.h= _alto*Tile::getTam();
+  destino.w= _ancho;
+  destino.h= _alto;
 
-  for(Uint32 i=0; i<destino.w; i=i+Tile::getTam())
-    for(Uint32 j=0; j<destino.h; j=j+Tile::getTam()){
+  cout << "destino.w, destino.h: " << destino.w << "," << destino.h << endl;
 
-      destino.x=i;
-      destino.y=j;
+  for(Uint32 i=0; i<destino.w; i++){
+    for(Uint32 j=0; j<destino.h; j++){
+
+      destino.x=i*Tile::getTam();
+      destino.y=j*Tile::getTam();
       
       cout << "(i,j): (" << i << "," << j << ")" << endl;
 
-      Tile t = _tiles.find(_matrizOriginal[i/Tile::getTam()]
-			   [j/Tile::getTam()])->second;
+      Tile t = _tiles.find(_matrizOriginal[i][j])->second;
 
       SDL_BlitSurface(t.getImagen(),
       		      &origen, _imagenAux, &destino);
 
       cout << "dibujado" << endl;
     }
+  }
 
   _p->volcarPantalla(_imagenAux, _p->getFondo());
 
