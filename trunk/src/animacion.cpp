@@ -46,22 +46,28 @@ void Animacion::inicializarAnimacion() {
 
     for (Uint32 i = 0; i < 48; i++) {
         for (Uint32 j = 0; j < 36; j++) {
-            if ((i % 6 < 2) && (j % 6 > 2)) {
+            if ((i % 8 < 2 ) || (i % 8 > 5)) {
                 matriz[i][j] = 0;
             } else {
-                matriz[i][j] = 1;
+                if ((j%6 < 2) || (j% 6 > 4)) {
+                    matriz[i][j] = 2;
+                } else {
+                    matriz[i][j] = 1;
+                }
             }
         }
     }
 
     _imag = new Imagen(48, 36, _pant, matriz);
-    Tile arena("arena.png");
-    Tile acero("acero.png");
+    Tile arena("./tiles/arena.png");
+    Tile piedra("./tiles/piedra.png");
+    Tile tierra("./tiles/tierra.png");
 
     _imag->relacionarTile(0, arena);
-    _imag->relacionarTile(1, acero);
+    _imag->relacionarTile(1, piedra);
+    _imag->relacionarTile(2, tierra);
 
-    _imag->dibujarFondo(0, 0);
+    _imag->dibujarFondo();
 
     /* Personaje */
     _principal = new Personaje(1, 1, 1, 30, _pant, "./baldos.png");
@@ -83,6 +89,8 @@ bool Animacion::procesarAccion() {
     /* Movimiento actual tomado como NULO */ 
     _mov = NULO;
 
+    char dir=' ';
+
     /* Lectura del nuevo evento */
     switch (evento.getEvento()) {
     case SALIR:
@@ -100,24 +108,28 @@ bool Animacion::procesarAccion() {
                 << endl;
         break;
     case ARRIBA:
+      dir='u';
         y = _principal->getPantY() -1;
         cy = _imag->getCY() -1;
         _mov = SUBIR;
         cout << "ARRIBA" << endl;
         break;
     case ABAJO:
+      dir='d';
         y = _principal->getPantY() +1;
         cy = _imag->getCY() +1;
         _mov = BAJAR;
         cout << "ABAJO" << endl;
         break;
     case IZQUIERDA:
+      dir='l';
         x = _principal->getPantX() -1;
         cx = _imag->getCX() -1;
         _mov = IZDA;
         cout << "IZDA" << endl;
         break;
     case DERECHA:
+      dir='r';
         x = _principal->getPantX() +1;
         cx = _imag->getCX() +1;
         _mov = DCHA;
@@ -132,7 +144,7 @@ bool Animacion::procesarAccion() {
         /* Si el movimiento queda fuera del rango de pantalla del personaje,
          * se moverá de forma estática, desplazándose el fondo por debajo */
         if (_principal->fueraRango(x, y)) {
-            hacerMovimientoEstatico(cx, cy);
+	  hacerMovimientoEstatico(cx, cy, dir);
         } else {
             /* En caso de que se desplace el personaje, el fondo quedará tal y
              * como estaba (por lo que no tendremos que pintarlo de nuevo,
@@ -143,19 +155,20 @@ bool Animacion::procesarAccion() {
     return false;
 }
 
-void Animacion::hacerMovimientoEstatico(Uint32 x, Uint32 y) {
+void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y, char dir) {
     /* Mientras necesitemos mover al personaje */
+  
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
-        /* Desplazamos el mapa */
-/*        _imag->dibujarFondo(x, y, _principal->getSecuenciasMovimiento() - sec,
-                            _principal->getSecuenciasMovimiento());*/
-        /* Volcar fondo en buffer */
-        _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
-        /* Mover el personaje (autovolcado en buffer) */
-        mover(sec, 0);
-        /* Volcar buffer en pantalla */
-        _pant->volcarPantalla(_pant->getBuffer());
+      /* Desplazamos el mapa */
+      //cout << "secuencia: " << _principal->getSecuenciasMovimiento() << endl; 
+      _imag->dibujarSecuencia(dir, _principal->getSecuenciasMovimiento() - sec, _principal->getSecuenciasMovimiento());
+      /* Volcar fondo en buffer */
+      //_pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
+      /* Mover el personaje (autovolcado en buffer) */
+      mover(sec, 0);
+      /* Volcar buffer en pantalla */
+      _pant->volcarPantalla(_pant->getBuffer());
     }
 }
 

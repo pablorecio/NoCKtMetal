@@ -59,9 +59,9 @@ void Animacion::inicializarAnimacion() {
     }
 
     _imag = new Imagen(48, 36, _pant, matriz);
-    Tile arena("arena.png");
-    Tile piedra("piedra.png");
-    Tile tierra("tierra.png");
+    Tile arena("./tiles/arena.png");
+    Tile piedra("./tiles/piedra.png");
+    Tile tierra("./tiles/tierra.png");
 
     _imag->relacionarTile(0, arena);
     _imag->relacionarTile(1, piedra);

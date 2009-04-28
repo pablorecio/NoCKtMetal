@@ -1,4 +1,27 @@
 
+//-*-C++-*-
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Copyright (C) 2009, NoCKTMetal Team
+ 
+ * --------------------------------------------------------
+ * Fichero = tile.cpp
+ * Autor = Rosa María Durante Lerate
+ * Fecha = 15 / 04 / 2009
+ */
+
 #include<iostream>
 #include<cstring>
 
@@ -8,9 +31,11 @@
 
 using namespace std;
 
+Uint32 Tile::_tam = 30;
+
 Tile::Tile(){}
 
-Tile::Tile(char *ruta, bool col, bool inter){
+Tile::Tile(const char *ruta, bool col, bool inter) {
   
   _ruta = (char*)malloc(sizeof(char)*(strlen(ruta)+1));
   strcpy(_ruta,ruta);
@@ -19,9 +44,10 @@ Tile::Tile(char *ruta, bool col, bool inter){
   // para saber con que tipo de tile trabajamos. 
   _colisionable=col;
   _interactuable=inter;
+
 }
 
-Tile::Tile(const Tile& otro){
+Tile::Tile(const Tile& otro) {
 
   _ruta= (char*)malloc(sizeof(char)*(strlen(otro._ruta)+1));
   strcpy(_ruta, otro._ruta);
