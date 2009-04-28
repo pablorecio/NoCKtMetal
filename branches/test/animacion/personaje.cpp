@@ -166,12 +166,6 @@ void Personaje::setPosicion() {
     /* Colocamos al personaje en la casilla central del rango */
     _pantX = (_rango.x / _tam) + (_rango.w / _tam)/2 -1;
     _pantY = (_rango.y / _tam) + (_rango.h / _tam)/2 -1;
-    cout << "PANT X: " << _pantX << endl;
-    cout << "PANT Y: " << _pantY << endl;
-    cout << "RANGO X: " << _rango.x << endl;
-    cout << "RANGO Y: " << _rango.y << endl;
-    cout << "RANGO W: " << _rango.w << endl;
-    cout << "RANGO H: " << _rango.h << endl;
     
     /* Colocamos también su posición en pixels */
     _x = _pantX * _tam;
@@ -219,12 +213,6 @@ void Personaje::setRango(Uint16 rangoAncho, Uint16 rangoAlto) {
     _rango.h = rangoAlto * _tam;
     _rango.x = (_p->getAncho() - _rango.w)/2;
     _rango.y = (_p->getAlto() - _rango.h)/2;
-    cout << "PANT X: " << _pantX << endl;
-    cout << "PANT Y: " << _pantY << endl;
-    cout << "RANGO X: " << _rango.x << endl;
-    cout << "RANGO Y: " << _rango.y << endl;
-    cout << "RANGO W: " << _rango.w << endl;
-    cout << "RANGO H: " << _rango.h << endl;
 }
 
 void Personaje::subirEnMapa() {
@@ -306,7 +294,7 @@ void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
 void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
     /* Trastear cuánto tiempo es necesario para que no se vea raro:
      * que no vaya ya demasiado lento */
-    SDL_Delay(60);
+    SDL_Delay(80);
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
      * posición actualizada de pantalla */
     _sprite.dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);

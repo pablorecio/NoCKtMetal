@@ -17,12 +17,12 @@ class Imagen{
   // creamos un objeto imagen a partir del tamaño de la matriz completa.
 
   Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles = NULL,
-	 Uint32** matriz_col = NULL, Uint32** matriz_inter = NULL);
-
+	 bool** matriz_col = NULL, bool** matriz_inter = NULL);
+/*
   Imagen(std::map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto, 
 	 Uint32** matriz_tiles = NULL,Uint32** matriz_col = NULL, 
 	 Uint32** matriz_inter = NULL);
-
+*/
   void relacionarTile(Uint32 id, Tile& t);
   void relacionarPantalla(Pantalla &p);
   // Conviete la matriz completa en el dibujo con tiles sobre una Surface.
@@ -37,10 +37,11 @@ class Imagen{
   Uint32 getAlto();
   Uint32 getAncho();
   Uint32** getMatrizImagenes();
-  Uint32** getMatrizColision();
-  Uint32** getMatrizInteractual();
+  bool** getMatrizColision();
+  bool** getMatrizInteractual();
   Sint32 getCX();
   Sint32 getCY();
+  bool esColision(Uint32 x, Uint32 y) const;
   std::map<Uint32,Tile> getTiles();
 
   // modificadoras
@@ -48,7 +49,7 @@ class Imagen{
   void setCY(Sint32 y);
   void setTiles(std::map<Uint32,Tile> conjTiles);
   void setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz, 
-		 Uint32** colisionable=NULL, Uint32** interactuable=NULL);
+		 bool** colisionable=NULL, bool** interactuable=NULL);
 
  private:
 
@@ -56,8 +57,8 @@ class Imagen{
   
   // matriz rellena de índices del vector de tiles.
   Uint32 **_matrizOriginal;
-  Uint32 **_matrizColision;
-  Uint32 **_matrizInteractual;
+  bool **_matrizColision;
+  bool **_matrizInteractual;
   Uint32 _alto,_ancho;
   Sint32 _cX, _cY; 
   Sint32 _cXt, _cYt;
@@ -76,11 +77,14 @@ class Imagen{
 inline Uint32 Imagen::getAlto() { return _alto; }
 inline Uint32 Imagen::getAncho() { return _ancho; }
 inline Uint32** Imagen::getMatrizImagenes() { return _matrizOriginal; }
-inline Uint32** Imagen::getMatrizColision() { return _matrizColision; }
-inline Uint32** Imagen::getMatrizInteractual() { return _matrizInteractual; } 
+inline bool** Imagen::getMatrizColision() { return _matrizColision; }
+inline bool** Imagen::getMatrizInteractual() { return _matrizInteractual; }
 
 inline Sint32 Imagen::getCX() { return _cXt; }
 inline Sint32 Imagen::getCY() { return _cYt; }
+inline bool Imagen::esColision(Uint32 x, Uint32 y) const {
+    return _matrizColision[x][y];
+}
 
 inline std::map<Uint32,Tile> Imagen::getTiles() { return _tiles; }
 

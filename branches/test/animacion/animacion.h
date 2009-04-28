@@ -117,6 +117,8 @@ private:
      * @param desp Desplazamiento. Por defecto 0.
      */
     void mover(Uint32 sec, Uint32 desp = 0);
+    void actualizarMapa();
+    void dibujarPosicionEstatica();
     /**
      * Puntero a la pantalla general del juego.
      */

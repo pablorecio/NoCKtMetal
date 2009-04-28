@@ -18,11 +18,11 @@ using namespace std;
 Imagen::Imagen(){}
 
 Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
-	       Uint32** matriz_col, Uint32** matriz_inter ):
+	       bool** matriz_col, bool** matriz_inter ):
   _alto(alto), _ancho(ancho), _cX(0), _cY(0),_cXt(0), _cYt(0), _p(p) {
 
   if(matriz_tiles != NULL){
-    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32*)*ancho);
     for(Uint32 i=0; i<ancho; i++)
       _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
     
@@ -33,9 +33,9 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
   }
   
   if(matriz_col != NULL){
-    _matrizColision= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    _matrizColision= (bool**)malloc(sizeof(bool*)*ancho);
     for(Uint32 i=0; i<ancho; i++)
-      _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+      _matrizColision[i]=(bool*)malloc(sizeof(bool)*alto);
     
     for(Uint32 i=0; i<ancho; i++)
       for(Uint32 j=0; j<alto; j++)
@@ -43,9 +43,9 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
   }
 
   if(matriz_inter != NULL){
-    _matrizInteractual= (Uint32**)malloc(sizeof(Uint32*)*ancho);
+    _matrizInteractual= (bool**)malloc(sizeof(bool*)*ancho);
     for(Uint32 i=0; i<ancho; i++)
-      _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*alto);
     
     for(Uint32 i=0; i<ancho; i++)
       for(Uint32 j=0; j<alto; j++)
@@ -55,7 +55,7 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
   
 
 }
-
+/*
 Imagen::Imagen(map<Uint32,Tile> imagenes, Uint32 ancho, Uint32 alto, 
        Uint32** matriz_tiles, Uint32** matriz_col, 
        Uint32** matriz_inter){
@@ -102,6 +102,7 @@ Imagen::Imagen(map<Uint32,Tile> imagenes, Uint32 ancho, Uint32 alto,
 	_matrizInteractual[i][j] = matriz_inter[i][j];
   }
 }
+ */
 
 void Imagen::relacionarTile(Uint32 id, Tile& t){
   _tiles.insert(make_pair(id,t));
@@ -113,7 +114,7 @@ void Imagen::relacionarPantalla(Pantalla& p)
 }
 
 void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz, 
-		       Uint32** colisionable, Uint32** interactuable){
+		       bool** colisionable, bool** interactuable){
   _ancho=ancho;
   _alto=alto;
   
@@ -126,9 +127,9 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
       _matrizOriginal[i][j] = matriz[i][j];
   
   if(colisionable != NULL){
-    _matrizColision= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    _matrizColision= (bool**)malloc(sizeof(bool*)*ancho);
     for(Uint32 i=0; i<ancho; i++)
-      _matrizColision[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+      _matrizColision[i]=(bool*)malloc(sizeof(bool)*alto);
     
     for(Uint32 i=0; i<ancho; i++)
       for(Uint32 j=0; j<alto; j++)
@@ -136,9 +137,9 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
   }
 
   if(interactuable != NULL){
-    _matrizInteractual= (Uint32**)malloc(sizeof(Uint32)*ancho);
+    _matrizInteractual= (bool**)malloc(sizeof(bool*)*ancho);
     for(Uint32 i=0; i<ancho; i++)
-      _matrizInteractual[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*alto);
     
     for(Uint32 i=0; i<ancho; i++)
       for(Uint32 j=0; j<alto; j++)
@@ -167,34 +168,20 @@ void Imagen::dibujarFondo(){
   destino.w= _ancho;
   destino.h= _alto;
 
-  cout << "destino.w, destino.h: " << destino.w << "," << destino.h << endl;
-
   for(Uint32 i=0; i<destino.w; i++){
     for(Uint32 j=0; j<destino.h; j++){
 
       destino.x=i*Tile::getTam();
       destino.y=j*Tile::getTam();
       
-      cout << "(i,j): (" << i << "," << j << ")" << endl;
-
       Tile t = _tiles.find(_matrizOriginal[i][j])->second;
 
       /*SDL_BlitSurface(t.getImagen(), &origen, _imagenAux, &destino);*/
       _p->volcarPantalla(t.getImagen(), &origen, _imagenAux, &destino);
-
-      cout << "dibujado" << endl;
     }
   }
-
   _p->volcarPantalla(_imagenAux, _p->getFondo());
-
-  cout << "(_cXt,_cYt): (" << _cXt << "," << _cYt << ")" << endl;
-  
-  _cX=_cXt*Tile::getTam();
-  _cY=_cYt*Tile::getTam();
-
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
-
 }
 
   // TODO: hacer que los bordes (arriba y izquierda) también salgan en negro
@@ -240,14 +227,8 @@ void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces){
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
 
   if(secuencia == veces){
-    cout << "antes! " << _cXt << " " << _cYt << endl;
-
     _cXt = _cX/Tile::getTam();
     _cYt = _cY/Tile::getTam();
-  
-    cout << "despues! " << _cXt << " " << _cYt << endl;
-
-    //dibujarFondo(_cXt, _cYt);
   }
 
 }
