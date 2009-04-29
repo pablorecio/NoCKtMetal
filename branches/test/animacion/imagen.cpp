@@ -14,7 +14,6 @@
 
 using namespace std;
 
-
 Imagen::Imagen(){}
 
 Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
@@ -22,33 +21,33 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
   _alto(alto), _ancho(ancho), _cX(0), _cY(0),_cXt(0), _cYt(0), _p(p) {
 
   if(matriz_tiles != NULL){
-    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizOriginal[i][j] = matriz_tiles[i][j];
     
   }
   
   if(matriz_col != NULL){
-    _matrizColision= (bool**)malloc(sizeof(bool*)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizColision[i]=(bool*)malloc(sizeof(bool)*alto);
+    _matrizColision= (bool**)malloc(sizeof(bool*)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizColision[i]=(bool*)malloc(sizeof(bool)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizColision[i][j] = matriz_col[i][j];
   }
 
   if(matriz_inter != NULL){
-    _matrizInteractual= (bool**)malloc(sizeof(bool*)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*alto);
+    _matrizInteractual= (bool**)malloc(sizeof(bool*)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizInteractual[i][j] = matriz_inter[i][j];
   }
 
@@ -70,33 +69,33 @@ Imagen::Imagen(map<Uint32,Tile> imagenes, Uint32 ancho, Uint32 alto,
   _tiles = imagenes;
 
   if(matriz_tiles != NULL){
-    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+    _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizOriginal[i][j] = matriz_tiles[i][j];
     
   }
   
   if(matriz_col != NULL){
-    _matrizColision= (bool**)malloc(sizeof(bool*)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizColision[i]=(bool*)malloc(sizeof(bool)*alto);
+    _matrizColision= (bool**)malloc(sizeof(bool*)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizColision[i]=(bool*)malloc(sizeof(bool)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizColision[i][j] = matriz_col[i][j];
   }
 
   if(matriz_inter != NULL){
-    _matrizInteractual= (bool**)malloc(sizeof(bool*)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*alto);
+    _matrizInteractual= (bool**)malloc(sizeof(bool*)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizInteractual[i][j] = matriz_inter[i][j];
   }
 }
@@ -115,31 +114,31 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
   _ancho=ancho;
   _alto=alto;
   
-  _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*ancho);
-  for(Uint32 i=0; i<ancho; i++)
-    _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*alto);
+  _matrizOriginal= (Uint32**)malloc(sizeof(Uint32)*alto);
+  for(Uint32 i=0; i<alto; i++)
+    _matrizOriginal[i]=(Uint32*)malloc(sizeof(Uint32)*ancho);
   
-  for(Uint32 i=0; i<ancho; i++)
-    for(Uint32 j=0; j<alto; j++)
+  for(Uint32 i=0; i<alto; i++)
+    for(Uint32 j=0; j<ancho; j++)
       _matrizOriginal[i][j] = matriz[i][j];
   
   if(colisionable != NULL){
-    _matrizColision= (bool**)malloc(sizeof(bool*)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizColision[i]=(bool*)malloc(sizeof(bool)*alto);
+    _matrizColision= (bool**)malloc(sizeof(bool*)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizColision[i]=(bool*)malloc(sizeof(bool)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizColision[i][j] = colisionable[i][j];
   }
 
   if(interactuable != NULL){
-    _matrizInteractual= (bool**)malloc(sizeof(bool*)*ancho);
-    for(Uint32 i=0; i<ancho; i++)
-      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*alto);
+    _matrizInteractual= (bool**)malloc(sizeof(bool*)*alto);
+    for(Uint32 i=0; i<alto; i++)
+      _matrizInteractual[i]=(bool*)malloc(sizeof(bool)*ancho);
     
-    for(Uint32 i=0; i<ancho; i++)
-      for(Uint32 j=0; j<alto; j++)
+    for(Uint32 i=0; i<alto; i++)
+      for(Uint32 j=0; j<ancho; j++)
 	_matrizInteractual[i][j] = interactuable[i][j];
   }
     
@@ -167,28 +166,24 @@ void Imagen::dibujarFondo(){
   destino.h= _alto;
 
   if(_matrizColision == NULL){
-    _matrizColision = (bool**)malloc(sizeof(bool*)*_ancho);
-    for(Uint32 i=0; i<_ancho; i++)
-      _matrizColision[i] = (bool*)malloc(sizeof(bool)*_alto);
+    _matrizColision = (bool**)malloc(sizeof(bool*)*_alto);
+    for(Uint32 i=0; i<_alto; i++)
+      _matrizColision[i] = (bool*)malloc(sizeof(bool)*_ancho);
     matrizColCreada=true;
   }
 
   if(_matrizInteractual == NULL){
-    _matrizInteractual = (bool**)malloc(sizeof(bool*)*_ancho);
-    for(Uint32 i=0; i<_ancho; i++)
-      _matrizInteractual[i] = (bool*)malloc(sizeof(bool)*_alto);
+    _matrizInteractual = (bool**)malloc(sizeof(bool*)*_alto);
+    for(Uint32 i=0; i<_alto; i++)
+      _matrizInteractual[i] = (bool*)malloc(sizeof(bool)*_ancho);
     matrizInterCreada=true;
   }
-
-  cout << "destino.w, destino.h: " << destino.w << "," << destino.h << endl;
 
   for(Uint32 i=0; i<destino.w; i++){
     for(Uint32 j=0; j<destino.h; j++){
 
       destino.x=i*Tile::getTam();
       destino.y=j*Tile::getTam();
-      
-      cout << "(i,j): (" << i << "," << j << ")" << endl;
 
       Tile t = getTile(_matrizOriginal[i][j]);
       if(matrizColCreada)
@@ -198,14 +193,10 @@ void Imagen::dibujarFondo(){
 
       SDL_BlitSurface(t.getImagen(),
       		      &origen, _imagenAux, &destino);
-
-      cout << "dibujado" << endl;
     }
   }
 
   _p->volcarPantalla(_imagenAux, _p->getFondo());
-
-  cout << "(_cXt,_cYt): (" << _cXt << "," << _cYt << ")" << endl;
   
   _cX=_cXt*Tile::getTam();
   _cY=_cYt*Tile::getTam();
@@ -218,7 +209,7 @@ void Imagen::dibujarFondo(){
   // cuando se necesite, es decir, por ejemplo, cuando el muñeco quiera acceder
   // hasta el límite superior del mapa
 
-void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces){
+void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces) {
 
   vector<Uint32> _pixels(veces);
   for(Uint32 i=0; i<veces; i++){
@@ -257,14 +248,8 @@ void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces){
   _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
 
   if(secuencia == veces){
-    cout << "antes! " << _cXt << " " << _cYt << endl;
-
     _cXt = _cX/Tile::getTam();
     _cYt = _cY/Tile::getTam();
-  
-    cout << "despues! " << _cXt << " " << _cYt << endl;
-
-    //dibujarFondo(_cXt, _cYt);
   }
 
 }

@@ -41,13 +41,13 @@ Animacion::~Animacion() { }
 
 void Animacion::inicializarAnimacion() {
     /* Inicializamos el mapa */
-    Uint32** matriz = (Uint32**) malloc(sizeof (Uint32*) * 48);
-    for (Uint32 i = 0; i < 48; i++) {
-        matriz[i] = (Uint32*) malloc(sizeof (Uint32)*36);
+    Uint32** matriz = (Uint32**) malloc(sizeof (Uint32*) * 36);
+    for (Uint32 i = 0; i < 36; i++) {
+        matriz[i] = (Uint32*) malloc(sizeof (Uint32)*48);
     }
 
-    for (Uint32 i = 0; i < 48; i++) {
-        for (Uint32 j = 0; j < 36; j++) {
+    for (Uint32 i = 0; i < 36; i++) {
+        for (Uint32 j = 0; j < 48; j++) {
             matriz[i][j] = 2;
             if (i > 13 && i < 15 && j < 22) {
                 matriz[i][j] = 1;
@@ -66,8 +66,9 @@ void Animacion::inicializarAnimacion() {
             }
         }
     }
-
+    cout << "PREIMAGEN" << endl;
     _imag = new Imagen(48, 36, _pant, matriz);
+    cout << "POSTIMAGEN" << endl;
     Tile arena("./tiles/arena.png");
     Tile piedra("./tiles/piedra.png", true);
     Tile tierra("./tiles/tierra.png", true);
@@ -80,11 +81,12 @@ void Animacion::inicializarAnimacion() {
     _imag->relacionarTile(3, piedra);
     _imag->relacionarTile(4, ladrillo);
     _imag->relacionarTile(5, ladTope);
-
+    cout << "POST TILES" << endl;
     _imag->dibujarFondo();
+    cout << "DIBUJAR FONDO" << endl;
 
     /* Personaje */
-    _principal = new Personaje(1, 1, 1, 8, 6, 30, _pant, "./lapunki.png");
+    _principal = new Personaje(1, 1, 1, 7, 5, 30, _pant, "./lapunki.png");
     _principal->setRango(4, 4);
     _principal->setPosicion();
 

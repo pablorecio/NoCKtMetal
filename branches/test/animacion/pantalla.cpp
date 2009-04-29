@@ -30,9 +30,7 @@
 using namespace std;
 
 Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof):
-_ancho(ancho), _alto(alto), _prof(prof) {
-    atexit(SDL_Quit);
-    
+_ancho(ancho), _alto(alto), _prof(prof) {    
     /* Comprobamos que sea compatible el modo de vídeo */
     if(SDL_VideoModeOK(_ancho, _alto, _prof,
                        SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
