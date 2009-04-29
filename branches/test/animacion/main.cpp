@@ -15,7 +15,7 @@ int main() {
     }
 
     Pantalla p = Pantalla();
-    p.setTitulo("NoCKt Metal", "./logo.png");
+    p.setTitulo("NoCKt Metal", "./tiles/logo.png");
 
     Animacion a = Animacion(&p);
     a.inicializarAnimacion();

@@ -58,39 +58,28 @@ void Animacion::inicializarAnimacion() {
             if ((i < 6) || (i > 23) || (j < 4) || (j > 23)) {
                 matriz[i][j] = 3;
             }
-        }
-    }
-
-    /* Inicializamos el mapa de colisiones*/
-    bool** colisiones = (bool**) malloc(sizeof (bool*) * 48);
-    for (Uint32 i = 0; i < 48; i++) {
-        colisiones[i] = (bool*) malloc(sizeof (bool)*36);
-    }
-
-    for (Uint32 i = 0; i < 48; i++) {
-        for (Uint32 j = 0; j < 36; j++) {
-            colisiones[i][j] = false;
-            if ((i < 6) || (i > 23) || (j < 4) || (j > 23)) {
-                colisiones[i][j] = true;
+            if ((j == 3) && (i >= 6 ) && (i <= 23)) {
+                matriz[i][j] = 4;
             }
-            if (i > 13 && i < 15&& j < 22) {
-                colisiones[i][j] = true;
-            }
-            if (i > 15 && i < 18 && j > 14 && j < 20) {
-                colisiones[i][j] = true;
+            if ((j == 2) && (i >= 6 ) && (i <= 23)) {
+                matriz[i][j] = 5;
             }
         }
     }
 
-    _imag = new Imagen(48, 36, _pant, matriz, colisiones);
+    _imag = new Imagen(48, 36, _pant, matriz);
     Tile arena("./tiles/arena.png");
-    Tile piedra("./tiles/piedra.png");
-    Tile tierra("./tiles/tierra.png");
+    Tile piedra("./tiles/piedra.png", true);
+    Tile tierra("./tiles/tierra.png", true);
     Tile acero("./tiles/acero.png");
+    Tile ladrillo("./tiles/ladrillos.png", true);
+    Tile ladTope("./tiles/ladrillosTope.png", true);
 
     _imag->relacionarTile(1, tierra);
     _imag->relacionarTile(2, arena);
     _imag->relacionarTile(3, piedra);
+    _imag->relacionarTile(4, ladrillo);
+    _imag->relacionarTile(5, ladTope);
 
     _imag->dibujarFondo();
 
@@ -168,7 +157,7 @@ bool Animacion::procesarAccion() {
     /* Si la opción elegida es realizar un movimiento... */
     if (_mov != NULO) {
         /* Si se puede mover a la siguiente posicion (no colisionable) */
-        if (!_imag->esColision(mx - 1, my - 1)) {
+        if (!_imag->isColisionable(mx - 1, my - 1)) {
             actualizarMapa();
             /* Si el movimiento queda fuera del rango de pantalla del personaje,
              * se moverá de forma estática, desplazándose el fondo por debajo */
