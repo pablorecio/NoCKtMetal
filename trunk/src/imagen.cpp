@@ -154,6 +154,8 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
 void Imagen::dibujarFondo(){
 
   SDL_Rect origen, destino;
+  bool matrizColCreada=false;
+  bool matrizInterCreada=false;
 
   _imagenAux = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho*Tile::getTam(),
 				    _alto*Tile::getTam(), 24, 0, 0, 0, 0);
@@ -163,6 +165,20 @@ void Imagen::dibujarFondo(){
 
   destino.w= _ancho;
   destino.h= _alto;
+
+  if(_matrizColision == NULL){
+    _matrizColision = (bool**)malloc(sizeof(bool*)*_ancho);
+    for(Uint32 i=0; i<_ancho; i++)
+      _matrizColision[i] = (bool*)malloc(sizeof(bool)*_alto);
+    matrizColCreada=true;
+  }
+
+  if(_matrizInteractual == NULL){
+    _matrizInteractual = (bool**)malloc(sizeof(bool*)*_ancho);
+    for(Uint32 i=0; i<_ancho; i++)
+      _matrizInteractual[i] = (bool*)malloc(sizeof(bool)*_alto);
+    matrizInterCreada=true;
+  }
 
   cout << "destino.w, destino.h: " << destino.w << "," << destino.h << endl;
 
@@ -174,7 +190,11 @@ void Imagen::dibujarFondo(){
       
       cout << "(i,j): (" << i << "," << j << ")" << endl;
 
-      Tile t = _tiles.find(_matrizOriginal[i][j])->second;
+      Tile t = getTile(_matrizOriginal[i][j]);
+      if(matrizColCreada)
+	_matrizColision[i][j] = t.isColisionable();
+      if(matrizInterCreada)
+	_matrizInteractual[i][j] = t.isInteractuable();
 
       SDL_BlitSurface(t.getImagen(),
       		      &origen, _imagenAux, &destino);

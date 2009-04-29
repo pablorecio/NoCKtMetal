@@ -162,6 +162,24 @@ class Imagen{
   std::map<Uint32,Tile> getTiles();
 
   /**
+   * @brief Función con la que obtenemos el tile correspondiente al identificador dado.
+   * Dicho identificador es usado para la organización de la matriz  de tiles.
+   */
+  Tile getTile(Uint32 identificador);
+
+  /**
+   * @brief Función con la que obtenemos si el tile que permanece en la posición dada
+   * es colisionable (<code>true</code>) o no lo es (<code>false</code>).
+   */
+  bool isColisionable(Uint32 cX, Uint32 cY);
+
+  /**
+   * @brief Función con la que obtenemos si el tile que permanece en la posición dada
+   * es interactuable (<code>true</code>) o no lo es (<code>false</code>).
+   */
+  bool isInteractuable(Uint32 cX, Uint32 cY);
+
+  /**
    * @brief Función que modifica la coordenada X de la posición de la pantalla en el mapa.
    */
   void setCX(Sint32 x);
@@ -219,6 +237,10 @@ inline void Imagen::setCX(Sint32 x) { _cXt=x; }
 inline void Imagen::setCY(Sint32 y) { _cYt=y; }
 
 inline void Imagen::setTiles(std::map<Uint32,Tile> conj_tiles) { _tiles= conj_tiles; }
+
+inline Tile Imagen::getTile(Uint32 identificador) { return _tiles.find(identificador)->second; }
+inline bool Imagen::isColisionable(Uint32 cX, Uint32 cY) { return _matrizColision[cX][cY]; }
+inline bool Imagen::isInteractuable(Uint32 cX, Uint32 cY) { return _matrizInteractua[cX][cY]; }
 
 
 #endif
