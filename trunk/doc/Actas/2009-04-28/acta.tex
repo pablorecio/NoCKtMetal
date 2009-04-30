@@ -1,0 +1,107 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage[left=2.5cm,top=3.5cm,right=2.5cm,bottom=3.5cm]{geometry}
+
+\usepackage{array}
+
+\usepackage{graphicx} 
+
+\begin{document}
+
+\includegraphics[scale=0.6]{../uca.png}
+
+\begin{center}
+  \noindent \huge\textbf{ Acta de reunión de grupo}\\
+\end{center}
+
+\noindent Día 28 de Abril del 2009\\
+
+\noindent Asisten:
+
+\begin{center}
+\begin{tabular}{|m{5.2cm}|m{5.2cm}|m{5.2cm}|}
+  \hline
+  Rosa María Durante Lerate & Pablo Recio Quijano & Noelia Sales Montes\\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  & & \\
+  Fdo: & Fdo: & Fdo: \\
+  \hline
+\end{tabular}
+\end{center}
+
+\noindent Acuerdos:\\
+
+\noindent La reunión viene a raiz de la necesidad de concretar las actuaciones
+a realizar hasta la siguiente presentación intermedia, con fecha aproximada
+del 20 de mayo. 
+
+\noindent El proyecto \textbf{NoCKt Metal} se encuentra actualmente en el 
+siguiente estado:
+
+\begin{itemize}
+\item Motor de movimiento
+  \begin{itemize}
+  \item Creación de un mapa a partir de tiles de 30x30
+  \item Movimiento de un personaje
+  \item Scrolling del mapa si fuera necesario al salir de un rango
+  \item Colisiones en ciertos tiles
+  \item Implementación de los distintos eventos lanzados por el usuario
+  \end{itemize}
+
+\item Motor de combate
+  \begin{itemize}
+  \item Implementación básica del nucleo del sistema de combate.
+  \item Lectura y escritura de los distintos elementos mediante
+    ficheros XML.
+  \item Pequeña interfaz por consola para probar el motor.
+  \item Organización en grupos, uso de inventarios y habilidades.
+  \end{itemize}
+\end{itemize}
+
+\noindent Por tanto, analizamos que las siguientes tareas serán:
+
+\begin{itemize}
+\item Motor de movimiento
+  \begin{itemize}
+  \item Inclusión de menús.
+  \item Interacción con elementos del mapa (objetos ó PNJs).
+  \item Añadir mapas ``serios''
+  \item Diálogos.
+  \item Añadir lectura y escritura usando XML.
+  \end{itemize}
+
+\item Motor de combate
+  \begin{itemize}
+  \item Implementar las funciones \textit{huir()} y \textit{defensa()}.
+  \item Estudiar IA de los enemigos.
+  \item Añadir a las clases que se necesite guardar, la ruta al fichero
+    donde se guardará, como un atributo de la clase.
+  \item Interfaz gráfica usando SDL
+  \item Realizar las operaciones de postcombate
+  \item Añadir más elementos (objetos,habilidades, personajes...)
+  \item Eliminar la clase \texttt{Atributos} dada la poca entidad por
+    si misma que tiene en el sistema.
+  \end{itemize}
+\end{itemize}
+
+\noindent Sin especificar concretamente que tareas realizaremos cada uno de
+los 3 miembros, \textit{a grosso modo} la organización por orden alfabético
+es la siguiente:
+
+\begin{description}
+\item[Noelia: ] Realización de la interfaz para los combates. Notar que
+  los menús se reutilizarán al menos en parte para el motor de movimiento.
+\item[Pablo: ] Continuar el desarrollo del nucleo del motor de combate. 
+  Ficheros XML en el motor de movimiento.
+\item[Rosa: ] Continuar el desarrollo del motor de movimiento. Añadir quizás
+elementos como más mapas, diálogos y demás.
+\end{description}
+
+\end{document}
