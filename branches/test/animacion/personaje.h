@@ -69,6 +69,8 @@ public:
      */
     Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p, const char* sprite,
                      Uint32 f = 4, Uint32 c = 4);
+    Personaje(Uint32 i, Uint32 tam, Pantalla* p, const char* sprite,
+                     Uint32 f = 4, Uint32 c = 4);
     /**
      * Constructor de un objeto <i>Personaje</i>.
      * Este constructor crea un personaje en una posición determinada
@@ -203,6 +205,7 @@ public:
      * @param margenArriba Alto del rango en casillas.
      */
     void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
+    void setMapa(Uint16 x, Uint16 y);
 
     /**
      * Método modificador de la posición en el mapa.

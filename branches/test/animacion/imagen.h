@@ -63,6 +63,9 @@ class Imagen{
    */
   Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles = NULL,
 	 bool** matriz_col = NULL, bool** matriz_inter = NULL);
+  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, Pantalla* p,
+         Uint32** matriz_tiles = NULL, bool** matriz_col = NULL,
+         bool** matriz_inter = NULL);
 
   /**
    * @brief Constructor para la clase imagen a partir del tamaño del mapa (alto y ancho)

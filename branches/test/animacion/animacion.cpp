@@ -41,58 +41,57 @@ Animacion::~Animacion() { }
 
 void Animacion::inicializarAnimacion() {
     /* Inicializamos el mapa */
-    Uint32** matriz = (Uint32**) malloc(sizeof (Uint32*) * 36);
-    for (Uint32 i = 0; i < 36; i++) {
-        matriz[i] = (Uint32*) malloc(sizeof (Uint32)*48);
-    }
-
-    for (Uint32 i = 0; i < 36; i++) {
-        for (Uint32 j = 0; j < 48; j++) {
-            matriz[i][j] = 2;
-            if (i > 13 && i < 15 && j < 22) {
-                matriz[i][j] = 1;
-            }
-            if (i > 15 && i < 18 && j > 14 && j < 20) {
-                matriz[i][j] = 1;
-            }
-            if ((i < 6) || (i > 23) || (j < 4) || (j > 23)) {
-                matriz[i][j] = 3;
-            }
-            if ((j == 3) && (i >= 6 ) && (i <= 23)) {
-                matriz[i][j] = 4;
-            }
-            if ((j == 2) && (i >= 6 ) && (i <= 23)) {
-                matriz[i][j] = 5;
-            }
+    Uint32** matriz;
+    matriz = new Uint32* [48];
+    for (Uint32 j = 0; j < 48; j++) {
+        matriz[j] = new Uint32 [36];
+        for(Uint32 i = 0; i < 36; i++) {
+            matriz[j][i] = 2;
+            if(j < 6 || j > 40) matriz[j][i] = 1;
+            if(i < 4 || i > 32) matriz[j][i] = 1;
         }
     }
+    /**
+    Uint32** matriz = (Uint32**) malloc(sizeof (Uint32*) * 60);
+    for (Uint32 i = 0; i < 60; i++) {
+        matriz[i] = (Uint32*) malloc(sizeof (Uint32)*60);
+        for (Uint32 j = 0; j < 60; j++) {
+            matriz[i][j] = 2;
+            if(i < 16 && j < 12) matriz[i][j] = 1;
+        }
+    }
+    */
+
+    Uint32 fondoX = 10, fondoY = 10;
     cout << "PREIMAGEN" << endl;
-    _imag = new Imagen(48, 36, _pant, matriz);
+    _imag = new Imagen(48, 36, fondoX, fondoY, _pant, matriz);
     cout << "POSTIMAGEN" << endl;
     Tile arena("./tiles/arena.png");
     Tile piedra("./tiles/piedra.png", true);
-    Tile tierra("./tiles/tierra.png", true);
+    Tile tierra("./tiles/tierra.png");
     Tile acero("./tiles/acero.png");
     Tile ladrillo("./tiles/ladrillos.png", true);
     Tile ladTope("./tiles/ladrillosTope.png", true);
 
-    _imag->relacionarTile(1, tierra);
+    _imag->relacionarTile(1, piedra);
     _imag->relacionarTile(2, arena);
-    _imag->relacionarTile(3, piedra);
+    _imag->relacionarTile(3, tierra);
     _imag->relacionarTile(4, ladrillo);
     _imag->relacionarTile(5, ladTope);
     cout << "POST TILES" << endl;
+
     _imag->dibujarFondo();
     cout << "DIBUJAR FONDO" << endl;
 
     /* Personaje */
-    _principal = new Personaje(1, 1, 1, 7, 5, 30, _pant, "./lapunki.png");
-    _principal->setRango(4, 4);
+    _principal = new Personaje(1, 30, _pant, "./lapunki.png");
+    _principal->setRango(2, 2);
     _principal->setPosicion();
-
-    /* Dibujamos la pantalla inicial */
-    _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
+    _principal->setMapa(fondoX + _principal->getPantX(),
+                        fondoY + _principal->getPantY());
     _principal->dibujarPosicionFrente();
+    /* Dibujamos la pantalla inicial */
+    _pant->volcarPantalla(_pant->getBuffer());
 }
 
 bool Animacion::procesarAccion() {
@@ -159,7 +158,7 @@ bool Animacion::procesarAccion() {
     /* Si la opción elegida es realizar un movimiento... */
     if (_mov != NULO) {
         /* Si se puede mover a la siguiente posicion (no colisionable) */
-        if (!_imag->isColisionable(mx - 1, my - 1)) {
+        if (!_imag->isColisionable(mx, my)) {
             actualizarMapa();
             /* Si el movimiento queda fuera del rango de pantalla del personaje,
              * se moverá de forma estática, desplazándose el fondo por debajo */

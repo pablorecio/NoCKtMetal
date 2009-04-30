@@ -9,8 +9,10 @@
 using namespace std;
 
 Musica::Musica(const char *ruta) {
-
-
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 2048) < 0) {
+      cerr << "Subsistema de Audio no disponible" << endl;
+      exit(1);
+    }
     // Cargamos la música
 
     bso = Mix_LoadMUS(ruta);
