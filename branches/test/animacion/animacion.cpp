@@ -46,34 +46,41 @@ void Animacion::inicializarAnimacion() {
     for (Uint32 j = 0; j < 48; j++) {
         matriz[j] = new Uint32 [36];
         for(Uint32 i = 0; i < 36; i++) {
-            if(i%2 == 0) matriz[j][i] = 2;
-            else matriz[j][i] = 3;
-            if(j <= 6 || j >= 40 || i <= 4 || i >= 32) {
+            matriz[j][i] = 6;
+            if(j <= 6 || j >= 40 || i <= 4 || i >= 31) {
                 matriz[j][i] = 1;
+            }
+            if(i == 5 && j > 6 && j < 40) {
+                matriz[j][i] = 5;
+            }
+            if(i == 6 && j > 6 && j < 40) {
+                matriz[j][i] = 4;
+            }
+            if(i == 17 && j > 10 && j < 30) {
+                matriz[j][i] = 5;
             }
         }
     }
 
     Uint32 fondoX = 10, fondoY = 10;
-    cout << "PREIMAGEN" << endl;
+
     _imag = new Imagen(48, 36, fondoX, fondoY, _pant, matriz);
-    cout << "POSTIMAGEN" << endl;
+
     Tile arena("./tiles/arena.png");
     Tile piedra("./tiles/piedra.png", true);
-    Tile tierra("./tiles/tierra.png");
-    Tile acero("./tiles/acero.png");
+    Tile madera("./tiles/madera.png");
+    Tile metal("./tiles/metal.png");
     Tile ladrillo("./tiles/ladrillos.png", true);
     Tile ladTope("./tiles/ladrillosTope.png", true);
 
     _imag->relacionarTile(1, piedra);
     _imag->relacionarTile(2, arena);
-    _imag->relacionarTile(3, tierra);
+    _imag->relacionarTile(3, madera);
     _imag->relacionarTile(4, ladrillo);
     _imag->relacionarTile(5, ladTope);
-    cout << "POST TILES" << endl;
+    _imag->relacionarTile(6, metal);
 
     _imag->dibujarFondo();
-    cout << "DIBUJAR FONDO" << endl;
 
     /* Personaje */
     _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");

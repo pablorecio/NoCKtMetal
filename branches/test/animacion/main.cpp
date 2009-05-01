@@ -37,7 +37,7 @@ using namespace std;
 int main() {
     if (iniciarSistema()) {
         Pantalla p = Pantalla();
-        p.setTitulo("NoCKt Metal", "./tiles/logo.png");
+        p.setTitulo("NoCKt Metal", "./logo.png");
 
         Musica m("musica/NIN-1m.ogg");
         m.reproducir();

@@ -68,7 +68,6 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
     
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = tam;
-    cout << "TAM: " << _tam << endl;
     
     /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
     _desp = vector<Uint32>(getSecuenciasMovimiento());
@@ -171,7 +170,6 @@ void Personaje::setPosicion() {
     /* Colocamos también su posición en pixels */
     _x = _pantX * _tam;
     _y = _pantY * _tam;
-
 
     /* Colocación en pixels correcta de los sprites en las casillas */
     if (_tam != _sprite.getAncho()) {
