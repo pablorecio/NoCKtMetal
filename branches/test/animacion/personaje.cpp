@@ -44,31 +44,6 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p,
     
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = _sprite.getAncho();
-    
-    /* Y el vector de desplazamiento se calcula en función de ese tamaño */
-    _desp = vector<Uint32>(getSecuenciasMovimiento());
-    for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
-        _desp.at(i) = _tam/getSecuenciasMovimiento();
-        /* Si la división en pixels no es exacta hay que rellenar pixels
-         * de forma equitativa */
-        if (i < _tam % getSecuenciasMovimiento()) {
-            _desp.at(i)++;
-        }
-    }
-}
-
-Personaje::Personaje(Uint32 i, Uint32 tam, Pantalla* p, const char* sprite,
-                     Uint32 f, Uint32 c):
-                     _id(i), _x(0), _y(0), _pantX(0), _pantY(0), _tam(tam),
-                     _p(p) {
-    _sprite = Sprite(sprite, f, c);
-    _rango.x = 0;
-    _rango.y = 0;
-    _rango.w = _p->getAncho();
-    _rango.h = _p->getAlto();
-
-    /* Por defecto se toma como tamaño el ancho del sprite */
-    _tam = _sprite.getAncho();
 
     /* Y el vector de desplazamiento se calcula en función de ese tamaño */
     _desp = vector<Uint32>(getSecuenciasMovimiento());
@@ -81,7 +56,6 @@ Personaje::Personaje(Uint32 i, Uint32 tam, Pantalla* p, const char* sprite,
         }
     }
 }
-
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
                      const char* sprite, Uint32 f, Uint32 c):
@@ -94,6 +68,7 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
     
     /* Por defecto se toma como tamaño el ancho del sprite */
     _tam = tam;
+    cout << "TAM: " << _tam << endl;
     
     /* Y el vector de desplazamiento se calcula en funcion de ese tamaño */
     _desp = vector<Uint32>(getSecuenciasMovimiento());

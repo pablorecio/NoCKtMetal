@@ -57,7 +57,10 @@ public:
     /**
      * Constructor de un objeto <i>Personaje</i>.
      * Este constructor crea un personaje en una posición determinada
-     * (casilla en la pantalla, nada de pixels) junto con su <i>sprite</i> asociado.
+     * (casilla en la pantalla, nada de pixels) junto con su <i>sprite</i>
+     * asociado.
+     * @note Este constructor no va a ser utilizado de momento, puesto que
+     * no podemos asegurar que el ancho del sprite sea igual al de un tile.
      * @param i Identificador del personaje.
      * @param x Posición horizontal.
      * @param y Posición vertical.
@@ -68,8 +71,6 @@ public:
      * @param c Número de columnas del sprite, cuyo valor por defecto es 4.
      */
     Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p, const char* sprite,
-                     Uint32 f = 4, Uint32 c = 4);
-    Personaje(Uint32 i, Uint32 tam, Pantalla* p, const char* sprite,
                      Uint32 f = 4, Uint32 c = 4);
     /**
      * Constructor de un objeto <i>Personaje</i>.

@@ -46,21 +46,13 @@ void Animacion::inicializarAnimacion() {
     for (Uint32 j = 0; j < 48; j++) {
         matriz[j] = new Uint32 [36];
         for(Uint32 i = 0; i < 36; i++) {
-            matriz[j][i] = 2;
-            if(j < 6 || j > 40) matriz[j][i] = 1;
-            if(i < 4 || i > 32) matriz[j][i] = 1;
+            if(i%2 == 0) matriz[j][i] = 2;
+            else matriz[j][i] = 3;
+            if(j <= 6 || j >= 40 || i <= 4 || i >= 32) {
+                matriz[j][i] = 1;
+            }
         }
     }
-    /**
-    Uint32** matriz = (Uint32**) malloc(sizeof (Uint32*) * 60);
-    for (Uint32 i = 0; i < 60; i++) {
-        matriz[i] = (Uint32*) malloc(sizeof (Uint32)*60);
-        for (Uint32 j = 0; j < 60; j++) {
-            matriz[i][j] = 2;
-            if(i < 16 && j < 12) matriz[i][j] = 1;
-        }
-    }
-    */
 
     Uint32 fondoX = 10, fondoY = 10;
     cout << "PREIMAGEN" << endl;
@@ -84,7 +76,7 @@ void Animacion::inicializarAnimacion() {
     cout << "DIBUJAR FONDO" << endl;
 
     /* Personaje */
-    _principal = new Personaje(1, 30, _pant, "./lapunki.png");
+    _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
     _principal->setRango(2, 2);
     _principal->setPosicion();
     _principal->setMapa(fondoX + _principal->getPantX(),
