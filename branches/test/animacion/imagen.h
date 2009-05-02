@@ -25,11 +25,11 @@
 #ifndef _IMAGEN_H_
 #define _IMAGEN_H_
 
+#include "pantalla.h"
 #include "tile.h"
 #include <map>
 
-#include "pantalla.h"
-
+using namespace std;
 
 /** 
  * @brief Abstración del mapa del juego. En esta clase se obtendrán los tiles necesarios y
@@ -63,6 +63,23 @@ class Imagen{
    */
   Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles = NULL,
 	 bool** matriz_col = NULL, bool** matriz_inter = NULL);
+  /**
+   * Constructor alternativo.
+   * @param ancho Número de tiles del ancho del mapa.
+   * @param alto Número de tiles de la altura del mapa.
+   * @param x Coordenada horizontal que se corresponde con la casilla a partir
+   * de la cual se desea visualizar el mapa.
+   * @param y Coordenada vertical que se corresponde con la casilla a partir
+   * de la cual se desea visualizar el mapa.
+   * @param p Pantalla en la que se visualizará el mapa.
+   * @param matriz_tiles Matriz de correspondencia <i>casilla-tile</i>.
+   * @param matriz_col Matriz de valores lógicos que identifica cada
+   * <code>tile</code> como colisionable o no colisionable.
+   * Debe ser del mismo tamaño que <code>matriz_tiles</code>.
+   * @param matriz_inter Matriz de valores lógicos que identifica cada
+   * <code>tile</code> como interactuable o no interactuable.
+   * Debe ser del mismo tamaño que <code>matriz_tiles</code>.
+   */
   Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, Pantalla* p,
          Uint32** matriz_tiles = NULL, bool** matriz_col = NULL,
          bool** matriz_inter = NULL);
@@ -162,7 +179,7 @@ class Imagen{
    * @brief Función con la que obtenemos los tiles correspondientes con el mapa y sus
    * identificadores.
    */
-  std::map<Uint32,Tile> getTiles();
+  map<Uint32,Tile> getTiles();
 
   /**
    * @brief Función con la que obtenemos el tile correspondiente al identificador dado.
@@ -196,7 +213,7 @@ class Imagen{
    * @brief Función que modifica los tiles relacionados con el objeto imagen y sus 
    * identificadores.
    */
-  void setTiles(std::map<Uint32,Tile> conjTiles);
+  void setTiles(map<Uint32,Tile> conjTiles);
 
   /**
    * @brief Función que modifica las estructuras de organización del mapa, asi como

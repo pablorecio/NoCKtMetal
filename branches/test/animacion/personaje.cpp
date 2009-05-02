@@ -35,7 +35,8 @@ Personaje::Personaje() {}
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p,
                      const char* sprite, Uint32 f, Uint32 c):
-                     _id(i), _x(0), _y(0), _pantX(x), _pantY(y), _p(p) {
+                     _id(i), _x(0), _y(0), _pantX(x), _pantY(y), _velocidad(60),
+                     _p(p) {
     _sprite = Sprite(sprite, f, c);
     _rango.x = 0;
     _rango.y = 0;
@@ -59,7 +60,8 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p,
 
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
                      const char* sprite, Uint32 f, Uint32 c):
-                     _id(i), _x(0), _y(0), _pantX(x), _pantY(y), _p(p) {
+                     _id(i), _x(0), _y(0), _pantX(x), _pantY(y), _velocidad(60),
+                     _p(p) {
     _sprite = Sprite(sprite, f, c);
     _rango.x = 0;
     _rango.y = 0;
@@ -84,8 +86,8 @@ Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
 Personaje::Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
                      Uint32 tam, Pantalla* p, const char* sprite, Uint32 f,
                      Uint32 c):
-                     _id(i), _mapaX(mapax), _mapaY(mapay), 
-                     _pantX(x), _pantY(y), _tam(tam), _p(p) {
+                     _id(i), _mapaX(mapax), _mapaY(mapay), _pantX(x), _pantY(y),
+                     _tam(tam), _velocidad(60), _p(p) {
     _sprite = Sprite(sprite, f, c);
     _rango.x = 0;
     _rango.y = 0;
@@ -298,7 +300,7 @@ void Personaje::moverDcha(Uint32 mov, Uint32 desp) {
 void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
     /* Trastear cuánto tiempo es necesario para que no se vea raro:
      * que no vaya ya demasiado lento */
-    SDL_Delay(80);
+    SDL_Delay(150 - _velocidad);
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
      * posición actualizada de pantalla */
     _sprite.dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);

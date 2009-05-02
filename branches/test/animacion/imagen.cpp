@@ -3,13 +3,12 @@
 #include <iterator>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-
 #include <cmath>
 #include <map>
 #include <vector>
 
-#include "tile.h"
 #include "imagen.h"
+#include "tile.h"
 #include "pantalla.h"
 
 using namespace std;
@@ -177,7 +176,7 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
     }
 }
 
-// Conviete la matriz completa en el dibujo con tiles sobre una Surface.
+// Convierte la matriz completa en el dibujo con tiles sobre una Surface.
 // Necesitamos saber desde que coordenada de la matriz completa comenzamos
 // a dibujar. El final/tamaño nos lo proporciona la Surface.
 

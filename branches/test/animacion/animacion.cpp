@@ -88,6 +88,7 @@ void Animacion::inicializarAnimacion() {
     _principal->setPosicion();
     _principal->setMapa(fondoX + _principal->getPantX(),
                         fondoY + _principal->getPantY());
+    _principal->setVelocidad(80);
     _principal->dibujarPosicionFrente();
     /* Dibujamos la pantalla inicial */
     _pant->volcarPantalla(_pant->getBuffer());
@@ -182,13 +183,12 @@ void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y, char dir) {
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
         /* Desplazamos el mapa */
-        //cout << "secuencia: " << _principal->getSecuenciasMovimiento() << endl;
         _imag->dibujarSecuencia(dir, _principal->getSecuenciasMovimiento() - sec,
                                 _principal->getSecuenciasMovimiento());
-        /* Volcar fondo en buffer
-        _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());*/
         /* Mover el personaje (autovolcado en buffer) */
         mover(sec, 0);
+        /* Pantalla visible */
+        _pant->volcarPantalla(_pant->getBuffer());
     }
 }
 
@@ -200,6 +200,8 @@ void Animacion::hacerMovimientoDinamico() {
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
         /* Volcar seccion de movimiento del PJ en buffer */
         mover(sec, _principal->getDesp(sec));
+        /* Pantalla visible */
+        _pant->volcarPantalla(_pant->getBuffer());
     }
 
     /* En función de la orientación del movimiento, indicamos que se ha
@@ -268,5 +270,7 @@ void Animacion::dibujarPosicionEstatica() {
         _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
         /* Mover el personaje (autovolcado en buffer) */
         mover(sec, 0);
+        /* Pantalla visible */
+        _pant->volcarPantalla(_pant->getBuffer());
     }
 }

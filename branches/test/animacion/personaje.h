@@ -49,7 +49,7 @@ public:
 
     /**
      * Constructor vacío de la clase <code>Personaje</code>.
-     * Este constructor no hace nada: no crea un personaje utilizable
+     * @note Este constructor no hace nada: no crea un personaje utilizable
      * posteriormente. Es necesaria para poder definir vectores y otros 
      * elementos similares.
      */
@@ -96,7 +96,7 @@ public:
      * @param x Posición horizontal en la pantalla.
      * @param y Posición vertical en la pantalla.
      * @param mapax Posición horizontal en el mapa.
-     * @param mapax Posición vertical en el mapa.
+     * @param mapay Posición vertical en el mapa.
      * @param tam Tamaño de las casillas en las que "viaja" nuestro personaje.
      * @param p Puntero a la pantalla en que se dibujará el personaje.
      * @param sprite Cadena de bajo nivel que representa la ruta donde se
@@ -154,6 +154,9 @@ public:
     /**
      * Método observador del desplazamiento a realizar en la secuencia <i>i</i>
      * de un movimiento cualquiera.
+     * @param i Entero que representa la secuencia de la cual se desea averiguar
+     * el desplazamiento.
+     * @return Entero que se corresponde con el desplazamiento en pixels.
      */
     Uint32 getDesp(Uint32 i) const;
     /**
@@ -174,9 +177,15 @@ public:
     Uint32 getSecuenciasMovimiento() const;
     /**
      * Método observador del rango de movimiento del personaje en la pantalla.
-     * @return Puntero a <code>SDL_Rect</code>.
+     * @return Referencia constante a <code>SDL_Rect</code>.
      */
     const SDL_Rect& getRango() const;
+    /**
+     * Método observador de la velocidad del personaje en la pantalla.
+     * @return Entero que se corresponde con la velocidad en un rango de 0 a
+     * 150.
+     */
+    Uint32 getVelocidad() const;
 
     /**
      * Método modificador de la posición en pantalla (en <i>casillas</i>).
@@ -185,7 +194,7 @@ public:
      */
     void setPosicion(Uint32 x, Uint32 y);
     /**
-     * Método modificador de la posicion en pantalla que coloca el personaje
+     * Método modificador de la posición en pantalla que coloca el personaje
      * en la posición central dentro de su rango de movimiento.
      */
     void setPosicion();
@@ -206,7 +215,21 @@ public:
      * @param margenArriba Alto del rango en casillas.
      */
     void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
+    /**
+     * Método modificador de la posición del personaje en el mapa.
+     * @note En principio, no es útil. Deben emplearse los métodos
+     * <code>subirEnMapa()</code>, <code>bajarEnMapa()</code>,
+     * <code>izdaEnMapa()</code>, <code>dchaEnMapa()</code>,
+     * @param x Coordenada horizontal de la casilla del mapa
+     * @param y Coordenada vertical de la casilla del mapa.
+     */
     void setMapa(Uint16 x, Uint16 y);
+    /**
+     * Método modificador de la velocidad del personaje en la pantalla.
+     * @param v Entero que se corresponde con la velocidad en un rango de 0 a
+     * 150.
+     */
+    void setVelocidad(Uint16 v);
 
     /**
      * Método modificador de la posición en el mapa.
@@ -349,6 +372,14 @@ protected:
      * Correspondencia pixels-casilla
      */
     Uint32 _tam;
+    /**
+     * Velocidad del personaje al desplazarse.
+     */
+    Uint32 _velocidad;
+    /**
+     * Vector auxiliar empleado para calcular el desplazamiento a realizar
+     * por el personaje en cada secuencia de un movimiento completo.
+     */
     vector<Uint32> _desp;
     /**
      * Rango rectangular en pantalla en el que se puede mover el personaje.
@@ -384,5 +415,7 @@ inline bool Personaje::fueraRango(Uint32 x, Uint32 y) const {
 inline Uint32 Personaje::getSecuenciasMovimiento() const {
     return _sprite.getColumnas();
 }
+inline Uint32 Personaje::getVelocidad() const { return _velocidad; }
+inline void Personaje::setVelocidad(Uint16 v) { if (v <= 150) _velocidad = v; }
 
 #endif

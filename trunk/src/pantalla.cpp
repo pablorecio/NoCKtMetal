@@ -30,9 +30,7 @@
 using namespace std;
 
 Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof):
-_ancho(ancho), _alto(alto), _prof(prof) {
-    atexit(SDL_Quit);
-    
+_ancho(ancho), _alto(alto), _prof(prof) {    
     /* Comprobamos que sea compatible el modo de vídeo */
     if(SDL_VideoModeOK(_ancho, _alto, _prof,
                        SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
@@ -97,6 +95,13 @@ void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
     SDL_BlitSurface(p1, NULL, p2, &(p1->clip_rect));
     SDL_Flip(p2);
 }
+
+void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP1, SDL_Surface *p2,
+                        SDL_Rect *rectP2) {
+    SDL_BlitSurface(p1, rectP1, p2, rectP2);
+    SDL_Flip(p2);
+}
+
 
 void Pantalla::cerrarPantalla() {
     /* Liberamos la memoria de las pantallas creadas */

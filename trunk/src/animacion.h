@@ -71,7 +71,7 @@ public:
     /**
      * Función que se encarga de inicializar el nivel actual.
      * @note Al encontrarnos aún en una versión <i>alpha</i> del proyecto,
-     * esta función es un tanto burda
+     * esta función es un tanto burda.
      * No se comporta abstrayendo absolutamente nada, puesto que aún no 
      * se ha incluido en el motor de movimiento la sección correspondiente a
      * lectura/escritura en XML.
@@ -98,13 +98,17 @@ private:
     /**
      * Método auxiliar que dibuja un movimiento estático <i>desde el punto
      * de vista del personaje</i>.
-     * @param m Identificador de la direccion del movimiento.
+     * @param cx Coordenada horizontal que indica hacia que sentido se mueve el
+     * personaje.
+     * @param cy Coordenada vertical que indica hacia que sentido se mueve el
+     * personaje.
+     * @param dir Identificador de la direccion del movimiento necesario para
+     * dibujar el fondo en movimiento.
      */
     void hacerMovimientoEstatico(Sint32 cx, Sint32 cy, char dir);
     /**
      * Método auxiliar que realiza un movimiento dinámico <i>desde el punto
      * de vista del personaje</i>.
-     * @param m Identificador de la dirección del movimiento.
      */
     void hacerMovimientoDinamico();
     /**
@@ -112,11 +116,20 @@ private:
      * Sirve de ayuda a <code>hacerMovimientoEstatico</code> y
      * <code>hacerMovimientoDinamico</code> que realizan el movimiento
      * intercalándolo con el del mapa.
-     * @param mov Identificador de la dirección del movimiento.
      * @param sec Secuencia actual del movimiento.
      * @param desp Desplazamiento. Por defecto 0.
      */
     void mover(Uint32 sec, Uint32 desp = 0);
+    /**
+     * Método auxiliar que se encarga de actualizar la posición del personaje,
+     * en el mapa.
+     */
+    void actualizarMapa();
+    /**
+     * Método auxiliar que realiza el movimiento de "choque" del personaje
+     * (cuando se topa con un tile colisionable).
+     */
+    void dibujarPosicionEstatica();
     /**
      * Puntero a la pantalla general del juego.
      */

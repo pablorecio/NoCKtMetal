@@ -141,6 +141,8 @@ class Pantalla {
      * va a ver modificada.
      */
     void volcarPantalla(SDL_Surface *p1, SDL_Surface *p2);
+    void volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP1, SDL_Surface *p2,
+                        SDL_Rect *rectP2);
 
     /**
      * Método que se encarga de finalizar de forma segura el funcionamiento
