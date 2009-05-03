@@ -95,6 +95,8 @@ ControlTurno::ControlTurno(ControlCombate &comb){
     sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
 
     for(size_t i = 0 ; i < auxiliar.size() ; i++){
+        cout << auxiliar.at(i)->getNombre() << " - Velocidad: "
+             << auxiliar.at(i)->getVelocidad() << endl;
         num_acciones.push_back((auxiliar.at(i)->getVelocidad() / 25)+1);
     }
 
@@ -120,7 +122,7 @@ ControlTurno::ControlTurno(ControlCombate &comb){
 }
 
 Uint32 ControlTurno::iteracionTurno(){
-  Uint32 sel = 0; //Atributo para seleccionar claves
+    Uint32 sel = 0;
     Combatiente *actual;
     Combatiente *objetivo;
 
@@ -131,7 +133,7 @@ Uint32 ControlTurno::iteracionTurno(){
 
     if(actual->getGrupo().controlable()){ //CONTROLABLE
         switch(seleccionaAccion(*actual)){
-	case 1: //Ataque simple
+            case 1:
                 cout << "Objetivos:" << endl;
                 objetivo = seleccionarObjetivo(*actual);
                 try{
@@ -142,7 +144,7 @@ Uint32 ControlTurno::iteracionTurno(){
                     cout << actual->getNombre() << " falló el ataque!" << endl;
                 }
                 break;
-	case 2: //Ataque especial
+            case 2:
                 cout << "Habilidades: " << endl;
                 mostrarHabilidades(*actual);
                 cout << "Seleccione una habilidad (clave): ";
@@ -155,7 +157,7 @@ Uint32 ControlTurno::iteracionTurno(){
                 cout << actual->getHabilidad(sel).getNombre() << " infligiendole ";
                 cout << actual->ataqueEspecial(sel,*objetivo) << endl;
                 break;
-	case 3: //Objeto
+            case 3:
                 cout << "Objetos: " << endl;
                 mostrarInventario(*actual);
                 cout << "Seleccione un objeto (clave): ";
@@ -166,7 +168,7 @@ Uint32 ControlTurno::iteracionTurno(){
                      << " con " << actual->getInventario().getObjeto(sel).getNombre()
                      << " infligiendole " << actual->usarObjeto(sel,*objetivo) << endl;
                 break;
-	case 4: //Huir
+            case 4:
                 actual->huir();
                 break;
             default:
