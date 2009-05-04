@@ -62,6 +62,7 @@ ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
 }
 
 Uint32 ControlCombate::iniciarCombate(){
+    mostrarCombate();
     while(_g1->vivo() && _g2->vivo()){
         ControlTurno actual(*this);
         while(!actual.finTurno() && _g1->vivo() && _g2->vivo()){
@@ -72,18 +73,33 @@ Uint32 ControlCombate::iniciarCombate(){
     else return 2;
 }
 
+void ControlCombate::mostrarCombate(){
+    //SDL: iniciar motor, fondo, sprites, etc ...
+    cout << "---------------------------------------" << endl;
+    cout << "--------------- Grupo 1 ---------------" << endl;
+    cout << "---------------------------------------" << endl;
+    _g1->mostrarGrupo();
+    cout << "---------------------------------------" << endl;
+    cout << "--------------- Grupo 2 ---------------" << endl;
+    cout << "---------------------------------------" << endl;
+    _g2->mostrarGrupo();
+}
+
 Uint32 ControlCombate::postCombate(){
     return 1;
 }
 
 
 ControlTurno::ControlTurno(){}
+
+//Crea la cola de turnos. Hacer acto de fe, porque aun no entiendo como es capaz de funcionar xDDD
 ControlTurno::ControlTurno(ControlCombate &comb){
     _comb = &comb;
 
     vector<Combatiente*> auxiliar;
     vector<int> num_acciones;
 
+    //Insertamos todos los combatientes en un mismo vector para ordenarlos
     for(size_t i = 0 ; i < _comb->_g1->getNumeroCombatientes() ; i++){
         auxiliar.push_back(_comb->_g1->getCombatientes().at(i));
     }
@@ -95,8 +111,8 @@ ControlTurno::ControlTurno(ControlCombate &comb){
     sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
 
     for(size_t i = 0 ; i < auxiliar.size() ; i++){
-        cout << auxiliar.at(i)->getNombre() << " - Velocidad: "
-             << auxiliar.at(i)->getVelocidad() << endl;
+        //cout << auxiliar.at(i)->getNombre() << " - Velocidad: "
+        //     << auxiliar.at(i)->getVelocidad() << endl;
         num_acciones.push_back((auxiliar.at(i)->getVelocidad() / 25)+1);
     }
 
@@ -122,108 +138,84 @@ ControlTurno::ControlTurno(ControlCombate &comb){
 }
 
 Uint32 ControlTurno::iteracionTurno(){
-    Uint32 sel = 0;
     Combatiente *actual;
     Combatiente *objetivo;
 
-    do{
+    do{ //Seleccionamos a los que están vivos
         actual = _turno.front();
         _turno.pop();
     }while(actual->getPV() == 0);
 
-    if(actual->getGrupo().controlable()){ //CONTROLABLE
-        switch(seleccionaAccion(*actual)){
-            case 1:
-                cout << "Objetivos:" << endl;
+    mostrarEstadoActual();
+
+    if(actual->getGrupo().controlable()){ //El combatiente es controlable por el jugador
+        mostrarAcciones();
+        Uint32 accion = seleccionarAccion();
+
+        Uint32 danio = 0;
+        Habilidad *hab;
+        Objeto *obj;
+        switch(accion){
+            case 1: //Ataque
+                mostrarObjetivos(*actual);
                 objetivo = seleccionarObjetivo(*actual);
                 try{
-                    cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
-                         << " infligiendole " << actual->ataqueSimple(*objetivo) << endl;
-                }
-                catch(...){
-                    cout << actual->getNombre() << " falló el ataque!" << endl;
+                    danio = actual->ataqueSimple(*objetivo);
+                    mostrarDamage(*actual,*objetivo,danio);
+                }catch(Combatiente::AtaqueFallado){
+                    mostrarAtaqueFallado(*actual);
                 }
                 break;
-            case 2:
-                cout << "Habilidades: " << endl;
+            case 2: //Ataque especial
                 mostrarHabilidades(*actual);
-                cout << "Seleccione una habilidad (clave): ";
-                cin >> sel;
-                cout << "Objetivos:" << endl;
+                hab = seleccionarHabilidad(*actual);
+                mostrarObjetivos(*actual);
                 objetivo = seleccionarObjetivo(*actual);
-
-                cout << actual->getNombre() << " ataca a " ;
-                cout << objetivo->getNombre() << " con ";
-                cout << actual->getHabilidad(sel).getNombre() << " infligiendole ";
-                cout << actual->ataqueEspecial(sel,*objetivo) << endl;
+                danio = actual->ataqueEspecial(hab->getIdentificador(),*objetivo);
+                mostrarDamage(*actual,*objetivo,danio);
                 break;
-            case 3:
-                cout << "Objetos: " << endl;
+            case 3: //Objeto
                 mostrarInventario(*actual);
-                cout << "Seleccione un objeto (clave): ";
-                cin >> sel;
-                cout << "Objetivos:" << endl;
+                obj = seleccionarObjeto(*actual);
+                mostrarObjetivos(*actual);
                 objetivo = seleccionarObjetivo(*actual);
-                cout << actual->getNombre() << " ataca a " << objetivo->getNombre()
-                     << " con " << actual->getInventario().getObjeto(sel).getNombre()
-                     << " infligiendole " << actual->usarObjeto(sel,*objetivo) << endl;
+                danio = actual->usarObjeto(obj->getIdentificador(),*objetivo);
+                mostrarDamage(*actual,*objetivo,danio);
                 break;
-            case 4:
-                actual->huir();
+            case 4: //Huir
+                cerr << "No implementada aun" << endl;
+                return 2;
                 break;
             default:
                 break;
         }
     }
     else{ //IA
-        cout << "Los kinkis aun no pueden atacar" << endl;
+        cout << "Eres un kinki de mierda y no puedes atacar, te jodes" << endl;
     }
     return 1;
 }
 
-Uint32 ControlTurno::seleccionaAccion(const Combatiente& c){
-    cout << "----- Ampli Breakers -----" << endl;
-    _comb->_g1->mostrarGrupo();
-    cout << "-------- Enemigos --------" << endl;
-    _comb->_g2->mostrarGrupo();
-    cout << "--------------------------" << endl;
-    cout << "Le toca a " << c.getNombre()  << endl;
-    cout << "-------- Acciones --------" << endl;
-
-    mostrarMenu(c);
-
-    cout << "Selecciones acción: ";
-    Uint32 opc;
-
-    cin >> opc;
-    return opc;
+void ControlTurno::mostrarEstadoActual(const Combatiente &c){
+    cout << "---------------------------------------" << endl;
+    cout << "---- Le toca a " << c.getNombre() << " ----" << endl;
+    cout << "---------------------------------------" << endl;
+    _comb->mostrarCombate();
 }
 
-void ControlTurno::mostrarMenu(const Combatiente& c){
-    cout << "1 - Ataque" << endl;
-    cout << "2 - Ataque especial" << endl;
-    cout << "3 - Objeto" << endl;
-    cout << "4 - Escapar" << endl;
+void ControlTurno::mostrarAcciones(){
+    cout << "Acciones disponibles:" << endl;
+    cout << "[1] - Atacar" << endl;
+    cout << "[2] - Habilidad" << endl;
+    cout << "[3] - Objeto" << endl;
+    cout << "[4] - Huir" << endl;
 }
 
-void ControlTurno::mostrarHabilidades(const Combatiente& c){
-    map<Uint32,Habilidad*> auxiliar = c.getHabilidades();
-
-    for(map<Uint32,Habilidad*>::iterator i = auxiliar.begin() ;
-        i != auxiliar.end() ; i++){
-        cout << i->second->getIdentificador() << " - " << i->second->getNombre()
-             << " - PE: " << i->second->getGastoPE() << endl;
-    }
-}
-
-void ControlTurno::mostrarInventario(const Combatiente& c){
-    map<Uint32,Objeto> auxiliar = c.getInventario().getInventarioCompleto();
-
-    for(map<Uint32,Objeto>::iterator i = auxiliar.begin() ;
-        i != auxiliar.end() ; i++){
-        cout << i->second.getIdentificador() << " - " << i->second.getNombre()
-             << " - Cantidad: " << i->second.getCantidad() << endl;
-    }
+Uint32 ControlTurno::seleccionarAccion(){
+    Uint32 sel;
+    cout << "Seleccione la acción que desee: ";
+    cin >> sel;
+    return sel;
 }
 
 void ControlTurno::mostrarObjetivos(const Combatiente& c){
@@ -232,18 +224,17 @@ void ControlTurno::mostrarObjetivos(const Combatiente& c){
 
     for(size_t i = 0 ; i < _comb->_g1->getNumeroCombatientes() ; i++)
         if(combG1.at(i)->getPV() != 0)
-            cout << combG1.at(i)->getIdentificador() << " - "
+            cout << "[" << combG1.at(i)->getIdentificador() << "] - "
                  << combG1.at(i)->getNombre() << endl;
 
     for(size_t i = 0 ; i < _comb->_g2->getNumeroCombatientes() ; i++)
         if(combG2.at(i)->getPV() != 0)
-            cout << combG2.at(i)->getIdentificador() << " - "
+            cout << "[" << combG2.at(i)->getIdentificador() << "] - "
                  << combG2.at(i)->getNombre() << endl;
 }
 
 Combatiente* ControlTurno::seleccionarObjetivo(const Combatiente& c)
-        throw(Grupo::NoExisteCombatiente){ //falla ¬¬
-
+        throw(Grupo::NoExisteCombatiente){
     Combatiente* objetivo;
     vector<Combatiente*> auxiliar;
 
@@ -255,12 +246,9 @@ Combatiente* ControlTurno::seleccionarObjetivo(const Combatiente& c)
         auxiliar.push_back(_comb->_g2->getCombatientes().at(i));
     }
 
-    mostrarObjetivos(c);
     cout << "Seleccione objetivo (por la clave): ";
     Uint32 clave;
     cin >> clave;
-
-    //bool encontrado = false;
 
     for(size_t i = 0 ; i < auxiliar.size() ; i++){
         if(auxiliar.at(i)->getIdentificador() == clave){
@@ -268,6 +256,52 @@ Combatiente* ControlTurno::seleccionarObjetivo(const Combatiente& c)
             return objetivo;
         }
     }
-    //if(!encontrado)
     throw(Grupo::NoExisteCombatiente());
+}
+
+void ControlTurno::mostrarHabilidades(const Combatiente& c){
+    map<Uint32,Habilidad*> auxiliar = c.getHabilidades();
+
+    cout << "Habilidades disponibles para " << c.getNombre() << ":" << endl;
+    for(map<Uint32,Habilidad*>::iterator i = auxiliar.begin() ;
+        i != auxiliar.end() ; i++){
+        cout << "[" << i->second->getIdentificador() << "] - " << i->second->getNombre()
+             << " - PE: " << i->second->getGastoPE() << endl;
+    }
+}
+
+Habilidad* ControlTurno::seleccionarHabilidad(const Combatiente& c){
+    Uint32 sel;
+    cout << "Seleccione la habilidad que desea usar (clave): ";
+    cin >> sel;
+    return c.getHabilidades().at(sel);
+}
+
+void ControlTurno::mostrarInventario(const Combatiente& c){
+    map<Uint32,Objeto> auxiliar = c.getInventario().getInventarioCompleto();
+
+    cout << "Objetos disponibles para " << c.getNombre() << ":" << endl;
+    for(map<Uint32,Objeto>::iterator i = auxiliar.begin() ;
+        i != auxiliar.end() ; i++){
+        cout << "[" << i->second.getIdentificador() << "] - " << i->second.getNombre()
+             << " - Cantidad: " << i->second.getCantidad() << endl;
+    }
+}
+
+Objeto* ControlTurno::seleccionarObjeto(const Combatiente& c){
+    Uint32 sel;
+    cout << "Seleccione el objeto que desea usar (clave): ";
+    cin >> sel;
+
+    Inventario I = c.getInventario();
+    return I.getPointerObjeto(sel);
+}
+
+void ControlTurno::mostrarDamage(const Combatiente &c, const Combatiente &o, Uint32 d){
+    cout << c.getNombre() << " atacó a " << o.getNombre() << " y le inflingió "
+         << d << " puntos de daño" << endl;
+}
+
+void ControlTurno::mostrarAtaqueFallado(const Combatiente &c){
+    cout << c.getNombre() << " ha fallado el ataque" << endl;
 }

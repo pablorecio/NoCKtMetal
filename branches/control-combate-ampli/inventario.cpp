@@ -43,6 +43,12 @@ Objeto& Inventario::getObjeto(Uint32 i) throw (ObjetoNoEnInventario){
     return _inventario.at(i);
 }
 
+Objeto* Inventario::getPointerObjeto(Uint32 i) throw (ObjetoNoEnInventario){
+    if(_inventario.find(i) == _inventario.end()) throw new ObjetoNoEnInventario();
+
+    return &(_inventario.at(i));
+}
+
 void Inventario::borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario){
     if(_inventario.find(i) == _inventario.end()) throw new ObjetoNoEnInventario();
 

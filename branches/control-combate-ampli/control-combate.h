@@ -93,6 +93,7 @@ public:
     Uint32 postCombate();
 private:
     Grupo *_g1, *_g2;
+    void mostrarCombate();
 
     friend class ControlTurno;
 };
@@ -158,16 +159,30 @@ private:
     ControlCombate *_comb;
     queue<Combatiente*> _turno;
 
-    // Aqui simplemente se seleccionan las acciones que se pueden hacer
-    Uint32 seleccionaAccion(const Combatiente& c);
+    void mostrarEstadoActual();
 
-    void mostrarMenu(const Combatiente& c);
-    void mostrarHabilidades(const Combatiente& c);
-    void mostrarInventario(const Combatiente& c);
+    Uint32 seleccionarAccion();
+    void mostrarAcciones();
     void mostrarObjetivos(const Combatiente& c);
+    Combatiente* seleccionarObjetivo(const Combatiente& c) throw(Grupo::NoExisteCombatiente);
+    void mostrarHabilidades(const Combatiente& c);
+    Habilidad* seleccionarHabilidad(const Combatiente& c);
+    void mostrarInventario(const Combatiente& c);
+    Objeto* seleccionarObjeto(const Combatiente& c);
 
-    Combatiente* seleccionarObjetivo(const Combatiente& c)
-    throw (Grupo::NoExisteCombatiente);
+    void mostrarDamage(const Combatiente &c, const Combatiente &o, Uint32 d);
+    void mostrarAtaqueFallado(const Combatiente &c);
+
+    // Aqui simplemente se seleccionan las acciones que se pueden hacer
+//    Uint32 seleccionaAccion(const Combatiente& c);
+//
+//    void mostrarMenu(const Combatiente& c);
+//    void mostrarHabilidades(const Combatiente& c);
+//    void mostrarInventario(const Combatiente& c);
+//    void mostrarObjetivos(const Combatiente& c);
+
+//    Combatiente* seleccionarObjetivo(const Combatiente& c)
+//    throw (Grupo::NoExisteCombatiente);
 };
 
 #endif	/* _CONTROLCOMBATE_H */

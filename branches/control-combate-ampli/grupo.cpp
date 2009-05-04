@@ -61,8 +61,6 @@ bool Grupo::vivo() const {
 }
 
 void Grupo::mostrarGrupo() const {
-    cout << "void Grupo::mostrarGrupo() const" << endl;
-    cout << "_numComp = " << _numComp << endl;
     for(size_t i = 0; i < _numComp ; i++)
     cout << _componentes.at(i)->getIdentificador() << " - " << _componentes.at(i)->getNombre()
             << " -- PV: " << _componentes.at(i)->getPV() << "/" << _componentes.at(i)->getPVMax()

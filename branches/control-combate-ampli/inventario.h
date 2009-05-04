@@ -128,6 +128,8 @@ public:
    */
   Objeto& getObjeto(Uint32 i) throw (ObjetoNoEnInventario);
 
+  Objeto* getPointerObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+
   /**
    * Método <i>getter</i> para obtener acceso a la estructura de datos que contiene
    * el inventario en si.
