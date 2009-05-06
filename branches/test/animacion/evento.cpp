@@ -28,7 +28,7 @@
 
 #include "evento.h"
 
-Evento::Evento() {
+Evento::Evento(): _retraso(30) {
     /* Evitar la autorepetición de teclas */
     SDL_EnableKeyRepeat(0, 0);
     
@@ -78,6 +78,8 @@ void Evento::actualizar() {
 }
 
 accion Evento::getEvento() {
+    /* Tiempo de retraso para captura de evento siguiente */
+    SDL_Delay(_retraso);
     /* Actualizamos el estado de los eventos */
     actualizar();
     /* Identificamos cuál es la acción que ha sido activada y la devolvemos */

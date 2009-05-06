@@ -83,6 +83,7 @@ public:
      */
     virtual ~Evento();
 private:
+    Uint32 _retraso;
     /**
      * Evento de la librería SDL que esta clase permite abstraer.
      */
