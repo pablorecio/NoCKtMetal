@@ -146,7 +146,7 @@ Uint32 ControlTurno::iteracionTurno(){
         _turno.pop();
     }while(actual->getPV() == 0);
 
-    mostrarEstadoActual();
+    mostrarEstadoActual(*actual);
 
     if(actual->getGrupo().controlable()){ //El combatiente es controlable por el jugador
         mostrarAcciones();

@@ -159,7 +159,7 @@ private:
     ControlCombate *_comb;
     queue<Combatiente*> _turno;
 
-    void mostrarEstadoActual();
+    void mostrarEstadoActual(const Combatiente &c);
 
     Uint32 seleccionarAccion();
     void mostrarAcciones();
