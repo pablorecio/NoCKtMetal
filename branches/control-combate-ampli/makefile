@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -ansi -Wall
+DEBUG = -g
+CXXFLAGS = -ansi -Wall ${DEBUG} -DDEBUG=1 -DFPS=1
 LIB = -lSDL -lSDL_image -lboost_serialization
 #iniciar = iniciar_xml
 EXE = main-combate

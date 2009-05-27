@@ -41,7 +41,7 @@ void Grupo::addCombatiente(Combatiente& comb) throw(GrupoLleno){
 }
 
 const Combatiente& Grupo::getCombatiente(Uint32 i) const throw(NoExisteCombatiente){
-    for(size_t j = 0 ; j < _componentes.size() ; j++){
+    for(size_t j = 0 ; j < _numComp ; j++){
         if(_componentes.at(j)->getIdentificador() == i)
             return *(_componentes.at(j));
     }
@@ -49,7 +49,7 @@ const Combatiente& Grupo::getCombatiente(Uint32 i) const throw(NoExisteCombatien
 }
 
 Combatiente& Grupo::getCombatiente(Uint32 i) throw(NoExisteCombatiente){
-    for(size_t j = 0 ; j < _componentes.size() ; j++){
+    for(size_t j = 0 ; j < _numComp ; j++){
         if(_componentes.at(j)->getIdentificador() == i)
             return *(_componentes.at(j));
     }
@@ -57,7 +57,7 @@ Combatiente& Grupo::getCombatiente(Uint32 i) throw(NoExisteCombatiente){
 }
 
 bool Grupo::vivo() const {
-    for (unsigned int i = 0 ; i < _componentes.size() ; i++)
+    for (unsigned int i = 0 ; i < _numComp ; i++)
       if (_componentes.at(i)->getPV() != 0){
 	#ifdef DEBUG
 	std::cout << "Grupo::vivo()" << std::endl;

@@ -45,13 +45,42 @@
 
 #include "control-combate.h"
 
-#define DEBUG 1
+//#define DEBUG 1
 
 using namespace std;
 
 class ObjetoComparacion{ //Para la ordenación de los turnos
 public:
     bool operator() (Combatiente* C1, Combatiente* C2){
+      #ifdef DEBUG 
+      cout << "--------------------------------" << endl;
+      cout << "------------- C1 ---------------" << endl;
+      cout << C1 << " " << C1->getNombre() << endl;
+      cout << "PV: " << C1->getPVMax() << "/" << C1->getPV() << endl;
+      cout << "PE: " << C1->getPEMax() << "/" << C1->getPE() << endl;
+      cout << "Velocidad: " << C1->getVelocidad() << endl;
+      cout << "Fuerza: " << C1->getFuerza() << endl;
+      cout << "Destreza: " << C1->getDestreza() << endl;
+      cout << "Suerte: " << C1->getSuerte() << endl;
+      cout << "Resistencia: " << C1->getResistencia() << endl;
+      cout << "Virtuosidad: " << C1->getVirtuosidad() << endl;
+      cout << "Constitucion: " << C1->getConstitucion() << endl;
+      cout << "Inteligencia: " << C1->getInteligencia() << endl;
+      cout << "------------- C2 ---------------" << endl;
+      cout << C2 << " " ;
+      cout << C2->getNombre() << endl;
+      cout << "PV: " << C2->getPVMax() << "/" << C2->getPV() << endl;
+      cout << "PE: " << C2->getPEMax() << "/" << C2->getPE() << endl;
+      cout << "Velocidad: " << C2->getVelocidad() << endl;
+      cout << "Fuerza: " << C2->getFuerza() << endl;
+      cout << "Destreza: " << C2->getDestreza() << endl;
+      cout << "Suerte: " << C2->getSuerte() << endl;
+      cout << "Resistencia: " << C2->getResistencia() << endl;
+      cout << "Virtuosidad: " << C2->getVirtuosidad() << endl;
+      cout << "Constitucion: " << C2->getConstitucion() << endl;
+      cout << "Inteligencia: " << C2->getInteligencia() << endl;
+      cout << "--------------------------------" << endl;
+      #endif
       return (C1->tiradaVelocidad() > C2->tiradaVelocidad());
     }
 };
@@ -63,7 +92,7 @@ ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
     _g2 = &g2;
 
      #ifdef DEBUG 
-        cout << "ConrolCombate::ControlCombate(Grupo &g1, Grupo &g2)" << endl; 
+        cout << "ControlCombate::ControlCombate(Grupo &g1, Grupo &g2)" << endl; 
      #endif 
 }
 

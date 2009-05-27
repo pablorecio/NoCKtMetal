@@ -6,7 +6,7 @@
 #include "atributos_base.h"
 #include "atributos.h"
 
-#define DEBUG 1
+//#define DEBUG 1
 
 Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(exp){
   _niv = 1; /*TODO*/
