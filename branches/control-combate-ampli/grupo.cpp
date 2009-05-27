@@ -25,6 +25,8 @@
 #include "combatiente.h"
 #include "inventario.h"
 
+#define DEBUG 1
+
 Grupo::Grupo(Inventario& invent, bool contr): _controlable(contr){
     _inventario = &invent;
     std::vector<Combatiente*> temp(4);
@@ -56,7 +58,15 @@ Combatiente& Grupo::getCombatiente(Uint32 i) throw(NoExisteCombatiente){
 
 bool Grupo::vivo() const {
     for (unsigned int i = 0 ; i < _componentes.size() ; i++)
-        if (_componentes.at(i)->getPV() != 0) return true;
+      if (_componentes.at(i)->getPV() != 0){
+	#ifdef DEBUG
+	std::cout << "Grupo::vivo()" << std::endl;
+	#endif
+	return true;
+      }
+	#ifdef DEBUG
+	std::cout << "Grupo::vivo()" << std::endl;
+	#endif
     return false;
 }
 

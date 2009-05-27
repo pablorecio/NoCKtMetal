@@ -1,9 +1,12 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <iostream>
+
 #include "atributos_base.h"
 #include "atributos.h"
 
+#define DEBUG 1
 
 Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(exp){
   _niv = 1; /*TODO*/
@@ -45,6 +48,11 @@ Uint32 Atributos::tiradaSuerte() const{
 }
 
 Uint32 Atributos::tiradaVelocidad() const { 
+  #ifdef DEBUG
+  std::cout << "Atributos::tiradaVelocidad(): "
+	    << "this = " << this
+	    << "_vel = " << _vel << std::endl;
+  #endif
   return _vel * (tiradaSuerte() + 1);
 }
 

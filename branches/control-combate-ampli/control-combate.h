@@ -34,6 +34,8 @@
 #include "grupo.h"
 #include "combatiente.h"
 
+#define DEBUG 1
+
 using namespace std;
 
 class ControlTurno;
@@ -153,9 +155,12 @@ public:
      * false</code> en otro caso.
      */
     bool finTurno() const {
+      #ifdef DEBUG
+      cout << "ControlTurno::finTurno()" << endl;
+      #endif
         return _turno.empty();
     }
-private:
+protected:
     ControlCombate *_comb;
     queue<Combatiente*> _turno;
 
@@ -172,17 +177,6 @@ private:
 
     void mostrarDamage(const Combatiente &c, const Combatiente &o, Uint32 d);
     void mostrarAtaqueFallado(const Combatiente &c);
-
-    // Aqui simplemente se seleccionan las acciones que se pueden hacer
-//    Uint32 seleccionaAccion(const Combatiente& c);
-//
-//    void mostrarMenu(const Combatiente& c);
-//    void mostrarHabilidades(const Combatiente& c);
-//    void mostrarInventario(const Combatiente& c);
-//    void mostrarObjetivos(const Combatiente& c);
-
-//    Combatiente* seleccionarObjetivo(const Combatiente& c)
-//    throw (Grupo::NoExisteCombatiente);
 };
 
 #endif	/* _CONTROLCOMBATE_H */

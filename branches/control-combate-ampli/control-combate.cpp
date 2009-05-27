@@ -45,12 +45,14 @@
 
 #include "control-combate.h"
 
+#define DEBUG 1
+
 using namespace std;
 
 class ObjetoComparacion{ //Para la ordenación de los turnos
 public:
     bool operator() (Combatiente* C1, Combatiente* C2){
-        return (C1->tiradaVelocidad() > C2->tiradaVelocidad());
+      return (C1->tiradaVelocidad() > C2->tiradaVelocidad());
     }
 };
 
@@ -59,14 +61,21 @@ ControlCombate::ControlCombate(){}
 ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
     _g1 = &g1;
     _g2 = &g2;
+
+     #ifdef DEBUG 
+        cout << "ConrolCombate::ControlCombate(Grupo &g1, Grupo &g2)" << endl; 
+     #endif 
 }
 
 Uint32 ControlCombate::iniciarCombate(){
     mostrarCombate();
+    int cont1 = 0 , cont2 = 0;
     while(_g1->vivo() && _g2->vivo()){
+	cout << "Turno " << ++cont1 << endl;
         ControlTurno actual(*this);
         while(!actual.finTurno() && _g1->vivo() && _g2->vivo()){
-            actual.iteracionTurno();
+	  cout << "Accion " << cont1 << "." << cont2++ << endl;
+	  actual.iteracionTurno();
         }
     }
     if(_g1->vivo()) return 1;
@@ -83,6 +92,9 @@ void ControlCombate::mostrarCombate(){
     cout << "--------------- Grupo 2 ---------------" << endl;
     cout << "---------------------------------------" << endl;
     _g2->mostrarGrupo();
+     #ifdef DEBUG 
+        cout << "ControlCombate::mostrarCombate()" << endl; 
+     #endif 
 }
 
 Uint32 ControlCombate::postCombate(){
@@ -98,23 +110,50 @@ ControlTurno::ControlTurno(ControlCombate &comb){
 
     vector<Combatiente*> auxiliar;
     vector<int> num_acciones;
+    
+    #ifdef DEBUG
+    cout << "ControlTurno::ControlTurno(): Vectores creados" << endl;
+    #endif
 
     //Insertamos todos los combatientes en un mismo vector para ordenarlos
     for(size_t i = 0 ; i < _comb->_g1->getNumeroCombatientes() ; i++){
+      if(_comb->_g1->getCombatientes().at(i)->getPV() > 0)
         auxiliar.push_back(_comb->_g1->getCombatientes().at(i));
     }
 
+    #ifdef DEBUG
+    cout << "ControlTurno::ControlTurno(): Combatientes 1 insertados en auxiliar" << endl;
+    #endif
+
     for(size_t i = 0 ; i < _comb->_g2->getNumeroCombatientes() ; i++){
+      if(_comb->_g2->getCombatientes().at(i)->getPV() > 0)
         auxiliar.push_back(_comb->_g2->getCombatientes().at(i));
     }
 
+    #ifdef DEBUG
+    cout << "ControlTurno::ControlTurno(): Combatientes 2 insertados en auxiliar" << endl;
+    cout << "ControlTurno::ControlTurno(): auxiliar.size() = " << auxiliar.size() << endl;
+    for(size_t i = 0 ; i < auxiliar.size() ; i++){
+      cout << "ControlTurno::ControlTurno(): " << auxiliar.at(i)->getNombre() 
+	   << " = " << auxiliar.at(i) << endl;
+    }
+    #endif
+
     sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
+
+    #ifdef DEBUG
+    cout << "ControlTurno::ControlTurno(): Combatientes ordenados" << endl;
+    #endif
 
     for(size_t i = 0 ; i < auxiliar.size() ; i++){
         //cout << auxiliar.at(i)->getNombre() << " - Velocidad: "
         //     << auxiliar.at(i)->getVelocidad() << endl;
         num_acciones.push_back((auxiliar.at(i)->getVelocidad() / 25)+1);
     }
+
+    #ifdef DEBUG
+    cout << "ControlTurno::ControlTurno(): Inicializado vector numero de acciones" << endl;
+    #endif
 
     Uint32 num_ceros = 0;
     Uint32 i = 0;
@@ -135,6 +174,10 @@ ControlTurno::ControlTurno(ControlCombate &comb){
         }
         i++;
     }
+
+    #ifdef DEBUG
+    cout << "ControlTurno::ControlTurno(): Fin" << endl;
+    #endif
 }
 
 Uint32 ControlTurno::iteracionTurno(){
@@ -193,6 +236,9 @@ Uint32 ControlTurno::iteracionTurno(){
     else{ //IA
         cout << "Eres un kinki de mierda y no puedes atacar, te jodes" << endl;
     }
+     #ifdef DEBUG 
+        cout << "ControlTurno::iteracionTurno()" << endl; 
+     #endif 
     return 1;
 }
 
@@ -201,6 +247,9 @@ void ControlTurno::mostrarEstadoActual(const Combatiente &c){
     cout << "---- Le toca a " << c.getNombre() << " ----" << endl;
     cout << "---------------------------------------" << endl;
     _comb->mostrarCombate();
+     #ifdef DEBUG 
+        cout << "ControlTurno::mostrarEstadoActual()" << endl; 
+     #endif 
 }
 
 void ControlTurno::mostrarAcciones(){
@@ -209,12 +258,18 @@ void ControlTurno::mostrarAcciones(){
     cout << "[2] - Habilidad" << endl;
     cout << "[3] - Objeto" << endl;
     cout << "[4] - Huir" << endl;
+     #ifdef DEBUG 
+        cout << "ControlTurno::MostrarAcciones()" << endl; 
+     #endif 
 }
 
 Uint32 ControlTurno::seleccionarAccion(){
     Uint32 sel;
     cout << "Seleccione la acción que desee: ";
     cin >> sel;
+     #ifdef DEBUG 
+        cout << "ControlTurno::seleccionarAccion()" << endl; 
+     #endif 
     return sel;
 }
 
@@ -231,6 +286,9 @@ void ControlTurno::mostrarObjetivos(const Combatiente& c){
         if(combG2.at(i)->getPV() != 0)
             cout << "[" << combG2.at(i)->getIdentificador() << "] - "
                  << combG2.at(i)->getNombre() << endl;
+     #ifdef DEBUG 
+        cout << "ControlTurno::mostrarObjetivos()" << endl; 
+     #endif 
 }
 
 Combatiente* ControlTurno::seleccionarObjetivo(const Combatiente& c)
@@ -253,9 +311,15 @@ Combatiente* ControlTurno::seleccionarObjetivo(const Combatiente& c)
     for(size_t i = 0 ; i < auxiliar.size() ; i++){
         if(auxiliar.at(i)->getIdentificador() == clave){
             objetivo = (auxiliar.at(i));
+     #ifdef DEBUG 
+        cout << "ControlTurno::seleccionarObjetivo()" << endl; 
+     #endif 
             return objetivo;
         }
     }
+     #ifdef DEBUG 
+        cout << "ControlTurno::seleccionarObjetivo()" << endl; 
+     #endif 
     throw(Grupo::NoExisteCombatiente());
 }
 
@@ -268,12 +332,18 @@ void ControlTurno::mostrarHabilidades(const Combatiente& c){
         cout << "[" << i->second->getIdentificador() << "] - " << i->second->getNombre()
              << " - PE: " << i->second->getGastoPE() << endl;
     }
+     #ifdef DEBUG 
+        cout << "ControlTurno::mostrarHabilidades()" << endl; 
+     #endif 
 }
 
 Habilidad* ControlTurno::seleccionarHabilidad(const Combatiente& c){
     Uint32 sel;
     cout << "Seleccione la habilidad que desea usar (clave): ";
     cin >> sel;
+     #ifdef DEBUG 
+        cout << "ControlTurno::seleccionarHabilidad()" << endl; 
+     #endif 
     return c.getHabilidades().at(sel);
 }
 
@@ -286,6 +356,9 @@ void ControlTurno::mostrarInventario(const Combatiente& c){
         cout << "[" << i->second.getIdentificador() << "] - " << i->second.getNombre()
              << " - Cantidad: " << i->second.getCantidad() << endl;
     }
+     #ifdef DEBUG 
+        cout << "ControlTurno::mostrarInventario()" << endl; 
+     #endif 
 }
 
 Objeto* ControlTurno::seleccionarObjeto(const Combatiente& c){
@@ -294,14 +367,23 @@ Objeto* ControlTurno::seleccionarObjeto(const Combatiente& c){
     cin >> sel;
 
     Inventario I = c.getInventario();
+     #ifdef DEBUG 
+        cout << "ControlTurno::seleccionarObjeto()" << endl; 
+     #endif 
     return I.getPointerObjeto(sel);
 }
 
 void ControlTurno::mostrarDamage(const Combatiente &c, const Combatiente &o, Uint32 d){
     cout << c.getNombre() << " atacó a " << o.getNombre() << " y le inflingió "
          << d << " puntos de daño" << endl;
+     #ifdef DEBUG 
+        cout << "ControlTurno::mostrarDamage()" << endl; 
+     #endif 
 }
 
 void ControlTurno::mostrarAtaqueFallado(const Combatiente &c){
     cout << c.getNombre() << " ha fallado el ataque" << endl;
+     #ifdef DEBUG 
+        cout << "ControlTurno::mostrarAtaqueFallado()" << endl; 
+     #endif 
 }
