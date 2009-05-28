@@ -8,7 +8,7 @@
 
 //#define DEBUG 1
 
-Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(exp){
+Atributos::Atributos(AtributoBase base, string rXML, Uint32 exp /*= 0*/):_base(base), _exp(exp){
   _niv = 1; /*TODO*/
 
   _expSigNiv = experienciaParaNivel(_niv);
@@ -36,6 +36,8 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(ex
   _PEmax = _base.getPE() + _int * multiplicadorPE;
   _PV = _PVmax;
   _PE = _PEmax;
+
+  _ruta_XML = rXML;
 }
 
 void Atributos::addExperiencia(Uint32 exp){

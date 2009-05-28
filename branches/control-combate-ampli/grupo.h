@@ -43,6 +43,8 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 
+#include "es-xml.h"
+
 using namespace std;
 
 /** 
@@ -98,7 +100,11 @@ public:
    * del grupo.
    * @param contr Determina si el grupo es controlable o no.
    */
-  Grupo(Inventario& invent, bool contr);
+  Grupo(Inventario& invent, bool contr, string rXML);
+
+  Grupo(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
 
   /**
    * Método <i>getter</i> para obtener acceso al inventario del grupo
@@ -173,12 +179,20 @@ public:
   bool vivo() const;
 
   void mostrarGrupo() const;
+
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
   
 private:
   bool _controlable;
   Inventario* _inventario;
   vector<Combatiente*> _componentes;
   Uint32 _numComp;
+
+  string _ruta_XML;
 
   friend class boost::serialization::access;
   template<class Archive>
@@ -188,6 +202,7 @@ private:
     ar & BOOST_SERIALIZATION_NVP(_inventario);
     ar & BOOST_SERIALIZATION_NVP(_componentes);
     ar & BOOST_SERIALIZATION_NVP(_numComp);
+    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 };
 #endif	/* _GRUPO_H */

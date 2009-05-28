@@ -28,16 +28,20 @@
 #ifndef _HABILIDAD_H
 #define	_HABILIDAD_H
 
+#include <iostream>
+
 #include <SDL/SDL.h>
 
 #include <boost/serialization/access.hpp>
 
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
-
+#include <boost/serialization/utility.hpp>
 #include <boost/serialization/base_object.hpp>
 
 #include "especial.h"
+
+#include "es-xml.h"
 
 /**
  *
@@ -72,7 +76,11 @@ public:
    *
    */
   Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo,
-	    Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE);
+	    Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE, string rXML);
+
+  Habilidad(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
 
   /**
    * Método <i>getter</i> que nos devuelve el número de puntos especiales
@@ -82,10 +90,17 @@ public:
    * por el atáque.
    */
   Uint32 getGastoPE() { return _PEgastados; }
+
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
   
 private:
   //hay que añadir las funciones de serializacion, hay que ver como
   //son para clases heredadas
+  string _ruta_XML;
   friend class boost::serialization::access;
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
@@ -98,6 +113,7 @@ private:
     ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
     ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
     ar & BOOST_SERIALIZATION_NVP(_PEgastados);
+    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 
 

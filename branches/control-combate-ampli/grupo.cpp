@@ -25,9 +25,10 @@
 #include "combatiente.h"
 #include "inventario.h"
 
-#define DEBUG 1
+//#define DEBUG 1
 
-Grupo::Grupo(Inventario& invent, bool contr): _controlable(contr){
+Grupo::Grupo(Inventario& invent, bool contr, string rXML): _controlable(contr),
+							   _ruta_XML(rXML){
     _inventario = &invent;
     std::vector<Combatiente*> temp(4);
     _componentes = temp;

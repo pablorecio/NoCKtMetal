@@ -36,6 +36,8 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 
+#include "es-xml.h"
+
 
 /**
  * Clase AtributoBase. Esta clase nos sirve para modelar los valores
@@ -110,10 +112,16 @@ class AtributoBase{
   AtributoBase(Uint32 PV, Uint32 PE, Uint32 ve, Uint32 f,
 	       Uint32 d, Uint32 s, Uint32 r, Uint32 vi,
 	       Uint32 c, Uint32 i, double iVe, double iFu, double iDe, 
-	       double iRe, double iSu, double iVi, double iCo, double iIn)
+	       double iRe, double iSu, double iVi, double iCo, double iIn,
+	       string rXML)
     : _PV(PV), _PE(PE), _vel(ve), _fue(f), _des(d), _sue(s), _res(r), 
       _vir(vi), _con(c), _int(i), _incVel(iVe), _incFue(iFu), _incDes(iDe), 
-      _incSue(iSu), _incRes(iRe), _incVir(iVi), _incCon(iCo), _incInt(iIn) {}
+      _incSue(iSu), _incRes(iRe), _incVir(iVi), _incCon(iCo), _incInt(iIn),
+      _ruta_XML(rXML) {}
+
+  AtributoBase(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
   
   /** 
    * 
@@ -260,6 +268,12 @@ class AtributoBase{
    */
   double getIncrementoInteligencia() const {return _incInt;}
 
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
+
  protected:
   Uint32 _PV;
   Uint32 _PE;
@@ -281,6 +295,7 @@ class AtributoBase{
   double _incCon;
   double _incInt;
 
+  string _ruta_XML;
   friend class boost::serialization::access;
   /// Serialization function
   template<class Archive>
@@ -304,6 +319,7 @@ class AtributoBase{
     ar & BOOST_SERIALIZATION_NVP(_incVir);
     ar & BOOST_SERIALIZATION_NVP(_incCon);
     ar & BOOST_SERIALIZATION_NVP(_incInt);
+    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 };
 

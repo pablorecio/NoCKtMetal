@@ -42,6 +42,10 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 
+#include "es-xml.h"
+
+using namespace std;
+
 /**
  * Clase que utilzamos para encapsular un conjunto único de objetos, de forma
  * que podamos modelar el inventario del que dispone un grupo, el cual es 
@@ -87,6 +91,12 @@ public:
    * Constructor vacio, no hace nada. 
    */  
   Inventario(){}
+
+  Inventario(string rXML):_ruta_XML(rXML){}
+
+  Inventario(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
   
   /** 
    * Método que añade al inventario un objeto dado, copiándolo en
@@ -155,8 +165,15 @@ public:
    * no se encuentra disponible en el inventario
    */  
   void borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
 private:
   std::map<Uint32,Objeto> _inventario;
+  string _ruta_XML;
   
   friend class boost::serialization::access;
   template<class Archive>
@@ -164,6 +181,7 @@ private:
   {
     // serialize base class information
     ar & BOOST_SERIALIZATION_NVP(_inventario);
+    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 };
 

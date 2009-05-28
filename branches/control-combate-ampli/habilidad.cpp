@@ -20,6 +20,7 @@
 #include "habilidad.h"
 
 Habilidad::Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo,
-                     Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE)
-  :Especial(nombre,id,tipo,cotaInf,cotaSup), _PEgastados(gastoPE) {}
+                     Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE, 
+		     string rXML)
+  :Especial(nombre,id,tipo,cotaInf,cotaSup), _ruta_XML(rXML), _PEgastados(gastoPE){}
 

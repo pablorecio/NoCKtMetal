@@ -25,7 +25,6 @@
  * Created on 27 de abril de 2009, 1:12
  */
 
-
 #include <iostream>
 #include <iterator>
 #include <vector>
@@ -52,35 +51,6 @@ using namespace std;
 class ObjetoComparacion{ //Para la ordenación de los turnos
 public:
     bool operator() (Combatiente* C1, Combatiente* C2){
-      #ifdef DEBUG 
-      cout << "--------------------------------" << endl;
-      cout << "------------- C1 ---------------" << endl;
-      cout << C1 << " " << C1->getNombre() << endl;
-      cout << "PV: " << C1->getPVMax() << "/" << C1->getPV() << endl;
-      cout << "PE: " << C1->getPEMax() << "/" << C1->getPE() << endl;
-      cout << "Velocidad: " << C1->getVelocidad() << endl;
-      cout << "Fuerza: " << C1->getFuerza() << endl;
-      cout << "Destreza: " << C1->getDestreza() << endl;
-      cout << "Suerte: " << C1->getSuerte() << endl;
-      cout << "Resistencia: " << C1->getResistencia() << endl;
-      cout << "Virtuosidad: " << C1->getVirtuosidad() << endl;
-      cout << "Constitucion: " << C1->getConstitucion() << endl;
-      cout << "Inteligencia: " << C1->getInteligencia() << endl;
-      cout << "------------- C2 ---------------" << endl;
-      cout << C2 << " " ;
-      cout << C2->getNombre() << endl;
-      cout << "PV: " << C2->getPVMax() << "/" << C2->getPV() << endl;
-      cout << "PE: " << C2->getPEMax() << "/" << C2->getPE() << endl;
-      cout << "Velocidad: " << C2->getVelocidad() << endl;
-      cout << "Fuerza: " << C2->getFuerza() << endl;
-      cout << "Destreza: " << C2->getDestreza() << endl;
-      cout << "Suerte: " << C2->getSuerte() << endl;
-      cout << "Resistencia: " << C2->getResistencia() << endl;
-      cout << "Virtuosidad: " << C2->getVirtuosidad() << endl;
-      cout << "Constitucion: " << C2->getConstitucion() << endl;
-      cout << "Inteligencia: " << C2->getInteligencia() << endl;
-      cout << "--------------------------------" << endl;
-      #endif
       return (C1->tiradaVelocidad() > C2->tiradaVelocidad());
     }
 };
@@ -127,7 +97,22 @@ void ControlCombate::mostrarCombate(){
 }
 
 Uint32 ControlCombate::postCombate(){
-    return 1;
+  if(_g1->vivo() && !_g2->vivo()){
+    Uint32 exp_ganada = 0;
+    for(size_t i = 0 ; i < _g2->getNumeroCombatientes() ; i++){
+      exp_ganada += _g2->getCombatientes().at(i)->getExperienciaGanable();
+    }
+    Uint32 cada_uno = exp_ganada / 4;
+    cout << "Habeis ganado " << exp_ganada << " puntos de experiencia" << endl;
+    for(size_t i = 0 ; i < _g1->getNumeroCombatientes() ; i++){
+      if(_g1->getCombatientes().at(i)->getExperiencia() + cada_uno >= 
+	 _g1->getCombatientes().at(i)->getExperienciaSiguienteNivel())
+	cout << _g1->getCombatientes().at(i)->getNombre() << " ha subido al nivel "
+	     << _g1->getCombatientes().at(i)->getNivel() + 1 << endl;
+      _g1->getCombatientes().at(i)->addExperiencia(cada_uno);
+    }
+  }
+  return 1;
 }
 
 

@@ -10,7 +10,7 @@ ${EXE}: ${OBJETOS}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
 
 
-atributos.o: atributos.h atributos_base.h
+atributos.o: atributos.h atributos_base.h es-xml.h
 combatiente.o: combatiente.h grupo.h inventario.h objeto.h
 control-combate.o: grupo.h atributos.h combatiente.h habilidad.h objeto.h inventario.h control-combate.h
 especial.o: especial.h

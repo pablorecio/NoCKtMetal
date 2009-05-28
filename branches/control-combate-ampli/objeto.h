@@ -38,10 +38,14 @@
 
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
-
+#include <boost/serialization/utility.hpp>
 #include <boost/serialization/base_object.hpp>
 
 #include "especial.h"
+
+#include "es-xml.h"
+
+using namespace std;
 
 /** 
  * 
@@ -104,7 +108,11 @@ public:
    * 
    */
   Objeto(std::string nombre, Uint32 id, tipoEspecial tipo,
-         Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad);
+         Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad, string rXML);
+
+  Objeto(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
   
   /** 
    * 
@@ -147,24 +155,26 @@ public:
    * necesaria para usar el objeto es menor que la cantidad disponible.
    */
   Objeto& operator --() throw(CantidadItemInsuficiente);
+
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
 private:
   Uint32 _cantidad;
+  string _ruta_XML;
 
   friend class boost::serialization::access;
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {    
-    ar & BOOST_SERIALIZATION_NVP(_nombre);
-    //std::cout << "ar & BOOST_SERIALIZATION_NVP(Especial::_nombre);" 
-    //	      << std::endl;
-    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
-    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
-    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
-    //std::cout << "ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));" 
-    //	      << std::endl;
-    ar & BOOST_SERIALIZATION_NVP(_cantidad);
-    //std::cout << "ar & BOOST_SERIALIZATION_NVP(_cantidad);" 
-    //	      << std::endl;
+    ar & BOOST_SERIALIZATION_NVP(_nombre)
+       & BOOST_SERIALIZATION_NVP(_idEspecial)
+       & BOOST_SERIALIZATION_NVP(_tipoEsp)
+       & BOOST_SERIALIZATION_NVP(_rangoDamage)
+       & BOOST_SERIALIZATION_NVP(_cantidad)
+       & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 };
 
