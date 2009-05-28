@@ -17,6 +17,7 @@
  */
 
 #include "objeto.h"
+#include "especial.h"
 
 Objeto::Objeto(std::string nombre, Uint32 id, tipoEspecial tipo,
 	   Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad):

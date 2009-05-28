@@ -25,7 +25,9 @@
  */
 
 #include <iostream>
+#include <SDL/SDL.h>
 
+#include "iniciar-objetos.h"
 #include "atributos.h"
 #include "atributos_base.h"
 #include "combatiente.h"

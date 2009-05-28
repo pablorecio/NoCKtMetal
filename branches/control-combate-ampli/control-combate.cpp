@@ -166,9 +166,20 @@ ControlTurno::ControlTurno(ControlCombate &comb){
       cout << "ControlTurno::ControlTurno(): " << auxiliar.at(i)->getNombre() 
 	   << " = " << auxiliar.at(i) << endl;
     }
+    cout << "--------------------------------------------" << endl;
+
+    for(vector<Combatiente*>::iterator i = auxiliar.begin() ; 
+	i != auxiliar.end() ; i++){
+      cout << "ControlTurno::ControlTurno(): " << (*i)->getNombre() 
+	   << " = " << *i << endl;
+    }
     #endif
 
-    sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
+    //sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
+    //sort casca, pero ordenacion por monticulo no :S o al menos no
+    //he localizado donde casca aun, así que la dejo por montículo.
+    make_heap (auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
+    sort_heap (auxiliar.begin(),auxiliar.end());
 
     #ifdef DEBUG
     cout << "ControlTurno::ControlTurno(): Combatientes ordenados" << endl;
