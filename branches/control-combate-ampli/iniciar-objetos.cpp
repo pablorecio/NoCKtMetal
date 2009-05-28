@@ -27,7 +27,7 @@
 #include <iostream>
 #include <SDL/SDL.h>
 
-#include "iniciar-objetos.h"
+//#include "iniciar-objetos.h"
 #include "atributos.h"
 #include "atributos_base.h"
 #include "combatiente.h"
@@ -40,7 +40,7 @@
 
 using namespace std;
 
-Uint32 crearFicheros(){
+int main(){
   AtributoBase atrDentacosJoe(90,18,14,9,12,10,10,11,9,10,0.9,0.6,0.8,0.7,0.7,0.8,0.6,0.65,
 			      string("datos-xml/atrBase-DentacosJoe.xml"));
 
@@ -117,6 +117,4 @@ Uint32 crearFicheros(){
     Kinki1.actualizarXML();
     Kinki2.actualizarXML();
     Kinki3.actualizarXML();
-
-    return 1;
 }

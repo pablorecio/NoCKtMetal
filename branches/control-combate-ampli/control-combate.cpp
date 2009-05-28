@@ -112,6 +112,7 @@ Uint32 ControlCombate::postCombate(){
       _g1->getCombatientes().at(i)->addExperiencia(cada_uno);
     }
   }
+  _g1->actualizarXML(); //LO ACTUALIZA TODO LO NECESARIO, YA QUE SOLO QUEREMOS GUARDAR EL GRUPO.
   return 1;
 }
 
