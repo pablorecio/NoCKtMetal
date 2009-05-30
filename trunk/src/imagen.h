@@ -38,6 +38,7 @@ using namespace std;
  * @version 3.0
  * @note Parte del Proyecto NoCKt Metal
  */
+class NPJ;
 
 class Imagen{
  public:
@@ -61,7 +62,7 @@ class Imagen{
    * @param matriz_inter Matriz de tipo <code>bool</code> informando que casilla del mapa
    * es interactuable con el personaje y cual no.
    */
-  Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles = NULL,
+  Imagen(Uint32 ancho, Uint32 alto, std::set<NPJ> npj, Pantalla* p, Uint32** matriz_tiles = NULL,
 	 bool** matriz_col = NULL, bool** matriz_inter = NULL);
   /**
    * Constructor alternativo.
@@ -237,7 +238,8 @@ class Imagen{
   Pantalla *_p;
 
   SDL_Surface* _imagenAux;
- 
+  
+  std::vector<NPJ> npjs_;
 };
 
 // funciones inline

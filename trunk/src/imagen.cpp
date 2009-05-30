@@ -15,40 +15,42 @@ using namespace std;
 
 Imagen::Imagen() { }
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto, Pantalla* p, Uint32** matriz_tiles,
+Imagen::Imagen(Uint32 ancho, Uint32 alto, set<NPJ> npj, Pantalla* p, Uint32** matriz_tiles,
                bool** matriz_col, bool** matriz_inter):
 _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0), _p(p) {
+  
+  npj_ = npj;
 
-    if (matriz_tiles != NULL) {
-        _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizOriginal[i][j] = matriz_tiles[i][j];
-
-    }
-
-    if (matriz_col != NULL) {
-        _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizColision[i][j] = matriz_col[i][j];
-    }
-
-    if (matriz_inter != NULL) {
-        _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizInteractual[i][j] = matriz_inter[i][j];
-    }
+  if (matriz_tiles != NULL) {
+    _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
+    for (Uint32 i = 0; i < ancho; i++)
+      _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
+    
+    for (Uint32 i = 0; i < ancho; i++)
+      for (Uint32 j = 0; j < alto; j++)
+	_matrizOriginal[i][j] = matriz_tiles[i][j];
+    
+  }
+  
+  if (matriz_col != NULL) {
+    _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
+    for (Uint32 i = 0; i < ancho; i++)
+      _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
+    
+    for (Uint32 i = 0; i < ancho; i++)
+      for (Uint32 j = 0; j < alto; j++)
+	_matrizColision[i][j] = matriz_col[i][j];
+  }
+  
+  if (matriz_inter != NULL) {
+    _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
+    for (Uint32 i = 0; i < ancho; i++)
+      _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
+    
+    for (Uint32 i = 0; i < ancho; i++)
+      for (Uint32 j = 0; j < alto; j++)
+	_matrizInteractual[i][j] = matriz_inter[i][j];
+  }
 }
 
 Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, Pantalla* p,
@@ -210,19 +212,21 @@ void Imagen::dibujarFondo() {
     }
 
     for (Uint32 i = 0; i < _ancho; i++) {
-        for (Uint32 j = 0; j < _alto; j++) {
+      for (Uint32 j = 0; j < _alto; j++) {
+	
+	destino.x = i * Tile::getTam();
+	destino.y = j * Tile::getTam();
+	
+	Tile t = getTile(_matrizOriginal[i][j]);
+	if (matrizColCreada)
+	  _matrizColision[i][j] = t.isColisionable();
+	if (matrizInterCreada)
+	  _matrizInteractual[i][j] = t.isInteractuable();
+	
+	_p->volcarPantalla(t.getImagen(), &origen, _imagenAux, &destino);
 
-            destino.x = i * Tile::getTam();
-            destino.y = j * Tile::getTam();
-
-            Tile t = getTile(_matrizOriginal[i][j]);
-            if (matrizColCreada)
-                _matrizColision[i][j] = t.isColisionable();
-            if (matrizInterCreada)
-                _matrizInteractual[i][j] = t.isInteractuable();
-
-            _p->volcarPantalla(t.getImagen(), &origen, _imagenAux, &destino);
-        }
+	
+      }
     }
 
     _cX = _cXt * Tile::getTam();
