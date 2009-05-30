@@ -28,6 +28,7 @@
 #include "grupo.h"
 #include "inventario.h"
 #include "objeto.h"
+#include "aleatorio.h"
 
 Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
                          Grupo &grupo, std::pair<Uint32,Uint32> rangoArma, string rXML,

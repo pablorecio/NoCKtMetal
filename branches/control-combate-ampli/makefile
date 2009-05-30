@@ -5,7 +5,7 @@ LIB = -lSDL -lSDL_image -lboost_serialization
 #iniciar = iniciar_xml
 EXE = main-combate
 INICIADOR = iniciar-objetos
-OBJS = atributos.o combatiente.o grupo.o inventario.o especial.o objeto.o habilidad.o control-combate.o
+OBJS = atributos.o combatiente.o grupo.o inventario.o especial.o objeto.o habilidad.o control-combate.o iacombate.o
 OBJETOS =  ${OBJS} ${EXE}.o 
 OBJS-INI = ${OBJS} iniciar-objetos.o
 
@@ -16,9 +16,9 @@ ${INICIADOR}: ${OBJS-INI}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
 
 
-atributos.o: atributos.h atributos_base.h es-xml.h
-combatiente.o: combatiente.h grupo.h inventario.h objeto.h
-control-combate.o: grupo.h atributos.h combatiente.h habilidad.h objeto.h inventario.h control-combate.h
+atributos.o: atributos.h atributos_base.h es-xml.h aleatorio.h
+combatiente.o: combatiente.h grupo.h inventario.h objeto.h aleatorio.h
+control-combate.o: grupo.h atributos.h combatiente.h habilidad.h objeto.h inventario.h control-combate.h iacombate.h
 especial.o: especial.h
 grupo.o: grupo.h combatiente.h inventario.h
 habilidad.o: habilidad.h especial.h
@@ -26,6 +26,7 @@ ${INICIADOR}.o: atributos.h atributos_base.h combatiente.h grupo.h habilidad.h o
 inventario.o: inventario.h objeto.h
 ${EXE}.o:atributos.h atributos_base.h combatiente.h grupo.h inventario.h objeto.h habilidad.h es-xml.h control-combate.h
 habilidad.o: objeto.h especial.h
+iacombate.o: iacombate.h grupo.h objeto.h combatiente.h habilidad.h inventario.o
 
 clean:
 	${RM} ${EXE} ${OBJETOS} ${OBJS-INI} ${INICIADOR} *~ *#

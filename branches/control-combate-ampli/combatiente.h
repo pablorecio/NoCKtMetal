@@ -42,6 +42,8 @@
 #include "inventario.h"
 #include "grupo.h"
 
+#include "aleatorio.h"
+
 #include <boost/serialization/access.hpp>
 
 #include <boost/serialization/serialization.hpp>

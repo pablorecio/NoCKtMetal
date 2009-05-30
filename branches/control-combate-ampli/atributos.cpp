@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "aleatorio.h"
 #include "atributos_base.h"
 #include "atributos.h"
 
@@ -102,10 +103,6 @@ void Atributos::subirNivel(){
   _PEmax = _base.getPE() + _int * multiplicadorPE;
   _PV = _PVmax;
   _PE = _PEmax;
-}
-
-Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
-  return (rand()%(b-a+1)+a);
 }
 
 double Atributos::coeficiente(double n, double a, double b) const{

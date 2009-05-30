@@ -552,7 +552,6 @@ friend class boost::serialization::access;
     ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 
-  Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
   void subirNivel();
   //TODO calcular los coeficientes correctamente, provisionales
   double coeficiente(double n, double a = 0.1, double b = 0.002) const;
