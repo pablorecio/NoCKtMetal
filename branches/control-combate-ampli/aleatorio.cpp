@@ -19,25 +19,20 @@
 
 /*
  * --------------------------------------------------------
- * Fichero = aleatorio.h
+ * Fichero = aleatorio.cpp
  * Autor = Pablo Recio Quijano
  * Fecha = 30 de mayo de 2009
  * --------------------------------------------------------
  */
-
-#ifndef _ALEATORIO_H
-#define	_ALEATORIO_H
 
 #include <cstdlib>
 #include <ctime>
 
 #include <SDL/SDL.h>
 
-class Aleatorio {
-public:
-  Aleatorio() {}
-    Uint32 valorEntero(Uint32 a, Uint32 b) const;
-};
+#include "aleatorio.h"
 
-#endif	/* _ALEATORIO_H */
+Uint32 Aleatorio::valorEntero(Uint32 a, Uint32 b) const{
+  return (rand()%(b-a+1)+a);
+}
 

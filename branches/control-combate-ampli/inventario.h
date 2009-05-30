@@ -30,19 +30,18 @@
 
 #include <iostream>
 #include <map>
-#include <boost/serialization/map.hpp>
 
 #include <exception>
 
 #include <SDL/SDL.h>
 
-#include "objeto.h"
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/map.hpp>
 
 #include "es-xml.h"
+#include "objeto.h"
 
 using namespace std;
 

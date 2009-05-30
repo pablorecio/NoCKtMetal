@@ -33,7 +33,6 @@
 #include <SDL/SDL.h>
 
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>

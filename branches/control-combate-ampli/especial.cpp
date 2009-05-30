@@ -18,10 +18,8 @@
 
 #include <iostream>
 
-#include <cstdlib>
-#include <ctime>
-
 #include "especial.h"
+#include "aleatorio.h"
 
 Especial::Especial(std::string nombre, Uint32 id, tipoEspecial tipo,
 		   Uint32 cotaInf, Uint32 cotaSup): _nombre(nombre), _idEspecial(id), _tipoEsp(tipo) {
@@ -30,9 +28,6 @@ Especial::Especial(std::string nombre, Uint32 id, tipoEspecial tipo,
 
 Uint32 Especial::calculaDamage() const{
   //srand(time(0));
-  return aleatorioRango(_rangoDamage.first, _rangoDamage.first);
-}
-
-Uint32 Especial::aleatorioRango(Uint32 a, Uint32 b) const{
-  return (rand()%(b-a+1)+a);
+    Aleatorio a;
+  return a.valorEntero(_rangoDamage.first, _rangoDamage.first);
 }

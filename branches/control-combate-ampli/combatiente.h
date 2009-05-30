@@ -30,7 +30,6 @@
 
 #include <iostream>
 #include <map>
-#include <boost/serialization/map.hpp>
 
 #include <SDL/SDL.h>
 #include <exception>
@@ -45,10 +44,9 @@
 #include "aleatorio.h"
 
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
-
+#include <boost/serialization/map.hpp>
 #include <boost/serialization/base_object.hpp>
 
 #include "es-xml.h"
@@ -243,7 +241,8 @@ public:
      * @return Entero sin signo de 32 bits con el valor de una tirada del arma
      */
     Uint32 tiradaArma() const {
-        return aleatorioRango(_rangoArma.first, _rangoArma.second);
+        Aleatorio a;
+        return a.valorEntero(_rangoArma.first, _rangoArma.second);
     }
 
     /**

@@ -47,7 +47,8 @@ void Atributos::addExperiencia(Uint32 exp){
 }
 
 Uint32 Atributos::tiradaSuerte() const{
-  return (aleatorioRango(1,100) < _sue);
+    Aleatorio a;
+  return (a.valorEntero(1,100) < _sue);
 }
 
 Uint32 Atributos::tiradaVelocidad() const { 

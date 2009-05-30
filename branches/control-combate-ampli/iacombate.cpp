@@ -1,6 +1,3 @@
-
-#include "aleatorio.h"
-
 //-*-C++-*-
 /*
  * This program is free software: you can redistribute it and/or modify
@@ -57,22 +54,23 @@ public:
     //que daño se ha realizado, que tipo de ataque, el indice de si es objeto
     //o habilidad, y el objetivo.
  void IACombate::atacar(Uint32 &danio, Uint32 &tipo, Uint32 &indice, Uint32 &objetivo){
-     tipo = seleccionarTipoAtaque();
-
-     switch(tipo){
-         case 1: //Ataque simple
-	   Combatiente *obj;
-	   obj = seleccionarObjetivo();
-             objetivo = obj->getIdentificador();
-             danio = _actual->ataqueSimple(*obj);
-             break;
-         case 2: //Habilidad
-             break;
-         case 3: //Objeto
-             break;
-         case 4: //Huir
-             break;
-     }
+   tipo = seleccionarTipoAtaque();
+     
+   switch(tipo){
+   case 1: //Ataque simple
+     Combatiente *obj;
+     obj = seleccionarObjetivo();
+     objetivo = obj->getIdentificador();
+     danio = _actual->ataqueSimple(*obj);
+     break;
+   case 2: //Habilidad
+     break;
+   case 3: //Objeto
+     break;
+   case 4: //Huir
+     break;
+   }
+   cout << "Y salgo de la IA" << endl; 
  }
 
 Uint32 IACombate::seleccionarTipoAtaque(){
@@ -89,12 +87,16 @@ Uint32 IACombate::seleccionarObjeto(){
 Combatiente* IACombate::seleccionarObjetivo(){
     vector<Combatiente*> auxiliar;
 
+    cout << "Hola rubio. Esto es antes" << endl;
     for (size_t i = 0; i < _g1->getNumeroCombatientes(); i++) {
         if (_g1->getCombatientes().at(i)->getPV() > 0)
             auxiliar.push_back(_g1->getCombatientes().at(i));
     }
 
-    int seleccionado = aleatorioRango(1,auxiliar.size());
+    cout << "Y esto es despues" << endl;
+    Aleatorio a;
+    int seleccionado = a.valorEntero(1,auxiliar.size()) - 1;
+    cout << "salgo de la funcion seleccionarObjetivo()" << endl;
     return auxiliar.at(seleccionado);
     /*make_heap(auxiliar.begin(),auxiliar.end(),ComparacionVida());
     sort_heap(auxiliar.begin(),auxiliar.end());
@@ -110,4 +112,3 @@ Combatiente* IACombate::seleccionarObjetivo(){
     for(size_t i = 0 ; i < porc_vida.size() ; i++){
     }*/
 }
-

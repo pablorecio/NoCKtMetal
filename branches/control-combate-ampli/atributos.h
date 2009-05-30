@@ -32,7 +32,6 @@
 
 #include <boost/config.hpp>
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 

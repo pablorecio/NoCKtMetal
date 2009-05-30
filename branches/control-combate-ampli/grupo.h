@@ -30,7 +30,6 @@
 
 #include <iostream>
 #include <vector>
-#include <boost/serialization/vector.hpp>
 #include <exception>
 
 #include <SDL/SDL.h>
@@ -39,7 +38,7 @@
 #include "combatiente.h"
 
 #include <boost/serialization/access.hpp>
-
+#include <boost/serialization/vector.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 

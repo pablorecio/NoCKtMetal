@@ -33,9 +33,7 @@
 
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/string.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/utility.hpp>

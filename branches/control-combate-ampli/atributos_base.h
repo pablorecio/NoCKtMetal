@@ -38,7 +38,7 @@
 
 #include "es-xml.h"
 
-
+using namespace std;
 /**
  * Clase AtributoBase. Esta clase nos sirve para modelar los valores
  * base y de incremenento para un determinado personaje. Realmente es
