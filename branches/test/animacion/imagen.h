@@ -17,7 +17,7 @@
  * Copyright (C) 2009, NoCKTMetal Team
  
  * --------------------------------------------------------
- * Fichero = tile.h
+ * Fichero = imagen.h
  * Autor = Rosa María Durante Lerate
  * Fecha = 20 / 04 / 2009
  */

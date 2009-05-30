@@ -225,6 +225,8 @@ void Imagen::dibujarFondo() {
         }
     }
 
+    // Insertar a todos los npj.
+
     _cX = _cXt * Tile::getTam();
     _cY = _cYt * Tile::getTam();
 
