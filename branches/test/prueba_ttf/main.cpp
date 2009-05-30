@@ -8,6 +8,11 @@
 
 #include <SDL/SDL_ttf.h>
 
+#include <vector>
+
+#include "dialogo.h"
+#include "pantalla.h"
+
 using namespace std;
 
 int main () {
@@ -40,28 +45,26 @@ int main () {
 	
     }
   
-    // Antes de establecer el modo de video
-    // Establecemos el nombre de la ventana
+    Pantalla p;
 
-    SDL_WM_SetCaption("Hola Mundo. SDL_ttf", NULL);
-
-    // Establecemos el modo
-
-    SDL_Surface *pantalla;
+    std::vector<Dialogo::Mensaje> men(10);
+    men.at(0) = Dialogo::Mensaje(0,"Wola rubio");
+    men.at(1) = Dialogo::Mensaje(1,"Wojojola ijorl");
+    men.at(2) = Dialogo::Mensaje(0,"cm tas tu?");
+    men.at(3) = Dialogo::Mensaje(1,"poz aki, tudiando.. y tu?");
+    men.at(4) = Dialogo::Mensaje(0,"programando XD");
+    men.at(5) = Dialogo::Mensaje(1,"ta bien eso :P");
+    men.at(6) = Dialogo::Mensaje(0,"sip, bueno, voy a seguir k m keda tela XD");
+    men.at(7) = Dialogo::Mensaje(1,"claro! a mi tb m keda XDD");
+    men.at(8) = Dialogo::Mensaje(0,"poz venga rubio!! ta luegooo");
+    men.at(9) = Dialogo::Mensaje(1,"xaitooo!! ^^");
     
-    pantalla = SDL_SetVideoMode(480, 360, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
-    
-    if(pantalla == NULL) {
-	
-	cerr << "No se pudo establecer el modo de video: "
-	     << SDL_GetError();
-	
-	exit(1);
-    }
+
+    Dialogo d(men, p);
 
     // Cargamos la fuente que vamos a utilizar de tamaño 40
     
-    TTF_Font *diag1;
+    /*TTF_Font *diag1;
     TTF_Font *diag2;
     diag1 = TTF_OpenFont("fuentes/FreeMono.ttf", 15);
     diag2 = TTF_OpenFont("fuentes/FreeMono.ttf", 15);
@@ -126,6 +129,7 @@ int main () {
     // Mostramos el resultado durante 5 seg
 
     SDL_Delay(2000);
+    */
 
     return 0;
 
