@@ -1,11 +1,15 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <iostream>
+
+#include "aleatorio.h"
 #include "atributos_base.h"
 #include "atributos.h"
 
+//#define DEBUG 1
 
-Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(exp){
+Atributos::Atributos(AtributoBase base, string rXML, Uint32 exp /*= 0*/):_base(base), _exp(exp){
   _niv = 1; /*TODO*/
 
   _expSigNiv = experienciaParaNivel(_niv);
@@ -33,6 +37,8 @@ Atributos::Atributos(AtributoBase base, Uint32 exp /*= 0*/):_base(base), _exp(ex
   _PEmax = _base.getPE() + _int * multiplicadorPE;
   _PV = _PVmax;
   _PE = _PEmax;
+
+  _ruta_XML = rXML;
 }
 
 void Atributos::addExperiencia(Uint32 exp){
@@ -41,10 +47,16 @@ void Atributos::addExperiencia(Uint32 exp){
 }
 
 Uint32 Atributos::tiradaSuerte() const{
-  return (aleatorioRango(1,100) < _sue);
+    Aleatorio a;
+  return (a.valorEntero(1,100) < _sue);
 }
 
 Uint32 Atributos::tiradaVelocidad() const { 
+  #ifdef DEBUG
+  std::cout << "Atributos::tiradaVelocidad(): "
+	    << "this = " << this
+	    << "_vel = " << _vel << std::endl;
+  #endif
   return _vel * (tiradaSuerte() + 1);
 }
 
@@ -92,10 +104,6 @@ void Atributos::subirNivel(){
   _PEmax = _base.getPE() + _int * multiplicadorPE;
   _PV = _PVmax;
   _PE = _PEmax;
-}
-
-Uint32 Atributos::aleatorioRango(Uint32 a, Uint32 b) const{
-  return (rand()%(b-a+1)+a);
 }
 
 double Atributos::coeficiente(double n, double a, double b) const{

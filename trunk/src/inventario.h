@@ -30,17 +30,20 @@
 
 #include <iostream>
 #include <map>
-#include <boost/serialization/map.hpp>
 
 #include <exception>
 
 #include <SDL/SDL.h>
 
-#include "objeto.h"
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/map.hpp>
+
+#include "es-xml.h"
+#include "objeto.h"
+
+using namespace std;
 
 /**
  * Clase que utilzamos para encapsular un conjunto único de objetos, de forma
@@ -87,6 +90,12 @@ public:
    * Constructor vacio, no hace nada. 
    */  
   Inventario(){}
+
+  Inventario(string rXML):_ruta_XML(rXML){}
+
+  Inventario(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
   
   /** 
    * Método que añade al inventario un objeto dado, copiándolo en
@@ -128,6 +137,8 @@ public:
    */
   Objeto& getObjeto(Uint32 i) throw (ObjetoNoEnInventario);
 
+  Objeto* getPointerObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+
   /**
    * Método <i>getter</i> para obtener acceso a la estructura de datos que contiene
    * el inventario en si.
@@ -153,8 +164,15 @@ public:
    * no se encuentra disponible en el inventario
    */  
   void borrarObjeto(Uint32 i) throw (ObjetoNoEnInventario);
+
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
 private:
   std::map<Uint32,Objeto> _inventario;
+  string _ruta_XML;
   
   friend class boost::serialization::access;
   template<class Archive>
@@ -162,6 +180,7 @@ private:
   {
     // serialize base class information
     ar & BOOST_SERIALIZATION_NVP(_inventario);
+    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 };
 

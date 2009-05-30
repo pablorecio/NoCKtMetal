@@ -17,10 +17,11 @@
  */
 
 #include "objeto.h"
+#include "especial.h"
 
 Objeto::Objeto(std::string nombre, Uint32 id, tipoEspecial tipo,
-	   Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad):
-           Especial(nombre,id,tipo,cotaInf,cotaSup),_cantidad(cantidad){}
+	       Uint32 cotaInf, Uint32 cotaSup, Uint32 cantidad, string rXML):
+  Especial(nombre,id,tipo,cotaInf,cotaSup),_cantidad(cantidad), _ruta_XML(rXML){}
 
 Uint32 Objeto::usarObjeto() throw(CantidadItemInsuficiente){
     if(_cantidad == 0) throw(new CantidadItemInsuficiente());

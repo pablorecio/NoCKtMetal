@@ -25,7 +25,9 @@
  */
 
 #include <iostream>
+#include <SDL/SDL.h>
 
+//#include "iniciar-objetos.h"
 #include "atributos.h"
 #include "atributos_base.h"
 #include "combatiente.h"
@@ -38,67 +40,81 @@
 
 using namespace std;
 
-Uint32 crearFicheros(){
-    AtributoBase atrDentacosJoe(90,18,14,9,12,10,10,11,9,10,0.9,0.6,0.8,0.7,0.7,0.8,0.6,0.65);
-    AtributoBase atrBaldos(120,8,7,12,9,10,14,8,12,6,0.7,0.85,0.6,0.9,0.5,0.6,0.9,0.5);
-    AtributoBase atrGraimito(50,40,10,8,12,9,8,14,7,14,0.8,0.55,0.7,0.5,0.6,0.9,0.6,0.9);
-    AtributoBase atrManoloLaPunki(80,20,10,11,12,7,8,10,11,13,0.7,0.65,0.8,0.6,0.9,0.8,0.7,0.7);
+int main(){
+  AtributoBase atrDentacosJoe(90,18,14,9,12,10,10,11,9,10,0.9,0.6,0.8,0.7,0.7,0.8,0.6,0.65,
+			      string("datos-xml/atrBase-DentacosJoe.xml"));
 
-    AtributoBase atrKinki1(80,20,10,11,12,7,8,10,11,13,0.7,0.65,0.8,0.6,0.9,0.8,0.7,0.7);
+    AtributoBase atrBaldos(120,8,7,12,9,10,14,8,12,6,0.7,0.85,0.6,0.9,0.5,0.6,0.9,0.5,
+			      string("datos-xml/atrBase-Baldos.xml"));
+    AtributoBase atrGraimito(50,40,10,8,12,9,8,14,7,14,0.8,0.55,0.7,0.5,0.6,0.9,0.6,0.9,
+			      string("datos-xml/atrBase-Graimito.xml"));
+    AtributoBase atrManoloLaPunki(80,20,10,11,12,7,8,10,11,13,0.7,0.65,0.8,0.6,0.9,0.8,0.7,0.7,
+			      string("datos-xml/atrBase-ManoloLaPunki.xml"));
 
-    Objeto Birra("Birra", 2,CURATIVO,25,50,5);
-    Objeto Grifa("Grifa",8,CAMBIO_ESTADO,8,15,2);
+    AtributoBase atrKinki1(80,20,10,11,12,7,8,10,11,13,0.7,0.65,0.8,0.6,0.9,0.8,0.7,0.7,
+			      string("datos-xml/atrBase-Kinki1.xml"));
 
-    Inventario invAmpli; invAmpli.addObjeto(Birra); invAmpli.addObjeto(Grifa);
-    Inventario invKinkis;
+    Objeto Birra("Birra", 2,CURATIVO,25,50,5,string("datos-xml/birra.xml"));
+    Objeto Grifa("Grifa",8,CAMBIO_ESTADO,8,15,2,string("datos-xml/grifa.xml"));
 
-    Habilidad riffMuerte("Riff de la muerte", 1,ATAQUE,20,38,6);
-    Habilidad bomboCabeza("Bombo a la cabeza", 3, ATAQUE, 25,40,6);
-    Habilidad tonoCurativo("Tono curativo",4,CURATIVO,30,40,15);
-    Habilidad alaridoTremebundo("Alarido tremebundo",5,ATAQUE,25,38,9);
+    Inventario invAmpli(string("datos-xml/InventarioAmpli.xml")); 
+    invAmpli.addObjeto(Birra); invAmpli.addObjeto(Grifa);
+    Inventario invKinkis(string("datos-xml/InventarioKinkis.xml"));
 
-    Grupo AmpliBreakers(invAmpli,true);
-    Grupo Kinkis(invKinkis,false);
+    Habilidad riffMuerte("Riff de la muerte", 1,ATAQUE,20,38,6,string("datos-xml/riffMuerte.xml"));
+    Habilidad bomboCabeza("Bombo a la cabeza", 3, ATAQUE, 25,40,6,string("datos-xml/bomboCabeza.xml"));
+    Habilidad tonoCurativo("Tono curativo",4,CURATIVO,30,40,15,string("datos-xml/tonoCurativo.xml"));
+    Habilidad alaridoTremebundo("Alarido tremebundo",5,ATAQUE,25,38,9,string("datos-xml/alaridoTremebundo.xml"));
+
+    Grupo AmpliBreakers(invAmpli,true,string("datos-xml/ampli.xml"));
+    Grupo Kinkis(invKinkis,false,string("datos-xml/kinkis.xml"));
 
     Combatiente Dentacos("Dentacos Joe", 20, atrDentacosJoe, AmpliBreakers,
-                         make_pair(14,20), 12000,17,30);
+                         make_pair(14,20),string("datos-xml/dentacos.xml"),12000,0,17,30);
     Dentacos.addHabilidad(riffMuerte);
     Combatiente Baldos("Baldos", 21, atrBaldos, AmpliBreakers, make_pair(23,32),
-                        15000, 20, 40);
+		       string("datos-xml/baldos.xml"),
+		       15000,0, 20, 40);
     Baldos.addHabilidad(bomboCabeza);
     Combatiente Graimito("Graimito el Bajo", 22, atrGraimito, AmpliBreakers,
-                         make_pair(13,20), 10000, 18, 20);
+			make_pair(13,20), string("datos-xml/graimito.xml"),10000,0, 18, 20);
     Graimito.addHabilidad(tonoCurativo);
     Combatiente Manolo("Manolo la Punki", 23, atrManoloLaPunki, AmpliBreakers,
-                       make_pair(18,25), 13000, 20, 30);
+		       make_pair(18,25), string("datos-xml/manolo.xml"), 13000,0, 20, 30);
     Manolo.addHabilidad(alaridoTremebundo);
 
-    Combatiente Kinki1("Kinki 1",30,atrKinki1,Kinkis,make_pair(17,23),10000,19,25);
-    Combatiente Kinki2("Kinki 2",31,atrKinki1,Kinkis,make_pair(17,23),10000,19,25);
-    Combatiente Kinki3("Kinki 3",32,atrKinki1,Kinkis,make_pair(17,23),10000,19,25);
+    Combatiente Kinki1("Kinki 1",30,atrKinki1,Kinkis,make_pair(17,23),
+		       string("datos-xml/kinki1.xml"),10000,900,19,25);
+    Combatiente Kinki2("Kinki 2",31,atrKinki1,Kinkis,make_pair(17,23),
+		       string("datos-xml/kinki2.xml"),10000,1000,19,25);
+    Combatiente Kinki3("Kinki 3",32,atrKinki1,Kinkis,make_pair(17,23),
+		       string("datos-xml/kinki3.xml"),10000,1200,19,25);
 
-    guardar_XML(Birra,"datos-xml/birra.xml");
-    guardar_XML(Grifa,"datos-xml/grifa.xml");
+    atrDentacosJoe.actualizarXML();
+    atrBaldos.actualizarXML();
+    atrGraimito.actualizarXML();
+    atrManoloLaPunki.actualizarXML();
 
-    guardar_XML(invAmpli,"datos-xml/inventarioAmpli.xml");
-    guardar_XML(invKinkis,"datos-xml/inventarioKinkis.xml");
+    Birra.actualizarXML();
+    Grifa.actualizarXML();
 
-    guardar_XML(AmpliBreakers,"datos-xml/ampli.xml");
-    guardar_XML(Kinkis,"datos-xml/kinkis.xml");
+    invAmpli.actualizarXML();
+    invKinkis.actualizarXML();
 
-    guardar_XML(riffMuerte,"datos-xml/riffMuerte.xml");
-    guardar_XML(bomboCabeza,"datos-xml/bomboCabeza.xml");
-    guardar_XML(tonoCurativo,"datos-xml/tonoCurativo.xml");
-    guardar_XML(alaridoTremebundo,"datos-xml/alaridoTremebundo.xml");
+    AmpliBreakers.actualizarXML();
+    Kinkis.actualizarXML();
 
-    guardar_XML(Dentacos,"datos-xml/dentacos.xml");
-    guardar_XML(Baldos,"datos-xml/baldos.xml");
-    guardar_XML(Graimito,"datos-xml/graimito.xml");
-    guardar_XML(Manolo,"datos-xml/manolo.xml");
+    riffMuerte.actualizarXML();
+    bomboCabeza.actualizarXML();
+    tonoCurativo.actualizarXML();
+    alaridoTremebundo.actualizarXML();
 
-    guardar_XML(Kinki1,"datos-xml/kinki1.xml");
-    guardar_XML(Kinki2,"datos-xml/kinki2.xml");
-    guardar_XML(Kinki3,"datos-xml/kinki3.xml");
+    Dentacos.actualizarXML();
+    Baldos.actualizarXML();
+    Graimito.actualizarXML();
+    Manolo.actualizarXML();
 
-    return 1;
+    Kinki1.actualizarXML();
+    Kinki2.actualizarXML();
+    Kinki3.actualizarXML();
 }

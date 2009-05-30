@@ -32,11 +32,11 @@
 #include <iostream>
 
 #include <boost/serialization/string.hpp>
-
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
+
+//#include "aleatorio.h"
 
 /** 
  * Enumerado para indicar que tipos de especiales hay.
@@ -154,7 +154,7 @@ protected:
   }
   
 private:
-  Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
+  //Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
 };
 
 #endif	/* _ESPECIAL_H */

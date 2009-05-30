@@ -27,16 +27,18 @@
 #ifndef _ATRIBUTOS_
 #define _ATRIBUTOS_
 
+#include <iostream>
 #include <SDL/SDL.h>
 
 #include <boost/config.hpp>
 #include <boost/serialization/access.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 
 #include "atributos_base.h"
 #include "atributos.h"
+
+#include "es-xml.h"
 
 /** 
  * @brief Clase con la que encapsulamos los atributos que tendrá un personaje del juego,
@@ -78,7 +80,11 @@ public:
      * nivel del personaje
      * @param exp Entero sin signo de 32 bits que indica la experiencia que tiene el PJ.
      */
-    Atributos(AtributoBase base, Uint32 exp = 0);
+  Atributos(AtributoBase base, string rXML, Uint32 exp = 0);
+
+  Atributos(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
 
     /**
      *
@@ -494,6 +500,11 @@ public:
      */
     Uint32 decrementarInteligencia(Uint32 i);
 
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
 protected:
     AtributoBase _base;
 
@@ -515,6 +526,8 @@ protected:
     Uint32 _con;
     Uint32 _int;
 
+  string _ruta_XML;
+
 friend class boost::serialization::access;
   /// Serialization function
   template<class Archive>
@@ -535,9 +548,9 @@ friend class boost::serialization::access;
     ar & BOOST_SERIALIZATION_NVP(_vir);
     ar & BOOST_SERIALIZATION_NVP(_con);
     ar & BOOST_SERIALIZATION_NVP(_int);
+    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
   }
 
-  Uint32 aleatorioRango(Uint32 a, Uint32 b) const;
   void subirNivel();
   //TODO calcular los coeficientes correctamente, provisionales
   double coeficiente(double n, double a = 0.1, double b = 0.002) const;

@@ -30,7 +30,6 @@
 
 #include <iostream>
 #include <map>
-#include <boost/serialization/map.hpp>
 
 #include <SDL/SDL.h>
 #include <exception>
@@ -42,12 +41,15 @@
 #include "inventario.h"
 #include "grupo.h"
 
-#include <boost/serialization/access.hpp>
+#include "aleatorio.h"
 
+#include <boost/serialization/access.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
-
+#include <boost/serialization/map.hpp>
 #include <boost/serialization/base_object.hpp>
+
+#include "es-xml.h"
 
 /** 
  * 
@@ -105,8 +107,13 @@ public:
      * @param armadura (TEMPORAL) Valor de la armadura equipada del combatiente
      */
     Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-            Grupo &grupo, std::pair<Uint32, Uint32> rangoArma,
-            Uint32 exp = 0, Uint32 aciertoArma = 15, Uint32 armadura = 20);
+		Grupo &grupo, std::pair<Uint32, Uint32> rangoArma, string rXML,
+		Uint32 exp = 0, Uint32 exp_ganable = 0, Uint32 aciertoArma = 15, 
+		Uint32 armadura = 20);
+
+  Combatiente(const char* ruta_XML){
+    cargar_XML(*this,ruta_XML);
+  }
 
     /**
      *
@@ -196,6 +203,10 @@ public:
         return _habilidades;
     }
 
+  Uint32 getExperienciaGanable() const {
+    return _experienciaGanable;
+  }
+
     /**
      * Método <i>getter</i> para obtener el valor del acierto del arma del
      * combatiente
@@ -230,7 +241,8 @@ public:
      * @return Entero sin signo de 32 bits con el valor de una tirada del arma
      */
     Uint32 tiradaArma() const {
-        return aleatorioRango(_rangoArma.first, _rangoArma.second);
+        Aleatorio a;
+        return a.valorEntero(_rangoArma.first, _rangoArma.second);
     }
 
     /**
@@ -301,6 +313,11 @@ public:
      * @return
      */
     bool huir();
+  string getRutaXML() const {return _ruta_XML;}
+  
+  void actualizarXML(){
+    guardar_XML(*this,_ruta_XML.c_str());
+  }
 private:
     std::string _nombre;
     Uint32 _idCombatiente;
@@ -308,7 +325,7 @@ private:
     Inventario *_inventario;
     Grupo* _grupo;
     bool _pasarTurno;
-
+  Uint32 _experienciaGanable;
     //temporal:
     std::pair<Uint32, Uint32> _rangoArma;
     Uint32 _aciertoArma;
@@ -344,6 +361,8 @@ private:
         ar & BOOST_SERIALIZATION_NVP(_aciertoArma);
         ar & BOOST_SERIALIZATION_NVP(_armadura);
         ar & BOOST_SERIALIZATION_NVP(_rangoArma);
+	ar & BOOST_SERIALIZATION_NVP(_experienciaGanable);
+	ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
     }
 };
 

@@ -1,3 +1,4 @@
+//-*-C++-*-
 /*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +17,22 @@
  *
  */
 
-#include "especial.h"
-#include "habilidad.h"
+/*
+ * --------------------------------------------------------
+ * Fichero = aleatorio.cpp
+ * Autor = Pablo Recio Quijano
+ * Fecha = 30 de mayo de 2009
+ * --------------------------------------------------------
+ */
 
-Habilidad::Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo,
-                     Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE, 
-		     string rXML)
-  :Especial(nombre,id,tipo,cotaInf,cotaSup), _ruta_XML(rXML), _PEgastados(gastoPE){}
+#include <cstdlib>
+#include <ctime>
+
+#include <SDL/SDL.h>
+
+#include "aleatorio.h"
+
+Uint32 Aleatorio::valorEntero(Uint32 a, Uint32 b) const{
+  return (rand()%(b-a+1)+a);
+}
 

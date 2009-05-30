@@ -25,13 +25,15 @@
  * --------------------------------------------------------
  */
 
+#ifndef _ES_XML_
+#define _ES_XML_
+
 #include <iostream>
 #include <fstream>
 
 #include <boost/archive/tmpdir.hpp>
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
-
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
 
@@ -112,4 +114,6 @@ void cargar_XML(T &a, const char *fichero){
  * Por ahora, no funciona con versiones posteriores de libboost (estamos
  * trabajando en ello)
  */
+
+#endif
 
