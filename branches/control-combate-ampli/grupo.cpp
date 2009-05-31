@@ -27,8 +27,8 @@
 
 //#define DEBUG 1
 
-Grupo::Grupo(Inventario& invent, bool contr, string rXML): _controlable(contr),
-							   _ruta_XML(rXML){
+Grupo::Grupo(Inventario& invent, bool contr, Uint32 i, string rXML): _controlable(contr),
+							   _id(i), _ruta_XML(rXML){
     _inventario = &invent;
     std::vector<Combatiente*> temp(4);
     _componentes = temp;

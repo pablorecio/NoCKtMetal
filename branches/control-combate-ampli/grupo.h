@@ -46,10 +46,10 @@
 
 using namespace std;
 
-/** 
- * 
- * Declaración adelantada de la clase <code>Combatiente</code>, necesaria para la 
- * relación entre ambas clases. 
+/**
+ *
+ * Declaración adelantada de la clase <code>Combatiente</code>, necesaria para la
+ * relación entre ambas clases.
  * @see combatiente.h
  */
 class Combatiente;
@@ -60,16 +60,16 @@ class Combatiente;
  * tiene un inventario común, así como un conjunto de componentes, los cuales
  * son controlables desde el grupo.
  *
- * @author Pablo Recio Quijano 
+ * @author Pablo Recio Quijano
  *
  * @date 16 de Abril de 2009
  */
 class Grupo {
 public:
-  /** 
+  /**
    * Clase de excepción que modela el caso que el grupo esté lleno (4 componentes)
    *
-   * @author Pablo Recio Quijano 
+   * @author Pablo Recio Quijano
    *
    * @date 16 de Abril de 2009
    */
@@ -86,20 +86,20 @@ public:
       return "No existe combatiente con esa clave";
     }
   };
-  /** 
+  /**
    * Constructor vacio, no hace nada.
    */
   Grupo(){}
 
-  /** 
+  /**
    * Constructor de un objeto de la clase <code>Grupo</code>, determinando el
    * inventario del que dispone, y si es controlable o no.
-   * 
+   *
    * @param invent Inventario sobre el cual trabaja todos los miembros
    * del grupo.
    * @param contr Determina si el grupo es controlable o no.
    */
-  Grupo(Inventario& invent, bool contr, string rXML);
+  Grupo(Inventario& invent, bool contr, Uint32 i, string rXML);
 
   Grupo(const char* ruta_XML){
     cargar_XML(*this,ruta_XML);
@@ -125,7 +125,7 @@ public:
 
   std::vector<Combatiente*>& getCombatientes(){
     return _componentes;
-  }  
+  }
 
   /**
    * Método <i>getter</i> para obtener acceso al componente con la clave dada.
@@ -141,37 +141,39 @@ public:
    */
   Combatiente& getCombatiente(Uint32 i) throw(NoExisteCombatiente);
 
-  /** 
-   * 
+  /**
+   *
    * Método <i>getter</i> para obtener el número de combatientes del grupo.
-   * 
+   *
    * @return Entero sin signo de 32 bits con el número de combatientes que
    * pertenecen al grupo.
    */
   Uint32 getNumeroCombatientes() const { return _numComp; }
 
-  /** 
+  /**
    * Método que sirve para añadir un combatiente al grupo
-   * 
+   *
    * @param comb Referencia al combatiente a añadir en el grupo.
    * @exception GrupoLleno Si el número de combatientes es 4, lanza la
    * excepción
    */
   void addCombatiente(Combatiente& comb) throw(GrupoLleno);
-  
-  /** 
-   * 
+
+  Uint32 getIdentificador() const { return _id; }
+
+  /**
+   *
    * Método <i>getter</i> para obtener si un grupo es controlable o no
-   * 
+   *
    * @return <code>true</code> si el grupo es controlabe y <code>false</code>
    * en otro caso.
    */
   bool controlable() const { return _controlable; }
-  
-  /** 
-   * 
+
+  /**
+   *
    * Método que indica si queda algún miembro vivo del grupo.
-   * 
+   *
    * @return <code>true</code> si hay algún combatiente con PV > 0 <code>false</code>
    * en otro caso.
    */
@@ -180,16 +182,17 @@ public:
   void mostrarGrupo() const;
 
   string getRutaXML() const {return _ruta_XML;}
-  
+
   void actualizarXML(){
     guardar_XML(*this,_ruta_XML.c_str());
   }
-  
+
 private:
   bool _controlable;
   Inventario* _inventario;
   vector<Combatiente*> _componentes;
   Uint32 _numComp;
+  Uint32 _id;
 
   string _ruta_XML;
 
