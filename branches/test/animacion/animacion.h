@@ -30,6 +30,8 @@
 #include "pantalla.h"
 #include "personaje.h"
 #include "imagen.h"
+#include "npj.h"
+
 
 /**
  * Tipo <i>Movimiento</i>, que representa la orientación del movimiento a

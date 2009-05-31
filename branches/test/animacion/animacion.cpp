@@ -28,6 +28,7 @@
 #include "personaje.h"
 #include "animacion.h"
 #include "imagen.h"
+#include "npj.h"
 
 using namespace std;
 
@@ -64,7 +65,10 @@ void Animacion::inicializarAnimacion() {
 
     Uint32 fondoX = 10, fondoY = 10;
 
-    _imag = new Imagen(48, 36, fondoX, fondoY, _pant, matriz);
+    std::vector<NPJ> personajes;
+    personajes.push_back(NPJ(0,30,30,"baldos.png"));
+
+    _imag = new Imagen(48, 36, fondoX, fondoY, personajes, _pant, matriz);
 
     Tile arena("./tiles/arena.png");
     Tile piedra("./tiles/piedra.png", true);
