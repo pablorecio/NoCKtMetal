@@ -23,13 +23,13 @@
  * Proyecto: NoCKt Metal
  */
 
-#include <SDL/SLD.h>
+#include <SDL/SDL.h>
 #include "imagen.h"
 #include "sprite.h"
 
 NPJ::NPJ() {} // para vectores;
-NPJ::NPJ(Uint32 i, Uint32 x, Uint32 y, Uint32 amplMov, const char* sprite, Uint32 f = 4, Uint32 c = 4): 
-  id_(i), x_(x), y_(y),  px_(x*Tile::getTam()), py_(y*Tile::getTam()), velocidad_(60)
+NPJ::NPJ(Uint32 i, Uint32 x, Uint32 y, const char* sprite,  Uint32 amplMov, Uint32 f, Uint32 c): 
+  id_(i), x_(x), y_(y), px_(x*Tile::getTam()), py_(y*Tile::getTam())
 {
   sprite_ = Sprite(sprite, f,c);
   rango_.x = x_; // por tiles.
@@ -37,15 +37,17 @@ NPJ::NPJ(Uint32 i, Uint32 x, Uint32 y, Uint32 amplMov, const char* sprite, Uint3
   rango_.h = amplMov;
   rango_.w = amplMov;
 
-  _tam = _sprite.getAncho();
+  vel_=60;
 
-  _desp = vector<Uint32>(getSecuenciasMovimiento());
+  tam_ = sprite_.getAncho();
+
+  desp_ = vector<Uint32>(getSecuenciasMovimiento());
     for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {
-        _desp.at(i) = _tam/getSecuenciasMovimiento();
+        desp_.at(i) = tam_/getSecuenciasMovimiento();
         /* Si la división en pixels no es exacta hay que rellenar pixels
          * de forma equitativa */
-        if (i < _tam % getSecuenciasMovimiento()) {
-            _desp.at(i)++;
+        if (i < tam_ % getSecuenciasMovimiento()) {
+            desp_.at(i)++;
         }
     }
 }
@@ -54,36 +56,40 @@ void NPJ::subir() { y_ -= 1; }
 void NPJ::bajar() { y_ += 1; }
 void NPJ::izq() { x_ -= 1; }
 void NPJ::drch() { x_ += 1; }
-void NPJ::dibujarPosicionFrente(SDL_Surface* i) { moverAbajo(0,i,0); }
-void NPJ::dibujarPosicionEspaldas(SDL_Surface* i) { moverArriba(0,i,0); }
-void NPJ::dibujarPosicionLatIzda(SDL_Surface* i) { moverIzda(0,i,0); }
-void NPJ::dibujarPosicionLatDcha(SDL_Surface* i) { moverDcha(0,i,0); }
+void NPJ::dibujarPosicionFrente() { moverAbajo(0,0); }
+void NPJ::dibujarPosicionEspaldas() { moverArriba(0,0); }
+void NPJ::dibujarPosicionLatIzda() { moverIzda(0,0); }
+void NPJ::dibujarPosicionLatDcha() { moverDcha(0,0); }
 
-void NPJ::moverArriba(Uint32 mov, SDL_Surface* i, Uint32 desp ) 
+void NPJ::moverArriba(Uint32 mov, Uint32 desp ) 
 {
   py_ -= desp;
-  mover(sprite_.getMovArriba(), mov, i); 
+  mover(sprite_.getMovArriba(), mov);
 }
 
-void NPJ::moverAbajo(Uint32 mov, SDL_Surface* i, Uint32 desp ) 
+void NPJ::moverAbajo(Uint32 mov, Uint32 desp ) 
 {
   py_ += desp;
-  mover(sprite_.getMovAbajo(), mov, i); 
+  mover(sprite_.getMovAbajo(), mov); 
 }
 
-void NPJ::moverIzda(Uint32 mov, SDL_Surface* i, Uint32 desp ) 
+void NPJ::moverIzda(Uint32 mov, Uint32 desp ) 
 { 
   px_ -= desp;
-  mover(sprite_.getMovIzda(), mov, i); 
+  mover(sprite_.getMovIzda(), mov);
 }
 
-void NPJ::moverDcha(Uint32 mov, SDL_Surface* i, Uint32 desp  ) 
+void NPJ::moverDcha(Uint32 mov, Uint32 desp  ) 
 { 
   px_ += desp;
-  mover(sprite_.getMovDcha(), mov, i); 
+  mover(sprite_.getMovDcha(), mov);
 }
 
-void NPJ::mover(Uint32 movimiento, Uint32 secuencia, SDL_Surface* i) {
-   SDL_Delay(150 - _velocidad);
-   sprite_.dibujar(movimiento, secuencia, i, px_ ,py_);
+void NPJ::mover(Uint32 movimiento, Uint32 secuencia) {
+  SDL_Delay(150 - vel_);
+  
+  //imagen_ = SDL_CreateRGBSurface(SDL_HWSURFACE, sprite_.getAncho(),
+  //  sprite_.getAlto(), 24, 0,0,0,0);
+  
+  sprite_.dibujar(movimiento, secuencia, imagen_->SurfaceNpj(), px_ ,py_);
 }

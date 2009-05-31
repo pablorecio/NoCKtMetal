@@ -27,6 +27,7 @@
 
 #include "pantalla.h"
 #include "tile.h"
+#include "npj.h"
 #include <map>
 
 using namespace std;
@@ -62,7 +63,7 @@ class Imagen{
    * @param matriz_inter Matriz de tipo <code>bool</code> informando que casilla del mapa
    * es interactuable con el personaje y cual no.
    */
-  Imagen(Uint32 ancho, Uint32 alto, std::set<NPJ> npj, Pantalla* p, Uint32** matriz_tiles = NULL,
+  Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ> npj, Pantalla* p, Uint32** matriz_tiles = NULL,
 	 bool** matriz_col = NULL, bool** matriz_inter = NULL);
   /**
    * Constructor alternativo.
@@ -81,7 +82,7 @@ class Imagen{
    * <code>tile</code> como interactuable o no interactuable.
    * Debe ser del mismo tamaño que <code>matriz_tiles</code>.
    */
-  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, Pantalla* p,
+  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla* p,
          Uint32** matriz_tiles = NULL, bool** matriz_col = NULL,
          bool** matriz_inter = NULL);
 
@@ -224,6 +225,8 @@ class Imagen{
   void setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz, 
 		 bool** colisionable=NULL, bool** interactuable=NULL);
 
+  SDL_Surface* SurfaceNpj() const;
+
  private:
 
   std::map<Uint32,Tile> _tiles;
@@ -238,6 +241,7 @@ class Imagen{
   Pantalla *_p;
 
   SDL_Surface* _imagenAux;
+  SDL_Surface* _imagenNpj;
   
   std::vector<NPJ> npjs_;
 };
@@ -264,5 +268,6 @@ inline Tile Imagen::getTile(Uint32 identificador) { return _tiles.find(identific
 inline bool Imagen::isColisionable(Uint32 cX, Uint32 cY) { return _matrizColision[cX][cY]; }
 inline bool Imagen::isInteractuable(Uint32 cX, Uint32 cY) { return _matrizInteractual[cX][cY]; }
 
+inline SDL_Surface* Imagen::SurfaceNpj() const { return _imagenNpj; } 
 
 #endif
