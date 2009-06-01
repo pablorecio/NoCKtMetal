@@ -2,12 +2,12 @@ CXX = g++
 CXXFLAGS = -ansi -Wall
 LIB = -lSDL -lSDL_image
 EXE = main
-OBJETOS = tile.o imagen.o sprite.o personaje.o pantalla.o main.o 
+OBJETOS = pantalla.o evento.o menu.o main.o 
 
 ${EXE}: ${OBJETOS}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
 
-${OBJETOS}: tile.h imagen.h sprite.h personaje.h pantalla.h 
+${OBJETOS}: pantalla.h evento.h menu.h
 
 clean:
 	${RM} ${EXE} ${OBJETOS} *~ *#

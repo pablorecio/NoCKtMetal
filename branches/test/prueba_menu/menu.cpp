@@ -20,6 +20,9 @@
  * Proyecto: NoCKt Metal
  */
 
+#include <SDL/SDL_image.h>
+
+
 #include <iostream>
 #include "menu.h"
 
@@ -30,38 +33,162 @@ using namespace std;
  * Elemento
  **********************************************************************/
 
-Elemento::Elemento() {}
+Elemento::Elemento(string url, Uint32 x, Uint32 y, Pantalla* p):
+_urlImagen(url),  _posX(x), _posY(y), _pant(p) {
+    /* Cargamos la imagen en la pantalla */
+    _imagen = IMG_Load(url);
 
-Elemento::Elemento(char* url, Uint32 x, Uint32 y, Pantalla* p):
-  _urlImagen(url), _posX(x), _posY(y), _pant(p) {
+    if (_imagen == NULL) {
+        cerr << "Error: " << SDL_GetError() << endl;
+        exit(1);
+    }
 
-}
+    /* Convertir a formato de pantalla */
+    SDL_Surface *tmp = IMG_Load(ruta_imagen);
+    _imagen = SDL_DisplayFormatAlpha(tmp);
+    SDL_FreeSurface(tmp);
+
+    if (_imagen == NULL) {
+        cerr << "Error: " << SDL_GetError() << endl;
+        exit(1);
+    }
+
+    /* Definición del color transparente */
+    Uint32 colorkey = SDL_MapRGB(_imagen->format, 0, 255, 0);
+    SDL_SetColorKey(_imagen, SDL_SRCCOLORKEY, colorkey);
+
+    /* Guardamos el ancho y el alto del elemento */
+    _ancho = aux->w;
+    _alto = aux->h;
+ }
 
 void Elemento::dibujar() {
+   
+    SDL_Rect r;
+    r.x = _posX;
+    r.y = _posY;
 
-
-
-  _pant->volcarPantalla(texto1, NULL, p_->getBuffer(), &r1);
+    /* Volcamos el elemento en la pantalla */
+    _pant->volcarPantalla(_imagen, NULL, _pant->getBuffer(), &r);
+    _pant->volcarPantalla(_pant->getBuffer());
 }
-
-
-/**********************************************************************
- * Botón
- **********************************************************************/
-
-
-
-
-
-
-/**********************************************************************
- * Cursor
- **********************************************************************/
-
-
-
 
 
 /**********************************************************************
  * Menú
  **********************************************************************/
+void Menu::setBoton(string mensaje, Uint32 posX, Uint32 poxY, string url,
+                    Uint32 espacioX, Uint32 espacioY) {
+    /* Si es el primer botón, se toma por defecto como activado */
+    if(_numBotones == 0) {
+        activo = true;
+        _botonActivo = 0;
+    } else {
+        activo = false;
+    }
+
+    Boton nuevo = Boton(url, mensaje, _pant, posX, posY, 0, 0, 5, 5, activo);
+
+    _botones.insert(make_pair(_numBotones, &nuevo));
+    _numBotones++;
+}
+
+void Menu::setBoton(Boton* b) {
+    _botones.insert(make_pair(_numBotones, b));
+    _numBotones++;   
+}
+
+void Menu::setCursor(char* url, Uint32 x, Uint32 y) {
+    _cursor = Cursor (url, x, y, _pant);
+}
+
+void Menu::dibujar() {
+    _pant->cargarImagen(_pant->getBuffer(), _urlImagen);
+
+    for(map<Uint32, Boton*>::iterator i = _botones.begin();
+    i != _botones.end(); i++) {
+        Boton aux = i->second;
+        aux.dibujar();
+    }
+
+    _cursor->dibujar();
+}
+
+bool Menu::actualizar() {
+    /* Cargamos las posiciones iniciales de los elementos y del fondo */
+    
+    /* Reiniciamos las banderas */
+    _estadoSalida = false;
+    _estadoAceptado = false;
+
+    /* Lectura del nuevo evento */
+    switch (_evento.getEvento()) {
+    case SALIR:
+        cout << "Saliendo de la ejecucion del programa" << endl;
+        _estadoSalida = true;
+        return true;
+    case ACEPTAR:
+        cout << "Ha elegido la opción " << _botonActivo << endl;
+        _estadoAceptado = true;
+        return true;
+    case ATRAS:
+        cout << "Reiniciar el menú" << endl;
+        break;
+    case ARRIBA: case IZDA:
+        cout << "Retroceder el cursor y redibujar el menú." << endl;
+        break;
+    case ABAJO: case DCHA:
+        cout << "Avanzar el cursor y redibujar el menú." << endl;
+        break;
+    default:
+        cout << "Opcion inválida en el menú" << endl;
+        break;
+    }
+
+    return false;
+}
+
+Uint32 Menu::retrocederCursor() {
+    if (_numBotones != 0) {
+        /* Avanzamos el cursor */
+        _botonActivo++;
+        if (_botonActivo >= _numBotones) {
+            /* Hemos llegado al último botón por lo que volvemos al primero */
+            _botonActivo = 0;
+        }
+    }
+    /* Incluir un else y lanzar un error en caso de que no haya botones */
+
+    /* Recalcular posiciones del cursor en función del botón activo:
+     * el cursor aparece en este caso a la izquierda del botón, pero
+     * esto puede modificarse fácilmente */
+    Boton* aux = _botones.at(_botonActivo);
+    Uint32 x = aux->getPosX() - aux->getDespX();
+    Uint32 y = aux->getPosY() - aux->getDespY();
+    _cursor->setPosicion(x,y);
+
+    return _botonActivo;
+}
+
+
+Uint32 Menu::avanzarCursor() {
+    if (_numBotones != 0) {
+        /* Avanzamos el cursor */
+        _botonActivo++;
+        if (_botonActivo >= _numBotones) {
+            /* Hemos llegado al último botón por lo que volvemos al primero */
+            _botonActivo = 0;
+        }
+    }
+    /* Incluir un else y lanzar un error en caso de que no haya botones */
+
+    /* Recalcular posiciones del cursor en función del botón activo:
+     * el cursor aparece en este caso a la izquierda del botón, pero
+     * esto puede modificarse fácilmente */
+    Boton* aux = _botones.at(_botonActivo);
+    Uint32 x = aux->getPosX() - aux->getDespX();
+    Uint32 y = aux->getPosY() - aux->getDespY();
+    _cursor->setPosicion(x,y);
+    
+    return _botonActivo;
+}
