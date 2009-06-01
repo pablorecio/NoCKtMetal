@@ -55,7 +55,7 @@ public:
     //o habilidad, y el objetivo.
  void IACombate::atacar(Uint32 &danio, Uint32 &tipo, Uint32 &indice, Uint32 &objetivo){
    tipo = seleccionarTipoAtaque();
-     
+
    switch(tipo){
    case 1: //Ataque simple
      Combatiente *obj;
@@ -70,7 +70,7 @@ public:
    case 4: //Huir
      break;
    }
-   cout << "Y salgo de la IA" << endl; 
+   cout << "Y salgo de la IA" << endl;
  }
 
 Uint32 IACombate::seleccionarTipoAtaque(){
@@ -87,28 +87,32 @@ Uint32 IACombate::seleccionarObjeto(){
 Combatiente* IACombate::seleccionarObjetivo(){
     vector<Combatiente*> auxiliar;
 
-    cout << "Hola rubio. Esto es antes" << endl;
     for (size_t i = 0; i < _g1->getNumeroCombatientes(); i++) {
         if (_g1->getCombatientes().at(i)->getPV() > 0)
             auxiliar.push_back(_g1->getCombatientes().at(i));
     }
 
-    cout << "Y esto es despues" << endl;
-    Aleatorio a;
-    int seleccionado = a.valorEntero(1,auxiliar.size()) - 1;
-    cout << "salgo de la funcion seleccionarObjetivo()" << endl;
-    return auxiliar.at(seleccionado);
-    /*make_heap(auxiliar.begin(),auxiliar.end(),ComparacionVida());
+    //Aleatorio a;
+    //int seleccionado = a.valorEntero(1,auxiliar.size()) - 1;
+    //return auxiliar.at(seleccionado);
+    make_heap(auxiliar.begin(),auxiliar.end(),ComparacionVida());
     sort_heap(auxiliar.begin(),auxiliar.end());
 
-    vector<int> porc_vida;
-    int total = 0;
-    for(size_t i = 0 ; i < auxiliar.size() ; i++){
-        porc_vida.push_back((auxiliar.at(i)->getPV() / auxiliar.at(i)->getPVMax())*100);
-        total += porc_vida.at(i);
+    Aleatorio a;
+    Sint32 n = _g1->getNumeroCombatientes();
+    vector<Sint32> valores;
+    Sint32 val_aux = 0;
+    for(Sint32 i = 0 ; i < n ; i++){
+    	val_aux += i + 1;
+    	valores.push_back(val_aux);
     }
+    Sint32 valor_aleatorio = a.valorEntero(1,val_aux);
 
-    vector<int> probabilidades;
-    for(size_t i = 0 ; i < porc_vida.size() ; i++){
-    }*/
+    Combatiente *objetivo;
+    for(Sint32 i = n-1 ; i >= 0 ; i--){
+    	if(i != 0 && valores.at(i) > valor_aleatorio && valores.at(i-1) < valor_aleatorio){
+    		objetivo = auxiliar.at(n-i);
+    	}
+    }
+    return objetivo;
 }

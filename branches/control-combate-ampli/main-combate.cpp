@@ -21,14 +21,11 @@
 #include "aleatorio.h"
 #include "biblioteca.h"
 #include "es-xml.h"
-#include "iniciar-objetos.h"
 #include "control-combate.h"
 
 using namespace std;
 
 int main(){
-  //crearFicheros();
-
   Biblioteca bib;
   bib.recargarXML("datos-xml/biblioteca.xml");
   cout << "Biblioteca cargada" << endl;

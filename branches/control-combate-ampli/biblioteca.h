@@ -75,10 +75,15 @@ public:
 	string getGrupoEnemigo(Uint32 id) const;
 	string getRutaXML() const;
 
-	map<Uint32, string> getPersonajesPrincipales() const;
-	map<Uint32, string> getObjetos() const;
-	map<Uint32, string> getHabilidades() const;
-	map<Uint32, string> getGruposEnemigos() const;
+	map<Uint32, string>& getPersonajesPrincipales();
+	map<Uint32, string>& getObjetos();
+	map<Uint32, string>& getHabilidades();
+	map<Uint32, string>& getGruposEnemigos();
+
+	const map<Uint32, string>& getPersonajesPrincipales() const;
+	const map<Uint32, string>& getObjetos() const;
+	const map<Uint32, string>& getHabilidades() const;
+	const map<Uint32, string>& getGruposEnemigos() const;
 
 	void actualizarXML();
 
@@ -143,19 +148,35 @@ inline string Biblioteca::getRutaXML() const {
 	return _rutaXML;
 }
 
-inline map<Uint32, string> Biblioteca::getPersonajesPrincipales() const {
+inline map<Uint32, string>& Biblioteca::getPersonajesPrincipales(){
 	return _personajesPrincipales;
 }
 
-inline map<Uint32, string> Biblioteca::getObjetos() const {
+inline map<Uint32, string>& Biblioteca::getObjetos(){
 	return _objetos;
 }
 
-inline map<Uint32, string> Biblioteca::getHabilidades() const {
+inline map<Uint32, string>& Biblioteca::getHabilidades(){
 	return _habilidades;
 }
 
-inline map<Uint32, string> Biblioteca::getGruposEnemigos() const {
+inline map<Uint32, string>& Biblioteca::getGruposEnemigos(){
+	return _gruposEnemigos;
+}
+
+inline const map<Uint32, string>& Biblioteca::getPersonajesPrincipales() const {
+	return _personajesPrincipales;
+}
+
+inline const map<Uint32, string>& Biblioteca::getObjetos() const {
+	return _objetos;
+}
+
+inline const map<Uint32, string>& Biblioteca::getHabilidades() const {
+	return _habilidades;
+}
+
+inline const map<Uint32, string>& Biblioteca::getGruposEnemigos() const {
 	return _gruposEnemigos;
 }
 
