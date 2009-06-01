@@ -43,8 +43,8 @@ int main() {
 
         menu.setCursor("cursor.png",0,0);
 
-        menu.setBoton("Nueva partida", 400, 20, "boton.png", 5, 5);
-        menu.setBoton("Salir", 420, 40, "boton.png", 5, 5);
+        menu.setBoton("Nueva partida", 300, 20, "boton.png", 5, 5);
+        menu.setBoton("Salir", 320, 60, "boton.png", 5, 5);
 
         bool salir = false;
 
@@ -59,6 +59,7 @@ int main() {
                 /* Procesar el boton activado */
                 switch (menu.getPosicionCursor()) {
                 case 0: /* Nueva Partida */
+                    cout << "Nueva partida" << endl;
                     break;
                 case 1: /* Salir */
                     cout << "Saliendo del juego" << endl;

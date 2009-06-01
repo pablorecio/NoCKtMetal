@@ -120,9 +120,17 @@ void Menu::setBoton(char* mensaje, Uint32 posx, Uint32 posy, char* url,
         _botonActivo = 0;
     }
     
-    _botones.insert(make_pair(_numBotones, new Boton(url, mensaje, _pant,
-                                                     posx, posy, 0, 0, 5, 5,
-                                                     activo)));
+    _botones.insert(make_pair(_numBotones, new Boton(url, mensaje, _pant, posx,
+                                                     posy, 0, 0, 5, 5, activo)));
+
+    for (map<Uint32, Boton*>::iterator i = _botones.begin();
+    i != _botones.end(); i++) {
+        Boton* aux = i->second;
+        cout << "Boton con imagen: " << aux->getImagen()
+             << " y ancho: " << aux->getAncho() << endl;
+
+    }
+
     _numBotones++;
 }
 
@@ -137,6 +145,7 @@ void Menu::setCursor(char* url, Uint32 x, Uint32 y) {
 
 void Menu::dibujar() {
     _pant->cargarImagen(_pant->getBuffer(), _urlFondo);
+    _pant->volcarPantalla(_pant->getBuffer());
 
     for(map<Uint32, Boton*>::iterator i = _botones.begin();
     i != _botones.end(); i++) {
@@ -169,9 +178,11 @@ bool Menu::actualizar() {
         break;
     case ARRIBA: case IZQUIERDA:
         cout << "Retroceder el cursor y redibujar el menú." << endl;
+        retrocederCursor();
         break;
     case ABAJO: case DERECHA:
         cout << "Avanzar el cursor y redibujar el menú." << endl;
+        avanzarCursor();
         break;
     default:
         break;
