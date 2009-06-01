@@ -38,12 +38,16 @@ using namespace std;
 class Elemento {
 public:
     Elemento();
-    Elemento(string url, Uint32 x, Uint32 y, Pantalla* p);
+    Elemento(char* url, Uint32 x, Uint32 y, Pantalla* p);
     string getImagen() const;
     Uint32 getPosX() const;
     Uint32 getPosY() const;
     Uint32 getAncho() const;
     Uint32 getAlto() const;
+    /*
+     * Modificación de la posición.
+     */
+    void setPosicion(Uint32 x, Uint32 y);
     void dibujar();
     virtual ~Elemento();
 
@@ -54,7 +58,7 @@ private:
      */
     SDL_Surface* _imagen;
 
-    string _urlImagen;
+    char* _urlImagen;
     Uint32 _posX;
     Uint32 _posY;
     Pantalla* _pant;
@@ -73,13 +77,17 @@ inline Uint32 Elemento::getPosX() const { return _posX; }
 inline Uint32 Elemento::getPosY() const { return _posY; }
 inline Uint32 Elemento::getAncho() const { return _ancho; }
 inline Uint32 Elemento::getAlto() const { return _alto; }
+inline void Elemento::setPosicion(Uint32 x, Uint32 y) {
+    _posX = x;
+    _posY = y;
+}
 inline Elemento::~Elemento() {}
 
 
 class Boton: public Elemento {
 public:
     Boton();
-    Boton(string url, string mensaje, Pantalla* p, Uint32 x, Uint32 y,
+    Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
           Uint32 dX = 0, Uint32 dY = 0, Uint32 rX = 0, Uint32 rY = 0,
           bool activo = false);
     Uint32 getDespX() const;
@@ -87,6 +95,11 @@ public:
     ~Boton();
 
 private:
+    /*
+     * Modificación de la posición: privado
+     */
+    void setPosicion(Uint32 x, Uint32 y);
+
     /* Separación lateral con respecto al cursor */
     Uint32 _despX;
     /* Separación vertical con respecto al cursor */
@@ -102,13 +115,13 @@ private:
 
 /* Métodos inline */
 inline Boton::Boton(): Elemento() {}
-inline Boton::Boton(string url, string mensaje, Pantalla* p, Uint32 x, Uint32 y,
-                    Uint32 dX = 0, Uint32 dY = 0, Uint32 rX = 0, Uint32 rY = 0,
-                    bool activo = false): Elemento(url, x, y, p), _despX(dX),
-        _despY(dY), _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje),
+inline Boton::Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
+                    Uint32 dX, Uint32 dY, Uint32 rX, Uint32 rY, bool activo):
+                    Elemento(url, x, y, p), _despX(dX), _despY(dY),
+        _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje),
         _activo(activo) {}
-inline Uint32 Boton::getDespX() const;
-inline Uint32 Boton::getDespY() const;
+inline Uint32 Boton::getDespX() const { return _despX; }
+inline Uint32 Boton::getDespY() const { return _despY; }
 inline Boton::~Boton() {}
 
 
@@ -117,10 +130,6 @@ class Cursor: public Elemento {
 public:
     Cursor();
     Cursor(char* url, Uint32 x, Uint32 y, Pantalla* p);
-    /*
-     * Modificación de la posición.
-     */
-    void setPosicion(Uint32 x, Uint32 y);
     ~Cursor();
 };
 
@@ -128,7 +137,6 @@ public:
 inline Cursor::Cursor(): Elemento() {}
 inline Cursor::Cursor(char* url, Uint32 x, Uint32 y, Pantalla* p):
 Elemento(url, x, y, p) {}
-inline void Cursor::setPosicion(Uint32 x, Uint32 y) { _posX = x; _posY = y; }
 inline Cursor::~Cursor() {}
 
 
@@ -146,7 +154,7 @@ public:
      * Constructor de una instancia utilizable como menú.
      * @param urlFondo Ruta a la imagen de fondo del menú.
      */
-    Menu(string urlFondo);
+    Menu(char* urlFondo, Pantalla* p);
     /* Devuelve el codigo (orden) del boton activado, o el valor siguiente al
      último en caso de error */
     Uint32 getPosicionCursor() const;
@@ -154,7 +162,7 @@ public:
     Uint32 getNumBotones() const;
     bool getEstadoSalida() const;
     bool getEstadoAceptado() const;
-    void setBoton(string mensaje, Uint32 posX, Uint32 poxY, string url,
+    void setBoton(char* mensaje, Uint32 posx, Uint32 poxy, char* url,
                   Uint32 espacioX, Uint32 espacioY);
     void setBoton(Boton* b);
     void setCursor(char* url, Uint32 x, Uint32 y);
@@ -175,6 +183,8 @@ public:
 
 private:
 
+    SDL_Surface* _fondo;
+    char* _urlFondo;
     /**
      * Puntero a la pantalla general del juego.
      */
@@ -184,7 +194,6 @@ private:
      * usuario.
      */
     Evento _evento;
-    string _urlFondo;
     /**
      * Botón actual que está activado.
      */
@@ -201,13 +210,10 @@ private:
 };
 
 inline Menu::Menu() {}
-inline Menu::Menu(string urlFondo): _urlFondo(urlFondo) {
-    _evento = new Evento();
-}
 /* Devuelve el codigo (orden) del boton activado, o el valor siguiente al
  * último en caso de error */
 inline Uint32 Menu::getPosicionCursor() const { return _botonActivo; }
-inline Boton* Menu::getBoton(Uint32 i) const { return _botones[i]; }
+inline Boton* Menu::getBoton(Uint32 i) const { return _botones.at(i); }
 inline Uint32 Menu::getNumBotones() const { return _numBotones; }
 inline bool Menu::getEstadoSalida() const { return _estadoSalida; }
 inline bool Menu::getEstadoAceptado() const { return _estadoAceptado; }

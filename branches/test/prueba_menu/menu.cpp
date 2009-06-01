@@ -22,7 +22,6 @@
 
 #include <SDL/SDL_image.h>
 
-
 #include <iostream>
 #include "menu.h"
 
@@ -33,7 +32,7 @@ using namespace std;
  * Elemento
  **********************************************************************/
 
-Elemento::Elemento(string url, Uint32 x, Uint32 y, Pantalla* p):
+Elemento::Elemento(char* url, Uint32 x, Uint32 y, Pantalla* p):
 _urlImagen(url),  _posX(x), _posY(y), _pant(p) {
     /* Cargamos la imagen en la pantalla */
     _imagen = IMG_Load(url);
@@ -44,9 +43,9 @@ _urlImagen(url),  _posX(x), _posY(y), _pant(p) {
     }
 
     /* Convertir a formato de pantalla */
-    SDL_Surface *tmp = IMG_Load(ruta_imagen);
-    _imagen = SDL_DisplayFormatAlpha(tmp);
-    SDL_FreeSurface(tmp);
+    SDL_Surface *aux = IMG_Load(_urlImagen);
+    _imagen = SDL_DisplayFormatAlpha(aux);
+    SDL_FreeSurface(aux);
 
     if (_imagen == NULL) {
         cerr << "Error: " << SDL_GetError() << endl;
@@ -77,19 +76,53 @@ void Elemento::dibujar() {
 /**********************************************************************
  * Menú
  **********************************************************************/
-void Menu::setBoton(string mensaje, Uint32 posX, Uint32 poxY, string url,
+
+
+
+Menu::Menu(char* urlFondo, Pantalla* p):
+_urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
+        _estadoSalida(false), _estadoAceptado(false)
+{
+    _evento = Evento();
+
+    /* Cargamos la imagen en la pantalla */
+    _fondo = IMG_Load(_urlFondo);
+
+    if (_fondo == NULL) {
+        cerr << "Error: " << SDL_GetError() << endl;
+        exit(1);
+    }
+
+    /* Convertir a formato de pantalla */
+    SDL_Surface *aux = IMG_Load(_urlFondo);
+    _fondo = SDL_DisplayFormatAlpha(aux);
+    SDL_FreeSurface(aux);
+
+    if (_fondo == NULL) {
+        cerr << "Error: " << SDL_GetError() << endl;
+        exit(1);
+    }
+
+    /* Definición del color transparente */
+    Uint32 colorkey = SDL_MapRGB(_fondo->format, 0, 255, 0);
+    SDL_SetColorKey(_fondo, SDL_SRCCOLORKEY, colorkey);
+}
+
+
+void Menu::setBoton(char* mensaje, Uint32 posx, Uint32 posy, char* url,
                     Uint32 espacioX, Uint32 espacioY) {
+
+    bool activo = false;
+
     /* Si es el primer botón, se toma por defecto como activado */
     if(_numBotones == 0) {
         activo = true;
         _botonActivo = 0;
-    } else {
-        activo = false;
     }
-
-    Boton nuevo = Boton(url, mensaje, _pant, posX, posY, 0, 0, 5, 5, activo);
-
-    _botones.insert(make_pair(_numBotones, &nuevo));
+    
+    _botones.insert(make_pair(_numBotones, new Boton(url, mensaje, _pant,
+                                                     posx, posy, 0, 0, 5, 5,
+                                                     activo)));
     _numBotones++;
 }
 
@@ -99,16 +132,16 @@ void Menu::setBoton(Boton* b) {
 }
 
 void Menu::setCursor(char* url, Uint32 x, Uint32 y) {
-    _cursor = Cursor (url, x, y, _pant);
+    _cursor = new Cursor (url, x, y, _pant);
 }
 
 void Menu::dibujar() {
-    _pant->cargarImagen(_pant->getBuffer(), _urlImagen);
+    _pant->cargarImagen(_pant->getBuffer(), _urlFondo);
 
     for(map<Uint32, Boton*>::iterator i = _botones.begin();
     i != _botones.end(); i++) {
-        Boton aux = i->second;
-        aux.dibujar();
+        Boton* aux = i->second;
+        aux->dibujar();
     }
 
     _cursor->dibujar();
@@ -134,14 +167,13 @@ bool Menu::actualizar() {
     case ATRAS:
         cout << "Reiniciar el menú" << endl;
         break;
-    case ARRIBA: case IZDA:
+    case ARRIBA: case IZQUIERDA:
         cout << "Retroceder el cursor y redibujar el menú." << endl;
         break;
-    case ABAJO: case DCHA:
+    case ABAJO: case DERECHA:
         cout << "Avanzar el cursor y redibujar el menú." << endl;
         break;
     default:
-        cout << "Opcion inválida en el menú" << endl;
         break;
     }
 

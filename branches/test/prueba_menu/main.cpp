@@ -23,14 +23,14 @@
  * Proyecto: NoCKt Metal
  */
 
+#include "menu.h"
+
+
 #include <iostream>
 #include <SDL/SDL.h>
 
 #include "sistema.h"
 #include "pantalla.h"
-#include "animacion.h"
-#include "musica.h"
-
 
 using namespace std;
 
@@ -39,25 +39,41 @@ int main() {
         Pantalla p = Pantalla();
         p.setTitulo("NoCKt Metal", "./logo.png");
 
-        Musica m("musica/NIN-1m.ogg");
-        m.reproducir();
-        cout << "Music on" << endl;
+        Menu menu = Menu("menu.png",&p);
 
-        Animacion a = Animacion(&p);
-        cout << "Animacion creada" << endl;
-        a.inicializarAnimacion();
-        cout << "Animacion iniciada" << endl;
+        menu.setCursor("cursor.png",0,0);
+
+        menu.setBoton("Nueva partida", 400, 20, "boton.png", 5, 5);
+        menu.setBoton("Salir", 420, 40, "boton.png", 5, 5);
 
         bool salir = false;
 
         while (!salir) {
-            salir = a.procesarAccion();
+            menu.dibujar();
+            while (!menu.actualizar()) {
+                ;
+            }
+
+            if (menu.getEstadoAceptado()) {
+                cout << "Estado aceptado" << endl;
+                /* Procesar el boton activado */
+                switch (menu.getPosicionCursor()) {
+                case 0: /* Nueva Partida */
+                    break;
+                case 1: /* Salir */
+                    cout << "Saliendo del juego" << endl;
+                    salir = true;
+                    break;
+                default:
+                    break;
+                }
+            }
+            if (menu.getEstadoSalida()) {
+                cout << "Saliendo del juego" << endl;
+                salir = true;
+            }
         }
-
-        cout << "Music off" << endl;
-        m.pausar();
-
-        cout << "Saliendo de la pantalla" << endl;
+        
         p.cerrarPantalla();
     } else {
         cerr << "ERROR INICIAL" << endl;
