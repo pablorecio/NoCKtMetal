@@ -58,15 +58,14 @@ int main() {
     Grupo AmpliBreakers(bib.getGrupoPrincipal().c_str());
 
     srand(time(0));
-    cout << "WOLA RUBIOOOO " << bib.getNumeroGruposEnemigos()
+    cout << "Mira que de gente nos quiere pegar: " << bib.getNumeroGruposEnemigos()
             << endl;
     Aleatorio a;
     Uint32 num_rep =
             a.valorEntero(0, bib.getNumeroGruposEnemigos() - 1);
     map<Uint32, string> aux = bib.getGruposEnemigos();
 
-    cout << "NUMERO ELEGIDO ES.............." << num_rep
-            << endl;
+    cout << "Número elegido..." << num_rep << endl;
 
     map<Uint32, string>::iterator I = aux.begin();
     for (size_t i = 0; i < num_rep; i++) {
@@ -91,9 +90,9 @@ int main() {
         
         Menu menu = Menu("imagenes/menu.png", "imagenes/cursor.png", &p);
 
-        menu.setBoton("Menu de movimiento", 270, 20, "imagenes/boton_movimiento.png", 0, 0);
-        menu.setBoton("Menu de combate", 290, 70, "imagenes/boton_combate.png", 0, 0);
-        menu.setBoton("Salir", 310, 120, "imagenes/boton_salir.png", 0, 0);
+        menu.setBoton("Menu de movimiento", 270, 30, "imagenes/boton_movimiento.png", 0, 0);
+        menu.setBoton("Menu de combate", 290, 90, "imagenes/boton_combate.png", 0, 0);
+        menu.setBoton("Salir", 310, 150, "imagenes/boton_salir.png", 0, 0);
 
         bool salir = false;
         bool salirAnimacion;
@@ -194,9 +193,7 @@ int main() {
             }
         }
 
-        cout << "Music off" << endl;
         m.pausar();
-
         p.cerrarPantalla();
     } else {
         cerr << "ERROR INICIAL" << endl;
