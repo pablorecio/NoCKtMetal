@@ -28,14 +28,59 @@
 
 #include <iostream>
 #include <SDL/SDL.h>
+#include <iostream>
+#include <map>
+#include <iterator>
+#include <ctime>
+#include <cstdlib>
 
+#include "atributos.h"
+#include "atributos_base.h"
+#include "combatiente.h"
+#include "grupo.h"
+#include "habilidad.h"
+#include "objeto.h"
+#include "inventario.h"
+#include "aleatorio.h"
+#include "biblioteca.h"
+#include "es-xml.h"
+#include "control-combate.h"
 #include "sistema.h"
 #include "pantalla.h"
+#include "menu.h"
 
 using namespace std;
 
 int main() {
+
+    Biblioteca bib;
+    bib.recargarXML("datos-xml/biblioteca.xml");
+    cout << "Biblioteca cargada" << endl;
+
+    Grupo AmpliBreakers(bib.getGrupoPrincipal().c_str());
+
+    srand(time(0));
+    cout << "WOLA RUBIOOOO " << bib.getNumeroGruposEnemigos()
+            << endl;
+    Aleatorio a;
+    Uint32 num_rep =
+            a.valorEntero(0, bib.getNumeroGruposEnemigos() - 1);
+    map<Uint32, string> aux = bib.getGruposEnemigos();
+
+    cout << "NUMERO ELEGIDO ES.............." << num_rep
+            << endl;
+
+    map<Uint32, string>::iterator I = aux.begin();
+    for (size_t i = 0; i < num_rep; i++) {
+        I++;
+    }
+
+    Grupo Enemigos(bib.getGrupoEnemigo(I->first).c_str());
+
+    ControlCombate combate(AmpliBreakers, Enemigos);
+
     if (iniciarSistema()) {
+
         Pantalla p = Pantalla();
         p.setTitulo("NoCKt Metal", "imagenes/logo.png");
 
@@ -60,12 +105,25 @@ int main() {
                 case 0: /* Motor de movimiento */
                     cout << "Motor de movimiento" << endl;
                     /* Lanzar motor de movimiento */
-                    
-                    
+
                     break;
                 case 1: /* Motor de combate */
                     cout << "Motor de combate" << endl;
                     /* Lanzar motor de combate */
+
+                    cout << "Seleccionado " << I->first;
+                    cout << " " << bib.getGrupoEnemigo(I->first) << endl;
+
+                    AmpliBreakers.mostrarGrupo();
+                    Enemigos.mostrarGrupo();
+
+#                    ifdef DEBUG
+                    cout << "Combate inicializado" << endl;
+#                    endif
+
+                    combate.iniciarCombate();
+                    combate.postCombate();
+
                     break;
                 case 2:
                     cout << "Saliendo del juego" << endl;
@@ -80,7 +138,7 @@ int main() {
                 salir = true;
             }
         }
-        
+
         p.cerrarPantalla();
     } else {
         cerr << "ERROR INICIAL" << endl;

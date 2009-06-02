@@ -225,12 +225,13 @@ bool Menu::actualizar() {
 
 Uint32 Menu::retrocederCursor() {
     if (_numBotones != 0) {
-        /* Avanzamos el cursor */
-        _botonActivo++;
-        if (_botonActivo >= _numBotones) {
+        if (_botonActivo == 0) {
             /* Hemos llegado al último botón por lo que volvemos al primero */
-            _botonActivo = 0;
-        }
+	  _botonActivo = _numBotones-1;
+        } else {
+	  /* Retrocedemos el cursor */
+	  _botonActivo--;
+	}
     }
     /* Incluir un else y lanzar un error en caso de que no haya botones */
 
