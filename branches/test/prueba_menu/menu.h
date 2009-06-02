@@ -49,6 +49,7 @@ public:
      */
     void setPosicion(Uint32 x, Uint32 y);
     void dibujar();
+    void dibujar(SDL_Surface* p);
     virtual ~Elemento();
 
 private:
@@ -92,6 +93,7 @@ public:
           bool activo = false);
     Uint32 getDespX() const;
     Uint32 getDespY() const;
+    bool getActivo() const;
     ~Boton();
 
 private:
@@ -122,6 +124,7 @@ inline Boton::Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
         _activo(activo) {}
 inline Uint32 Boton::getDespX() const { return _despX; }
 inline Uint32 Boton::getDespY() const { return _despY; }
+inline bool Boton::getActivo() const { return _activo; }
 inline Boton::~Boton() {}
 
 
@@ -129,14 +132,14 @@ inline Boton::~Boton() {}
 class Cursor: public Elemento {
 public:
     Cursor();
-    Cursor(char* url, Uint32 x, Uint32 y, Pantalla* p);
+    Cursor(char* url, Pantalla* p);
     ~Cursor();
 };
 
 /* Métodos inline */
 inline Cursor::Cursor(): Elemento() {}
-inline Cursor::Cursor(char* url, Uint32 x, Uint32 y, Pantalla* p):
-Elemento(url, x, y, p) {}
+inline Cursor::Cursor(char* url, Pantalla* p):
+Elemento(url, 0, 0, p) {}
 inline Cursor::~Cursor() {}
 
 
@@ -154,7 +157,7 @@ public:
      * Constructor de una instancia utilizable como menú.
      * @param urlFondo Ruta a la imagen de fondo del menú.
      */
-    Menu(char* urlFondo, Pantalla* p);
+    Menu(char* urlFondo, char* urlCursor, Pantalla* p);
     /* Devuelve el codigo (orden) del boton activado, o el valor siguiente al
      último en caso de error */
     Uint32 getPosicionCursor() const;
@@ -164,9 +167,6 @@ public:
     bool getEstadoAceptado() const;
     void setBoton(char* mensaje, Uint32 posx, Uint32 poxy, char* url,
                   Uint32 espacioX, Uint32 espacioY);
-    void setBoton(Boton* b);
-    void setCursor(char* url, Uint32 x, Uint32 y);
-    void setCursor(Cursor* c);
     void dibujar();
     bool actualizar();
     /**
@@ -217,7 +217,6 @@ inline Boton* Menu::getBoton(Uint32 i) const { return _botones.at(i); }
 inline Uint32 Menu::getNumBotones() const { return _numBotones; }
 inline bool Menu::getEstadoSalida() const { return _estadoSalida; }
 inline bool Menu::getEstadoAceptado() const { return _estadoAceptado; }
-inline void Menu::setCursor(Cursor* c) { _cursor = c; }
 inline Menu::~Menu() {}
 
 #endif	/* _MENU_H */

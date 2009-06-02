@@ -72,17 +72,23 @@ void Elemento::dibujar() {
     _pant->volcarPantalla(_pant->getBuffer());
 }
 
+void Elemento::dibujar(SDL_Surface *p) {
+
+    SDL_Rect r;
+    r.x = _posX;
+    r.y = _posY;
+
+    /* Volcamos el elemento en la pantalla dada */
+    _pant->volcarPantalla(_imagen, NULL, p, &r);
+}
 
 /**********************************************************************
  * Menú
  **********************************************************************/
 
-
-
-Menu::Menu(char* urlFondo, Pantalla* p):
+Menu::Menu(char* urlFondo, char* urlCursor, Pantalla* p):
 _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
-        _estadoSalida(false), _estadoAceptado(false)
-{
+        _estadoSalida(false), _estadoAceptado(false) {
     _evento = Evento();
 
     /* Cargamos la imagen en la pantalla */
@@ -106,6 +112,8 @@ _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
     /* Definición del color transparente */
     Uint32 colorkey = SDL_MapRGB(_fondo->format, 0, 255, 0);
     SDL_SetColorKey(_fondo, SDL_SRCCOLORKEY, colorkey);
+
+    _cursor = new Cursor(urlCursor, _pant);
 }
 
 
@@ -120,39 +128,28 @@ void Menu::setBoton(char* mensaje, Uint32 posx, Uint32 posy, char* url,
         _botonActivo = 0;
     }
     
-    _botones.insert(make_pair(_numBotones, new Boton(url, mensaje, _pant, posx,
-                                                     posy, 0, 0, 5, 5, activo)));
+    Boton* b = new Boton(url, mensaje, _pant, posx, posy, 0,0,5,5,activo);
+    _botones.insert(make_pair(_numBotones, b));
 
-    for (map<Uint32, Boton*>::iterator i = _botones.begin();
-    i != _botones.end(); i++) {
-        Boton* aux = i->second;
-        cout << "Boton con imagen: " << aux->getImagen()
-             << " y ancho: " << aux->getAncho() << endl;
+    /* Dibujamos el botón en el fondo, puesto que no es necesario redibujarlo
+     * cada vez que se mueva el cursor: siempre va a estar en la misma posición
+     */
+    b->dibujar(_fondo);
 
+
+    /* Volvemos a comprobar si es el primer botón introducido en el
+     * mapa, para calcular la posición inicial del cursor en base a éste */
+    if(_numBotones == 0) {
+        Uint32 x = b->getPosX() - b->getDespX() - _cursor->getAncho();
+        Uint32 y = b->getPosY() + b->getDespY();
+        _cursor->setPosicion(x,y);
     }
 
     _numBotones++;
 }
 
-void Menu::setBoton(Boton* b) {
-    _botones.insert(make_pair(_numBotones, b));
-    _numBotones++;   
-}
-
-void Menu::setCursor(char* url, Uint32 x, Uint32 y) {
-    _cursor = new Cursor (url, x, y, _pant);
-}
-
 void Menu::dibujar() {
-    _pant->cargarImagen(_pant->getBuffer(), _urlFondo);
-    _pant->volcarPantalla(_pant->getBuffer());
-
-    for(map<Uint32, Boton*>::iterator i = _botones.begin();
-    i != _botones.end(); i++) {
-        Boton* aux = i->second;
-        aux->dibujar();
-    }
-
+    _pant->volcarPantalla(_fondo, _pant->getBuffer());
     _cursor->dibujar();
 }
 
@@ -179,10 +176,12 @@ bool Menu::actualizar() {
     case ARRIBA: case IZQUIERDA:
         cout << "Retroceder el cursor y redibujar el menú." << endl;
         retrocederCursor();
+        dibujar();
         break;
     case ABAJO: case DERECHA:
         cout << "Avanzar el cursor y redibujar el menú." << endl;
         avanzarCursor();
+        dibujar();
         break;
     default:
         break;
@@ -206,8 +205,8 @@ Uint32 Menu::retrocederCursor() {
      * el cursor aparece en este caso a la izquierda del botón, pero
      * esto puede modificarse fácilmente */
     Boton* aux = _botones.at(_botonActivo);
-    Uint32 x = aux->getPosX() - aux->getDespX();
-    Uint32 y = aux->getPosY() - aux->getDespY();
+    Uint32 x = aux->getPosX() - aux->getDespX() - _cursor->getAncho();
+    Uint32 y = aux->getPosY() + aux->getDespY();
     _cursor->setPosicion(x,y);
 
     return _botonActivo;
@@ -229,8 +228,8 @@ Uint32 Menu::avanzarCursor() {
      * el cursor aparece en este caso a la izquierda del botón, pero
      * esto puede modificarse fácilmente */
     Boton* aux = _botones.at(_botonActivo);
-    Uint32 x = aux->getPosX() - aux->getDespX();
-    Uint32 y = aux->getPosY() - aux->getDespY();
+    Uint32 x = aux->getPosX() - aux->getDespX() - _cursor->getAncho();
+    Uint32 y = aux->getPosY() + aux->getDespY();
     _cursor->setPosicion(x,y);
     
     return _botonActivo;
