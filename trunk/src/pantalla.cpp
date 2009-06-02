@@ -55,8 +55,6 @@ _ancho(ancho), _alto(alto), _prof(prof) {
                                   _prof, 0, 0, 0, 0);
     _movimiento = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho,
                                        _alto, _prof, 0, 0, 0, 0);
-    _movSec = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho, _alto,
-				   _prof, 0, 0, 0, 0);
 }
 
 Pantalla::~Pantalla() {}
@@ -80,12 +78,6 @@ void Pantalla::rellenarPantalla(SDL_Surface *p, Uint32 colorR, Uint32 colorG,
                                 Uint32 colorB, Uint32 colorA) {
     SDL_FillRect(p, NULL, SDL_MapRGBA(p->format, colorR, colorG, colorB,
                                       colorA));
-}
-
-void Pantalla::limpiarBuffer(SDL_Surface* buffer)
-{
-  SDL_Surface *auxiliar = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho, _alto,			       _prof, 0, 0, 0, 0);
-  volcarPantalla(auxiliar, buffer);
 }
 
 void Pantalla::volcarPantalla(SDL_Surface *p1) {

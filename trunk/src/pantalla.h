@@ -70,9 +70,6 @@ class Pantalla {
      * Método observador del ancho de la ventana principal.
      * @return Entero coincidente con el ancho de la ventana principal.
      */
-
-    SDL_Surface* getMovimientoSecundario() const;
-    
     Uint32 getAncho() const;
     /**
      * Método observador del alto de la ventana principal.
@@ -118,14 +115,6 @@ class Pantalla {
     void rellenarPantalla(SDL_Surface *p, Uint32 colorR = 255,
                           Uint32 colorG = 255, Uint32 colorB = 255,
                           Uint32 colorA = 0);
-
-    
-    /**
-     * Tomaremos una SDL_Surface vacía y la volcaremos en el
-     * 'Buffer' que nos pasen por parámetro.
-     * @param buffer Es un tipo SDL_Surface que queremos limpiar.
-     */
-    void limpiarBuffer(SDL_Surface* buffer);
 
     /**
      * Método modificador que copia el contenido de una pantalla en nuestra
@@ -195,8 +184,6 @@ class Pantalla {
      * fuera posible.     
      */
     SDL_Surface* _movimiento;
-    SDL_Surface* _movSec;
-
     /**
      * Entero que representa el ancho de la pantalla principal.
      */
@@ -215,7 +202,6 @@ class Pantalla {
 inline SDL_Surface* Pantalla::getBuffer() const { return _buffer; }
 inline SDL_Surface* Pantalla::getFondo() const { return _fondo; }
 inline SDL_Surface* Pantalla::getMovimiento() const { return _movimiento; }
-inline SDL_Surface* Pantalla::getMovimientoSecundario() const { return _movSec; }
 inline Uint32 Pantalla::getAncho() const { return _ancho; }
 inline Uint32 Pantalla::getAlto() const { return _alto; }
 inline Uint32 Pantalla::getProf() const { return _prof; }

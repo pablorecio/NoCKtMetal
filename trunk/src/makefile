@@ -1,19 +1,19 @@
 CXX = g++
-DEBUG = -g
-CXXFLAGS = -ansi -Wall #${DEBUG} -DDEBUG=0 -DFPS=0
-LIB = -lSDL -lboost_serialization
-EXE = main-combate
+CXXFLAGS = -ansi -Wall
+LIB = -lSDL -lSDL_image -lSDL_ttf -lboost_serialization
+EXE = main-menu
 GENERA = generar-xml
-OBJS = atributos.o combatiente.o grupo.o inventario.o especial.o objeto.o habilidad.o control-combate.o iacombate.o aleatorio.o biblioteca.o
-OBJETOS =  ${OBJS} ${EXE}.o
+OBJS = atributos.o combatiente.o grupo.o inventario.o especial.o objeto.o habilidad.o control-combate.o iacombate.o aleatorio.o biblioteca.o sistema.o pantalla.o evento.o menu.o
+OBJETOS = ${OBJS} ${EXE}.o
 OBJS-G =  ${OBJS} iniciar-objetos.o biblioteca.o ${GENERA}.o
 
 ${EXE}: ${OBJETOS}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
-	
+
 ${GENERA}: ${OBJS-G}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
 
+# -------------------------------------------------------------------
 atributos.o: atributos.h atributos_base.h es-xml.h aleatorio.h
 combatiente.o: combatiente.h grupo.h inventario.h objeto.h aleatorio.h
 control-combate.o: grupo.h atributos.h combatiente.h habilidad.h objeto.h inventario.h control-combate.h iacombate.h
@@ -27,10 +27,17 @@ habilidad.o: objeto.h especial.h
 iacombate.o: iacombate.h grupo.h objeto.h combatiente.h habilidad.h inventario.h aleatorio.h
 aleatorio.o: aleatorio.h
 biblioteca.o: combatiente.h grupo.h objeto.h habilidad.h biblioteca.h
+# ---------------------------------------------------------------------
+sistema.o: sistema.h
+pantalla.o: pantalla.h
+evento.o: evento.h
+menu.o: pantalla.h evento.h menu.h
+# ---------------------------------------------------------------------
 ${GENERA}.o: biblioteca.h iniciar-objetos.h
+
 
 clean:
 	${RM} ${EXE} ${OBJETOS} ${OBJS-G} ${GENERA} *~ *#
-	
+
 clean-all:
 	make clean & ${RM} datos-xml/*

@@ -28,7 +28,7 @@
 
 #include "evento.h"
 
-Evento::Evento(): _retraso(30) {
+Evento::Evento(Uint32 r): _retraso(r) {
     /* Evitar la autorepetición de teclas */
     SDL_EnableKeyRepeat(0, 0);
     
