@@ -33,10 +33,24 @@
 
 #include <SDL/SDL.h>
 
+/**
+ * Sencilla clase para encapsular el cálculo de valores aleatorios. Esta clase
+ * simplemente tiene funciones para calcular valores en cierto rango
+ * dado por el usuario.
+ */
 class Aleatorio {
 public:
-  Aleatorio() {}
-    Uint32 valorEntero(Uint32 a, Uint32 b) const;
+	/**
+	 * Constructor predeterminado. No hace nada.
+	 */
+	Aleatorio() {}
+	/**
+	 * Calcula un número entero pseudo-aleatorio en el rango dado, ambos incluidos.
+	 * @param a Extremo izquierdo del intervalo
+	 * @param b Extremo derecho del intervalo
+	 * @return Valor entero sin signo de 32 bits entre [a,b]
+	 */
+	Uint32 valorEntero(Uint32 a, Uint32 b) const;
 };
 
 #endif	/* _ALEATORIO_H */

@@ -16,7 +16,7 @@
  *
  */
 
-/* 
+/*
  * File:   control-combate.h
  * Author: Pablo Recio Quijano
  *
@@ -95,6 +95,7 @@ public:
     Uint32 postCombate();
 private:
     Grupo *_g1, *_g2;
+    bool _huida;
     void mostrarCombate();
 
     friend class ControlTurno;
@@ -177,6 +178,7 @@ protected:
 
     void mostrarDamage(const Combatiente &c, const Combatiente &o, Uint32 d);
     void mostrarAtaqueFallado(const Combatiente &c);
+    Uint32 intentarHuir(const Combatiente &c);
 };
 
 #endif	/* _CONTROLCOMBATE_H */

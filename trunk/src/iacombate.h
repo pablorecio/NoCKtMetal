@@ -57,8 +57,19 @@
  */
 class IACombate {
 public:
+	/**
+	 * Constructor predeterminado. No hace nada.
+	 */
     IACombate(){}
 
+    /**
+     * Constructor de un objeto de la clase <code>IACombate</code>. El objeto
+     * construido encapsula una acción de un combatiente determinado.
+     *
+     * @param act Referencia al combatiente que realiza la acción.
+     * @param g1 Referencia al grupo contrario al combatiente.
+     * @param g2 Referencia al grupo al que pertenece el combaitente
+     */
     IACombate(Combatiente &act, Grupo &g1, Grupo &g2);
 
     /**

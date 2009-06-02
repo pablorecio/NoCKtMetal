@@ -50,73 +50,95 @@
  *
  * @see Especial
  *
- * @author Pablo Recio Quijano 
+ * @author Pablo Recio Quijano
  *
  * @date 15 de Abril de 2009
  */
-class Habilidad: public Especial{
+class Habilidad: public Especial {
 public:
-  /**
-   * Constructor vacio, no hace nada.
-   */
-  Habilidad() {}
+	/**
+	 * Constructor vacio, no hace nada.
+	 */
+	Habilidad() {
+	}
 
-  /**
-   * Constructor de un objeto de la clase Habilidad. Este constructor recibe todos
-   * los parámetros para crear dicho objeto, y aprovecha el constructor
-   * de su clase padre "especial".
-   *
-   * @param nombre Cadena con el nombre identificativo del Objeto
-   * @param id Identificador único del Objeto
-   * @param tipo Tipo del Objeto
-   * @param cotaInf Cota inferior de daño
-   * @param cotaSup Cota superior de daño
-   * @param gastoPE Cantidad de puntos especiales que consume este ataque.
-   *
-   */
-  Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo,
-	    Uint32 cotaInf, Uint32 cotaSup, Uint32 gastoPE, string rXML);
+	/**
+	 * Constructor de un objeto de la clase Habilidad. Este constructor recibe todos
+	 * los parámetros para crear dicho objeto, y aprovecha el constructor
+	 * de su clase padre "especial".
+	 *
+	 * @param nombre Cadena con el nombre identificativo del Objeto
+	 * @param id Identificador único del Objeto
+	 * @param tipo Tipo del Objeto
+	 * @param cotaInf Cota inferior de daño
+	 * @param cotaSup Cota superior de daño
+	 * @param gastoPE Cantidad de puntos especiales que consume este ataque.
+	 * @param rXML Ruta donde se almacenará el fichero serializado de este objeto.
+	 *
+	 */
+	Habilidad(std::string nombre, Uint32 id, tipoEspecial tipo, Uint32 cotaInf,
+			Uint32 cotaSup, Uint32 gastoPE, string rXML);
 
-  Habilidad(const char* ruta_XML){
-    cargar_XML(*this,ruta_XML);
-  }
+	/**
+	 * Construye un objeto de la clase <code>Habilidad</code> a partir de
+	 * un fichero XML.
+	 *
+	 * @param ruta_XML Ruta al fichero que contiene el objeto que queremos
+	 * deserializar.
+	 */
+	Habilidad(const char* ruta_XML) {
+		cargar_XML(*this, ruta_XML);
+	}
 
-  /**
-   * Método <i>getter</i> que nos devuelve el número de puntos especiales
-   * que consume esta hábilidad especial.
-   *
-   * @return Valor entero sin signo de 32 bits con el número de PE consumidos
-   * por el atáque.
-   */
-  Uint32 getGastoPE() { return _PEgastados; }
+	/**
+	 * Método <i>getter</i> que nos devuelve el número de puntos especiales
+	 * que consume esta hábilidad especial.
+	 *
+	 * @return Valor entero sin signo de 32 bits con el número de PE consumidos
+	 * por el atáque.
+	 */
+	Uint32 getGastoPE() {
+		return _PEgastados;
+	}
 
-  string getRutaXML() const {return _ruta_XML;}
-  
-  void actualizarXML(){
-    guardar_XML(*this,_ruta_XML.c_str());
-  }
-  
+	/**
+	 *
+	 * Método <i>getter</i> para la ruta del fichero XML con el contenido
+	 * serializado del objeto.
+	 *
+	 * @return Cadena que contiene la ruta al fichero XML.
+	 */
+	string getRutaXML() const {
+		return _ruta_XML;
+	}
+
+	/**
+	 * Método que serializa el objeto en la ruta XML del mismo, borrando
+	 * lo que hubiera antes.
+	 */
+	void actualizarXML() {
+		guardar_XML(*this, _ruta_XML.c_str());
+	}
+
 private:
-  //hay que añadir las funciones de serializacion, hay que ver como
-  //son para clases heredadas
-  string _ruta_XML;
-  friend class boost::serialization::access;
-  template<class Archive>
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    // serialize base class information
-    //ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
+	//hay que añadir las funciones de serializacion, hay que ver como
+	//son para clases heredadas
+	string _ruta_XML;
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version) {
+		// serialize base class information
+		//ar & BOOST_SERIALIZATION_NVP(boost::serialization::base_object<Especial>(*this));
 
-    ar & BOOST_SERIALIZATION_NVP(_nombre);
-    ar & BOOST_SERIALIZATION_NVP(_idEspecial);
-    ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
-    ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
-    ar & BOOST_SERIALIZATION_NVP(_PEgastados);
-    ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
-  }
+		ar & BOOST_SERIALIZATION_NVP(_nombre);
+		ar & BOOST_SERIALIZATION_NVP(_idEspecial);
+		ar & BOOST_SERIALIZATION_NVP(_tipoEsp);
+		ar & BOOST_SERIALIZATION_NVP(_rangoDamage);
+		ar & BOOST_SERIALIZATION_NVP(_PEgastados);
+		ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
+	}
 
-
-  Uint32 _PEgastados;
+	Uint32 _PEgastados;
 
 };
 
