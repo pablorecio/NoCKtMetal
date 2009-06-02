@@ -29,7 +29,7 @@
 
 NPJ::NPJ() {} // para vectores;
 NPJ::NPJ(Uint32 i, Uint32 x, Uint32 y, const char* sprite,  Uint32 amplMov, Uint32 f, Uint32 c): 
-  id_(i), x_(x), y_(y), px_(x*Tile::getTam()), py_(y*Tile::getTam())
+  id_(i), x_(x), y_(y)
 {
   sprite_ = Sprite(sprite, f,c);
   rango_.x = x_; // por tiles.
@@ -37,9 +37,37 @@ NPJ::NPJ(Uint32 i, Uint32 x, Uint32 y, const char* sprite,  Uint32 amplMov, Uint
   rango_.h = amplMov;
   rango_.w = amplMov;
 
+  px_ = x_*Tile::getTam();
+  py_ = y_*Tile::getTam();
+
   vel_=60;
 
-  tam_ = sprite_.getAncho();
+  tam_ = Tile::getTam();
+
+  /* Colocación en pixels correcta de los sprites en las casillas */
+  if (tam_ != sprite_.getAncho()) {
+    if (tam_ < sprite_.getAncho()) {
+      /* Si el ancho del sprite es distinto, hay que centrarlo
+       * horizontalmente en la casilla */
+      px_ -= (sprite_.getAncho() - tam_)/2;
+    } else {
+      /* Si el ancho del sprite es distinto, hay que centrarlo
+       * horizontalmente en la casilla */
+      px_ += (tam_ - sprite_.getAncho())/2;
+    }
+  }
+  
+  /* Colocación vertical */
+  if (tam_ > sprite_.getAlto()) {
+    /* Si el alto del sprite es mayor hay que centrarlo */
+    py_ += tam_ - sprite_.getAlto()/2;
+  } else {
+    /* De forma general el sprite se colocará con su borde inferior alineado
+     * con el borde inferior de la casilla */
+    py_ += tam_ - sprite_.getAlto();
+  }
+  
+  //tam_ = sprite_.getAncho();
 
   desp_ = vector<Uint32>(getSecuenciasMovimiento());
     for (Uint32 i = 0; i < getSecuenciasMovimiento(); i++) {

@@ -64,10 +64,13 @@ void Animacion::inicializarAnimacion() {
     }
 
     Uint32 fondoX = 10, fondoY = 10;
-
+    
+    cout << "NPJS" << endl;
     std::vector<NPJ> personajes;
     personajes.push_back(NPJ(0,30,30,"baldos.png"));
+    personajes.push_back(NPJ(1,7,7,"lapunki.png"));
 
+    cout << "imagen!" << endl;
     _imag = new Imagen(48, 36, fondoX, fondoY, personajes, _pant, matriz);
 
     Tile arena("./tiles/arena.png");
@@ -84,8 +87,10 @@ void Animacion::inicializarAnimacion() {
     _imag->relacionarTile(5, ladTope);
     _imag->relacionarTile(6, metal);
 
+    cout << "dibujar fondoo!" << endl;
     _imag->dibujarFondo();
 
+    cout << "personaje" << endl;
     /* Personaje */
     _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
     _principal->setRango(2, 2);
@@ -175,8 +180,14 @@ bool Animacion::procesarAccion() {
                 hacerMovimientoDinamico();
             }
         } else {
+	  cout << "Personaje en: (" << _principal->getMapaX() << "," << _principal->getMapaY() << ")" << endl;
             cout << "COLISION EN (" << mx << ", " << my << ")" << endl;
+	    if(_imag->isInteractuable(mx,my)){
+	      _imag->dibujar(mx,my,_principal->getMapaX(), _principal->getMapaY());
+	    }
+	    _pant->volcarPantalla(_pant->getBuffer());
             dibujarPosicionEstatica();
+	    
         }
     }
     return false;

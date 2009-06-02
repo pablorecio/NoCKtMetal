@@ -18,92 +18,58 @@ using namespace std;
 
 Imagen::Imagen() { }
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto, vector<NPJ> npj, Pantalla* p, Uint32** matriz_tiles,
-               bool** matriz_col, bool** matriz_inter):
-_alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0), _p(p) {
+Imagen::Imagen(Uint32 ancho, Uint32 alto, vector<NPJ> npj, Pantalla& p, vector<vector<Uint32> > matriz_tiles):
+  _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0), _p(p) {
   
-  npjs_ = npj;
+  for(size_t i=0; i<npj.size(); i++)
+    npjs_.push_back(npj.at(i));
 
   for(size_t i=0; i<npjs_.size(); i++){
     npjs_.at(i).setImagen(*this);
   }
 
-  if (matriz_tiles != NULL) {
-    _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
-    for (Uint32 i = 0; i < ancho; i++)
-      _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
+  // if (matriz_tiles != NULL) {
+  //   _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
+  //   for (Uint32 i = 0; i < ancho; i++)
+  //     _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
     
-    for (Uint32 i = 0; i < ancho; i++)
-      for (Uint32 j = 0; j < alto; j++)
-	_matrizOriginal[i][j] = matriz_tiles[i][j];
+  //   for (Uint32 i = 0; i < ancho; i++)
+  //     for (Uint32 j = 0; j < alto; j++)
+  // 	_matrizOriginal[i][j] = matriz_tiles[i][j];
     
-  }
+  // }
+
+  vector<Uint32> auxiliar(_ancho);
+  for(Uint32 i=0; i<_alto; i++)
+    _matrizOriginal.push_back(auxiliar); 
   
-  if (matriz_col != NULL) {
-    _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
-    for (Uint32 i = 0; i < ancho; i++)
-      _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
-    
-    for (Uint32 i = 0; i < ancho; i++)
-      for (Uint32 j = 0; j < alto; j++)
-	_matrizColision[i][j] = matriz_col[i][j];
-  }
-  
-  if (matriz_inter != NULL) {
-    _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
-    for (Uint32 i = 0; i < ancho; i++)
-      _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
-    
-    for (Uint32 i = 0; i < ancho; i++)
-      for (Uint32 j = 0; j < alto; j++)
-	_matrizInteractual[i][j] = matriz_inter[i][j];
-  }
+  for(Uint32 i=0; i<_ancho; i++)
+    for(Uint32 j=0; j<_alto; j++)
+      _matrizOriginal[i][j] = matriz_tiles[i][j];
 }
 
 Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla* p,
-               Uint32** matriz_tiles, bool** matriz_col, bool** matriz_inter):
+               vector<vector<Uint32> > matriz_tiles):
 _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(x), _cYt(y), _p(p) {
 
-  npjs_ = personajes;
+  for(size_t i=0; i<personajes.size(); i++)
+    npjs_.push_back(personajes.at(i));
   for(size_t i=0; i<npjs_.size(); i++){
     npjs_.at(i).setImagen(*this);
   }
-  
-    if (matriz_tiles != NULL) {
-        _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
 
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizOriginal[i][j] = matriz_tiles[i][j];
+ vector<Uint32> auxiliar(_ancho);
+  for(Uint32 i=0; i<_alto; i++)
+    _matrizOriginal.push_back(auxiliar); 
 
-    }
-
-    if (matriz_col != NULL) {
-        _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizColision[i][j] = matriz_col[i][j];
-    }
-
-    if (matriz_inter != NULL) {
-        _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizInteractual[i][j] = matriz_inter[i][j];
-    }
+  for(Uint32 i=0; i<_ancho; i++)
+    for(Uint32 j=0; j<_alto; j++)
+      _matrizOriginal[i][j] = matriz_tiles[i][j];
+    
 }
 
 Imagen::Imagen(map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto,
-               Uint32** matriz_tiles, bool** matriz_col,
-               bool** matriz_inter) {
+               vector<vector<Uint32> > matriz_tiles) {
 
     _ancho = ancho;
     _alto = alto;
@@ -116,36 +82,13 @@ Imagen::Imagen(map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto,
 
     _tiles = imagenes;
 
-    if (matriz_tiles != NULL) {
-        _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
+    vector<Uint32> auxiliar(_ancho);
+  for(Uint32 i=0; i<_alto; i++)
+    _matrizOriginal.push_back(auxiliar); 
 
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizOriginal[i][j] = matriz_tiles[i][j];
-
-    }
-
-    if (matriz_col != NULL) {
-        _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizColision[i][j] = matriz_col[i][j];
-    }
-
-    if (matriz_inter != NULL) {
-        _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
-
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizInteractual[i][j] = matriz_inter[i][j];
-    }
+  for(Uint32 i=0; i<_ancho; i++)
+    for(Uint32 j=0; j<_alto; j++)
+      _matrizOriginal[i][j] = matriz_tiles[i][j];
 }
 
 void Imagen::relacionarTile(Uint32 id, Tile& t) {
@@ -201,21 +144,19 @@ void Imagen::dibujarFondo() {
 
     _imagenAux = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho * Tile::getTam(),
                                       _alto * Tile::getTam(), 24, 0, 0, 0, 0);
-    _imagenNpj = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho * Tile::getTam(),
-				      _alto * Tile::getTam(), 24, 0, 0, 0, 0);
 
     if (_matrizColision == NULL) {
-        _matrizColision = (bool**)malloc(sizeof (bool*) * _ancho);
-        for (Uint32 i = 0; i < _ancho; i++)
-            _matrizColision[i] = (bool*)malloc(sizeof (bool) * _alto);
-        matrizColCreada = true;
+      _matrizColision =  new bool[_ancho][];//(bool**)malloc(sizeof (bool*) * _ancho);
+      for (Uint32 i = 0; i < _ancho; i++)
+	_matrizColision[i] = new bool[_alto];
+      matrizColCreada = true;
     }
 
     if (_matrizInteractual == NULL) {
-        _matrizInteractual = (bool**)malloc(sizeof (bool*) * _ancho);
-        for (Uint32 i = 0; i < _ancho; i++)
-            _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * _alto);
-        matrizInterCreada = true;
+      _matrizInteractual = new bool[_ancho][];//(bool**)malloc(sizeof (bool*) * _ancho);
+      for (Uint32 i = 0; i < _ancho; i++)
+	_matrizInteractual[i] = new bool[_alto]; //(bool*)malloc(sizeof (bool) * _alto);
+      matrizInterCreada = true;
     }
 
     
@@ -227,8 +168,6 @@ void Imagen::dibujarFondo() {
     destino.w = _ancho;
     destino.h = _alto;
 
-    // Y aqui construimos el mapa completo.
-  
     for (Uint32 i = 0; i < _ancho; i++) {
       for (Uint32 j = 0; j < _alto; j++) {
 	
@@ -245,6 +184,20 @@ void Imagen::dibujarFondo() {
       }
     }
 
+    cout << "mapa pintado" << endl;
+    
+    for(size_t i=0; i<npjs_.size(); i++){
+      NPJ aux = npjs_.at(i);
+      cout << "Personaje: " << aux.getId() << endl;
+      cout << "(" << aux.getX() << "," << aux.getY() << ")" << endl;
+      _matrizColision[aux.getX()][aux.getY()] = true;
+      cout << "colision true" << endl;
+      _matrizInteractual[aux.getX()][npjs_.at(i).getY()] = true;
+      cout << "interactual true" << endl; 
+      cout << "dibuja personaje: " << aux.getId() << endl;
+      aux.dibujarPosicionFrente();
+    }
+
     _cX = _cXt * Tile::getTam();
     _cY = _cYt * Tile::getTam();
 
@@ -256,18 +209,8 @@ void Imagen::dibujarFondo() {
 
     _p->volcarPantalla(_imagenAux, &origen, _p->getFondo(), &destino);
     _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
-    
-    // A partir de aqui situamos a los NPJ en el mapa!!
 
-    for(size_t i=0; i<npjs_.size(); i++){
-      _matrizColision[npjs_.at(i).getX()][npjs_.at(i).getY()] = true;
-      _matrizInteractual[npjs_.at(i).getX()][npjs_.at(i).getY()] = true;
-      
-      npjs_.at(i).dibujarPosicionFrente();
-    }
-
-    _p->volcarPantalla(_imagenNpj, &origen, _p->getMovimientoSecundario(), &destino);
-    _p->volcarPantalla(_p->getMovimientoSecundario(), _p->getBuffer());
+    cout << "Pantalla volcada completa." << endl;
 
 }
 
@@ -310,11 +253,79 @@ void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces) {
 
     _p->volcarPantalla(_imagenAux, &origen, _p->getFondo(), &destino);
     _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
-    _p->volcarPantalla(_imagenNpj, &origen, _p->getMovimientoSecundario(), &destino);
-    _p->volcarPantalla(_p->getMovimientoSecundario(), _p->getBuffer());
+    //_p->volcarPantalla(_imagenNpj, &origen, _p->getMovimientoSecundario(), &destino);
+    //_p->volcarPantalla(_p->getMovimientoSecundario(), _p->getBuffer());
 
     if (secuencia == veces) {
         _cXt = _cX / Tile::getTam();
         _cYt = _cY / Tile::getTam();
     }
+}
+
+const std::vector<NPJ::interaccion>& Imagen::dibujar(Uint32 tx, Uint32 ty, Uint32 px, Uint32 py)
+{
+  char dir;
+  if(tx == px && ty < py)
+    dir = 'd';
+  if(tx == px && ty > py)
+    dir = 'u';
+  if(py == ty && tx < px)
+    dir = 'r';
+  if(py == ty && tx > px)
+    dir = 'l';
+
+  Uint32 posx = tx-1;
+  Uint32 posy = ty-1;
+
+  SDL_Rect origen, destino;
+  
+  origen.x = 0;
+  origen.y = 0;
+  origen.h = Tile::getTam();
+  origen.w = Tile::getTam();
+  
+  destino.w = _ancho;
+  destino.h = _alto;
+  
+  for(int i=0; i<3; i++)
+    for(int j=0; j<3; j++){
+      Tile t = getTile(_matrizOriginal[posx+i][posy+j]);
+      
+      destino.x = (posx+i) * Tile::getTam();
+      destino.y = (posy+j) * Tile::getTam();
+
+      _p->volcarPantalla(t.getImagen(), &origen, _imagenAux, &destino);
+    }
+
+
+  bool descubierto=false;
+  size_t npj =0;
+  while(npj < npjs_.size() && !descubierto){
+    if(npjs_.at(npj).getX() == tx && npjs_.at(npj).getY() == ty){
+      switch(dir){
+      case 'd': npjs_.at(npj).dibujarPosicionFrente(); break;
+      case 'u': npjs_.at(npj).dibujarPosicionEspaldas(); break;
+      case 'r': npjs_.at(npj).dibujarPosicionLatDcha(); break;
+      case 'l': npjs_.at(npj).dibujarPosicionLatIzda(); break;
+      default: break;
+      }
+      descubierto=true;
+    }
+    else
+      npj++;
+  }
+ 
+  destino.x = destino.y = 0;
+  origen.h = destino.h = _p->getAlto();
+  origen.w = destino.w = _p->getAncho();
+  origen.x = _cX;
+  origen.y = _cY;
+  
+  _p->volcarPantalla(_imagenAux, &origen, _p->getFondo(), &destino);
+  _p->volcarPantalla(_p->getFondo(), _p->getBuffer());
+  
+  cout << "Pantalla volcada completa." << endl;
+  
+  return npjs_.at(npj).acciones();
+
 }

@@ -29,6 +29,7 @@
 #include "tile.h"
 #include "npj.h"
 #include <map>
+#include <vector>
 
 using namespace std;
 
@@ -63,8 +64,8 @@ class Imagen{
    * @param matriz_inter Matriz de tipo <code>bool</code> informando que casilla del mapa
    * es interactuable con el personaje y cual no.
    */
-  Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ> npj, Pantalla* p, Uint32** matriz_tiles = NULL,
-	 bool** matriz_col = NULL, bool** matriz_inter = NULL);
+  Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ> npj, Pantalla& p, 
+	 std::vector<std::vector<Uint32> > matriz_tiles);
   /**
    * Constructor alternativo.
    * @param ancho Número de tiles del ancho del mapa.
@@ -82,9 +83,8 @@ class Imagen{
    * <code>tile</code> como interactuable o no interactuable.
    * Debe ser del mismo tamaño que <code>matriz_tiles</code>.
    */
-  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla* p,
-         Uint32** matriz_tiles = NULL, bool** matriz_col = NULL,
-         bool** matriz_inter = NULL);
+  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla& p,
+         std::vector<std::vector<Uint32> > matriz_tiles);
 
   /**
    * @brief Constructor para la clase imagen a partir del tamaño del mapa (alto y ancho)
@@ -100,9 +100,8 @@ class Imagen{
    * @param matriz_inter Matriz de tipo <code>bool</code> informando que casilla del mapa
    * es interactuable con el personaje y cual no.
    */  
-  Imagen(std::map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto, 
-	 Uint32** matriz_tiles = NULL, bool** matriz_col = NULL, 
-	 bool** matriz_inter = NULL);
+  Imagen(std::map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto, Pantalla& p, std::vector<NPJ> p,
+	 std::vector<std::vector<Uint32> > matriz_tiles);
 
   /**
    * @brief Función que abstrae la composición formada entre las clases Tile e Imagen.
@@ -153,17 +152,17 @@ class Imagen{
    * @brief Función con la que obtenemos la organización de los tiles en el mapa (matriz
    * de identificadores de tiles).
    */
-  Uint32** getMatrizImagenes();
+  std::vector<std::vector<Uint32> > getMatrizImagenes();
 
   /**
    * @brief Función con la que obtenemos la matriz de tiles colisionables en el mapa.
    */
-  bool** getMatrizColision();
+  std::vector<std::vector<bool> > getMatrizColision();
 
   /**
    * @brief Función con la que obtenemos la matriz de tiles interactuables en el mapa.
    */
-  bool** getMatrizInteractual();
+  std::vector<std::vector<bool> > getMatrizInteractual();
 
   /**
    * @brief Coordenada X del mapa donde se situa (esquina superior izquierda) la pantalla
@@ -222,18 +221,31 @@ class Imagen{
    * la información de qué posiciones son colisionables y de las que son interactuables
    * en el mapa.
    */
-  void setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz, 
-		 bool** colisionable=NULL, bool** interactuable=NULL);
+  void setMatriz(Uint32 ancho, Uint32 alto, std::vector<std::vector<Uint32> > matriz);
 
   SDL_Surface* SurfaceNpj() const;
+
+  /**
+   * Cuando el muñeco principal accione la interacción que tenga el muñeco
+   * secundario éste se volverá a dibujar de cara al personaje principal.
+   * @param tx Posición x del personaje secundario.
+   * @param ty Posición y del personaje secundario.
+   * @param px Posición x del perosnaje principal.
+   * @param py Posición y del personaje principal.
+   * Éstos últimos se utilizan para saber qué orientación debe tener el personaje
+   * secundario.
+   * @return Devuelve la interacción que se realiza con este personaje (Dialogo, Combate
+   * u objeto).
+   */
+  const std::vector<NPJ::interaccion>& dibujar(Uint32 tx, Uint32 ty, Uint32 px, Uint32 py);
 
  private:
 
   std::map<Uint32,Tile> _tiles;
  
-  Uint32 **_matrizOriginal;
-  bool **_matrizColision;
-  bool **_matrizInteractual;
+  std::vector<std::vector<Uint32> >_matrizOriginal;
+  std::vector<std::vector<bool> >_matrizColision;
+  std::vector<std::vector<bool>_matrizInteractual;
   Uint32 _alto,_ancho;
   Sint32 _cX, _cY;       // coordenadas en pixels.
   Sint32 _cXt, _cYt;     // coordenadas en tiles.
@@ -241,7 +253,8 @@ class Imagen{
   Pantalla *_p;
 
   SDL_Surface* _imagenAux;
-  SDL_Surface* _imagenNpj;
+  //SDL_Surface* _imagenNpj; Futura modificación para el movimiento
+  // en el mapa de un npj.
   
   std::vector<NPJ> npjs_;
 };
@@ -250,9 +263,9 @@ class Imagen{
 
 inline Uint32 Imagen::getAlto() { return _alto; }
 inline Uint32 Imagen::getAncho() { return _ancho; }
-inline Uint32** Imagen::getMatrizImagenes() { return _matrizOriginal; }
-inline bool** Imagen::getMatrizColision() { return _matrizColision; }
-inline bool** Imagen::getMatrizInteractual() { return _matrizInteractual; } 
+inline std::vector<std::vector<Uint32> > Imagen::getMatrizImagenes() { return _matrizOriginal; }
+inline std::vector<std::vector<bool> > Imagen::getMatrizColision() { return _matrizColision; }
+inline std::vector<std::vector<bool> > Imagen::getMatrizInteractual() { return _matrizInteractual; } 
 
 inline Sint32 Imagen::getCX() { return _cXt; }
 inline Sint32 Imagen::getCY() { return _cYt; }
@@ -268,6 +281,6 @@ inline Tile Imagen::getTile(Uint32 identificador) { return _tiles.find(identific
 inline bool Imagen::isColisionable(Uint32 cX, Uint32 cY) { return _matrizColision[cX][cY]; }
 inline bool Imagen::isInteractuable(Uint32 cX, Uint32 cY) { return _matrizInteractual[cX][cY]; }
 
-inline SDL_Surface* Imagen::SurfaceNpj() const { return _imagenNpj; } 
+inline SDL_Surface* Imagen::SurfaceNpj() const { return _imagenAux; } 
 
 #endif
