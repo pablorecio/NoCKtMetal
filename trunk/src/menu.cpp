@@ -207,12 +207,10 @@ bool Menu::actualizar() {
         cout << "Reiniciar el menú" << endl;
         break;
     case ARRIBA: case IZQUIERDA:
-        cout << "Retroceder el cursor y redibujar el menú." << endl;
         retrocederCursor();
         dibujar();
         break;
     case ABAJO: case DERECHA:
-        cout << "Avanzar el cursor y redibujar el menú." << endl;
         avanzarCursor();
         dibujar();
         break;

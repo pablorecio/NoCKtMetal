@@ -96,22 +96,26 @@ int main() {
         menu.setBoton("Salir", 310, 120, "imagenes/boton_salir.png", 0, 0);
 
         bool salir = false;
-        bool salirAnimacion = false;
+        bool salirAnimacion;
 
         while (!salir) {
+            salirAnimacion = false;
+            
             menu.dibujar();
             while (!menu.actualizar()) {
                 ;
             }
 
             if (menu.getEstadoAceptado()) {
-                cout << "Estado aceptado" << endl;
                 /* Procesar el boton activado */
                 switch (menu.getPosicionCursor()) {
                 case 0: /* Motor de movimiento */
-                    cout << "Motor de movimiento" << endl;
-
-                    salirAnimacion = false;
+                    cout << endl << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << " Entrando en el motor de movimiento " << endl
+                            << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << endl;
                     
                     /* Lanzar motor de movimiento */
                     anim.inicializarAnimacion();
@@ -120,16 +124,30 @@ int main() {
 
                     while (!salirAnimacion) {
                         salirAnimacion = anim.procesarAccion();
-
+                    /*
                         if (anim.getEstadoInventario()) {
-                            /* Procesar el guardado de posiciones para
-                             * no perder el estado actual del pj */
+                             * Procesar el guardado de posiciones para
+                             * no perder el estado actual del pj *
                         }
+                    */
                     }
+
+                    cout << endl << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << " Saliendo del motor de movimiento " << endl
+                            << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << endl;
 
                     break;
                 case 1: /* Motor de combate */
-                    cout << "Motor de combate" << endl;
+                    cout << endl << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << " Entrando en el motor de movimiento " << endl
+                            << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << endl;
+
                     /* Lanzar motor de combate */
 
                     cout << "Seleccionado " << I->first;
@@ -138,16 +156,27 @@ int main() {
                     AmpliBreakers.mostrarGrupo();
                     Enemigos.mostrarGrupo();
 
-#                    ifdef DEBUG
+#ifdef DEBUG
                     cout << "Combate inicializado" << endl;
-#                    endif
+#endif
 
                     combate.iniciarCombate();
                     combate.postCombate();
 
+                    cout << endl << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << " Saliendo del motor de combate " << endl
+                            << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << endl;
                     break;
                 case 2:
-                    cout << "Saliendo del juego" << endl;
+                    cout << endl << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << " Saliendo del juego " << endl
+                            << "--------------------------------------"
+                            << "------------------------------------" << endl
+                            << endl;
                     salir = true;
                     break;
                 default:
@@ -155,7 +184,12 @@ int main() {
                 }
             }
             if (menu.getEstadoSalida()) {
-                cout << "Saliendo del juego" << endl;
+                cout << endl << "--------------------------------------"
+                        << "------------------------------------" << endl
+                        << " Saliendo del juego " << endl
+                        << "--------------------------------------"
+                        << "------------------------------------" << endl
+                        << endl;
                 salir = true;
             }
         }

@@ -35,7 +35,7 @@
 using namespace std;
 
 Animacion::Animacion() {
-    evento = Evento(20);
+    evento = Evento(70);
 }
 
 Animacion::Animacion(Pantalla *p): _pant(p) { }
