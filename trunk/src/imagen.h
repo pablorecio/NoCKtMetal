@@ -64,8 +64,8 @@ class Imagen{
    * @param matriz_inter Matriz de tipo <code>bool</code> informando que casilla del mapa
    * es interactuable con el personaje y cual no.
    */
-  Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ> npj, Pantalla& p, 
-	 std::vector<std::vector<Uint32> > matriz_tiles);
+  Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ>& npj, Pantalla& p, 
+	 std::vector<std::vector<Uint32> >& matriz_tiles, std::map<Uint32, Tile>& imagenes);
   /**
    * Constructor alternativo.
    * @param ancho Número de tiles del ancho del mapa.
@@ -84,8 +84,8 @@ class Imagen{
    * Debe ser del mismo tamaño que <code>matriz_tiles</code>.
    */
 
-  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla& p,
-	 std::vector<std::vector<Uint32> > matriz_tiles);
+  Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ>& personajes, Pantalla& p,
+	 std::vector<std::vector<Uint32> >& matriz_tiles, std::map<Uint32,Tile>& imagenes);
 
   /**
    * @brief Constructor para la clase imagen a partir del tamaño del mapa (alto y ancho)
@@ -101,8 +101,8 @@ class Imagen{
    * @param matriz_inter Matriz de tipo <code>bool</code> informando que casilla del mapa
    * es interactuable con el personaje y cual no.
    */  
-  Imagen(std::map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto, Pantalla& p, std::vector<NPJ> pers,
-	 std::vector<std::vector<Uint32> > matriz_tiles);
+  Imagen(std::map<Uint32, Tile>& imagenes, Uint32 ancho, Uint32 alto, Pantalla& p, std::vector<NPJ>& pers,
+	 std::vector<std::vector<Uint32> >& matriz_tiles);
 
   /**
    * @brief Función que abstrae la composición formada entre las clases Tile e Imagen.
@@ -216,13 +216,6 @@ class Imagen{
    * identificadores.
    */
   void setTiles(map<Uint32,Tile> conjTiles);
-
-  /**
-   * @brief Función que modifica las estructuras de organización del mapa, asi como
-   * la información de qué posiciones son colisionables y de las que son interactuables
-   * en el mapa.
-   */
-  //void setMatriz(Uint32 ancho, Uint32 alto, std::vector<std::vector<Uint32> > matriz);
 
   SDL_Surface* SurfaceNpj() const;
 

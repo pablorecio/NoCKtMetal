@@ -55,7 +55,6 @@ void Animacion::inicializarAnimacion() {
 
   for (Uint32 j = 0; j < 48; j++) {
     for(Uint32 i = 0; i < 36; i++) {
-      cout << "(" << i << "," << j << ")" << endl;
       matriz[j][i] = 6;
       if(j <= 6 || j >= 40 || i <= 4 || i >= 31) {
 	matriz[j][i] = 1;
@@ -80,27 +79,21 @@ void Animacion::inicializarAnimacion() {
   std::vector<NPJ> personajes;
   personajes.push_back(NPJ(0,30,30,"baldos.png"));
   personajes.push_back(NPJ(1,7,7,"lapunki.png"));
+
+  std::map<Uint32,Tile> tiles;
+  tiles.insert(make_pair(1,Tile("./tiles/piedra.png", true)));
+  tiles.insert(make_pair(2,Tile("./tiles/arena.png")));
+  tiles.insert(make_pair(3,Tile("./tiles/madera.png", false)));
+  tiles.insert(make_pair(4,Tile("./tiles/ladrillos.png", true)));
+  tiles.insert(make_pair(5,Tile("./tiles/ladrillosTope.png", true)));
+  tiles.insert(make_pair(6,Tile("./tiles/metal.png")));
   
   cout << "imagen!" << endl;
-  _imag = new Imagen(48, 36, fondoX, fondoY, personajes, *_pant, matriz);
-
-    Tile arena("./tiles/arena.png");
-    Tile piedra("./tiles/piedra.png", true);
-    Tile madera("./tiles/madera.png");
-    Tile metal("./tiles/metal.png");
-    Tile ladrillo("./tiles/ladrillos.png", true);
-    Tile ladTope("./tiles/ladrillosTope.png", true);
-
-    _imag->relacionarTile(1, piedra);
-    _imag->relacionarTile(2, arena);
-    _imag->relacionarTile(3, madera);
-    _imag->relacionarTile(4, ladrillo);
-    _imag->relacionarTile(5, ladTope);
-    _imag->relacionarTile(6, metal);
-
-    cout << "dibujar fondoo!" << endl;
-    _imag->dibujarFondo();
-
+  _imag = new Imagen(48, 36, fondoX, fondoY, personajes, *_pant, matriz, tiles);
+  
+  cout << "dibujar fondoo!" << endl;
+  _imag->dibujarFondo();
+  
     cout << "personaje" << endl;
     /* Personaje */
     _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
