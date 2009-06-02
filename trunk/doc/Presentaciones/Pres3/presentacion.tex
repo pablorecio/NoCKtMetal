@@ -101,7 +101,12 @@
    
    \begin{frame}{Modificaciones y justificaciones}
     
-    ¿?
+    \begin{itemize}
+     \item Desde la anterior presentación no hemos considerado
+	   ninguna modificación del proyecto inicial, por lo
+	   estamos siguiendo el plan inicial.
+	 
+     \end{itemize}
     
     
    \end{frame}
@@ -111,8 +116,35 @@
  
    \subsection{Producto actual}
 
+   %INCLUIR EXPLICACION DE LA IA
+   \begin{frame}{Estado actual: Motor de Combate}
+    \begin{itemize}
+     \item Inclusión de una simple IA para los rivales
+     \item Mejora de la serialización de los objetos, añadiendo
+	   construcciones desde ficheros.
+     \item Adquisición de experiencia de los PJs
+     \item Más grupos enemigos con distintas cualidades cada uno.
+     \item Clase \texttt{Biblioteca} que indexa los datos para 
+	   guardados de partida.
+     \item Solucionados algunos bugs críticos
+    \end{itemize}
+   \end{frame}
+
    \begin{frame}{Captura de pantalla: Motor de combate}
     
+   \end{frame}
+
+   \begin{frame}{Estado actual: Motor de movimiento}
+    \begin{itemize}
+     \item Añadidos NPJs en el motor, ampliando la funcionalidad del mismo.
+     \item Añadidas las funcionalidades de diálogos entre PJs y NPJs.
+     \item Tratamiento de eventos para futura interaccion entre PJs y
+	   NPJs u objetos
+     \item Mejora de las colisiones en el mapa, detectando además los NPJ
+     \item Solucionados algunos bugs y re-escritura de algunas clases
+	   para una mejor cohesión
+     \item Menu inicial :)
+    \end{itemize}
    \end{frame}
 
 
@@ -138,12 +170,12 @@
   \subsection{Ejemplos de código}
   
   \begin{frame}{Ejemplo: Clase x}
-
+   combatiente.h recortado xD
   \end{frame}
   
   
   \begin{frame}{Ejemplo: Interfaz principal entre clases}
-
+   personaje.h
   \end{frame}
     
   
@@ -154,7 +186,17 @@
   \subsection{Solución de problemas}
 
   \begin{frame}{Problemas y soluciones}
-   
+   - Ordenacion del vector en los turnos
+   - Utilizacion de vectores de bajo nivel fallaba varias
+     veces. Solucion: std::vector<> 
+   - IA totalmente aleatoria: ponderacion por porcentaje de vida.
+   - Fechas en la que nos encontramos xD: solucion retrasar plazos
+   - Problema en capas SDL\_Surface. Solucion: redibujado de algunas
+     capas en una sola
+   - Aceleracion del menu inicial debido a un redibujado de los
+     elementos del mismo. Solucion: dibujar los elementos una unica vez
+
+  
   \end{frame}
   
   
