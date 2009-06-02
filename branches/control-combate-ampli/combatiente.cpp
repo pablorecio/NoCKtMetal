@@ -29,13 +29,18 @@
 #include "inventario.h"
 #include "objeto.h"
 #include "aleatorio.h"
+#include "armadura.h"
+#include "arma.h"
 
 Combatiente::Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-                         Grupo &grupo, std::pair<Uint32,Uint32> rangoArma, string rXML,
-                         Uint32 exp, Uint32 exp_ganable, Uint32 aciertoArma, 
-			 Uint32 armadura):
-  Atributos(atr, rXML, exp), _nombre(nombre), _idCombatiente(id), _experienciaGanable(exp_ganable),
-  _rangoArma(rangoArma), _aciertoArma(aciertoArma), _armadura(armadura){
+						Grupo &grupo, string rXML, Arma &arma,
+						Armadura &armadura, Uint32 exp, Uint32 exp_ganable):
+  Atributos(atr, rXML, exp), _nombre(nombre), _idCombatiente(id),
+  _experienciaGanable(exp_ganable){
+	_arma = &arma;
+	_armadura = &armadura;
+	_arma->equiparItem(_idCombatiente);
+	_armadura->equiparItem(_idCombatiente);
     _grupo = &grupo;
     _inventario = &(_grupo->getInventario());
     _grupo->addCombatiente(*this); //Añadimos el combatiente a su grupo
@@ -61,7 +66,7 @@ Uint32 Combatiente::ataqueSimple(Combatiente& objetivo) throw(AtaqueFallado){
 Uint32 Combatiente::usarObjeto(Uint32 i, Combatiente& objetivo)
         throw (Inventario::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente){
     Objeto o = _inventario->getObjeto(i);
-    
+
     Uint32 res;
     if (o.getTipoAtaque() == CURATIVO){
         res = o.calculaDamage();

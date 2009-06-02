@@ -40,8 +40,9 @@
 #include "objeto.h"
 #include "inventario.h"
 #include "grupo.h"
-
 #include "aleatorio.h"
+#include "arma.h"
+#include "armadura.h"
 
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/serialization.hpp>
@@ -58,6 +59,8 @@
  * @see grupo.h
  */
 class Grupo;
+class Arma;
+class Armadura;
 
 /**
  *
@@ -108,9 +111,8 @@ public:
 	 * @param armadura (TEMPORAL) Valor de la armadura equipada del combatiente
 	 */
 	Combatiente(std::string nombre, Uint32 id, AtributoBase atr, Grupo &grupo,
-			std::pair<Uint32, Uint32> rangoArma, string rXML, Uint32 exp = 0,
-			Uint32 exp_ganable = 0, Uint32 aciertoArma = 15, Uint32 armadura =
-					20);
+				string rXML, Arma &arma, Armadura &armadura,
+				Uint32 exp = 0, Uint32 exp_ganable = 0);
 	/**
 	 * Construye un objeto de la clase <code>AtributoCombatiente</code> a partir de
 	 * un fichero XML.
@@ -221,7 +223,7 @@ public:
 	 * @return Valor entero sin signo de 32 bits con el acierto del arma del combatiente.
 	 */
 	Uint32 getAciertoArma() const {
-		return _aciertoArma;
+		return _arma->getAcierto();
 	}
 
 	/**
@@ -230,7 +232,7 @@ public:
 	 * @return Valor entero sin signo de 32 bits con la armadura del combatiente
 	 */
 	Uint32 getArmadura() const {
-		return _armadura;
+		return _armadura->getIncrementoArmadura();
 	}
 
 	/**
@@ -239,7 +241,7 @@ public:
 	 * @return Par de enteros sin signo de 32 bits con el rango de daño del arma.
 	 */
 	std::pair<Uint32, Uint32> getRangoArma() const {
-		return _rangoArma;
+		return _arma->getRangoAtaque();
 	}
 
 	/**
@@ -249,7 +251,7 @@ public:
 	 */
 	Uint32 tiradaArma() const {
 		Aleatorio a;
-		return a.valorEntero(_rangoArma.first, _rangoArma.second);
+		return a.valorEntero(getRangoArma().first, getRangoArma().second);
 	}
 
 	/**
@@ -348,10 +350,8 @@ private:
 	Grupo* _grupo;
 	bool _pasarTurno;
 	Uint32 _experienciaGanable;
-	//temporal:
-	std::pair<Uint32, Uint32> _rangoArma;
-	Uint32 _aciertoArma;
-	Uint32 _armadura;
+	Arma *_arma;
+	Armadura *_armadura;
 
 	friend class boost::serialization::access;
 
@@ -380,9 +380,8 @@ private:
 		ar & BOOST_SERIALIZATION_NVP(_inventario);
 		ar & BOOST_SERIALIZATION_NVP(_grupo);
 		ar & BOOST_SERIALIZATION_NVP(_pasarTurno);
-		ar & BOOST_SERIALIZATION_NVP(_aciertoArma);
+		ar & BOOST_SERIALIZATION_NVP(_arma);
 		ar & BOOST_SERIALIZATION_NVP(_armadura);
-		ar & BOOST_SERIALIZATION_NVP(_rangoArma);
 		ar & BOOST_SERIALIZATION_NVP(_experienciaGanable);
 		ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
 	}

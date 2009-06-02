@@ -84,42 +84,129 @@ Uint32 crearFicheros(){
     Grupo Maris(invMaris,false,80,string("datos-xml/grp-maris.xml"));
     Grupo Emos(invEmos,false,90,string("datos-xml/grp-emos.xml"));
 
+    /* ----------------------- AMPLIS -----------------------------*/
+
+    Arma Strato("Guitarra Strato",100,ARMA,15,23,false,18,
+    		string("datos-xml/arma-strato"));
+    Arma Baquetas("Baquetas",101,ARMA,25,35,false,19,
+    		string("datos-xml/arma-baquetas"));
+    Arma Cuerdita("Bajo cuerdita",102,ARMA,13,20,false,21,
+    		string("datos-xml/arma-cuerdita"));
+    Arma MicroInfernal("Micro Infernal",103,ARMA,18,25,false,18,
+    		string("datos-xml/arma-micro"));
+
+    Armadura ChupaCuero1("Chupa de cuero", 110, DEFENSIVO, 0, 0,false, 35,
+    		string("datos-xml/armadura-chupa"));
+    Armadura ChupaCuero2("Chupa de cuero", 120, DEFENSIVO, 0, 0,false, 35,
+    		string("datos-xml/armadura-chupa"));
+    Armadura ChupaCuero3("Chupa de cuero", 130, DEFENSIVO, 0, 0,false, 35,
+    		string("datos-xml/armadura-chupa"));
+    Armadura ChupaCuero4("Chupa de cuero", 140, DEFENSIVO, 0, 0,false, 35,
+    		string("datos-xml/armadura-chupa"));
+
     Combatiente Dentacos("Dentacos Joe", 20, atrDentacosJoe, AmpliBreakers,
-                         make_pair(14,20),string("datos-xml/comb-dentacos.xml"),12000,0,17,30);
+                         string("datos-xml/comb-dentacos.xml"),Strato,
+                         ChupaCuero1,12000);
     Dentacos.addHabilidad(riffMuerte);
-    Combatiente Baldos("Baldos", 21, atrBaldos, AmpliBreakers, make_pair(23,32),
-		       string("datos-xml/comb-baldos.xml"),
-		       15000,0, 20, 40);
+
+    Combatiente Baldos("Baldos", 21, atrBaldos, AmpliBreakers,
+		       string("datos-xml/comb-baldos.xml"), Baquetas, ChupaCuero2,
+		       15000);
     Baldos.addHabilidad(bomboCabeza);
+
     Combatiente Graimito("Graimito el Bajo", 22, atrGraimito, AmpliBreakers,
-			make_pair(13,20), string("datos-xml/comb-graimito.xml"),10000,0, 18, 20);
+			string("datos-xml/comb-graimito.xml"),Cuerdita,ChupaCuero3,10000);
     Graimito.addHabilidad(tonoCurativo); Graimito.addHabilidad(venganzaBajista);
+
     Combatiente Manolo("Manolo la Punki", 23, atrManoloLaPunki, AmpliBreakers,
-		       make_pair(18,25), string("datos-xml/comb-manolo.xml"), 13000,0, 20, 30);
+		       string("datos-xml/comb-manolo.xml"),MicroInfernal, ChupaCuero4, 13000);
     Manolo.addHabilidad(alaridoTremebundo);
 
-    Combatiente shurmano("Shurmano",30,atrKinki1,Kinkis,make_pair(17,23),
-		       string("datos-xml/comb-shurmano.xml"),10000,900,19,25);
-    Combatiente shuprimo("Shuprimo",31,atrKinki1,Kinkis,make_pair(17,23),
-		       string("datos-xml/comb-shuprimo.xml"),10000,1000,19,25);
-    Combatiente tioshungo("Er tio shungoshungo",32,atrKinki1,Kinkis,make_pair(17,23),
-		       string("datos-xml/comb-tioshungo.xml"),10000,1200,19,25);
+    /* ------------------------------------------------------------*/
+    /* ----------------------- KINKIS -----------------------------*/
 
-	Combatiente paca("Paca", 35, atrMari1,Maris,make_pair(15,35),
-			   string("datos-xml/comb-paca.xml"),12000,1500,24,30);
-	Combatiente ortensia("Ortensia", 36, atrMari1,Maris,make_pair(15,35),
-			   string("datos-xml/comb-ortensia.xml"),12000,1500,24,30);
-	Combatiente juani("La juani", 37, atrMari1,Maris,make_pair(15,35),
-			   string("datos-xml/comb-juani.xml"),12000,1500,24,30);
-	Combatiente conchita("Conchita", 38, atrMari1,Maris,make_pair(15,35),
-			   string("datos-xml/comb-conchita.xml"),12000,1500,24,30);
+    Arma Navajote1("Er navajote",104,ARMA,17,23,false,19,
+    		string("datos-xml/arma-navajote"));
+    Arma Navajote2("Er navajote",114,ARMA,17,23,false,19,
+    		string("datos-xml/arma-navajote"));
+    Arma Navajote3("Er navajote",124,ARMA,17,23,false,19,
+    		string("datos-xml/arma-navajote"));
 
-	Combatiente darknight("Dark Night", 40, atrEmo1,Emos,make_pair(15,35),
-			   string("datos-xml/comb-darknight.xml"),9000,800,18,50);
-	Combatiente bloodtears("Blood Tears", 41, atrEmo1,Emos,make_pair(15,35),
-			   string("datos-xml/comb-bloodtears.xml"),9000,800,18,50);
-	Combatiente death("I Wish Death", 42, atrEmo1,Emos,make_pair(15,35),
-			   string("datos-xml/comb-death.xml"),9000,800,18,50);
+    Armadura Shanda1("Er shanda naik", 121, DEFENSIVO, 0, 0,false, 25,
+    		string("datos-xml/armadura-shanda"));
+    Armadura Shanda2("Er shanda naik", 131, DEFENSIVO, 0, 0,false, 25,
+    		string("datos-xml/armadura-shanda"));
+    Armadura Shanda3("Er shanda naik", 141, DEFENSIVO, 0, 0,false, 25,
+    		string("datos-xml/armadura-shanda"));
+
+    Combatiente shurmano("Shurmano",30,atrKinki1,Kinkis,
+		       string("datos-xml/comb-shurmano.xml"),Navajote1,Shanda1,10000,900);
+
+    Combatiente shuprimo("Shuprimo",31,atrKinki1,Kinkis,
+		       string("datos-xml/comb-shuprimo.xml"),Navajote2,Shanda2,10000,900);
+
+    Combatiente tioshungo("Er tio shungoshungo",32,atrKinki1,Kinkis,
+		       string("datos-xml/comb-tioshungo.xml"),Navajote3,Shanda3,10000,900);
+
+    /* ------------------------------------------------------------*/
+    /* ------------------------ MARIS -----------------------------*/
+    Arma BolsaMercadia1("Bolsa mercadia",105,ARMA,15,35,false,24,
+    		string("datos-xml/arma-bolsa"));
+    Arma BolsaMercadia2("Bolsa mercadia",115,ARMA,15,35,false,24,
+    		string("datos-xml/arma-bolsa"));
+    Arma BolsaMercadia3("Bolsa mercadia",125,ARMA,15,35,false,24,
+    		string("datos-xml/arma-bolsa"));
+    Arma BolsaMercadia4("Bolsa mercadia",135,ARMA,15,35,false,24,
+    		string("datos-xml/arma-bolsa"));
+
+    Armadura Bata1("La bata de guatiné", 112, DEFENSIVO, 0, 0,false, 30,
+    		string("datos-xml/armadura-bata"));
+    Armadura Bata2("La bata de guatiné", 122, DEFENSIVO, 0, 0,false, 30,
+    		string("datos-xml/armadura-bata"));
+    Armadura Bata3("La bata de guatiné", 132, DEFENSIVO, 0, 0,false, 30,
+    		string("datos-xml/armadura-bata"));
+    Armadura Bata4("La bata de guatiné", 142, DEFENSIVO, 0, 0,false, 30,
+    		string("datos-xml/armadura-bata"));
+
+	Combatiente paca("Paca", 35, atrMari1,Maris,
+			   string("datos-xml/comb-paca.xml"),BolsaMercadia1,Bata1,12000,1500);
+
+	Combatiente ortensia("Ortensia", 36, atrMari1,Maris,
+			   string("datos-xml/comb-ortensia.xml"),BolsaMercadia2,Bata2,12000,1500);
+
+	Combatiente juani("La juani", 37, atrMari1,Maris,
+			   string("datos-xml/comb-juani.xml"),BolsaMercadia3,Bata3,12000,1500);
+
+	Combatiente conchita("Conchita", 38, atrMari1,Maris,
+			   string("datos-xml/comb-conchita.xml"),BolsaMercadia4,Bata4,12000,1500);
+
+    /* ------------------------------------------------------------*/
+    /* ------------------------- EMOS -----------------------------*/
+    Arma CuchillaAfeitar1("Cuchilla de afetiar",106,ARMA,15,25,false,18,
+    		string("datos-xml/arma-cuchilla"));
+    Arma CuchillaAfeitar2("Cuchilla de afetiar",116,ARMA,15,25,false,18,
+    		string("datos-xml/arma-cuchilla"));
+    Arma CuchillaAfeitar3("Cuchilla de afetiar",126,ARMA,15,25,false,18,
+    		string("datos-xml/arma-cuchilla"));
+
+    Armadura Flequillo1("Flequillo visera", 113, DEFENSIVO, 0, 0, false,50,
+    		string("datos-xml/armadura-flequillo"));
+    Armadura Flequillo2("Flequillo visera", 123, DEFENSIVO, 0, 0, false,50,
+    		string("datos-xml/armadura-flequillo"));
+    Armadura Flequillo3("Flequillo visera", 133, DEFENSIVO, 0, 0, false,50,
+    		string("datos-xml/armadura-flequillo"));
+
+	Combatiente darknight("Dark Night", 40, atrEmo1,Emos,
+			   string("datos-xml/comb-darknight.xml"),
+			   CuchillaAfeitar1,Flequillo1,9000,800);
+
+	Combatiente bloodtears("Blood Tears", 41, atrEmo1,Emos,
+			   string("datos-xml/comb-bloodtears.xml"),
+			   CuchillaAfeitar2,Flequillo2,9000,800);
+
+	Combatiente death("I Wish Death", 42, atrEmo1,Emos,
+			   string("datos-xml/comb-death.xml"),
+			   CuchillaAfeitar3,Flequillo3,9000,800);
 
 	Biblioteca bib("datos-xml/biblioteca.xml");
 
