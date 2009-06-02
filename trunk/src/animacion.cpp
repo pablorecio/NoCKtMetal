@@ -25,14 +25,17 @@
 
 #include <iostream>
 
+#include <vector>
+
 #include "personaje.h"
 #include "animacion.h"
 #include "imagen.h"
+#include "npj.h"
 
 using namespace std;
 
 Animacion::Animacion() {
-    evento = Evento();
+    evento = Evento(20);
 }
 
 Animacion::Animacion(Pantalla *p): _pant(p) { }
@@ -41,49 +44,59 @@ Animacion::~Animacion() { }
 
 void Animacion::inicializarAnimacion() {
     /* Inicializamos el mapa */
-    Uint32** matriz;
-    matriz = new Uint32* [48];
-    for (Uint32 j = 0; j < 48; j++) {
-        matriz[j] = new Uint32 [36];
-        for(Uint32 i = 0; i < 36; i++) {
-            matriz[j][i] = 6;
-            if(j <= 6 || j >= 40 || i <= 4 || i >= 31) {
-                matriz[j][i] = 1;
-            }
-            if(i == 5 && j > 6 && j < 40) {
+ 
+  cout << "inicializarAnimacion" << endl;
+  
+  vector<vector<Uint32> > matriz;
+  vector<Uint32> auxiliar(36);
+
+  for(Uint32 i=0; i<48; i++)
+    matriz.push_back(auxiliar);
+
+  for (Uint32 j = 0; j < 48; j++) {
+    for(Uint32 i = 0; i < 36; i++) {
+      matriz[j][i] = 6;
+      if(j <= 6 || j >= 40 || i <= 4 || i >= 31) {
+	matriz[j][i] = 1;
+      }
+      if(i == 5 && j > 6 && j < 40) {
                 matriz[j][i] = 5;
-            }
-            if(i == 6 && j > 6 && j < 40) {
-                matriz[j][i] = 4;
-            }
-            if(i == 17 && j > 10 && j < 30) {
-                matriz[j][i] = 5;
-            }
-        }
+      }
+      if(i == 6 && j > 6 && j < 40) {
+	matriz[j][i] = 4;
+      }
+      if(i == 17 && j > 10 && j < 30) {
+	matriz[j][i] = 5;
+      }
     }
+  }
+  
+  cout << "matriz de tiles echo" << endl;
 
-    Uint32 fondoX = 10, fondoY = 10;
+  Uint32 fondoX = 10, fondoY = 10;
+    
+  cout << "NPJS" << endl;
+  std::vector<NPJ> personajes;
+  personajes.push_back(NPJ(0,30,30,"./sprites/baldos.png"));
+  personajes.push_back(NPJ(1,7,7,"./sprites/manolo.png"));
 
-    _imag = new Imagen(48, 36, fondoX, fondoY, _pant, matriz);
-
-    Tile arena("./tiles/arena.png");
-    Tile piedra("./tiles/piedra.png", true);
-    Tile madera("./tiles/madera.png");
-    Tile metal("./tiles/metal.png");
-    Tile ladrillo("./tiles/ladrillos.png", true);
-    Tile ladTope("./tiles/ladrillosTope.png", true);
-
-    _imag->relacionarTile(1, piedra);
-    _imag->relacionarTile(2, arena);
-    _imag->relacionarTile(3, madera);
-    _imag->relacionarTile(4, ladrillo);
-    _imag->relacionarTile(5, ladTope);
-    _imag->relacionarTile(6, metal);
-
-    _imag->dibujarFondo();
-
+  std::map<Uint32,Tile> tiles;
+  tiles.insert(make_pair(1,Tile("./tiles/piedra.png", true)));
+  tiles.insert(make_pair(2,Tile("./tiles/arena.png")));
+  tiles.insert(make_pair(3,Tile("./tiles/madera.png", false)));
+  tiles.insert(make_pair(4,Tile("./tiles/ladrillos.png", true)));
+  tiles.insert(make_pair(5,Tile("./tiles/ladrillosTope.png", true)));
+  tiles.insert(make_pair(6,Tile("./tiles/metal.png")));
+  
+  cout << "imagen!" << endl;
+  _imag = new Imagen(48, 36, fondoX, fondoY, personajes, *_pant, matriz, tiles);
+  
+  cout << "dibujar fondoo!" << endl;
+  _imag->dibujarFondo();
+  
+    cout << "personaje" << endl;
     /* Personaje */
-    _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
+    _principal = new Personaje(1,1,1,30,_pant, "./sprites/manolo.png");
     _principal->setRango(2, 2);
     _principal->setPosicion();
     _principal->setMapa(fondoX + _principal->getPantX(),
@@ -110,11 +123,12 @@ bool Animacion::procesarAccion() {
     /* Lectura del nuevo evento */
     switch (evento.getEvento()) {
     case SALIR:
-        cout << "Saliendo de la ejecucion del programa" << endl;
+        cout << "De vuelta al menu :P" << endl;
         return true;
     case MENU:
-        cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
-        break;
+        cout << "Desea ver el inventario pero aún no está listo :P" << endl;
+        _estadoInventario = true;
+        return true;
     case ACEPTAR:
         cout << "Ha aceptado algo... Pero aqui no sirve de nada... "
                 << " eso solo vale en los menus..." << endl;
@@ -171,8 +185,14 @@ bool Animacion::procesarAccion() {
                 hacerMovimientoDinamico();
             }
         } else {
+	  cout << "Personaje en: (" << _principal->getMapaX() << "," << _principal->getMapaY() << ")" << endl;
             cout << "COLISION EN (" << mx << ", " << my << ")" << endl;
+	    if(_imag->isInteractuable(mx,my)){
+	      _imag->dibujar(mx,my,_principal->getMapaX(), _principal->getMapaY());
+	    }
+	    _pant->volcarPantalla(_pant->getBuffer());
             dibujarPosicionEstatica();
+	    
         }
     }
     return false;

@@ -23,11 +23,7 @@
  * Proyecto: NoCKt Metal
  */
 
-#include "menu.h"
-
-
 #include <iostream>
-#include <SDL/SDL.h>
 #include <iostream>
 #include <map>
 #include <iterator>
@@ -48,6 +44,8 @@
 #include "sistema.h"
 #include "pantalla.h"
 #include "menu.h"
+#include "animacion.h"
+#include "musica.h"
 
 using namespace std;
 
@@ -84,6 +82,13 @@ int main() {
         Pantalla p = Pantalla();
         p.setTitulo("NoCKt Metal", "imagenes/logo.png");
 
+        Animacion anim = Animacion(&p);
+        cout << "Animacion creada" << endl;
+
+        Musica m("musica/NIN-1m.ogg");
+        m.reproducir();
+        cout << "Music on" << endl;
+        
         Menu menu = Menu("imagenes/menu.png", "imagenes/cursor.png", &p);
 
         menu.setBoton("Menu de movimiento", 270, 20, "imagenes/boton_movimiento.png", 0, 0);
@@ -91,6 +96,7 @@ int main() {
         menu.setBoton("Salir", 310, 120, "imagenes/boton_salir.png", 0, 0);
 
         bool salir = false;
+        bool salirAnimacion = false;
 
         while (!salir) {
             menu.dibujar();
@@ -104,7 +110,22 @@ int main() {
                 switch (menu.getPosicionCursor()) {
                 case 0: /* Motor de movimiento */
                     cout << "Motor de movimiento" << endl;
+
+                    salirAnimacion = false;
+                    
                     /* Lanzar motor de movimiento */
+                    anim.inicializarAnimacion();
+                    cout << "Animacion iniciada" << endl;
+
+
+                    while (!salirAnimacion) {
+                        salirAnimacion = anim.procesarAccion();
+
+                        if (anim.getEstadoInventario()) {
+                            /* Procesar el guardado de posiciones para
+                             * no perder el estado actual del pj */
+                        }
+                    }
 
                     break;
                 case 1: /* Motor de combate */
@@ -138,6 +159,9 @@ int main() {
                 salir = true;
             }
         }
+
+        cout << "Music off" << endl;
+        m.pausar();
 
         p.cerrarPantalla();
     } else {

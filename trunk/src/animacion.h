@@ -30,6 +30,8 @@
 #include "pantalla.h"
 #include "personaje.h"
 #include "imagen.h"
+#include "npj.h"
+
 
 /**
  * Tipo <i>Movimiento</i>, que representa la orientación del movimiento a
@@ -68,6 +70,8 @@ public:
      */
     Animacion(Pantalla *p);
 
+
+    bool getEstadoInventario() const;
     /**
      * Función que se encarga de inicializar el nivel actual.
      * @note Al encontrarnos aún en una versión <i>alpha</i> del proyecto,
@@ -154,6 +158,10 @@ private:
      * <code>izda</code> y <code>dcha</code>.
      */
     Movimiento _mov;
+    bool _estadoInventario;
 };
+
+
+inline bool Animacion::getEstadoInventario() const { return _estadoInventario; }
 
 #endif	/* _ANIMACION_H */
