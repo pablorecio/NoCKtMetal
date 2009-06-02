@@ -30,4 +30,7 @@ biblioteca.o: combatiente.h grupo.h objeto.h habilidad.h biblioteca.h
 ${GENERA}.o: biblioteca.h iniciar-objetos.h
 
 clean:
-	${RM} ${EXE} ${OBJETOS} ${OBJS-INI} ${INICIADOR} *~ *#
+	${RM} ${EXE} ${OBJETOS} ${OBJS-G} ${GENERA} *~ *#
+	
+clean-all:
+	make clean & ${RM} datos-xml/*

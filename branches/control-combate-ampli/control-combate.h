@@ -16,7 +16,7 @@
  *
  */
 
-/* 
+/*
  * File:   control-combate.h
  * Author: Pablo Recio Quijano
  *
@@ -74,7 +74,7 @@ public:
      * @param g1 Grupo 1 participante del combate
      * @param g2 Grupo 2 participante del combate
      */
-    ControlCombate(Grupo &g1, Grupo &g2);
+    ControlCombate(Grupo &g1, Grupo &g2, bool huida = false);
 
     /**
      * Función que inicia el combate. Esta función, realiza un bucle,
@@ -95,6 +95,7 @@ public:
     Uint32 postCombate();
 private:
     Grupo *_g1, *_g2;
+    bool _huida;
     void mostrarCombate();
 
     friend class ControlTurno;
@@ -177,6 +178,7 @@ protected:
 
     void mostrarDamage(const Combatiente &c, const Combatiente &o, Uint32 d);
     void mostrarAtaqueFallado(const Combatiente &c);
+    Uint32 intentarHuir(const Combatiente &c);
 };
 
 #endif	/* _CONTROLCOMBATE_H */
