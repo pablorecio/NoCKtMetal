@@ -37,12 +37,13 @@ using namespace std;
 int main() {
     if (iniciarSistema()) {
         Pantalla p = Pantalla();
-        p.setTitulo("NoCKt Metal", "./logo.png");
+        p.setTitulo("NoCKt Metal", "imagenes/logo.png");
 
-        Menu menu = Menu("menu.png", "cursor.png", &p);
+        Menu menu = Menu("imagenes/menu.png", "imagenes/cursor.png", &p);
 
-        menu.setBoton("Nueva Partida", 280, 20, "boton.png", 0, 0);
-        menu.setBoton("Salir", 300, 70, "boton.png", 0, 0);
+        menu.setBoton("Menu de movimiento", 270, 20, "imagenes/boton_movimiento.png", 0, 0);
+        menu.setBoton("Menu de combate", 290, 70, "imagenes/boton_combate.png", 0, 0);
+        menu.setBoton("Salir", 310, 120, "imagenes/boton_salir.png", 0, 0);
 
         bool salir = false;
 
@@ -56,10 +57,17 @@ int main() {
                 cout << "Estado aceptado" << endl;
                 /* Procesar el boton activado */
                 switch (menu.getPosicionCursor()) {
-                case 0: /* Nueva Partida */
-                    cout << "Nueva partida" << endl;
+                case 0: /* Motor de movimiento */
+                    cout << "Motor de movimiento" << endl;
+                    /* Lanzar motor de movimiento */
+                    
+                    
                     break;
-                case 1: /* Salir */
+                case 1: /* Motor de combate */
+                    cout << "Motor de combate" << endl;
+                    /* Lanzar motor de combate */
+                    break;
+                case 2:
                     cout << "Saliendo del juego" << endl;
                     salir = true;
                     break;
