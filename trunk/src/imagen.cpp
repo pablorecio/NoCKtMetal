@@ -19,7 +19,7 @@ using namespace std;
 Imagen::Imagen() { }
 
 Imagen::Imagen(Uint32 ancho, Uint32 alto, vector<NPJ> npj, Pantalla& p, vector<vector<Uint32> > matriz_tiles):
-  _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0), _p(p) {
+  _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0), _p(&p) {
   
   for(size_t i=0; i<npj.size(); i++)
     npjs_.push_back(npj.at(i));
@@ -39,18 +39,29 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, vector<NPJ> npj, Pantalla& p, vector<v
     
   // }
 
-  vector<Uint32> auxiliar(_ancho);
-  for(Uint32 i=0; i<_alto; i++)
+  vector<Uint32> auxiliar(_alto);
+  vector<bool> auxiliarb(_alto);
+  for(Uint32 i=0; i<_ancho; i++){
     _matrizOriginal.push_back(auxiliar); 
-  
+    _matrizColision.push_back(auxiliarb);
+    _matrizInteractual.push_back(auxiliarb);
+  }
+      
   for(Uint32 i=0; i<_ancho; i++)
     for(Uint32 j=0; j<_alto; j++)
       _matrizOriginal[i][j] = matriz_tiles[i][j];
+
+  for(Uint32 i=0; i<_ancho; i++)
+    for(Uint32 j=0; j<_alto; j++){
+      _matrizColision[i][j] = getTile(_matrizOriginal[i][j]).isColisionable();
+      _matrizInteractual[i][j] = getTile(_matrizOriginal[i][j]).isInteractuable();
+    }
+  
 }
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla* p,
+Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ> personajes, Pantalla& p,
                vector<vector<Uint32> > matriz_tiles):
-_alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(x), _cYt(y), _p(p) {
+_alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(x), _cYt(y), _p(&p) {
 
   for(size_t i=0; i<personajes.size(); i++)
     npjs_.push_back(personajes.at(i));
@@ -58,17 +69,27 @@ _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(x), _cYt(y), _p(p) {
     npjs_.at(i).setImagen(*this);
   }
 
- vector<Uint32> auxiliar(_ancho);
-  for(Uint32 i=0; i<_alto; i++)
+  vector<Uint32> auxiliar(_alto);
+  vector<bool> auxiliarb(_alto);
+  for(Uint32 i=0; i<_ancho; i++){
     _matrizOriginal.push_back(auxiliar); 
-
+    _matrizColision.push_back(auxiliarb);
+    _matrizInteractual.push_back(auxiliarb);
+  }
+      
   for(Uint32 i=0; i<_ancho; i++)
     for(Uint32 j=0; j<_alto; j++)
       _matrizOriginal[i][j] = matriz_tiles[i][j];
+
+  for(Uint32 i=0; i<_ancho; i++)
+    for(Uint32 j=0; j<_alto; j++){
+      _matrizColision[i][j] = getTile(_matrizOriginal[i][j]).isColisionable();
+      _matrizInteractual[i][j] = getTile(_matrizOriginal[i][j]).isInteractuable();
+    }
     
 }
 
-Imagen::Imagen(map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto,
+Imagen::Imagen(map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto, Pantalla& p, std::vector<NPJ> pers,
                vector<vector<Uint32> > matriz_tiles) {
 
     _ancho = ancho;
@@ -82,13 +103,30 @@ Imagen::Imagen(map<Uint32, Tile> imagenes, Uint32 ancho, Uint32 alto,
 
     _tiles = imagenes;
 
-    vector<Uint32> auxiliar(_ancho);
-  for(Uint32 i=0; i<_alto; i++)
-    _matrizOriginal.push_back(auxiliar); 
+    for(size_t i=0; i<pers.size(); i++)
+    npjs_.push_back(pers.at(i));
+  for(size_t i=0; i<npjs_.size(); i++){
+    npjs_.at(i).setImagen(*this);
+  }
 
+   vector<Uint32> auxiliar(_alto);
+   vector<bool> auxiliarb(_alto);
+  for(Uint32 i=0; i<_ancho; i++){
+    _matrizOriginal.push_back(auxiliar); 
+    _matrizColision.push_back(auxiliarb);
+    _matrizInteractual.push_back(auxiliarb);
+  }
+      
   for(Uint32 i=0; i<_ancho; i++)
     for(Uint32 j=0; j<_alto; j++)
       _matrizOriginal[i][j] = matriz_tiles[i][j];
+
+  for(Uint32 i=0; i<_ancho; i++)
+    for(Uint32 j=0; j<_alto; j++){
+      _matrizColision[i][j] = getTile(_matrizOriginal[i][j]).isColisionable();
+      _matrizInteractual[i][j] = getTile(_matrizOriginal[i][j]).isInteractuable();
+    }
+
 }
 
 void Imagen::relacionarTile(Uint32 id, Tile& t) {
@@ -99,39 +137,39 @@ void Imagen::relacionarPantalla(Pantalla& p) {
     _p = &p;
 }
 
-void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
-                       bool** colisionable, bool** interactuable) {
-    _ancho = ancho;
-    _alto = alto;
+// void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
+//                        bool** colisionable, bool** interactuable) {
+//     _ancho = ancho;
+//     _alto = alto;
 
-    _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
-    for (Uint32 i = 0; i < ancho; i++)
-        _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
+//     _matrizOriginal = (Uint32**) malloc(sizeof (Uint32) * ancho);
+//     for (Uint32 i = 0; i < ancho; i++)
+//         _matrizOriginal[i] = (Uint32*) malloc(sizeof (Uint32) * alto);
 
-    for (Uint32 i = 0; i < ancho; i++)
-        for (Uint32 j = 0; j < alto; j++)
-            _matrizOriginal[i][j] = matriz[i][j];
+//     for (Uint32 i = 0; i < ancho; i++)
+//         for (Uint32 j = 0; j < alto; j++)
+//             _matrizOriginal[i][j] = matriz[i][j];
 
-    if (colisionable != NULL) {
-        _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
+//     if (colisionable != NULL) {
+//         _matrizColision = (bool**)malloc(sizeof (bool*) * ancho);
+//         for (Uint32 i = 0; i < ancho; i++)
+//             _matrizColision[i] = (bool*)malloc(sizeof (bool) * alto);
 
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizColision[i][j] = colisionable[i][j];
-    }
+//         for (Uint32 i = 0; i < ancho; i++)
+//             for (Uint32 j = 0; j < alto; j++)
+//                 _matrizColision[i][j] = colisionable[i][j];
+//     }
 
-    if (interactuable != NULL) {
-        _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
-        for (Uint32 i = 0; i < ancho; i++)
-            _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
+//     if (interactuable != NULL) {
+//         _matrizInteractual = (bool**)malloc(sizeof (bool*) * ancho);
+//         for (Uint32 i = 0; i < ancho; i++)
+//             _matrizInteractual[i] = (bool*)malloc(sizeof (bool) * alto);
 
-        for (Uint32 i = 0; i < ancho; i++)
-            for (Uint32 j = 0; j < alto; j++)
-                _matrizInteractual[i][j] = interactuable[i][j];
-    }
-}
+//         for (Uint32 i = 0; i < ancho; i++)
+//             for (Uint32 j = 0; j < alto; j++)
+//                 _matrizInteractual[i][j] = interactuable[i][j];
+//     }
+// }
 
 // Convierte la matriz completa en el dibujo con tiles sobre una Surface.
 // Necesitamos saber desde que coordenada de la matriz completa comenzamos
@@ -139,27 +177,10 @@ void Imagen::setMatriz(Uint32 ancho, Uint32 alto, Uint32** matriz,
 
 void Imagen::dibujarFondo() {
     SDL_Rect origen, destino;
-    bool matrizColCreada = false;
-    bool matrizInterCreada = false;
 
     _imagenAux = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho * Tile::getTam(),
                                       _alto * Tile::getTam(), 24, 0, 0, 0, 0);
-
-    if (_matrizColision == NULL) {
-      _matrizColision =  new bool[_ancho][];//(bool**)malloc(sizeof (bool*) * _ancho);
-      for (Uint32 i = 0; i < _ancho; i++)
-	_matrizColision[i] = new bool[_alto];
-      matrizColCreada = true;
-    }
-
-    if (_matrizInteractual == NULL) {
-      _matrizInteractual = new bool[_ancho][];//(bool**)malloc(sizeof (bool*) * _ancho);
-      for (Uint32 i = 0; i < _ancho; i++)
-	_matrizInteractual[i] = new bool[_alto]; //(bool*)malloc(sizeof (bool) * _alto);
-      matrizInterCreada = true;
-    }
-
-    
+   
     origen.x = 0;
     origen.y = 0;
     origen.h = Tile::getTam();
@@ -175,10 +196,6 @@ void Imagen::dibujarFondo() {
 	destino.y = j * Tile::getTam();
 	
 	Tile t = getTile(_matrizOriginal[i][j]);
-	if (matrizColCreada && !_matrizColision[i][j] )
-	  _matrizColision[i][j] = t.isColisionable();
-	if (matrizInterCreada && !_matrizInteractual[i][j])
-	  _matrizInteractual[i][j] = t.isInteractuable();
 	
 	_p->volcarPantalla(t.getImagen(), &origen, _imagenAux, &destino);
       }

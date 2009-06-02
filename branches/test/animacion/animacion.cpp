@@ -25,6 +25,8 @@
 
 #include <iostream>
 
+#include <vector>
+
 #include "personaje.h"
 #include "animacion.h"
 #include "imagen.h"
@@ -42,36 +44,45 @@ Animacion::~Animacion() { }
 
 void Animacion::inicializarAnimacion() {
     /* Inicializamos el mapa */
-    Uint32** matriz;
-    matriz = new Uint32* [48];
-    for (Uint32 j = 0; j < 48; j++) {
-        matriz[j] = new Uint32 [36];
-        for(Uint32 i = 0; i < 36; i++) {
-            matriz[j][i] = 6;
-            if(j <= 6 || j >= 40 || i <= 4 || i >= 31) {
-                matriz[j][i] = 1;
-            }
-            if(i == 5 && j > 6 && j < 40) {
+ 
+  cout << "inicializarAnimacion" << endl;
+  
+  vector<vector<Uint32> > matriz;
+  vector<Uint32> auxiliar(36);
+
+  for(Uint32 i=0; i<48; i++)
+    matriz.push_back(auxiliar);
+
+  for (Uint32 j = 0; j < 48; j++) {
+    for(Uint32 i = 0; i < 36; i++) {
+      cout << "(" << i << "," << j << ")" << endl;
+      matriz[j][i] = 6;
+      if(j <= 6 || j >= 40 || i <= 4 || i >= 31) {
+	matriz[j][i] = 1;
+      }
+      if(i == 5 && j > 6 && j < 40) {
                 matriz[j][i] = 5;
-            }
-            if(i == 6 && j > 6 && j < 40) {
-                matriz[j][i] = 4;
-            }
-            if(i == 17 && j > 10 && j < 30) {
-                matriz[j][i] = 5;
-            }
-        }
+      }
+      if(i == 6 && j > 6 && j < 40) {
+	matriz[j][i] = 4;
+      }
+      if(i == 17 && j > 10 && j < 30) {
+	matriz[j][i] = 5;
+      }
     }
+  }
+  
+  cout << "matriz de tiles echo" << endl;
 
-    Uint32 fondoX = 10, fondoY = 10;
+  Uint32 fondoX = 10, fondoY = 10;
     
-    cout << "NPJS" << endl;
-    std::vector<NPJ> personajes;
-    personajes.push_back(NPJ(0,30,30,"baldos.png"));
-    personajes.push_back(NPJ(1,7,7,"lapunki.png"));
-
-    cout << "imagen!" << endl;
-    _imag = new Imagen(48, 36, fondoX, fondoY, personajes, _pant, matriz);
+  cout << "NPJS" << endl;
+  std::vector<NPJ> personajes;
+  personajes.push_back(NPJ(0,30,30,"baldos.png"));
+  personajes.push_back(NPJ(1,7,7,"lapunki.png"));
+  
+  cout << "imagen!" << endl;
+  _imag = new Imagen(48, 36, fondoX, fondoY, personajes, *_pant, matriz);
 
     Tile arena("./tiles/arena.png");
     Tile piedra("./tiles/piedra.png", true);
