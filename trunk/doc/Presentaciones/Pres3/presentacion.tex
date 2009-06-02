@@ -81,18 +81,10 @@
   
   \begin{frame}{Diagrama de Gannt}
    
-%   \begin{figure}[t]
-%    \includegraphics[scale=0.27]{./Imagenes/gannt.pdf}
-%   \end{figure}
+  \begin{figure}[t]
+    \includegraphics[scale=0.2]{./Imagenes/gannt.pdf}
+   \end{figure}
    
-  \end{frame}
-  
-  
-  \begin{frame}{Asignación de Recursos}
-   
-   Seguimos centrándonos en la implementación:
-   
-    
   \end{frame}
    
    
@@ -116,7 +108,6 @@
  
    \subsection{Producto actual}
 
-   %INCLUIR EXPLICACION DE LA IA
    \begin{frame}{Estado actual: Motor de Combate}
     \begin{itemize}
      \item Inclusión de una simple IA para los rivales
@@ -152,21 +143,103 @@
     
    \end{frame}
 
+   \subsection{Inteligencia Artificial}
+   \begin{frame}
+     La IA solo es utilizada en el motor de combate, y no es una IA
+     demasiado crítica, ya que no tiene que actuar en tiempo real, y
+     las variables de decisión no son demasiado complejas.\\
 
+     Por ahora, solo realiza ataques simples. En la próxima versión hará
+     ataques, usará objetos e incluso puede que intente huir.\\
+
+     \begin{block}{Secuencia}
+       \begin{itemize}
+       \item Comprueba el porcentaje de vida de cada rival.
+       \item Asigna una puntuación en función del porcentaje de vida,
+         de forma que el que tiene menos vida, tiene una puntuación más alta.
+       \item Se realiza una tirada pseudo-aleatoria, de forma que los
+         que tienen menos vida es más posible que sean atacados que el resto.
+       \end{itemize}
+     \end{block}
+   \end{frame}
+   
 
  \section{Calidad de la implementación}
  
   \subsection{Calidad del codigo}
   
-  \begin{frame}{Programación Orientada a Objetos + SDL}   
-   
-   
-   \textsc{Nota.} La unión entre los dos motores aún no está
-   implementada, puesto que no están terminados los motores.
+  \begin{frame}[fragile=singleslide]{Clase \textbf{Combatiente} (1)}
 
+   \begin{lstlisting}[style=C++]
+    #ifndef _COMBATIENTE_H
+    #define _COMBATIENTE_H
+
+    #include .......
+
+    class Combatiente: public Atributos {
+      public:
+      class AtaqueFallado: public std::exception {
+        public:
+        const char* what() const throw () {
+          return "El ataque ha fallado!";
+        }
+      };
+
+      Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
+                  Grupo &grupo,
+                  std::pair<Uint32, Uint32> rangoArma, string rXML, 
+                  Uint32 exp = 0, Uint32 exp_ganable = 0, 
+                  Uint32 aciertoArma = 15, Uint32 armadura = 20);
+      \end{lstlisting}
+    
+    \end{frame}
+    
+  \begin{frame}[fragile=singleslide]{Clase \textbf{Combatiente} (2)}
+   \begin{lstlisting}[style=C++]
+                  
+      Combatiente(const char* ruta_XML) {
+        cargar_XML(*this, ruta_XML);
+      }
+
+      /*--- METODOS GETTER----*/
+      .......
+      /*----------------------*/
+      Uint32 tiradaArma() const {
+        Aleatorio a;
+        return a.valorEntero(_rangoArma.first, _rangoArma.second);
+      }
+      void addHabilidad(Habilidad& h);
+      Uint32 ataqueSimple(Combatiente &objetivo) throw(AtaqueFallado);
+      Uint32 usarObjeto(Uint32 i, Combatiente& objetivo) throw (Inventario::ObjetoNoEnInventario,
+                       Objeto::CantidadItemInsuficiente);
+      Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
+      void actualizarXML() {
+        guardar_XML(*this, _ruta_XML.c_str());
+      }
+   
+   \end{lstlisting}
+   
   \end{frame}
-  
-  
+  \begin{frame}[fragile=singleslide]{Clase \textbf{Combatiente} (y 3)}
+   \begin{lstlisting}[style=C++]
+     private:
+       std::string _nombre;
+       Uint32 _idCombatiente
+       std::map<Uint32, Habilidad*> _habilidades;
+       Inventario *_inventario;
+       Grupo* _grupo;
+       bool _pasarTurno;
+       Uint32 _experienciaGanable;
+       std::pair<Uint32, Uint32> _rangoArma;
+       Uint32 _aciertoArma;
+       Uint32 _armadura;
+       friend class boost::serialization::access;
+
+       template<class Archive>
+       void serialize(Archive & ar, const unsigned int version)
+   \end{lstlisting}
+ \end{frame}
+ 
   \subsection{Ejemplos de código}
   
   \begin{frame}{Ejemplo: Clase x}
