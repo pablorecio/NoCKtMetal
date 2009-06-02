@@ -122,7 +122,7 @@ inline Boton::Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
 Menu::Menu(char* urlFondo, char* urlCursor, Pantalla* p):
 _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
         _estadoSalida(false), _estadoAceptado(false) {
-    _evento = Evento();
+    _evento = Evento(100);
 
     /* Cargamos la imagen en la pantalla */
     _fondo = IMG_Load(_urlFondo);
