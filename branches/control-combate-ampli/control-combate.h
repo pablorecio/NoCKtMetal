@@ -74,7 +74,7 @@ public:
      * @param g1 Grupo 1 participante del combate
      * @param g2 Grupo 2 participante del combate
      */
-    ControlCombate(Grupo &g1, Grupo &g2, bool huida = false);
+    ControlCombate(Grupo &g1, Grupo &g2);
 
     /**
      * Función que inicia el combate. Esta función, realiza un bucle,

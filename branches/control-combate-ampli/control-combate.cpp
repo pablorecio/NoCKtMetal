@@ -60,7 +60,8 @@ public:
 ControlCombate::ControlCombate() {
 }
 
-ControlCombate::ControlCombate(Grupo &g1, Grupo &g2, bool huida):_huida(huida){
+ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
+	_huida = false;
 	_g1 = &g1;
 	_g2 = &g2;
 
