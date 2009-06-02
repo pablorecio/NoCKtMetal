@@ -19,7 +19,7 @@
 \everymath{\displaystyle}
 % -------------------------------------------------------------------
 \subtitle{El retorno del proyecto}
-\date{Mayo 2009}
+\date{Junio 2009}
 % -------------------------------------------------------------------
 % Fondo blanco: primera página
 % ------------------------------------------------------------------
@@ -81,8 +81,8 @@
   
   \begin{frame}{Diagrama de Gannt}
    
-  \begin{figure}[t]
-    \includegraphics[scale=0.2]{./Imagenes/gannt.pdf}
+   \begin{figure}[t]
+    \includegraphics[scale=0.225]{./Imagenes/gannt.pdf}
    \end{figure}
    
   \end{frame}
@@ -98,8 +98,7 @@
 	   ninguna modificación del proyecto inicial, por lo
 	   estamos siguiendo el plan inicial.
 	 
-     \end{itemize}
-    
+    \end{itemize}    
     
    \end{frame}
    
@@ -166,18 +165,43 @@
 
  \section{Calidad de la implementación}
  
-  \subsection{Calidad del codigo}
+  \subsection{Calidad del código}
   
-  \begin{frame}[fragile=singleslide]{Clase \textbf{Combatiente} (1)}
+  \begin{frame}{Implementación de código en grupo}
+   A continuación veremos unos ejemplos de códigos que forman parte del
+   proyecto.
 
+   \begin{block}{Elección de los códigos a mostrar}
+    En representación de todos los códigos que contiene el proyecto,
+    hemos escogido dos ejemplos en los cuales se sustenta la base de
+    cualquier juego: el personaje principal.\\
+
+    \vspace*{0.3cm}    
+    Hemos incluido las clases que abstraen el personaje desde los dos
+    puntos de vista:
+    \begin{description}
+     \item[Clase combatiente:] base del motor de combate\\
+		Representación de una clase cualquiera
+     \item[Clase Personaje:] base del motor de movimiento\\
+		Representación de una clase desarrollada
+		``simultáneamente'' por varios componentes
+    \end{description}
+   \end{block}
+  \end{frame}
+ 
+  \subsection{Ejemplo: Clase (estructura en objetos)}
+  
+  
+  \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Combatiente} (1)}
+   
    \begin{lstlisting}[style=C++]
     #ifndef _COMBATIENTE_H
     #define _COMBATIENTE_H
-
-    #include .......
+    
+    #include ...
 
     class Combatiente: public Atributos {
-      public:
+     public:
       class AtaqueFallado: public std::exception {
         public:
         const char* what() const throw () {
@@ -185,43 +209,41 @@
         }
       };
 
-      Combatiente(std::string nombre, Uint32 id, AtributoBase atr,
-                  Grupo &grupo,
-                  std::pair<Uint32, Uint32> rangoArma, string rXML, 
-                  Uint32 exp = 0, Uint32 exp_ganable = 0, 
+      Combatiente(std::string nombre, Uint32 id,
+                  AtributoBase atr, Grupo &grupo,
+                  std::pair<Uint32, Uint32> rangoArma,
+                  string rXML, Uint32 exp = 0, Uint32 exp_ganable = 0, 
                   Uint32 aciertoArma = 15, Uint32 armadura = 20);
-      \end{lstlisting}
+   \end{lstlisting}
     
-    \end{frame}
+  \end{frame}
     
-  \begin{frame}[fragile=singleslide]{Clase \textbf{Combatiente} (2)}
-   \begin{lstlisting}[style=C++]
-                  
+  \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Combatiente} (2)}
+   \begin{lstlisting}[style=C++]                  
       Combatiente(const char* ruta_XML) {
         cargar_XML(*this, ruta_XML);
       }
 
-      /*--- METODOS GETTER----*/
-      .......
-      /*----------------------*/
+      /*--- METODOS GETTER --- */
+      /* ..................... */
+
       Uint32 tiradaArma() const {
         Aleatorio a;
         return a.valorEntero(_rangoArma.first, _rangoArma.second);
       }
       void addHabilidad(Habilidad& h);
       Uint32 ataqueSimple(Combatiente &objetivo) throw(AtaqueFallado);
-      Uint32 usarObjeto(Uint32 i, Combatiente& objetivo) throw (Inventario::ObjetoNoEnInventario,
-                       Objeto::CantidadItemInsuficiente);
-      Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
-      void actualizarXML() {
-        guardar_XML(*this, _ruta_XML.c_str());
-      }
-   
+      Uint32 usarObjeto(Uint32 i, Combatiente& objetivo) throw (Inventario::ObjetoNoEnInventario, Objeto::CantidadItemInsuficiente);
+      Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);   
    \end{lstlisting}
    
   \end{frame}
-  \begin{frame}[fragile=singleslide]{Clase \textbf{Combatiente} (y 3)}
+  \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Combatiente} (3)}
    \begin{lstlisting}[style=C++]
+      void actualizarXML() {
+        guardar_XML(*this, _ruta_XML.c_str());
+      }
+
      private:
        std::string _nombre;
        Uint32 _idCombatiente
@@ -237,18 +259,87 @@
 
        template<class Archive>
        void serialize(Archive & ar, const unsigned int version)
+#endif
    \end{lstlisting}
  \end{frame}
- 
-  \subsection{Ejemplos de código}
   
-  \begin{frame}{Ejemplo: Clase x}
-   combatiente.h recortado xD
+  \subsection{Ejemplo: Interfaz principal entre clases}
+  \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Personaje} (1)}
+   
+   \begin{lstlisting}[style=C++]
+#ifndef _PERSONAJE_
+#define _PERSONAJE_
+
+#include ...
+
+class Personaje {
+public:
+
+    Personaje();
+    Personaje(Uint32 i, Uint32 x, Uint32 y, Pantalla* p, const char* sprite,
+                     Uint32 f = 4, Uint32 c = 4);               
+    Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 tam, Pantalla* p,
+              const char* sprite, Uint32 f = 4, Uint32 c = 4);       
+    Personaje(Uint32 i, Uint32 x, Uint32 y, Uint32 mapax, Uint32 mapay,
+              Uint32 tam, Pantalla* p, const char* sprite, Uint32 f = 4,
+              Uint32 c = 4);
+    ~Personaje();
+
+
+   \end{lstlisting}
   \end{frame}
   
-  
-  \begin{frame}{Ejemplo: Interfaz principal entre clases}
-   personaje.h
+  \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Personaje} (2)}
+   
+   \begin{lstlisting}[style=C++]
+    /*--- METODOS GETTER --- */
+    /* ..................... */
+
+    void setPosicion(Uint32 x, Uint32 y);
+    void setPosicion();
+    void setRango(Uint16 margenIzdo, Uint16 margenArriba, Uint16 rangoAncho,
+                  Uint16 rangoAlto);
+    void setRango(Uint16 rangoAncho = 0, Uint16 rangoAlto = 0);
+    void setMapa(Uint16 x, Uint16 y);
+    void setVelocidad(Uint16 v);
+
+    void subirEnMapa();
+    void bajarEnMapa();
+    void izdaEnMapa();
+    void dchaEnMapa();
+
+    void subirEnPantalla();
+    void bajarEnPantalla();
+    void izdaEnPantalla();
+    void dchaEnPantalla();
+   \end{lstlisting}
+  \end{frame}
+
+  \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Personaje} (3)}
+   
+   \begin{lstlisting}[style=C++]
+    void dibujarPosicionFrente();
+    void dibujarPosicionEspaldas();
+    void dibujarPosicionLatIzda();
+    void dibujarPosicionLatDcha();    
+    void moverArriba(Uint32 mov, Uint32 desp = 0);
+    void moverAbajo(Uint32 mov, Uint32 desp = 0);
+    void moverIzda(Uint32 mov, Uint32 desp = 0);
+    void moverDcha(Uint32 mov, Uint32 desp = 0);
+
+protected:
+    void mover(Uint32 movimiento, Uint32 secuencia);
+    Uint32 _id, _mapaX, _mapaY, _x, _y, _pantX, _pantY, _tam, _velocidad;
+    vector<Uint32> _desp;
+    SDL_Rect _rango;
+    Pantalla* _p;
+    Sprite _sprite;
+};
+    /*--- METODOS INLINE --- */
+    /* ..................... */
+
+#endif
+   \end{lstlisting}
   \end{frame}
     
   
@@ -259,17 +350,39 @@
   \subsection{Solución de problemas}
 
   \begin{frame}{Problemas y soluciones}
-   - Ordenacion del vector en los turnos
-   - Utilizacion de vectores de bajo nivel fallaba varias
-     veces. Solucion: std::vector<> 
-   - IA totalmente aleatoria: ponderacion por porcentaje de vida.
-   - Fechas en la que nos encontramos xD: solucion retrasar plazos
-   - Problema en capas SDL\_Surface. Solucion: redibujado de algunas
-     capas en una sola
-   - Aceleracion del menu inicial debido a un redibujado de los
-     elementos del mismo. Solucion: dibujar los elementos una unica vez
+   \begin{itemize}
+    \item Ordenación del vector en los turnos
+    \item Utilización de vectores de bajo nivel fallaba varias
+     veces.
+	  \begin{description}
+	   \item[Solución:] \texttt{std::vector<>}
+	  \end{description}
+    \item IA totalmente aleatoria: ponderación por porcentaje de vida.
+    \item Fechas en la que nos encontramos.
+	  \begin{description}
+	   \item[Solución:] Retrasar plazos
+	  \end{description}
+    \item Problema en capas \texttt{SDL\_Surface}.
+	  \begin{description}
+	   \item[Solución:] Redibujado de algunas capas en una
+		       sola
+	  \end{description}
+    \item Aceleración del menú inicial debido a un redibujado de los
+	  elementos del mismo.	  
+	  \begin{description}
+	   \item[Solución:] Dibujar los elementos una única vez
+	  \end{description}
+   \end{itemize}
 
   
+  \end{frame}
+
+  \begin{frame}{Conclusión final}
+   A pesar de los problemas de tiempo y los inconvenientes sufridos el
+   proyecto avanza.\\
+
+   Se han solventado los problemas más serios y se intenta unificar los
+   dos motores que ya poseen una base sólida.
   \end{frame}
   
   
