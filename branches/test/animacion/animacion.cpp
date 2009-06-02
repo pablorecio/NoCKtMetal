@@ -128,10 +128,35 @@ bool Animacion::procesarAccion() {
     case MENU:
         cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
         break;
-    case ACEPTAR:
-        cout << "Ha aceptado algo... Pero aqui no sirve de nada... "
-                << " eso solo vale en los menus..." << endl;
-        break;
+    case ACEPTAR: {
+      if(_imag->isInteractuable(mx+1, my)){
+	cout << "mx+1,my: " << _imag->isInteractuable(mx+1,my) << endl;
+	_imag->dibujar(mx+1,my,_principal->getMapaX(), _principal->getMapaY());
+      } else if (_imag->isInteractuable(mx-1,my)){
+	cout << "mx-1,my: " << _imag->isInteractuable(mx-1,my) << endl;
+	_imag->dibujar(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
+      } else if(_imag->isInteractuable(mx,my+1)){
+	cout << "mx,my+1: " << _imag->isInteractuable(mx,my+1) << endl;
+	_imag->dibujar(mx,my+1,_principal->getMapaX(), _principal->getMapaY());
+      } else if(_imag->isInteractuable(mx,my-1)){
+	cout << "mx,my-1: " << _imag->isInteractuable(mx,my-1) << endl;
+	_imag->dibujar(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
+      }
+      _pant->volcarPantalla(_pant->getBuffer());
+      dibujarPosicionEstatica();
+      // for(size_t i=0; i<cozaz.size(); i++)
+      // 	switch(cozaz.at(i)){
+      // 	case NPJ::DIALOGO: cout << "DIALOGO" << endl; break;
+      // 	case NPJ::OBJETO: cout << "OBJETO" << endl; break;
+      // 	case NPJ::PELEA: cout << "PELEA" << endl; break;
+      // 	default: break;
+      // 	}
+      
+      cout << "Ha aceptado algo... Pero aqui no sirve de nada... "
+	   << " eso solo vale en los menus..." << endl;
+    } 
+      break;
+      
     case ATRAS:
         cout << "Ha rechazado algo... eso solo sirve en un menu... "
                 << endl;
@@ -184,12 +209,7 @@ bool Animacion::procesarAccion() {
                 hacerMovimientoDinamico();
             }
         } else {
-	  cout << "Personaje en: (" << _principal->getMapaX() << "," << _principal->getMapaY() << ")" << endl;
             cout << "COLISION EN (" << mx << ", " << my << ")" << endl;
-	    if(_imag->isInteractuable(mx,my)){
-	      _imag->dibujar(mx,my,_principal->getMapaX(), _principal->getMapaY());
-	    }
-	    _pant->volcarPantalla(_pant->getBuffer());
             dibujarPosicionEstatica();
 	    
         }
