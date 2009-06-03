@@ -1,0 +1,196 @@
+% ===================================================================
+%                   Presentación con Latex Beamer
+% ===================================================================
+\documentclass[9pt,xcolor=svgnames]{beamer}
+%\documentclass[handout,xcolor=svgnames]{beamer} %Version imprimible
+% -------------------------------------------------------------------
+% Paquetes personalizados
+\usepackage{../paquetes}
+\usepackage{../colores}
+\usepackage{../info}
+\usepackage{../modo}
+% -------------------------------------------------------------------
+
+% Comienza el documento
+\begin{document}
+% Tikz -> Imágenes
+\tikzstyle{every picture}+=[remember picture]
+% Entorno matemático
+\everymath{\displaystyle}
+% -------------------------------------------------------------------
+\subtitle{La venganza del proyecto}
+\date{Junio 2009}
+% -------------------------------------------------------------------
+% Fondo blanco: primera página
+% ------------------------------------------------------------------
+
+\beamersetaveragebackground{white}
+
+\begin{frame}
+ \thispagestyle{empty}
+ \begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.4]{./Imagenes/logo_cachimba.pdf}
+
+\noindent \Huge Presenta...
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+ \thispagestyle{empty}
+ 
+ \animate<2-3> 
+ \begin{figure}[t]
+  \centering
+  \includegraphics<1>[scale=0.7]{../Imagenes/logo_1.pdf}
+  \includegraphics<2>[scale=0.7]{../Imagenes/logo_2.pdf}
+  \includegraphics<3>[scale=0.7]{../Imagenes/logo_3.pdf}
+  \includegraphics<4>[scale=0.7]{../Imagenes/logo_4.pdf}
+ \end{figure}
+\end{frame}
+
+
+% -------------------------------------------------------------------
+% Fondo para el resto del documento
+\setbeamertemplate{background}{
+\includegraphics[width=\paperwidth,height=\paperheight]
+{../Imagenes/fondo.pdf}
+}
+% -------------------------------------------------------------------
+
+
+% Continuación:
+% Transparencia de Inicio -> Título
+\begin{frame}
+ \titlepage
+\end{frame}
+
+\normalsize
+
+% Transparencia de índice
+\begin{frame}{Índice} 
+ \transdissolve
+ \tableofcontents
+\end{frame}
+  
+  
+ \section{Estado final del proyecto}
+ 
+   
+   \subsection{Modificaciones sufridas por el proyecto}
+   
+   \begin{frame}{Modificaciones y justificaciones}
+   \transdissolve
+    
+    \begin{itemize}
+     \item Desde la anterior presentación no hemos considerado
+	   ninguna modificación del proyecto inicial, por lo
+	   estamos siguiendo el plan inicial.
+	 
+    \end{itemize}    
+    
+   \end{frame}
+   
+ \section{Contenido extra del proyecto}
+
+  \subsection{Documentación}
+
+   \begin{frame}{Manual de instalación y uso}
+    \transdissolve
+    
+    Se incluye un manual de instalación y uso del videojuego
+   \end{frame}
+
+
+   \begin{frame}{Documentación}
+    \transdissolve
+    
+    Existe documentación interna (automatizada con Doxygen o similar) y
+    se muestra un ejemplo de documento de ingeniería.
+
+   \end{frame}
+
+
+   \subsection{Elementos multimedia}
+
+   \begin{frame}{Estado actual: Motor de Combate}
+   \transdissolve
+
+    Se comenta en los créditos del juego y la documentación el origen de
+    los elementos visuales y sonoros del juego y existe algo hecho por
+    ellos.\\
+
+    Captura de pantalla de la pantalla de créditos que muestra lo
+    solicitado.
+   \end{frame}
+
+
+
+  \subsection{Posibilidad de ampliación}
+
+
+   \begin{frame}{Documentación}
+    Es posible ampliar el juego (nuevos niveles, enemigos, etc) y se
+    documenta cómo:
+
+    \begin{enumerate}
+     \item Diseño del nuevo nivel: mapa, PJs, objetos, desarrollo de la
+	   historia...
+     \item Desarrollo de los sprites de movimiento y de combate de los
+	   PJ a añadir, así como de los nuevos elementos multimedia, si
+	   los hubiere.
+     \item Traducción a XML siguiendo las pautas dadas en la
+	   documentación pertinente de las estadísticas de los nuevos
+	   PJ, del mapa, y de las posiciones de cada elemento y su
+	   comportamiento en el mapa. Posterior encriptación
+     \item Inclusión de los ficheros multimedia en los directorios
+	   pertinentes (también se encuentra en la documentación de
+	   ayuda al futuro desarrollador), así como de los ficheros XML.
+     \item Y, por último, probar que todo va perfecto... A JUGAR!
+    \end{enumerate}
+   \end{frame}
+
+  \subsection{Elementos innovadores}
+
+   \begin{frame}{Documentación}
+    El juego incorpora elementos innovadores:
+    \begin{itemize}
+     \item Los combates son completamente ``libres'' desde el punto de
+	   vista de la acción del usuario: puede golpear, curar y hacer
+	   la acción que desee (siempre que posea los requisitos
+	   mínimos) sobre cualquier PJ, sea o no sea del propio equipo.\\
+
+     \item (Los PJs a veces tienen comportamientos en mitad del combate,
+	   fruto de su personalidad:\\
+	   Por ejemplo, Baldos arrea al enanín para rematarlo una de
+	   tantas veces, como muestra de su gran fuerza ante el equipo
+	   rival (aunque a Graimito no le haga mucha gracia...) )
+
+     \item (Inclusión de la utilización de libSDL en PSP: adaptación del
+	   juego a PSP, o preparación para ello - aún sin desarrollar
+	   por completo)
+
+    \end{itemize}
+   \end{frame}
+
+ \section{Presentación del producto}
+
+  \subsection{¡A jugar!}
+ \begin{frame}{Estado del menu principal}
+   \transdissolve
+
+  Captura de pantalla del juego en funcionamiento.\\
+
+  Paso a la ejecución del juego.
+ \end{frame}
+ 
+
+  
+ \section{Para terminar}
+
+  \input{../licencia.tex}
+
+  
+\end{document}
+ 
