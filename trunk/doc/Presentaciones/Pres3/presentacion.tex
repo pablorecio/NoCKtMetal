@@ -80,6 +80,8 @@
   \subsection{Actualización de la planificación}
   
   \begin{frame}{Diagrama de Gannt}
+
+   \transdissolve
    
    \begin{figure}[t]
     \includegraphics[scale=0.225]{./Imagenes/gannt.pdf}
@@ -92,6 +94,7 @@
    \subsection{Modificaciones sufridas por el proyecto}
    
    \begin{frame}{Modificaciones y justificaciones}
+   \transdissolve
     
     \begin{itemize}
      \item Desde la anterior presentación no hemos considerado
@@ -107,6 +110,8 @@
 
  \subsection{Menu principal}
  \begin{frame}{Estado del menu principal}
+   \transdissolve
+
    \begin{figure}[t]
     \includegraphics[scale=0.35]{./Imagenes/menu.pdf}
    \end{figure}
@@ -115,6 +120,8 @@
    \subsection{Producto actual}
 
    \begin{frame}{Estado actual: Motor de Combate}
+   \transdissolve
+
     \begin{itemize}
      \item Inclusión de una simple IA para los rivales
      \item Mejora de la serialización de los objetos, añadiendo
@@ -128,12 +135,16 @@
    \end{frame}
 
    \begin{frame}{Captura de pantalla: Motor de combate}
+   \transdissolve
+
    \begin{figure}[t]
     \includegraphics[scale=0.35]{./Imagenes/combate.pdf}
    \end{figure}    
    \end{frame}
 
    \begin{frame}{Estado actual: Motor de movimiento}
+   \transdissolve
+
     \begin{itemize}
      \item Añadidos NPJs en el motor, ampliando la funcionalidad del mismo.
      \item Añadidas las funcionalidades de diálogos entre PJs y NPJs.
@@ -148,6 +159,8 @@
 
 
    \begin{frame}{Captura de pantalla: Motor gráfico}
+   \transdissolve
+
    \begin{figure}[t]
     \includegraphics[scale=0.35]{./Imagenes/movimiento.pdf}
    \end{figure}    
@@ -155,10 +168,12 @@
 
    \subsection{Inteligencia Artificial}
    \begin{frame}
+   \transdissolve
+
      La IA solo es utilizada en el motor de combate, y no es una IA
      demasiado crítica, ya que no tiene que actuar en tiempo real, y
      las variables de decisión no son demasiado complejas.\\
-
+    \vspace*{0.3cm}
      Por ahora, solo realiza ataques simples. En la próxima versión hará
      ataques, usará objetos e incluso puede que intente huir.\\
 
@@ -179,6 +194,8 @@
   \subsection{Calidad del código}
   
   \begin{frame}{Implementación de código en grupo}
+   \transdissolve
+
    A continuación veremos unos ejemplos de códigos que forman parte del
    proyecto.
 
@@ -192,10 +209,12 @@
     puntos de vista:
     \begin{description}
      \item[Clase combatiente:] base del motor de combate\\
-		Representación de una clase cualquiera
+		Representación de una clase cualquiera\\
+		\url{http://nocktmetal.forja.rediris.es/doc/a00067.html}
      \item[Clase Personaje:] base del motor de movimiento\\
 		Representación de una clase desarrollada
-		``simultáneamente'' por varios componentes
+		``simultáneamente'' por varios componentes\\
+		\url{http://nocktmetal.forja.rediris.es/doc/a00085.html}
     \end{description}
    \end{block}
   \end{frame}
@@ -204,6 +223,7 @@
   
   
   \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Combatiente} (1)}
+   \transdissolve
    
    \begin{lstlisting}[style=C++]
     #ifndef _COMBATIENTE_H
@@ -230,6 +250,8 @@
   \end{frame}
     
   \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Combatiente} (2)}
+   \transdissolve
+
    \begin{lstlisting}[style=C++]                  
       Combatiente(const char* ruta_XML) {
         cargar_XML(*this, ruta_XML);
@@ -249,7 +271,9 @@
    \end{lstlisting}
    
   \end{frame}
+
   \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Combatiente} (3)}
+   \transdissolve
    \begin{lstlisting}[style=C++]
       void actualizarXML() {
         guardar_XML(*this, _ruta_XML.c_str());
@@ -275,7 +299,9 @@
  \end{frame}
   
   \subsection{Ejemplo: Interfaz principal entre clases}
+
   \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Personaje} (1)}
+   \transdissolve
    
    \begin{lstlisting}[style=C++]
 #ifndef _PERSONAJE_
@@ -301,6 +327,7 @@ public:
   \end{frame}
   
   \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Personaje} (2)}
+   \transdissolve
    
    \begin{lstlisting}[style=C++]
     /*--- METODOS GETTER --- */
@@ -327,6 +354,7 @@ public:
   \end{frame}
 
   \begin{frame}[fragile=singleslide]{Ejemplo: Clase \textbf{Personaje} (3)}
+   \transdissolve
    
    \begin{lstlisting}[style=C++]
     void dibujarPosicionFrente();
@@ -361,6 +389,8 @@ protected:
   \subsection{Solución de problemas}
 
   \begin{frame}{Problemas y soluciones}
+   \transdissolve
+
    \begin{itemize}
     \item Ordenación del vector en los turnos
     \item Utilización de vectores de bajo nivel fallaba varias
@@ -389,15 +419,37 @@ protected:
   \end{frame}
 
   \begin{frame}{Conclusión final}
+   \transdissolve
+
    A pesar de los problemas de tiempo y los inconvenientes sufridos el
    proyecto avanza.\\
-
+   \vspace*{0.3cm}
    Se han solventado los problemas más serios y se intenta unificar los
    dos motores que ya poseen una base sólida.
   \end{frame}
   
   
  \section{Para terminar}
+
+ \begin{frame}{Bibliografía}
+   \transdissolve
+
+  \begin{itemize}
+   \item Wiki de libSDL\\
+	 \url{http://softwarelibre.uca.es/wikijuegos/}
+   \item Documentación de Serialización de las librerías libBoost\\
+	 \url{http://www.boost.org/doc/libs/1_35_0/libs/serialization/doc/index.html}
+   \item API de SDL\\
+	 \url{http://www.libsdl.org/cgi/docwiki.cgi/}
+  \end{itemize}
+  
+
+  \begin{block}{Anexo: StatSVN}
+   \url{http://aulavirtual.uca.es/moodle/file.php/4374/stats/nocktmetal/index.html}
+  \end{block}
+
+ \end{frame}
+
   \input{../licencia.tex}
 
   
