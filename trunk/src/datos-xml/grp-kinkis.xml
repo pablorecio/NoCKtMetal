@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="4">
+<a class_id="0" tracking_level="1" version="0" object_id="_0">
+	<_controlable>0</_controlable>
+	<_inventario class_id="1" tracking_level="1" version="0" object_id="_1">
+		<_inventario class_id="2" tracking_level="0" version="0">
+			<count>0</count>
+			<item_version>0</item_version>
+		</_inventario>
+		<_ruta_XML>datos-xml/inv-kinkis.xml</_ruta_XML>
+	</_inventario>
+	<_componentes class_id="3" tracking_level="0" version="0">
+		<count>4</count>
+		<item class_id="4" tracking_level="1" version="0" object_id="_2">
+			<_base class_id="5" tracking_level="0" version="0">
+				<_PV>80</_PV>
+				<_PE>20</_PE>
+				<_vel>10</_vel>
+				<_fue>11</_fue>
+				<_des>12</_des>
+				<_sue>7</_sue>
+				<_res>8</_res>
+				<_vir>10</_vir>
+				<_con>11</_con>
+				<_int>13</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.65000000000000002</_incFue>
+				<_incDes>0.80000000000000004</_incDes>
+				<_incSue>0.90000000000000002</_incSue>
+				<_incRes>0.59999999999999998</_incRes>
+				<_incVir>0.80000000000000004</_incVir>
+				<_incCon>0.69999999999999996</_incCon>
+				<_incInt>0.69999999999999996</_incInt>
+				<_ruta_XML>datos-xml/atrBase-kinki1.xml</_ruta_XML>
+			</_base>
+			<_exp>10000</_exp>
+			<_niv>8</_niv>
+			<_expSigNiv>11600</_expSigNiv>
+			<_PV>112</_PV>
+			<_PVmax>112</_PVmax>
+			<_PE>56</_PE>
+			<_PEmax>56</_PEmax>
+			<_vel>15</_vel>
+			<_fue>16</_fue>
+			<_des>18</_des>
+			<_sue>14</_sue>
+			<_res>12</_res>
+			<_vir>16</_vir>
+			<_con>16</_con>
+			<_int>18</_int>
+			<_nombre>Shurmano</_nombre>
+			<_idCombatiente>30</_idCombatiente>
+			<_habilidades class_id="6" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id="7" tracking_level="1" version="0" object_id="_3">
+				<_nombre>Er navajote</_nombre>
+				<_idEspecial>104</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage class_id="8" tracking_level="0" version="0">
+					<first>17</first>
+					<second>23</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>30</_id>
+				<_acierto>19</_acierto>
+				<_ruta_XML>datos-xml/arma-navajote</_ruta_XML>
+			</_arma>
+			<_armadura class_id="9" tracking_level="1" version="0" object_id="_4">
+				<_nombre>Er shanda naik</_nombre>
+				<_idEspecial>121</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>30</_id>
+				<_inc_armadura>25</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-shanda</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>900</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-shurmano.xml</_ruta_XML>
+		</item>
+		<item class_id_reference="4" object_id="_5">
+			<_base>
+				<_PV>80</_PV>
+				<_PE>20</_PE>
+				<_vel>10</_vel>
+				<_fue>11</_fue>
+				<_des>12</_des>
+				<_sue>7</_sue>
+				<_res>8</_res>
+				<_vir>10</_vir>
+				<_con>11</_con>
+				<_int>13</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.65000000000000002</_incFue>
+				<_incDes>0.80000000000000004</_incDes>
+				<_incSue>0.90000000000000002</_incSue>
+				<_incRes>0.59999999999999998</_incRes>
+				<_incVir>0.80000000000000004</_incVir>
+				<_incCon>0.69999999999999996</_incCon>
+				<_incInt>0.69999999999999996</_incInt>
+				<_ruta_XML>datos-xml/atrBase-kinki1.xml</_ruta_XML>
+			</_base>
+			<_exp>10000</_exp>
+			<_niv>8</_niv>
+			<_expSigNiv>11600</_expSigNiv>
+			<_PV>112</_PV>
+			<_PVmax>112</_PVmax>
+			<_PE>56</_PE>
+			<_PEmax>56</_PEmax>
+			<_vel>15</_vel>
+			<_fue>16</_fue>
+			<_des>18</_des>
+			<_sue>14</_sue>
+			<_res>12</_res>
+			<_vir>16</_vir>
+			<_con>16</_con>
+			<_int>18</_int>
+			<_nombre>Shuprimo</_nombre>
+			<_idCombatiente>31</_idCombatiente>
+			<_habilidades>
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id_reference="7" object_id="_6">
+				<_nombre>Er navajote</_nombre>
+				<_idEspecial>114</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage>
+					<first>17</first>
+					<second>23</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>31</_id>
+				<_acierto>19</_acierto>
+				<_ruta_XML>datos-xml/arma-navajote</_ruta_XML>
+			</_arma>
+			<_armadura class_id_reference="9" object_id="_7">
+				<_nombre>Er shanda naik</_nombre>
+				<_idEspecial>131</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>31</_id>
+				<_inc_armadura>25</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-shanda</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>900</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-shuprimo.xml</_ruta_XML>
+		</item>
+		<item class_id_reference="4" object_id="_8">
+			<_base>
+				<_PV>80</_PV>
+				<_PE>20</_PE>
+				<_vel>10</_vel>
+				<_fue>11</_fue>
+				<_des>12</_des>
+				<_sue>7</_sue>
+				<_res>8</_res>
+				<_vir>10</_vir>
+				<_con>11</_con>
+				<_int>13</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.65000000000000002</_incFue>
+				<_incDes>0.80000000000000004</_incDes>
+				<_incSue>0.90000000000000002</_incSue>
+				<_incRes>0.59999999999999998</_incRes>
+				<_incVir>0.80000000000000004</_incVir>
+				<_incCon>0.69999999999999996</_incCon>
+				<_incInt>0.69999999999999996</_incInt>
+				<_ruta_XML>datos-xml/atrBase-kinki1.xml</_ruta_XML>
+			</_base>
+			<_exp>10000</_exp>
+			<_niv>8</_niv>
+			<_expSigNiv>11600</_expSigNiv>
+			<_PV>112</_PV>
+			<_PVmax>112</_PVmax>
+			<_PE>56</_PE>
+			<_PEmax>56</_PEmax>
+			<_vel>15</_vel>
+			<_fue>16</_fue>
+			<_des>18</_des>
+			<_sue>14</_sue>
+			<_res>12</_res>
+			<_vir>16</_vir>
+			<_con>16</_con>
+			<_int>18</_int>
+			<_nombre>Er tio shungoshungo</_nombre>
+			<_idCombatiente>32</_idCombatiente>
+			<_habilidades>
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id_reference="7" object_id="_9">
+				<_nombre>Er navajote</_nombre>
+				<_idEspecial>124</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage>
+					<first>17</first>
+					<second>23</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>32</_id>
+				<_acierto>19</_acierto>
+				<_ruta_XML>datos-xml/arma-navajote</_ruta_XML>
+			</_arma>
+			<_armadura class_id_reference="9" object_id="_10">
+				<_nombre>Er shanda naik</_nombre>
+				<_idEspecial>141</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>32</_id>
+				<_inc_armadura>25</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-shanda</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>900</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-tioshungo.xml</_ruta_XML>
+		</item>
+		<item class_id="-1"></item>
+	</_componentes>
+	<_numComp>3</_numComp>
+	<_ruta_XML>datos-xml/grp-kinkis.xml</_ruta_XML>
+</a>
+</boost_serialization>

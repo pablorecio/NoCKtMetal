@@ -36,9 +36,11 @@ using namespace std;
  **********************************************************************/
 
 Elemento::Elemento(const char* url, Uint32 x, Uint32 y, Pantalla* p):
-_urlImagen(url),  _posX(x), _posY(y), _pant(p) {
+_posX(x), _posY(y), _pant(p) {
+
     /* Cargamos la imagen en la pantalla */
     _imagen = IMG_Load(url);
+
 
     if (_imagen == NULL) {
         cerr << "Error: " << SDL_GetError() << endl;
@@ -46,7 +48,7 @@ _urlImagen(url),  _posX(x), _posY(y), _pant(p) {
     }
 
     /* Convertir a formato de pantalla */
-    SDL_Surface *aux = IMG_Load(_urlImagen);
+    SDL_Surface *aux = IMG_Load(url);
     _imagen = SDL_DisplayFormatAlpha(aux);
     SDL_FreeSurface(aux);
 
@@ -61,7 +63,7 @@ _urlImagen(url),  _posX(x), _posY(y), _pant(p) {
 }
 
 void Elemento::dibujar() {
-   
+
     SDL_Rect r;
     r.x = _posX;
     r.y = _posY;
@@ -95,26 +97,33 @@ inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
         _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje),
         _activo(activo) {
 
-    // tipo de la fuente del diálogo. Suponemos siempre la misma.
-    _tipoFuente = TTF_OpenFont("fuentes/FreeMono.ttf", 15);
+	/* Iniciamos el sistema TTF si no estaba activo ya */
+    if(!TTF_WasInit() && TTF_Init()==-1) {
+    	cout << "TTF_Init: %s\n" << TTF_GetError() << endl;
+    	exit(2);
+    }
+
+    /* Definición del tipo de fuente del menu */
+    _tipoFuente = TTF_OpenFontRW(SDL_RWFromFile("fuentes/FontMenu.ttf", "r"), 1, 19);
 
     /* Color de la fuente */
     SDL_Color c;
-    c.r = 100;
-    c.g = 100;
-    c.b = 100;
+    c.r = 150;
+    c.g = 0;
+    c.b = 0;
 
-    
+
     SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
+    r.x = _rangoMensajeX;
+    r.y = _rangoMensajeY;
 
     /* Cargamos el mensaje */
     cout << "El mensaje es: " << _mensaje << endl;
     SDL_Surface* texto = TTF_RenderText_Blended(_tipoFuente, _mensaje, c);
-    p->volcarPantalla(texto, NULL, getImagen(), &r);
+    p->volcarPantalla(texto, NULL, _imagen, &r);
     SDL_FreeSurface(texto);
 }
+
 
 /**********************************************************************
  * Menú
@@ -123,7 +132,8 @@ inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
 Menu::Menu(const char* urlFondo, const char* urlCursor, Pantalla* p):
 _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
         _estadoSalida(false), _estadoAceptado(false) {
-    _evento = Evento(100);
+
+    _evento = Evento(80);
 
     /* Cargamos la imagen en la pantalla */
     _fondo = IMG_Load(_urlFondo);
@@ -161,15 +171,14 @@ void Menu::setBoton(const char* mensaje, Uint32 posx, Uint32 posy,
         activo = true;
         _botonActivo = 0;
     }
-    
-    Boton* b = new Boton(url, mensaje, _pant, posx, posy, 0,0,5,5,activo);
+
+    Boton *b = new Boton(url, mensaje, _pant, posx, posy, 0,0,10,10,activo);
     _botones.insert(make_pair(_numBotones, b));
 
     /* Dibujamos el botón en el fondo, puesto que no es necesario redibujarlo
      * cada vez que se mueva el cursor: siempre va a estar en la misma posición
      */
     b->dibujar(_fondo);
-
 
     /* Volvemos a comprobar si es el primer botón introducido en el
      * mapa, para calcular la posición inicial del cursor en base a éste */
@@ -189,7 +198,7 @@ void Menu::dibujar() {
 
 bool Menu::actualizar() {
     /* Cargamos las posiciones iniciales de los elementos y del fondo */
-    
+
     /* Reiniciamos las banderas */
     _estadoSalida = false;
     _estadoAceptado = false;
@@ -264,6 +273,6 @@ Uint32 Menu::avanzarCursor() {
     Uint32 x = aux->getPosX() - aux->getDespX() - _cursor->getAncho();
     Uint32 y = aux->getPosY() + aux->getDespY();
     _cursor->setPosicion(x,y);
-    
+
     return _botonActivo;
 }

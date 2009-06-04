@@ -36,10 +36,14 @@ using namespace std;
 
 class Elemento {
 public:
+
+	/**
+	 * Constructor predeterminado.
+	 */
     Elemento();
+
     Elemento(const char* url, Uint32 x, Uint32 y, Pantalla* p);
     SDL_Surface* getImagen() const;
-    Pantalla* getPantalla() const;
     Uint32 getPosX() const;
     Uint32 getPosY() const;
     Uint32 getAncho() const;
@@ -52,14 +56,13 @@ public:
     void dibujar(SDL_Surface* p);
     virtual ~Elemento();
 
-private:
+protected:
 
     /**
      * Superficie de la librería SDL donde se almacena la imagen.
      */
     SDL_Surface* _imagen;
 
-    const char* _urlImagen;
     Uint32 _posX;
     Uint32 _posY;
     Pantalla* _pant;
@@ -71,10 +74,8 @@ private:
 };
 
 /* Métodos inline */
-inline Elemento::Elemento(): _imagen(0), _urlImagen(0), _posX(0), _posY(0),
+inline Elemento::Elemento(): _imagen(0), _posX(0), _posY(0),
         _pant(0) {}
-inline SDL_Surface* Elemento::getImagen() const { return _imagen; }
-inline Pantalla* Elemento::getPantalla() const { return _pant; }
 inline Uint32 Elemento::getPosX() const { return _posX; }
 inline Uint32 Elemento::getPosY() const { return _posY; }
 inline Uint32 Elemento::getAncho() const { return _ancho; }
@@ -179,7 +180,7 @@ public:
     Uint32 avanzarCursor();
     virtual ~Menu();
 
-private:
+protected:
 
     SDL_Surface* _fondo;
     const char* _urlFondo;

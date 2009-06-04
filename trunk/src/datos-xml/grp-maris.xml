@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="4">
+<a class_id="0" tracking_level="1" version="0" object_id="_0">
+	<_controlable>0</_controlable>
+	<_inventario class_id="1" tracking_level="1" version="0" object_id="_1">
+		<_inventario class_id="2" tracking_level="0" version="0">
+			<count>0</count>
+			<item_version>0</item_version>
+		</_inventario>
+		<_ruta_XML>datos-xml/inv-maris.xml</_ruta_XML>
+	</_inventario>
+	<_componentes class_id="3" tracking_level="0" version="0">
+		<count>4</count>
+		<item class_id="4" tracking_level="1" version="0" object_id="_2">
+			<_base class_id="5" tracking_level="0" version="0">
+				<_PV>100</_PV>
+				<_PE>10</_PE>
+				<_vel>8</_vel>
+				<_fue>14</_fue>
+				<_des>10</_des>
+				<_sue>12</_sue>
+				<_res>13</_res>
+				<_vir>7</_vir>
+				<_con>12</_con>
+				<_int>8</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.84999999999999998</_incFue>
+				<_incDes>0.59999999999999998</_incDes>
+				<_incSue>0.5</_incSue>
+				<_incRes>0.90000000000000002</_incRes>
+				<_incVir>0.59999999999999998</_incVir>
+				<_incCon>0.90000000000000002</_incCon>
+				<_incInt>0.5</_incInt>
+				<_ruta_XML>datos-xml/atrBase-mari1</_ruta_XML>
+			</_base>
+			<_exp>12000</_exp>
+			<_niv>9</_niv>
+			<_expSigNiv>13500</_expSigNiv>
+			<_PV>160</_PV>
+			<_PVmax>160</_PVmax>
+			<_PE>46</_PE>
+			<_PEmax>46</_PEmax>
+			<_vel>14</_vel>
+			<_fue>21</_fue>
+			<_des>15</_des>
+			<_sue>16</_sue>
+			<_res>21</_res>
+			<_vir>12</_vir>
+			<_con>20</_con>
+			<_int>12</_int>
+			<_nombre>Paca</_nombre>
+			<_idCombatiente>35</_idCombatiente>
+			<_habilidades class_id="6" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id="7" tracking_level="1" version="0" object_id="_3">
+				<_nombre>Bolsa mercadia</_nombre>
+				<_idEspecial>105</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage class_id="8" tracking_level="0" version="0">
+					<first>15</first>
+					<second>35</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>35</_id>
+				<_acierto>24</_acierto>
+				<_ruta_XML>datos-xml/arma-bolsa</_ruta_XML>
+			</_arma>
+			<_armadura class_id="9" tracking_level="1" version="0" object_id="_4">
+				<_nombre>La bata de guatiné</_nombre>
+				<_idEspecial>112</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>35</_id>
+				<_inc_armadura>30</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-bata</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>1500</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-paca.xml</_ruta_XML>
+		</item>
+		<item class_id_reference="4" object_id="_5">
+			<_base>
+				<_PV>100</_PV>
+				<_PE>10</_PE>
+				<_vel>8</_vel>
+				<_fue>14</_fue>
+				<_des>10</_des>
+				<_sue>12</_sue>
+				<_res>13</_res>
+				<_vir>7</_vir>
+				<_con>12</_con>
+				<_int>8</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.84999999999999998</_incFue>
+				<_incDes>0.59999999999999998</_incDes>
+				<_incSue>0.5</_incSue>
+				<_incRes>0.90000000000000002</_incRes>
+				<_incVir>0.59999999999999998</_incVir>
+				<_incCon>0.90000000000000002</_incCon>
+				<_incInt>0.5</_incInt>
+				<_ruta_XML>datos-xml/atrBase-mari1</_ruta_XML>
+			</_base>
+			<_exp>12000</_exp>
+			<_niv>9</_niv>
+			<_expSigNiv>13500</_expSigNiv>
+			<_PV>160</_PV>
+			<_PVmax>160</_PVmax>
+			<_PE>46</_PE>
+			<_PEmax>46</_PEmax>
+			<_vel>14</_vel>
+			<_fue>21</_fue>
+			<_des>15</_des>
+			<_sue>16</_sue>
+			<_res>21</_res>
+			<_vir>12</_vir>
+			<_con>20</_con>
+			<_int>12</_int>
+			<_nombre>Ortensia</_nombre>
+			<_idCombatiente>36</_idCombatiente>
+			<_habilidades>
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id_reference="7" object_id="_6">
+				<_nombre>Bolsa mercadia</_nombre>
+				<_idEspecial>115</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage>
+					<first>15</first>
+					<second>35</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>36</_id>
+				<_acierto>24</_acierto>
+				<_ruta_XML>datos-xml/arma-bolsa</_ruta_XML>
+			</_arma>
+			<_armadura class_id_reference="9" object_id="_7">
+				<_nombre>La bata de guatiné</_nombre>
+				<_idEspecial>122</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>36</_id>
+				<_inc_armadura>30</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-bata</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>1500</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-ortensia.xml</_ruta_XML>
+		</item>
+		<item class_id_reference="4" object_id="_8">
+			<_base>
+				<_PV>100</_PV>
+				<_PE>10</_PE>
+				<_vel>8</_vel>
+				<_fue>14</_fue>
+				<_des>10</_des>
+				<_sue>12</_sue>
+				<_res>13</_res>
+				<_vir>7</_vir>
+				<_con>12</_con>
+				<_int>8</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.84999999999999998</_incFue>
+				<_incDes>0.59999999999999998</_incDes>
+				<_incSue>0.5</_incSue>
+				<_incRes>0.90000000000000002</_incRes>
+				<_incVir>0.59999999999999998</_incVir>
+				<_incCon>0.90000000000000002</_incCon>
+				<_incInt>0.5</_incInt>
+				<_ruta_XML>datos-xml/atrBase-mari1</_ruta_XML>
+			</_base>
+			<_exp>12000</_exp>
+			<_niv>9</_niv>
+			<_expSigNiv>13500</_expSigNiv>
+			<_PV>160</_PV>
+			<_PVmax>160</_PVmax>
+			<_PE>46</_PE>
+			<_PEmax>46</_PEmax>
+			<_vel>14</_vel>
+			<_fue>21</_fue>
+			<_des>15</_des>
+			<_sue>16</_sue>
+			<_res>21</_res>
+			<_vir>12</_vir>
+			<_con>20</_con>
+			<_int>12</_int>
+			<_nombre>La juani</_nombre>
+			<_idCombatiente>37</_idCombatiente>
+			<_habilidades>
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id_reference="7" object_id="_9">
+				<_nombre>Bolsa mercadia</_nombre>
+				<_idEspecial>125</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage>
+					<first>15</first>
+					<second>35</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>37</_id>
+				<_acierto>24</_acierto>
+				<_ruta_XML>datos-xml/arma-bolsa</_ruta_XML>
+			</_arma>
+			<_armadura class_id_reference="9" object_id="_10">
+				<_nombre>La bata de guatiné</_nombre>
+				<_idEspecial>132</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>37</_id>
+				<_inc_armadura>30</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-bata</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>1500</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-juani.xml</_ruta_XML>
+		</item>
+		<item class_id_reference="4" object_id="_11">
+			<_base>
+				<_PV>100</_PV>
+				<_PE>10</_PE>
+				<_vel>8</_vel>
+				<_fue>14</_fue>
+				<_des>10</_des>
+				<_sue>12</_sue>
+				<_res>13</_res>
+				<_vir>7</_vir>
+				<_con>12</_con>
+				<_int>8</_int>
+				<_incVel>0.69999999999999996</_incVel>
+				<_incFue>0.84999999999999998</_incFue>
+				<_incDes>0.59999999999999998</_incDes>
+				<_incSue>0.5</_incSue>
+				<_incRes>0.90000000000000002</_incRes>
+				<_incVir>0.59999999999999998</_incVir>
+				<_incCon>0.90000000000000002</_incCon>
+				<_incInt>0.5</_incInt>
+				<_ruta_XML>datos-xml/atrBase-mari1</_ruta_XML>
+			</_base>
+			<_exp>12000</_exp>
+			<_niv>9</_niv>
+			<_expSigNiv>13500</_expSigNiv>
+			<_PV>160</_PV>
+			<_PVmax>160</_PVmax>
+			<_PE>46</_PE>
+			<_PEmax>46</_PEmax>
+			<_vel>14</_vel>
+			<_fue>21</_fue>
+			<_des>15</_des>
+			<_sue>16</_sue>
+			<_res>21</_res>
+			<_vir>12</_vir>
+			<_con>20</_con>
+			<_int>12</_int>
+			<_nombre>Conchita</_nombre>
+			<_idCombatiente>38</_idCombatiente>
+			<_habilidades>
+				<count>0</count>
+				<item_version>0</item_version>
+			</_habilidades>
+			<_inventario class_id_reference="1" object_id_reference="_1"></_inventario>
+			<_grupo class_id_reference="0" object_id_reference="_0"></_grupo>
+			<_pasarTurno>0</_pasarTurno>
+			<_arma class_id_reference="7" object_id="_12">
+				<_nombre>Bolsa mercadia</_nombre>
+				<_idEspecial>135</_idEspecial>
+				<_tipoEsp>4</_tipoEsp>
+				<_rangoDamage>
+					<first>15</first>
+					<second>35</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>38</_id>
+				<_acierto>24</_acierto>
+				<_ruta_XML>datos-xml/arma-bolsa</_ruta_XML>
+			</_arma>
+			<_armadura class_id_reference="9" object_id="_13">
+				<_nombre>La bata de guatiné</_nombre>
+				<_idEspecial>142</_idEspecial>
+				<_tipoEsp>3</_tipoEsp>
+				<_rangoDamage>
+					<first>0</first>
+					<second>0</second>
+				</_rangoDamage>
+				<_equipado>0</_equipado>
+				<_id>38</_id>
+				<_inc_armadura>30</_inc_armadura>
+				<_ruta_XML>datos-xml/armadura-bata</_ruta_XML>
+			</_armadura>
+			<_experienciaGanable>1500</_experienciaGanable>
+			<_ruta_XML>datos-xml/comb-conchita.xml</_ruta_XML>
+		</item>
+	</_componentes>
+	<_numComp>4</_numComp>
+	<_ruta_XML>datos-xml/grp-maris.xml</_ruta_XML>
+</a>
+</boost_serialization>

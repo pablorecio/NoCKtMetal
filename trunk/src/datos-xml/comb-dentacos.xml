@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="4">
+<a class_id="0" tracking_level="1" version="0" object_id="_0">
+	<_base class_id="1" tracking_level="0" version="0">
+		<_PV>90</_PV>
+		<_PE>18</_PE>
+		<_vel>14</_vel>
+		<_fue>9</_fue>
+		<_des>12</_des>
+		<_sue>10</_sue>
+		<_res>10</_res>
+		<_vir>11</_vir>
+		<_con>9</_con>
+		<_int>10</_int>
+		<_incVel>0.90000000000000002</_incVel>
+		<_incFue>0.59999999999999998</_incFue>
+		<_incDes>0.80000000000000004</_incDes>
+		<_incSue>0.69999999999999996</_incSue>
+		<_incRes>0.69999999999999996</_incRes>
+		<_incVir>0.80000000000000004</_incVir>
+		<_incCon>0.59999999999999998</_incCon>
+		<_incInt>0.65000000000000002</_incInt>
+		<_ruta_XML>datos-xml/atrBase-dentacosJoe.xml</_ruta_XML>
+	</_base>
+	<_exp>12000</_exp>
+	<_niv>9</_niv>
+	<_expSigNiv>13500</_expSigNiv>
+	<_PV>132</_PV>
+	<_PVmax>132</_PVmax>
+	<_PE>63</_PE>
+	<_PEmax>63</_PEmax>
+	<_vel>22</_vel>
+	<_fue>14</_fue>
+	<_des>19</_des>
+	<_sue>16</_sue>
+	<_res>16</_res>
+	<_vir>18</_vir>
+	<_con>14</_con>
+	<_int>15</_int>
+	<_nombre>Dentacos Joe</_nombre>
+	<_idCombatiente>20</_idCombatiente>
+	<_habilidades class_id="2" tracking_level="0" version="0">
+		<count>1</count>
+		<item_version>0</item_version>
+		<item class_id="3" tracking_level="0" version="0">
+			<first>1</first>
+			<second class_id="4" tracking_level="1" version="0" object_id="_1">
+				<_nombre>Riff de la muerte</_nombre>
+				<_idEspecial>1</_idEspecial>
+				<_tipoEsp>0</_tipoEsp>
+				<_rangoDamage class_id="5" tracking_level="0" version="0">
+					<first>20</first>
+					<second>38</second>
+				</_rangoDamage>
+				<_PEgastados>6</_PEgastados>
+				<_ruta_XML>datos-xml/hab-riffMuerte.xml</_ruta_XML>
+			</second>
+		</item>
+	</_habilidades>
+	<_inventario class_id="6" tracking_level="1" version="0" object_id="_2">
+		<_inventario class_id="7" tracking_level="0" version="0">
+			<count>3</count>
+			<item_version>0</item_version>
+			<item class_id="8" tracking_level="0" version="0">
+				<first>2</first>
+				<second class_id="9" tracking_level="0" version="0">
+					<_nombre>Birra</_nombre>
+					<_idEspecial>2</_idEspecial>
+					<_tipoEsp>1</_tipoEsp>
+					<_rangoDamage>
+						<first>25</first>
+						<second>50</second>
+					</_rangoDamage>
+					<_cantidad>5</_cantidad>
+					<_ruta_XML>datos-xml/obj-birra.xml</_ruta_XML>
+				</second>
+			</item>
+			<item>
+				<first>3</first>
+				<second>
+					<_nombre>Pitiflai</_nombre>
+					<_idEspecial>3</_idEspecial>
+					<_tipoEsp>1</_tipoEsp>
+					<_rangoDamage>
+						<first>15</first>
+						<second>25</second>
+					</_rangoDamage>
+					<_cantidad>5</_cantidad>
+					<_ruta_XML>datos-xml/obj-pitiflai</_ruta_XML>
+				</second>
+			</item>
+			<item>
+				<first>8</first>
+				<second>
+					<_nombre>Grifa</_nombre>
+					<_idEspecial>8</_idEspecial>
+					<_tipoEsp>2</_tipoEsp>
+					<_rangoDamage>
+						<first>8</first>
+						<second>15</second>
+					</_rangoDamage>
+					<_cantidad>2</_cantidad>
+					<_ruta_XML>datos-xml/obj-grifa.xml</_ruta_XML>
+				</second>
+			</item>
+		</_inventario>
+		<_ruta_XML>datos-xml/inv-ampli.xml</_ruta_XML>
+	</_inventario>
+	<_grupo class_id="10" tracking_level="1" version="0" object_id="_3">
+		<_controlable>1</_controlable>
+		<_inventario class_id_reference="6" object_id_reference="_2"></_inventario>
+		<_componentes class_id="11" tracking_level="0" version="0">
+			<count>4</count>
+			<item class_id_reference="0" object_id_reference="_0"></item>
+			<item class_id_reference="0" object_id="_4">
+				<_base>
+					<_PV>120</_PV>
+					<_PE>8</_PE>
+					<_vel>7</_vel>
+					<_fue>12</_fue>
+					<_des>9</_des>
+					<_sue>10</_sue>
+					<_res>14</_res>
+					<_vir>8</_vir>
+					<_con>12</_con>
+					<_int>6</_int>
+					<_incVel>0.69999999999999996</_incVel>
+					<_incFue>0.84999999999999998</_incFue>
+					<_incDes>0.59999999999999998</_incDes>
+					<_incSue>0.5</_incSue>
+					<_incRes>0.90000000000000002</_incRes>
+					<_incVir>0.59999999999999998</_incVir>
+					<_incCon>0.90000000000000002</_incCon>
+					<_incInt>0.5</_incInt>
+					<_ruta_XML>datos-xml/atrBase-baldos.xml</_ruta_XML>
+				</_base>
+				<_exp>15000</_exp>
+				<_niv>10</_niv>
+				<_expSigNiv>15500</_expSigNiv>
+				<_PV>183</_PV>
+				<_PVmax>183</_PVmax>
+				<_PE>41</_PE>
+				<_PEmax>41</_PEmax>
+				<_vel>13</_vel>
+				<_fue>20</_fue>
+				<_des>14</_des>
+				<_sue>15</_sue>
+				<_res>23</_res>
+				<_vir>13</_vir>
+				<_con>21</_con>
+				<_int>11</_int>
+				<_nombre>Baldos</_nombre>
+				<_idCombatiente>21</_idCombatiente>
+				<_habilidades>
+					<count>1</count>
+					<item_version>0</item_version>
+					<item>
+						<first>3</first>
+						<second class_id_reference="4" object_id="_5">
+							<_nombre>Bombo a la cabeza</_nombre>
+							<_idEspecial>3</_idEspecial>
+							<_tipoEsp>0</_tipoEsp>
+							<_rangoDamage>
+								<first>25</first>
+								<second>40</second>
+							</_rangoDamage>
+							<_PEgastados>6</_PEgastados>
+							<_ruta_XML>datos-xml/hab-bomboCabeza.xml</_ruta_XML>
+						</second>
+					</item>
+				</_habilidades>
+				<_inventario class_id_reference="6" object_id_reference="_2"></_inventario>
+				<_grupo class_id_reference="10" object_id_reference="_3"></_grupo>
+				<_pasarTurno>0</_pasarTurno>
+				<_arma class_id="12" tracking_level="1" version="0" object_id="_6">
+					<_nombre>Baquetas</_nombre>
+					<_idEspecial>101</_idEspecial>
+					<_tipoEsp>4</_tipoEsp>
+					<_rangoDamage>
+						<first>25</first>
+						<second>35</second>
+					</_rangoDamage>
+					<_equipado>0</_equipado>
+					<_id>21</_id>
+					<_acierto>19</_acierto>
+					<_ruta_XML>datos-xml/arma-baquetas</_ruta_XML>
+				</_arma>
+				<_armadura class_id="13" tracking_level="1" version="0" object_id="_7">
+					<_nombre>Chupa de cuero</_nombre>
+					<_idEspecial>120</_idEspecial>
+					<_tipoEsp>3</_tipoEsp>
+					<_rangoDamage>
+						<first>0</first>
+						<second>0</second>
+					</_rangoDamage>
+					<_equipado>0</_equipado>
+					<_id>21</_id>
+					<_inc_armadura>35</_inc_armadura>
+					<_ruta_XML>datos-xml/armadura-chupa</_ruta_XML>
+				</_armadura>
+				<_experienciaGanable>0</_experienciaGanable>
+				<_ruta_XML>datos-xml/comb-baldos.xml</_ruta_XML>
+			</item>
+			<item class_id_reference="0" object_id="_8">
+				<_base>
+					<_PV>50</_PV>
+					<_PE>40</_PE>
+					<_vel>10</_vel>
+					<_fue>8</_fue>
+					<_des>12</_des>
+					<_sue>9</_sue>
+					<_res>8</_res>
+					<_vir>14</_vir>
+					<_con>7</_con>
+					<_int>14</_int>
+					<_incVel>0.80000000000000004</_incVel>
+					<_incFue>0.55000000000000004</_incFue>
+					<_incDes>0.69999999999999996</_incDes>
+					<_incSue>0.59999999999999998</_incSue>
+					<_incRes>0.5</_incRes>
+					<_incVir>0.90000000000000002</_incVir>
+					<_incCon>0.59999999999999998</_incCon>
+					<_incInt>0.90000000000000002</_incInt>
+					<_ruta_XML>datos-xml/atrBase-graimito.xml</_ruta_XML>
+				</_base>
+				<_exp>10000</_exp>
+				<_niv>8</_niv>
+				<_expSigNiv>11600</_expSigNiv>
+				<_PV>72</_PV>
+				<_PVmax>72</_PVmax>
+				<_PE>82</_PE>
+				<_PEmax>82</_PEmax>
+				<_vel>16</_vel>
+				<_fue>12</_fue>
+				<_des>17</_des>
+				<_sue>13</_sue>
+				<_res>12</_res>
+				<_vir>21</_vir>
+				<_con>11</_con>
+				<_int>21</_int>
+				<_nombre>Graimito el Bajo</_nombre>
+				<_idCombatiente>22</_idCombatiente>
+				<_habilidades>
+					<count>2</count>
+					<item_version>0</item_version>
+					<item>
+						<first>4</first>
+						<second class_id_reference="4" object_id="_9">
+							<_nombre>Tono curativo</_nombre>
+							<_idEspecial>4</_idEspecial>
+							<_tipoEsp>1</_tipoEsp>
+							<_rangoDamage>
+								<first>30</first>
+								<second>40</second>
+							</_rangoDamage>
+							<_PEgastados>15</_PEgastados>
+							<_ruta_XML>datos-xml/hab-tonoCurativo.xml</_ruta_XML>
+						</second>
+					</item>
+					<item>
+						<first>6</first>
+						<second class_id_reference="4" object_id="_10">
+							<_nombre>La venganza del Bajista</_nombre>
+							<_idEspecial>6</_idEspecial>
+							<_tipoEsp>0</_tipoEsp>
+							<_rangoDamage>
+								<first>70</first>
+								<second>120</second>
+							</_rangoDamage>
+							<_PEgastados>70</_PEgastados>
+							<_ruta_XML>datos-xml/hab-venganzaBajista.xml</_ruta_XML>
+						</second>
+					</item>
+				</_habilidades>
+				<_inventario class_id_reference="6" object_id_reference="_2"></_inventario>
+				<_grupo class_id_reference="10" object_id_reference="_3"></_grupo>
+				<_pasarTurno>0</_pasarTurno>
+				<_arma class_id_reference="12" object_id="_11">
+					<_nombre>Bajo cuerdita</_nombre>
+					<_idEspecial>102</_idEspecial>
+					<_tipoEsp>4</_tipoEsp>
+					<_rangoDamage>
+						<first>13</first>
+						<second>20</second>
+					</_rangoDamage>
+					<_equipado>0</_equipado>
+					<_id>22</_id>
+					<_acierto>21</_acierto>
+					<_ruta_XML>datos-xml/arma-cuerdita</_ruta_XML>
+				</_arma>
+				<_armadura class_id_reference="13" object_id="_12">
+					<_nombre>Chupa de cuero</_nombre>
+					<_idEspecial>130</_idEspecial>
+					<_tipoEsp>3</_tipoEsp>
+					<_rangoDamage>
+						<first>0</first>
+						<second>0</second>
+					</_rangoDamage>
+					<_equipado>0</_equipado>
+					<_id>22</_id>
+					<_inc_armadura>35</_inc_armadura>
+					<_ruta_XML>datos-xml/armadura-chupa</_ruta_XML>
+				</_armadura>
+				<_experienciaGanable>0</_experienciaGanable>
+				<_ruta_XML>datos-xml/comb-graimito.xml</_ruta_XML>
+			</item>
+			<item class_id_reference="0" object_id="_13">
+				<_base>
+					<_PV>80</_PV>
+					<_PE>20</_PE>
+					<_vel>10</_vel>
+					<_fue>11</_fue>
+					<_des>12</_des>
+					<_sue>7</_sue>
+					<_res>8</_res>
+					<_vir>10</_vir>
+					<_con>11</_con>
+					<_int>13</_int>
+					<_incVel>0.69999999999999996</_incVel>
+					<_incFue>0.65000000000000002</_incFue>
+					<_incDes>0.80000000000000004</_incDes>
+					<_incSue>0.90000000000000002</_incSue>
+					<_incRes>0.59999999999999998</_incRes>
+					<_incVir>0.80000000000000004</_incVir>
+					<_incCon>0.69999999999999996</_incCon>
+					<_incInt>0.69999999999999996</_incInt>
+					<_ruta_XML>datos-xml/atrBase-manoloLaPunki.xml</_ruta_XML>
+				</_base>
+				<_exp>13000</_exp>
+				<_niv>9</_niv>
+				<_expSigNiv>13500</_expSigNiv>
+				<_PV>131</_PV>
+				<_PVmax>131</_PVmax>
+				<_PE>77</_PE>
+				<_PEmax>77</_PEmax>
+				<_vel>16</_vel>
+				<_fue>16</_fue>
+				<_des>19</_des>
+				<_sue>15</_sue>
+				<_res>13</_res>
+				<_vir>17</_vir>
+				<_con>17</_con>
+				<_int>19</_int>
+				<_nombre>Manolo la Punki</_nombre>
+				<_idCombatiente>23</_idCombatiente>
+				<_habilidades>
+					<count>1</count>
+					<item_version>0</item_version>
+					<item>
+						<first>5</first>
+						<second class_id_reference="4" object_id="_14">
+							<_nombre>Alarido tremebundo</_nombre>
+							<_idEspecial>5</_idEspecial>
+							<_tipoEsp>0</_tipoEsp>
+							<_rangoDamage>
+								<first>25</first>
+								<second>38</second>
+							</_rangoDamage>
+							<_PEgastados>9</_PEgastados>
+							<_ruta_XML>datos-xml/hab-alaridoTremebundo.xml</_ruta_XML>
+						</second>
+					</item>
+				</_habilidades>
+				<_inventario class_id_reference="6" object_id_reference="_2"></_inventario>
+				<_grupo class_id_reference="10" object_id_reference="_3"></_grupo>
+				<_pasarTurno>0</_pasarTurno>
+				<_arma class_id_reference="12" object_id="_15">
+					<_nombre>Micro Infernal</_nombre>
+					<_idEspecial>103</_idEspecial>
+					<_tipoEsp>4</_tipoEsp>
+					<_rangoDamage>
+						<first>18</first>
+						<second>25</second>
+					</_rangoDamage>
+					<_equipado>0</_equipado>
+					<_id>23</_id>
+					<_acierto>18</_acierto>
+					<_ruta_XML>datos-xml/arma-micro</_ruta_XML>
+				</_arma>
+				<_armadura class_id_reference="13" object_id="_16">
+					<_nombre>Chupa de cuero</_nombre>
+					<_idEspecial>140</_idEspecial>
+					<_tipoEsp>3</_tipoEsp>
+					<_rangoDamage>
+						<first>0</first>
+						<second>0</second>
+					</_rangoDamage>
+					<_equipado>0</_equipado>
+					<_id>23</_id>
+					<_inc_armadura>35</_inc_armadura>
+					<_ruta_XML>datos-xml/armadura-chupa</_ruta_XML>
+				</_armadura>
+				<_experienciaGanable>0</_experienciaGanable>
+				<_ruta_XML>datos-xml/comb-manolo.xml</_ruta_XML>
+			</item>
+		</_componentes>
+		<_numComp>4</_numComp>
+		<_ruta_XML>datos-xml/grp-ampli.xml</_ruta_XML>
+	</_grupo>
+	<_pasarTurno>0</_pasarTurno>
+	<_arma class_id_reference="12" object_id="_17">
+		<_nombre>Guitarra Strato</_nombre>
+		<_idEspecial>100</_idEspecial>
+		<_tipoEsp>4</_tipoEsp>
+		<_rangoDamage>
+			<first>15</first>
+			<second>23</second>
+		</_rangoDamage>
+		<_equipado>0</_equipado>
+		<_id>20</_id>
+		<_acierto>18</_acierto>
+		<_ruta_XML>datos-xml/arma-strato</_ruta_XML>
+	</_arma>
+	<_armadura class_id_reference="13" object_id="_18">
+		<_nombre>Chupa de cuero</_nombre>
+		<_idEspecial>110</_idEspecial>
+		<_tipoEsp>3</_tipoEsp>
+		<_rangoDamage>
+			<first>0</first>
+			<second>0</second>
+		</_rangoDamage>
+		<_equipado>0</_equipado>
+		<_id>20</_id>
+		<_inc_armadura>35</_inc_armadura>
+		<_ruta_XML>datos-xml/armadura-chupa</_ruta_XML>
+	</_armadura>
+	<_experienciaGanable>0</_experienciaGanable>
+	<_ruta_XML>datos-xml/comb-dentacos.xml</_ruta_XML>
+</a>
+</boost_serialization>

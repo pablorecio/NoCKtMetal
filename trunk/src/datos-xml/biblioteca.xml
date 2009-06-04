@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="4">
+<a class_id="0" tracking_level="0" version="0">
+	<_rutaXML>datos-xml/biblioteca.xml</_rutaXML>
+	<_grupoPrincipal>datos-xml/grp-ampli.xml</_grupoPrincipal>
+	<_personajesPrincipales class_id="1" tracking_level="0" version="0">
+		<count>4</count>
+		<item_version>0</item_version>
+		<item class_id="2" tracking_level="0" version="0">
+			<first>20</first>
+			<second>datos-xml/comb-dentacos.xml</second>
+		</item>
+		<item>
+			<first>21</first>
+			<second>datos-xml/comb-baldos.xml</second>
+		</item>
+		<item>
+			<first>22</first>
+			<second>datos-xml/comb-graimito.xml</second>
+		</item>
+		<item>
+			<first>23</first>
+			<second>datos-xml/comb-manolo.xml</second>
+		</item>
+	</_personajesPrincipales>
+	<_objetos>
+		<count>3</count>
+		<item_version>0</item_version>
+		<item>
+			<first>2</first>
+			<second>datos-xml/obj-birra.xml</second>
+		</item>
+		<item>
+			<first>3</first>
+			<second>datos-xml/obj-pitiflai</second>
+		</item>
+		<item>
+			<first>8</first>
+			<second>datos-xml/obj-grifa.xml</second>
+		</item>
+	</_objetos>
+	<_habilidades>
+		<count>5</count>
+		<item_version>0</item_version>
+		<item>
+			<first>1</first>
+			<second>datos-xml/hab-riffMuerte.xml</second>
+		</item>
+		<item>
+			<first>3</first>
+			<second>datos-xml/hab-bomboCabeza.xml</second>
+		</item>
+		<item>
+			<first>4</first>
+			<second>datos-xml/hab-tonoCurativo.xml</second>
+		</item>
+		<item>
+			<first>5</first>
+			<second>datos-xml/hab-alaridoTremebundo.xml</second>
+		</item>
+		<item>
+			<first>6</first>
+			<second>datos-xml/hab-venganzaBajista.xml</second>
+		</item>
+	</_habilidades>
+	<_gruposEnemigos>
+		<count>3</count>
+		<item_version>0</item_version>
+		<item>
+			<first>70</first>
+			<second>datos-xml/grp-kinkis.xml</second>
+		</item>
+		<item>
+			<first>80</first>
+			<second>datos-xml/grp-maris.xml</second>
+		</item>
+		<item>
+			<first>90</first>
+			<second>datos-xml/grp-emos.xml</second>
+		</item>
+	</_gruposEnemigos>
+</a>
+</boost_serialization>

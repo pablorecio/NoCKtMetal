@@ -24,7 +24,7 @@
  */
 
 #include <iostream>
-#include <iostream>
+#include <vector>
 #include <map>
 #include <iterator>
 #include <ctime>
@@ -43,7 +43,7 @@
 #include "control-combate.h"
 #include "sistema.h"
 #include "pantalla.h"
-#include "menu.h"
+#include "menu-principal.h"
 #include "animacion.h"
 #include "musica.h"
 
@@ -51,6 +51,7 @@ using namespace std;
 
 int main() {
 
+	/* Construcción e inicialización de elementos del motor de combate */
     Biblioteca bib;
     bib.recargarXML("datos-xml/biblioteca.xml");
     cout << "Biblioteca cargada" << endl;
@@ -78,6 +79,7 @@ int main() {
 
     if (iniciarSistema()) {
 
+    	/* Construcción e inicialización de elementos del motor de movimiento */
         Pantalla p = Pantalla();
         p.setTitulo("NoCKt Metal", "imagenes/logo.png");
 
@@ -87,19 +89,28 @@ int main() {
         Musica m("musica/NIN-1m.ogg");
         m.reproducir();
         cout << "Music on" << endl;
-        
-        Menu menu = Menu(string("imagenes/menu.png").c_str(), string("imagenes/cursor.png").c_str(), &p);
 
-        menu.setBoton(string("Menu de movimiento").c_str(), 270, 30, string("imagenes/boton_movimiento.png").c_str(), 0, 0);
-        menu.setBoton(string("Menu de combate").c_str(), 290, 90, string("imagenes/boton_combate.png").c_str(), 0, 0);
-        menu.setBoton(string("Salir").c_str(), 310, 150, string("imagenes/boton_salir.png").c_str(), 0, 0);
+        vector<const char*> botonesMenu;
+        botonesMenu.push_back("Motor de movimiento");
+        botonesMenu.push_back("Motor de combate");
+        botonesMenu.push_back("Salir");
+
+        /* Construcción e inicialización del menú principal */
+        MenuPrincipal menu = MenuPrincipal("imagenes/menu.png",
+        		"imagenes/cursor.png", "imagenes/boton.png", &p, botonesMenu,
+        		270, 30, 20, 60);
+        /*
+        menu.setBoton("Menu de movimiento", 270, 30, "imagenes/boton.png", 0, 0);
+        menu.setBoton("Menu de combate", 290, 90, "imagenes/boton.png", 0, 0);
+        menu.setBoton("Salir", 310, 150, "imagenes/boton.png", 0, 0);
+        */
 
         bool salir = false;
         bool salirAnimacion;
 
         while (!salir) {
             salirAnimacion = false;
-            
+
             menu.dibujar();
             while (!menu.actualizar()) {
                 ;
@@ -115,7 +126,7 @@ int main() {
                             << "--------------------------------------"
                             << "------------------------------------" << endl
                             << endl;
-                    
+
                     /* Lanzar motor de movimiento */
                     anim.inicializarAnimacion();
                     cout << "Animacion iniciada" << endl;

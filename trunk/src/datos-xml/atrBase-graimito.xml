@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="4">
+<a class_id="0" tracking_level="0" version="0">
+	<_PV>50</_PV>
+	<_PE>40</_PE>
+	<_vel>10</_vel>
+	<_fue>8</_fue>
+	<_des>12</_des>
+	<_sue>9</_sue>
+	<_res>8</_res>
+	<_vir>14</_vir>
+	<_con>7</_con>
+	<_int>14</_int>
+	<_incVel>0.80000000000000004</_incVel>
+	<_incFue>0.55000000000000004</_incFue>
+	<_incDes>0.69999999999999996</_incDes>
+	<_incSue>0.59999999999999998</_incSue>
+	<_incRes>0.5</_incRes>
+	<_incVir>0.90000000000000002</_incVir>
+	<_incCon>0.59999999999999998</_incCon>
+	<_incInt>0.90000000000000002</_incInt>
+	<_ruta_XML>datos-xml/atrBase-graimito.xml</_ruta_XML>
+</a>
+</boost_serialization>
