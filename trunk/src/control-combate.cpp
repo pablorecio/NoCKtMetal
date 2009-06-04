@@ -72,7 +72,7 @@ ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
 
 Uint32 ControlCombate::iniciarCombate() {
 	mostrarCombate();
-	int cont1 = 0, cont2 = 0;
+	//	int cont1 = 0, cont2 = 0;
 	while (_g1->vivo() && _g2->vivo() && !_huida) {
 		//cout << "Turno " << ++cont1 << endl;
 		ControlTurno actual(*this);

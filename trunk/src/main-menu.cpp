@@ -88,11 +88,11 @@ int main() {
         m.reproducir();
         cout << "Music on" << endl;
         
-        Menu menu = Menu("imagenes/menu.png", "imagenes/cursor.png", &p);
+        Menu menu = Menu(string("imagenes/menu.png").c_str(), string("imagenes/cursor.png").c_str(), &p);
 
-        menu.setBoton("Menu de movimiento", 270, 30, "imagenes/boton_movimiento.png", 0, 0);
-        menu.setBoton("Menu de combate", 290, 90, "imagenes/boton_combate.png", 0, 0);
-        menu.setBoton("Salir", 310, 150, "imagenes/boton_salir.png", 0, 0);
+        menu.setBoton(string("Menu de movimiento").c_str(), 270, 30, string("imagenes/boton_movimiento.png").c_str(), 0, 0);
+        menu.setBoton(string("Menu de combate").c_str(), 290, 90, string("imagenes/boton_combate.png").c_str(), 0, 0);
+        menu.setBoton(string("Salir").c_str(), 310, 150, string("imagenes/boton_salir.png").c_str(), 0, 0);
 
         bool salir = false;
         bool salirAnimacion;

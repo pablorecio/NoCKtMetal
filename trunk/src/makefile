@@ -45,6 +45,9 @@ musica.o: musica.h
 ${GENERA}.o: biblioteca.h iniciar-objetos.h
 
 
+all:	${GENERA} ${EXE}
+	./generar-xml
+
 clean:
 	${RM} ${EXE} ${OBJETOS} ${OBJS-G} ${GENERA} *~ *#
 

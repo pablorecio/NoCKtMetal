@@ -35,7 +35,7 @@ using namespace std;
  * Elemento
  **********************************************************************/
 
-Elemento::Elemento(char* url, Uint32 x, Uint32 y, Pantalla* p):
+Elemento::Elemento(const char* url, Uint32 x, Uint32 y, Pantalla* p):
 _urlImagen(url),  _posX(x), _posY(y), _pant(p) {
     /* Cargamos la imagen en la pantalla */
     _imagen = IMG_Load(url);
@@ -88,8 +88,9 @@ void Elemento::dibujar(SDL_Surface *p) {
  * Botón
  **********************************************************************/
 
-inline Boton::Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
-                    Uint32 dX, Uint32 dY, Uint32 rX, Uint32 rY, bool activo):
+inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
+                    Uint32 x, Uint32 y, Uint32 dX, Uint32 dY, Uint32 rX,
+                    Uint32 rY, bool activo):
                     Elemento(url, x, y, p), _despX(dX), _despY(dY),
         _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje),
         _activo(activo) {
@@ -119,7 +120,7 @@ inline Boton::Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
  * Menú
  **********************************************************************/
 
-Menu::Menu(char* urlFondo, char* urlCursor, Pantalla* p):
+Menu::Menu(const char* urlFondo, const char* urlCursor, Pantalla* p):
 _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
         _estadoSalida(false), _estadoAceptado(false) {
     _evento = Evento(100);
@@ -150,8 +151,8 @@ _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
 }
 
 
-void Menu::setBoton(char* mensaje, Uint32 posx, Uint32 posy, char* url,
-                    Uint32 espacioX, Uint32 espacioY) {
+void Menu::setBoton(const char* mensaje, Uint32 posx, Uint32 posy,
+                    const char* url, Uint32 espacioX, Uint32 espacioY) {
 
     bool activo = false;
 

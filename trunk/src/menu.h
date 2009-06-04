@@ -27,7 +27,6 @@
 #define	_MENU_H
 
 #include <iostream>
-#include <cstring>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include "evento.h"
@@ -38,7 +37,7 @@ using namespace std;
 class Elemento {
 public:
     Elemento();
-    Elemento(char* url, Uint32 x, Uint32 y, Pantalla* p);
+    Elemento(const char* url, Uint32 x, Uint32 y, Pantalla* p);
     SDL_Surface* getImagen() const;
     Pantalla* getPantalla() const;
     Uint32 getPosX() const;
@@ -60,7 +59,7 @@ private:
      */
     SDL_Surface* _imagen;
 
-    char* _urlImagen;
+    const char* _urlImagen;
     Uint32 _posX;
     Uint32 _posY;
     Pantalla* _pant;
@@ -90,7 +89,7 @@ inline Elemento::~Elemento() {}
 class Boton: public Elemento {
 public:
     Boton();
-    Boton(char* url, char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
+    Boton(const char* url, const char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
           Uint32 dX = 0, Uint32 dY = 0, Uint32 rX = 0, Uint32 rY = 0,
           bool activo = false);
     Uint32 getDespX() const;
@@ -114,7 +113,7 @@ private:
     Uint32 _rangoMensajeX;
     /* Separación vertical con respecto al mensaje */
     Uint32 _rangoMensajeY;
-    char* _mensaje;
+    const char* _mensaje;
     bool _activo;
     TTF_Font* _tipoFuente;
 };
@@ -131,13 +130,13 @@ inline Boton::~Boton() {}
 class Cursor: public Elemento {
 public:
     Cursor();
-    Cursor(char* url, Pantalla* p);
+    Cursor(const char* url, Pantalla* p);
     ~Cursor();
 };
 
 /* Métodos inline */
 inline Cursor::Cursor(): Elemento() {}
-inline Cursor::Cursor(char* url, Pantalla* p):
+inline Cursor::Cursor(const char* url, Pantalla* p):
 Elemento(url, 0, 0, p) {}
 inline Cursor::~Cursor() {}
 
@@ -156,7 +155,7 @@ public:
      * Constructor de una instancia utilizable como menú.
      * @param urlFondo Ruta a la imagen de fondo del menú.
      */
-    Menu(char* urlFondo, char* urlCursor, Pantalla* p);
+    Menu(const char* urlFondo, const char* urlCursor, Pantalla* p);
     /* Devuelve el codigo (orden) del boton activado, o el valor siguiente al
      último en caso de error */
     Uint32 getPosicionCursor() const;
@@ -164,7 +163,7 @@ public:
     Uint32 getNumBotones() const;
     bool getEstadoSalida() const;
     bool getEstadoAceptado() const;
-    void setBoton(char* mensaje, Uint32 posx, Uint32 poxy, char* url,
+    void setBoton(const char* mensaje, Uint32 posx, Uint32 poxy, const char* url,
                   Uint32 espacioX, Uint32 espacioY);
     void dibujar();
     bool actualizar();
@@ -183,7 +182,7 @@ public:
 private:
 
     SDL_Surface* _fondo;
-    char* _urlFondo;
+    const char* _urlFondo;
     /**
      * Puntero a la pantalla general del juego.
      */
