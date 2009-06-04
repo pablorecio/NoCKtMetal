@@ -1,6 +1,6 @@
 CXX = g++
 DEBUG = -g
-CXXFLAGS = -ansi -Wall #${DEBUG} -DDEBUG=0 -DFPS=0
+CXXFLAGS = -ansi -Wall ${DEBUG} -DDEBUG=1 -DFPS=1
 LIB = -lSDL -lboost_serialization
 EXE = main-combate
 GENERA = generar-xml
@@ -10,7 +10,7 @@ OBJS-G =  ${OBJS} iniciar-objetos.o biblioteca.o ${GENERA}.o
 
 ${EXE}: ${OBJETOS}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
-	
+
 ${GENERA}: ${OBJS-G}
 	${CXX} -o ${LDFLAGS} $@ $^ ${LIB}
 
@@ -31,6 +31,6 @@ ${GENERA}.o: biblioteca.h iniciar-objetos.h
 
 clean:
 	${RM} ${EXE} ${OBJETOS} ${OBJS-G} ${GENERA} *~ *#
-	
+
 clean-all:
 	make clean & ${RM} datos-xml/*
