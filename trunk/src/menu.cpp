@@ -21,12 +21,12 @@
  */
 
 #include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <iostream>
 
 #include "menu.h"
 #include "pantalla.h"
+#include "sistema.h"
 
 using namespace std;
 
@@ -92,16 +92,11 @@ void Elemento::dibujar(SDL_Surface *p) {
 
 inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
                     Uint32 x, Uint32 y, Uint32 dX, Uint32 dY, Uint32 rX,
-                    Uint32 rY, bool activo):
+                    Uint32 rY):
                     Elemento(url, x, y, p), _despX(dX), _despY(dY),
-        _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje),
-        _activo(activo) {
+        _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje) {
 
-	/* Iniciamos el sistema TTF si no estaba activo ya */
-    if(!TTF_WasInit() && TTF_Init()==-1) {
-    	cout << "TTF_Init: %s\n" << TTF_GetError() << endl;
-    	exit(2);
-    }
+	iniciarTTF();
 
     /* Definición del tipo de fuente del menu */
     _tipoFuente = TTF_OpenFontRW(SDL_RWFromFile("fuentes/FontMenu.ttf", "r"), 1, 19);
@@ -130,13 +125,13 @@ inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
  **********************************************************************/
 
 Menu::Menu(const char* urlFondo, const char* urlCursor, Pantalla* p):
-_urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
-        _estadoSalida(false), _estadoAceptado(false) {
+	_pant(p), _botonActivo(0), _numBotones(0), _estadoSalida(false),
+	_estadoAceptado(false) {
 
     _evento = Evento(80);
 
     /* Cargamos la imagen en la pantalla */
-    _fondo = IMG_Load(_urlFondo);
+    _fondo = IMG_Load(urlFondo);
 
     if (_fondo == NULL) {
         cerr << "Error: " << SDL_GetError() << endl;
@@ -144,7 +139,7 @@ _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
     }
 
     /* Convertir a formato de pantalla */
-    SDL_Surface *aux = IMG_Load(_urlFondo);
+    SDL_Surface *aux = IMG_Load(urlFondo);
     _fondo = SDL_DisplayFormatAlpha(aux);
     SDL_FreeSurface(aux);
 
@@ -164,15 +159,12 @@ _urlFondo(urlFondo), _pant(p), _botonActivo(0), _numBotones(0),
 void Menu::setBoton(const char* mensaje, Uint32 posx, Uint32 posy,
                     const char* url, Uint32 espacioX, Uint32 espacioY) {
 
-    bool activo = false;
-
-    /* Si es el primer botón, se toma por defecto como activado */
+	/* Si es el primer botón, se toma por defecto como activado */
     if(_numBotones == 0) {
-        activo = true;
         _botonActivo = 0;
     }
 
-    Boton *b = new Boton(url, mensaje, _pant, posx, posy, 0,0,10,10,activo);
+    Boton *b = new Boton(url, mensaje, _pant, posx, posy, 0,0,10,10);
     _botones.insert(make_pair(_numBotones, b));
 
     /* Dibujamos el botón en el fondo, puesto que no es necesario redibujarlo
@@ -235,11 +227,11 @@ Uint32 Menu::retrocederCursor() {
     if (_numBotones != 0) {
         if (_botonActivo == 0) {
             /* Hemos llegado al último botón por lo que volvemos al primero */
-	  _botonActivo = _numBotones-1;
+        	_botonActivo = _numBotones-1;
         } else {
-	  /* Retrocedemos el cursor */
-	  _botonActivo--;
-	}
+        	/* Retrocedemos el cursor */
+        	_botonActivo--;
+        }
     }
     /* Incluir un else y lanzar un error en caso de que no haya botones */
 

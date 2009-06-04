@@ -25,6 +25,8 @@
 
 #include <iostream>
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+
 #include "sistema.h"
 
 using namespace std;
@@ -105,5 +107,13 @@ void iniciarSubsistemaJoystick() {
         cerr << "No se puede iniciar el joystick: %s\n" << SDL_GetError()
                 << endl;
         exit(1);
+    }
+}
+
+void iniciarTTF() {
+	/* Iniciamos el sistema TTF si no estaba activo ya */
+    if(!TTF_WasInit() && TTF_Init()==-1) {
+    	cout << "TTF_Init: %s\n" << TTF_GetError() << endl;
+    	exit(2);
     }
 }

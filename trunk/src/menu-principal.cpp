@@ -25,11 +25,6 @@
 
 #include "menu-principal.h"
 
-MenuPrincipal::MenuPrincipal() {
-	// TODO Auto-generated constructor stub
-
-}
-
 
 MenuPrincipal::MenuPrincipal(const char* urlFondo, const char* urlCursor,
 		const char* urlBoton, Pantalla* p, vector<const char*> mBotones,
@@ -39,9 +34,4 @@ MenuPrincipal::MenuPrincipal(const char* urlFondo, const char* urlCursor,
 	for (unsigned int i = 0; i < mBotones.size(); ++i) {
 		setBoton(mBotones.at(i), posX + i*despX, posY + i*despY, urlBoton, 0,0);
 	}
-}
-
-MenuPrincipal::~MenuPrincipal() {
-	// TODO Auto-generated destructor stub
-
 }

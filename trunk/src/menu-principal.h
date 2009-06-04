@@ -31,16 +31,33 @@
 
 using namespace std;
 
+/**
+ * Clase que abstrae el comportamiento y la visualización del menú principal.
+ * @author Noelia Sales Montes
+ * @date 4 06 2009
+ * @note Parte del Proyecto NoCKt Metal
+ * @see menu.h
+ */
 class MenuPrincipal: public Menu {
 public:
+	/**
+	 * Constructor predeterminado.
+	 */
 	MenuPrincipal();
 
 	MenuPrincipal(const char* urlFondo, const char* urlCursor,
 			const char* urlBoton, Pantalla* p, vector<const char*> mBotones,
 			Uint32 posX, Uint32 posY, Sint32 despX = 0, Sint32 despY = 0);
 
+	/**
+	 * Destructor de la clase MenuPrincipal.
+	 */
 	virtual ~MenuPrincipal();
 
 };
+
+/* Métodos inline de la clase MenuPrincipal */
+inline MenuPrincipal::MenuPrincipal() {}
+inline MenuPrincipal::~MenuPrincipal() {}
 
 #endif /* MENUPRINCIPAL_H_ */
