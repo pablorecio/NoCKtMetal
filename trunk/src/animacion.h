@@ -48,7 +48,7 @@ enum Movimiento {
 /**
  * @brief Clase controladora de un nivel de juego.
  * Se encarga de inicializar los datos necesarios para un nivel del juego, así
- * como de controlar la gestión de eventos (con ayuda de la clase 
+ * como de controlar la gestión de eventos (con ayuda de la clase
  * <code>Evento</code>) y el movimiento general de los elementos
  * dinámicos, en principio, el <i>fondo</i> y un <i>personaje principal</i>.
  * @author Noelia Sales Montes
@@ -65,10 +65,10 @@ public:
     /**
      * Constructor de un nivel del juego, cuyos elementos se representarán
      * en la pantalla dada.
-     * @param p Puntero al objeto que representa la pantalla principal del 
+     * @param p Puntero al objeto que representa la pantalla principal del
      * juego.
      */
-    Animacion(Pantalla *p);
+    Animacion(Pantalla* p, Evento* e);
 
 
     bool getEstadoInventario() const;
@@ -76,7 +76,7 @@ public:
      * Función que se encarga de inicializar el nivel actual.
      * @note Al encontrarnos aún en una versión <i>alpha</i> del proyecto,
      * esta función es un tanto burda.
-     * No se comporta abstrayendo absolutamente nada, puesto que aún no 
+     * No se comporta abstrayendo absolutamente nada, puesto que aún no
      * se ha incluido en el motor de movimiento la sección correspondiente a
      * lectura/escritura en XML.
      */
@@ -88,8 +88,8 @@ public:
      * @note De momento tan solo se refiere al movimiento solicitado por el
      * usuario, pero en versiones posteriores se pretende añadir más elementos
      * bajo control ajeno a éste.
-     * @return Valor lógico que controla la acción procesada. Si la acción 
-     * elegida es salir del programa, se devuelve <code>true</code>; 
+     * @return Valor lógico que controla la acción procesada. Si la acción
+     * elegida es salir del programa, se devuelve <code>true</code>;
      * <code>false</code> en caso contrario.
      */
     bool procesarAccion();
@@ -142,7 +142,7 @@ private:
      * Objeto de la clase evento que controlará las acciones solicitadas por el
      * usuario.
      */
-    Evento evento;
+    Evento* _evento;
     /**
      * Puntero al personaje principal del nivel.
      */

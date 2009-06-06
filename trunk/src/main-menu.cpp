@@ -30,65 +30,31 @@
 #include <ctime>
 #include <cstdlib>
 
-#include "atributos.h"
-#include "atributos_base.h"
-#include "combatiente.h"
-#include "grupo.h"
-#include "habilidad.h"
-#include "objeto.h"
-#include "inventario.h"
-#include "aleatorio.h"
-#include "biblioteca.h"
-#include "es-xml.h"
-#include "control-combate.h"
 #include "sistema.h"
-#include "pantalla.h"
 #include "menu-principal.h"
-#include "animacion.h"
+#include "motor-movimiento.h"
+#include "motor-combate.h"
 #include "musica.h"
+#include "evento.h"
 
 using namespace std;
 
 int main() {
 
-	/* Construcción e inicialización de elementos del motor de combate */
-    Biblioteca bib;
-    bib.recargarXML("datos-xml/biblioteca.xml");
-    cout << "Biblioteca cargada" << endl;
-
-    Grupo AmpliBreakers(bib.getGrupoPrincipal().c_str());
-
-    srand(time(0));
-    cout << "Mira que de gente nos quiere pegar: " << bib.getNumeroGruposEnemigos()
-            << endl;
-    Aleatorio a;
-    Uint32 num_rep =
-            a.valorEntero(0, bib.getNumeroGruposEnemigos() - 1);
-    map<Uint32, string> aux = bib.getGruposEnemigos();
-
-    cout << "Número elegido..." << num_rep << endl;
-
-    map<Uint32, string>::iterator I = aux.begin();
-    for (size_t i = 0; i < num_rep; i++) {
-        I++;
-    }
-
-    Grupo Enemigos(bib.getGrupoEnemigo(I->first).c_str());
-
-    ControlCombate combate(AmpliBreakers, Enemigos);
-
     if (iniciarSistema()) {
 
-    	/* Construcción e inicialización de elementos del motor de movimiento */
         Pantalla p = Pantalla();
         p.setTitulo("NoCKt Metal", "imagenes/logo.png");
 
-        Animacion anim = Animacion(&p);
-        cout << "Animacion creada" << endl;
+        Evento e = Evento(100);
 
         Musica m("musica/NIN-1m.ogg");
         m.reproducir();
         cout << "Music on" << endl;
+
+        /* Construcción e inicialización de elementos del motor de movimiento */
+        MotorMovimiento mov(&p, &e);
+    	MotorCombate com = MotorCombate();
 
         vector<const char*> botonesMenu;
         botonesMenu.push_back("Motor de movimiento");
@@ -106,10 +72,8 @@ int main() {
         */
 
         bool salir = false;
-        bool salirAnimacion;
 
         while (!salir) {
-            salirAnimacion = false;
 
             menu.dibujar();
             while (!menu.actualizar()) {
@@ -120,66 +84,11 @@ int main() {
                 /* Procesar el boton activado */
                 switch (menu.getPosicionCursor()) {
                 case 0: /* Motor de movimiento */
-                    cout << endl << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << " Entrando en el motor de movimiento " << endl
-                            << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << endl;
-
-                    /* Lanzar motor de movimiento */
-                    anim.inicializarAnimacion();
-                    cout << "Animacion iniciada" << endl;
-
-
-                    while (!salirAnimacion) {
-                        salirAnimacion = anim.procesarAccion();
-                    /*
-                        if (anim.getEstadoInventario()) {
-                             * Procesar el guardado de posiciones para
-                             * no perder el estado actual del pj *
-                        }
-                    */
-                    }
-
-                    cout << endl << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << " Saliendo del motor de movimiento " << endl
-                            << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << endl;
-
-                    break;
+                	mov.ejecutar();
+                	break;
                 case 1: /* Motor de combate */
-                    cout << endl << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << " Entrando en el motor de movimiento " << endl
-                            << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << endl;
-
-                    /* Lanzar motor de combate */
-
-                    cout << "Seleccionado " << I->first;
-                    cout << " " << bib.getGrupoEnemigo(I->first) << endl;
-
-                    AmpliBreakers.mostrarGrupo();
-                    Enemigos.mostrarGrupo();
-
-#ifdef DEBUG
-                    cout << "Combate inicializado" << endl;
-#endif
-
-                    combate.iniciarCombate();
-                    combate.postCombate();
-
-                    cout << endl << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << " Saliendo del motor de combate " << endl
-                            << "--------------------------------------"
-                            << "------------------------------------" << endl
-                            << endl;
-                    break;
+                	com.ejecutar();
+                	break;
                 case 2:
                     cout << endl << "--------------------------------------"
                             << "------------------------------------" << endl

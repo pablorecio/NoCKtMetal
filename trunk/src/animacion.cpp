@@ -28,6 +28,7 @@
 #include <vector>
 
 #include "personaje.h"
+#include "evento.h"
 #include "animacion.h"
 #include "imagen.h"
 #include "npj.h"
@@ -35,18 +36,18 @@
 using namespace std;
 
 Animacion::Animacion() {
-    evento = Evento(70);
+    _evento = new Evento(70);
 }
 
-Animacion::Animacion(Pantalla *p): _pant(p) { }
+Animacion::Animacion(Pantalla* p, Evento* e): _pant(p), _evento(e) {}
 
 Animacion::~Animacion() { }
 
 void Animacion::inicializarAnimacion() {
     /* Inicializamos el mapa */
- 
+
   cout << "inicializarAnimacion" << endl;
-  
+
   vector<vector<Uint32> > matriz;
   vector<Uint32> auxiliar(36);
 
@@ -70,11 +71,11 @@ void Animacion::inicializarAnimacion() {
       }
     }
   }
-  
+
   cout << "matriz de tiles echo" << endl;
 
   Uint32 fondoX = 10, fondoY = 10;
-    
+
   cout << "NPJS" << endl;
   std::vector<NPJ> personajes;
   personajes.push_back(NPJ(0,30,30,"./sprites/baldos.png"));
@@ -87,13 +88,13 @@ void Animacion::inicializarAnimacion() {
   tiles.insert(make_pair(4,Tile("./tiles/ladrillos.png", true)));
   tiles.insert(make_pair(5,Tile("./tiles/ladrillosTope.png", true)));
   tiles.insert(make_pair(6,Tile("./tiles/metal.png")));
-  
+
   cout << "imagen!" << endl;
   _imag = new Imagen(48, 36, fondoX, fondoY, personajes, *_pant, matriz, tiles);
-  
+
   cout << "dibujar fondoo!" << endl;
   _imag->dibujarFondo();
-  
+
     cout << "personaje" << endl;
     /* Personaje */
     _principal = new Personaje(1,1,1,30,_pant, "./sprites/manolo.png");
@@ -120,8 +121,8 @@ bool Animacion::procesarAccion() {
 
     char dir = ' ';
 
-    /* Lectura del nuevo evento */
-    switch (evento.getEvento()) {
+    /* Lectura del nuevo _evento */
+    switch (_evento->getEvento()) {
     case SALIR:
         cout << "De vuelta al menu :P" << endl;
         return true;
@@ -192,7 +193,7 @@ bool Animacion::procesarAccion() {
 	    }
 	    _pant->volcarPantalla(_pant->getBuffer());
             dibujarPosicionEstatica();
-	    
+
         }
     }
     return false;
