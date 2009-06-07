@@ -41,81 +41,81 @@ using namespace std;
 
 int main() {
 
-  //if (iniciarSistema()) {
+  if (iniciarSistema()) {
 
-      //Pantalla p = Pantalla();
-      // p.setTitulo("NoCKt Metal", "imagenes/logo.png");
+    Pantalla p = Pantalla();
+    p.setTitulo("NoCKt Metal", "imagenes/logo.png");
 
-      // Evento e = Evento(100);
+    Evento e = Evento(100);
 
-      // Musica m("musica/NIN-1m.ogg");
-      // m.reproducir();
-      // cout << "Music on" << endl;
+    Musica m("musica/NIN-1m.ogg");
+    m.reproducir();
+    cout << "Music on" << endl;
 
-        /* Construcción e inicialización de elementos del motor de movimiento */
-      // MotorMovimiento mov(&p, &e);
-    	MotorCombate com;
+    /* Construcción e inicialización de elementos del motor de movimiento */
+    MotorMovimiento mov(&p, &e);
+    MotorCombate com;
 
-	//  vector<const char*> botonesMenu;
-        //botonesMenu.push_back("Motor de movimiento");
-        //botonesMenu.push_back("Motor de combate");
-        //botonesMenu.push_back("Salir");
+    vector<const char*> botonesMenu;
+    botonesMenu.push_back("Motor de movimiento");
+    botonesMenu.push_back("Motor de combate");
+    botonesMenu.push_back("Salir");
 
-        /* Construcción e inicialización del menú principal */
-        //MenuPrincipal menu = MenuPrincipal("imagenes/menu.png",
-        //		"imagenes/cursor.png", "imagenes/boton.png", &p, botonesMenu,
-        //		270, 30, 20, 60);
-        /*
-        menu.setBoton("Menu de movimiento", 270, 30, "imagenes/boton.png", 0, 0);
-        menu.setBoton("Menu de combate", 290, 90, "imagenes/boton.png", 0, 0);
-        menu.setBoton("Salir", 310, 150, "imagenes/boton.png", 0, 0);
-        */
+    /* Construcción e inicialización del menú principal */
+    MenuPrincipal menu = MenuPrincipal("imagenes/menu.png",
+				       "imagenes/cursor.png", "imagenes/boton.png", &p, botonesMenu,
+				       270, 30, 20, 60);
+    /*
+      menu.setBoton("Menu de movimiento", 270, 30, "imagenes/boton.png", 0, 0);
+      menu.setBoton("Menu de combate", 290, 90, "imagenes/boton.png", 0, 0);
+      menu.setBoton("Salir", 310, 150, "imagenes/boton.png", 0, 0);
+    */
 
-        //bool salir = false;
+    bool salir = false;
 
-        //while (!salir) {
+    while (!salir) {
 
-	//   menu.dibujar();
-	//   while (!menu.actualizar()) {
-	//       ;
-	//   }
+      menu.dibujar();
+      while (!menu.actualizar()) {
+	;
+      }
 
-	//   if (menu.getEstadoAceptado()) {
-                /* Procesar el boton activado */
-	//       switch (menu.getPosicionCursor()) {
-	//       case 0: /* Motor de movimiento */
-	//       	mov.ejecutar();
-	//       	break;
-	//       case 1: /* Motor de combate */
-                	com.ejecutar();
-			//       	break;
-			// case 2:
-			// cout << endl << "--------------------------------------"
-			//   << "------------------------------------" << endl
-			//   << " Saliendo del juego " << endl
-			//   << "--------------------------------------"
-			//   << "------------------------------------" << endl
-			//   << endl;
-			//salir = true;
-			//break;
-			//default:
-			//break;
-			//}
-			//}
-			//if (menu.getEstadoSalida()) {
-			// cout << endl << "--------------------------------------"
-                        //<< "------------------------------------" << endl
-                        //<< " Saliendo del juego " << endl
-                        //<< "--------------------------------------"
-                        //<< "------------------------------------" << endl
-                        //<< endl;
-			//salir = true;
-			//}
-			//}
+      if (menu.getEstadoAceptado()) {
+	/* Procesar el boton activado */
+	switch (menu.getPosicionCursor()) {
+	case 0: /* Motor de movimiento */
+	  mov.ejecutar();
+	  break;
+	case 1: /* Motor de combate */
+	  com.ejecutar();
+	  break;
+	case 2:
+	  cout << endl << "--------------------------------------"
+	       << "------------------------------------" << endl
+	       << " Saliendo del juego " << endl
+	       << "--------------------------------------"
+	       << "------------------------------------" << endl
+	       << endl;
+	  salir = true;
+	  break;
+	default:
+	  break;
+	}
+      }
+      if (menu.getEstadoSalida()) {
+	cout << endl << "--------------------------------------"
+	     << "------------------------------------" << endl
+	     << " Saliendo del juego " << endl
+	     << "--------------------------------------"
+	     << "------------------------------------" << endl
+	     << endl;
+	salir = true;
+      }
+    }
 
-			//m.pausar();
-			// p.cerrarPantalla();
-			//} else {
-			//cerr << "ERROR INICIAL" << endl;
-			//}
+    m.pausar();
+    p.cerrarPantalla();
+  } else {
+    cerr << "ERROR INICIAL" << endl;
+  }
 }
