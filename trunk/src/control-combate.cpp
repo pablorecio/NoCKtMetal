@@ -72,6 +72,8 @@ ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
 
 Uint32 ControlCombate::iniciarCombate() {
 	mostrarCombate();
+	cout << "G1 -> " << _g1->getIdentificador() << endl;
+	cout << "G2 -> " << _g2->getIdentificador() << endl;
 	//	int cont1 = 0, cont2 = 0;
 	while (_g1->vivo() && _g2->vivo() && !_huida) {
 		//cout << "Turno " << ++cont1 << endl;
@@ -232,6 +234,11 @@ Uint32 ControlTurno::iteracionTurno() {
 
 	Uint32 danio = 0;
 
+	cout << "G1 - " << _comb->_g1->getIdentificador() << endl;
+	cout << "G2 - " << _comb->_g2->getIdentificador() << endl;
+	cout << "Me llamo " << actual->getNombre()
+	     << " y el identificador de mi grupo es: " 
+	     << actual->getGrupo().getIdentificador() << endl;
 	if (actual->getGrupo().controlable()) { //El combatiente es controlable por el jugador
 		mostrarAcciones();
 		accion = seleccionarAccion();

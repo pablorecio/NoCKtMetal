@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -ansi -Wall
+CXXFLAGS = -ansi -Wall ${DEBUG} -DDEBUG=1 -DFPS=1
+DEBUG = -g
 LIB = -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -lboost_serialization
 EXE = main-menu
 GENERA = generar-xml

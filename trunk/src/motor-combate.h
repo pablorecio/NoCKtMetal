@@ -21,12 +21,11 @@
 #include "control-combate.h"
 
 class MotorCombate {
-public:
-	MotorCombate();
-	void ejecutar();
-	virtual ~MotorCombate();
+ public:
+  MotorCombate();
+  void ejecutar();
 
-private:
+  private:
     Biblioteca _bib;
     Grupo _jugador;
     map<Uint32, string> _nombreEnemigos;
@@ -34,7 +33,5 @@ private:
     Grupo _enemigosActuales;
     ControlCombate _combate;
 };
-
-inline MotorCombate::~MotorCombate() {}
 
 #endif /* MOTORCOMBATE_H_ */

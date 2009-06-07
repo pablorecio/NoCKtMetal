@@ -111,8 +111,32 @@ public:
 	 * deserializar.
 	 */
 	Grupo(const char* ruta_XML) {
-		cargar_XML(*this, ruta_XML);
+	  cargar_XML(*this, ruta_XML);
 	}
+
+  Grupo(const Grupo& otro){
+    
+    _controlable = otro._controlable;
+    _inventario = otro._inventario;
+    _componentes = otro._componentes;
+    _numComp = otro._numComp;
+    _id = otro._id;
+    
+    _ruta_XML = otro._ruta_XML;
+  }
+
+  Grupo& operator =(const Grupo& otro){
+    if(&otro != this){
+      _controlable = otro._controlable;
+      _inventario = otro._inventario;
+      _componentes = otro._componentes;
+      _numComp = otro._numComp;
+      _id = otro._id;
+      
+      _ruta_XML = otro._ruta_XML;      
+    }
+    return *this;
+  }
 
 	/**
 	 * Método <i>getter</i> para obtener acceso al inventario del grupo
@@ -237,6 +261,7 @@ private:
 		ar & BOOST_SERIALIZATION_NVP(_componentes);
 		ar & BOOST_SERIALIZATION_NVP(_numComp);
 		ar & BOOST_SERIALIZATION_NVP(_ruta_XML);
+		ar & BOOST_SERIALIZATION_NVP(_id);
 	}
 };
 #endif	/* _GRUPO_H */
