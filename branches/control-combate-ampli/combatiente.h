@@ -83,9 +83,15 @@ public:
 
 	class AtaqueFallado: public std::exception {
 	public:
-
 		const char* what() const throw () {
 			return "¡El ataque ha fallado!";
+		}
+	};
+
+	class NoHaySuficientePE: public std::exception{
+	public:
+		const char* what() const throw () {
+			return "No tienes suficiente PE";
 		}
 	};
 
@@ -307,7 +313,7 @@ public:
 	 * @return El valor del daño realizado por la habilidad, por si se quisiera
 	 * mostrar dicho valor.
 	 */
-	Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo);
+	Uint32 ataqueEspecial(Uint32 i, Combatiente& objetivo) throw (NoHaySuficientePE);
 
 	/**
 	 *

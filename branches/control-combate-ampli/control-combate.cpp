@@ -71,22 +71,22 @@ ControlCombate::ControlCombate(Grupo &g1, Grupo &g2){
 }
 
 Uint32 ControlCombate::iniciarCombate() {
-  mostrarCombate();
-  //int cont1 = 0, cont2 = 0;
-  while (_g1->vivo() && _g2->vivo() && !_huida) {
-    //cout << "Turno " << ++cont1 << endl;
-    ControlTurno actual(*this);
-    while (!actual.finTurno() && !_huida && _g1->vivo() && _g2->vivo()) {
-      //cout << "Accion " << cont1 << "." << cont2++ << endl;
-      actual.iteracionTurno();
-    }
-  }
-  if (_g1->vivo())
-    return 1;
-  else if (_huida)
-    return 3;
-  else
-    return 2;
+	mostrarCombate();
+	//int cont1 = 0, cont2 = 0;
+	while (_g1->vivo() && _g2->vivo() && !_huida) {
+		//cout << "Turno " << ++cont1 << endl;
+		ControlTurno actual(*this);
+		while (!actual.finTurno() && !_huida && _g1->vivo() && _g2->vivo()) {
+			//cout << "Accion " << cont1 << "." << cont2++ << endl;
+			actual.iteracionTurno();
+		}
+	}
+	if (_g1->vivo())
+		return 1;
+	else if (_huida)
+		return 3;
+	else
+		return 2;
 }
 
 void ControlCombate::mostrarCombate() {
@@ -129,29 +129,8 @@ Uint32 ControlCombate::postCombate() {
 ControlTurno::ControlTurno() {
 }
 
-//Crea la cola de turnos. Hacer acto de fe, porque aun no entiendo como es capaz de funcionar xDDD
 
-ControlTurno::ControlTurno(ControlCombate &comb){
-  _comb = &comb;
-
-  vector<Combatiente*> auxiliar;
-  for(size_t i = 0 ; i < _comb->_g1->getNumeroCombatientes() ; i++){
-    if(_comb->_g1->getCombatientes().at(i)->getPV() > 0)
-      auxiliar.push_back(_comb->_g1->getCombatientes().at(i));      
-  }
-  for(size_t i = 0 ; i < _comb->_g2->getNumeroCombatientes() ; i++){
-    if(_comb->_g2->getCombatientes().at(i)->getPV() > 0)
-      auxiliar.push_back(_comb->_g2->getCombatientes().at(i));      
-  }
-
-  sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
-  for(vector<Combatiente*>::const_iterator i = auxiliar.begin() ; i != auxiliar.end() ; i++){
-    cout << "Insertado " << (*i)->getNombre() << "con velocidad " << (*i)->getVelocidad() << endl; 
-    _turno.push(*i);
-  }
-}
-
-/*ControlTurno::ControlTurno(ControlCombate &comb) {
+ControlTurno::ControlTurno(ControlCombate &comb) {
   _comb = &comb;
 
   vector<Combatiente*> auxiliar;
@@ -192,11 +171,8 @@ ControlTurno::ControlTurno(ControlCombate &comb){
   }
 #endif
 
-  //sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
-  //sort casca, pero ordenacion por monticulo no :S o al menos no
-  //he localizado donde casca aun, así que la dejo por montículo.
-  make_heap(auxiliar.begin(), auxiliar.end(), ObjetoComparacion());
-  sort_heap(auxiliar.begin(), auxiliar.end());
+	stable_sort(auxiliar.begin(),auxiliar.end(),ObjetoComparacion());
+
 
 #ifdef DEBUG
   cout << "ControlTurno::ControlTurno(): Combatientes ordenados" << endl;
@@ -235,7 +211,7 @@ ControlTurno::ControlTurno(ControlCombate &comb){
 #ifdef DEBUG
   cout << "ControlTurno::ControlTurno(): Fin" << endl;
 #endif
-}*/
+}
 
 Uint32 ControlTurno::iteracionTurno() {
   Combatiente *actual;
@@ -257,6 +233,7 @@ Uint32 ControlTurno::iteracionTurno() {
     accion = seleccionarAccion();
     Habilidad *hab;
     Objeto *obj;
+    bool band = false;
     switch (accion) {
     case 1: //Ataque
       mostrarObjetivos(*actual);
@@ -269,12 +246,20 @@ Uint32 ControlTurno::iteracionTurno() {
       }
       break;
     case 2: //Ataque especial
-      mostrarHabilidades(*actual);
-      hab = seleccionarHabilidad(*actual);
-      mostrarObjetivos(*actual);
-      objetivo = seleccionarObjetivo(*actual);
-      danio = actual->ataqueEspecial(hab->getIdentificador(), *objetivo);
-      mostrarDamage(*actual, *objetivo, danio);
+    	while(!band){
+    		mostrarHabilidades(*actual);
+    		hab = seleccionarHabilidad(*actual);
+    		mostrarObjetivos(*actual);
+    		objetivo = seleccionarObjetivo(*actual);
+    		try{
+    			danio = actual->ataqueEspecial(hab->getIdentificador(), *objetivo);
+        		band = true;
+        		mostrarDamage(*actual, *objetivo, danio);
+    		}
+    		catch(Combatiente::NoHaySuficientePE){
+    			cerr << "No tienes suficiente PE para usar ese ataque" << endl;
+    		}
+    	}
       break;
     case 3: //Objeto
       mostrarInventario(*actual);
