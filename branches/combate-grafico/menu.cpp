@@ -275,9 +275,8 @@ Uint32 Menu::avanzarCursor() {
 
 MenuVariable::MenuVariable(const char* urlFondo, const char* urlCursor,
 		Pantalla* p, Uint32 tamX, Uint32 tamY, Uint32 posX, Uint32 posY):
-			_pant(p), _botonActivo(0), _numBotones(0), estadoSalida(false),
-			_estadoAceptado(false), _ancho(tamX), _alto(tamY), _posX(posX),
-			_posY(posY) {
+			Menu(urlFondo, urlCursor, p), _ancho(tamX), _alto(tamY),
+			_posX(posX), _posY(posY) {
 
     _evento = Evento(80);
 
@@ -310,7 +309,7 @@ MenuVariable::MenuVariable(const char* urlFondo, const char* urlCursor,
     r.w = _ancho;
     r.h = _alto;
 
-    _pant->volcarPantalla(aux, _fondo, &r);
+    _pant->volcarPantalla(aux, NULL, _fondo, &r);
 
     _cursor = new Cursor(urlCursor, _pant);
 }

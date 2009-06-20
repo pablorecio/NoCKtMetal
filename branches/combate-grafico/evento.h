@@ -59,8 +59,9 @@ class Evento {
 public:
     /**
      * Constructor predeterminado de la clase <code>Evento</code>.
+     * @param r Retraso entre recepción de eventos.
      */
-    Evento();
+    Evento(Uint32 r = 70);
     /**
      * Método actualizador del controlador de eventos.
      * Es utilizado en el metodo observador para poder leer los eventos del
@@ -83,6 +84,7 @@ public:
      */
     virtual ~Evento();
 private:
+    Uint32 _retraso;
     /**
      * Evento de la librería SDL que esta clase permite abstraer.
      */

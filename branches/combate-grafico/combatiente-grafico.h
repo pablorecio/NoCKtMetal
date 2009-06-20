@@ -35,7 +35,7 @@ public:
 				Uint32 f, Uint32 c, bool pos, Uint32 exp = 0,
 				Uint32 exp_ganable = 0);
 
-	Sprite* getSprite() const;
+	Sprite* getSprite();
 
 	bool getPosNormal() const;
 
@@ -77,11 +77,11 @@ private:
 inline CombatienteGrafico::CombatienteGrafico (string nombre, Uint32 id,
 		AtributoBase atr, Grupo &grupo, string rXML, Arma &arma,
 		Armadura &armadura, const char* sprite,	Uint32 f, Uint32 c, bool pos,
-		Uint32 exp = 0, Uint32 exp_ganable = 0):
+		Uint32 exp, Uint32 exp_ganable):
 			Combatiente(nombre, id, atr, grupo, rXML, arma, armadura, exp,
 					exp_ganable), _sprite(sprite, f, c), _posNormal(pos) {}
 
-inline Sprite* CombatienteGrafico::getSprite() const { return &_sprite; }
+inline Sprite* CombatienteGrafico::getSprite() { return &_sprite; }
 
 inline bool CombatienteGrafico::getPosNormal() const { return _posNormal; }
 

@@ -11,9 +11,11 @@
 #include <ctime>
 #include <cstdlib>
 
+#include "pantalla.h"
+
 #include "atributos.h"
 #include "atributos_base.h"
-#include "combatiente.h"
+#include "combatiente-grafico.h"
 #include "grupo.h"
 #include "habilidad.h"
 #include "objeto.h"
@@ -21,11 +23,15 @@
 #include "aleatorio.h"
 #include "biblioteca.h"
 #include "es-xml.h"
-#include "control-combate.h"
+#include "control-grafico.h"
 
 using namespace std;
 
 int main(){
+
+	Pantalla p();
+
+
   Biblioteca bib;
   bib.recargarXML("datos-xml/biblioteca.xml");
   cout << "Biblioteca cargada" << endl;
@@ -61,5 +67,6 @@ int main(){
 
     combate.iniciarCombate();
     combate.postCombate();
+
 }
 

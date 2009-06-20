@@ -1,16 +1,16 @@
 /*
  * This program is free software: you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software
- * Foundation, either version 3 of the License, or any
+ * and/or modify it under the terms of the GNU General 
+ * Public License as published by the Free Software 
+ * Foundation, either version 3 of the License, or any 
  * later version.
-
+ 
  * This program is distributed in the hope that it will be
  * useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A 
  * PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
-
+ 
  * You should have received a copy of the GNU General
  * Public License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
@@ -30,16 +30,14 @@
 using namespace std;
 
 Pantalla::Pantalla(Uint32 ancho, Uint32 alto, Uint32 prof):
-_ancho(ancho), _alto(alto), _prof(prof) {
-    atexit(SDL_Quit);
-
+_ancho(ancho), _alto(alto), _prof(prof) {    
     /* Comprobamos que sea compatible el modo de vídeo */
     if(SDL_VideoModeOK(_ancho, _alto, _prof,
                        SDL_HWSURFACE|SDL_DOUBLEBUF) == 0) {
         cerr << "Modo no soportado: " << SDL_GetError() << endl;
         exit(1);
     }
-
+    
     /* Entrar en el modo gráfico: pantalla principal */
     _pantalla = SDL_SetVideoMode(_ancho, _alto, _prof,
                                  SDL_HWSURFACE|SDL_DOUBLEBUF);
@@ -64,7 +62,7 @@ Pantalla::~Pantalla() {}
 void Pantalla::setTitulo(const char *titulo, const char *icono) {
     /* Configuramos el título */
     SDL_WM_SetCaption(titulo, titulo);
-
+    
     /* Y el icono que se asignará a nuestra ventana principal */
     SDL_Surface* imgIcono = IMG_Load(icono);
     SDL_WM_SetIcon(imgIcono, NULL);
@@ -98,10 +96,9 @@ void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2) {
     SDL_Flip(p2);
 }
 
-
-void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Surface *p2,
-		SDL_Rect *rectP2) {
-    SDL_BlitSurface(p1, NULL, p2, rectP2);
+void Pantalla::volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP1, SDL_Surface *p2,
+                        SDL_Rect *rectP2) {
+    SDL_BlitSurface(p1, rectP1, p2, rectP2);
     SDL_Flip(p2);
 }
 

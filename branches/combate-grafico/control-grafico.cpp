@@ -44,7 +44,7 @@ ControlGrafico::ControlGrafico(Grupo &g1, Grupo &g2, Pantalla* p):
 
   //_menuSup-> Añadir los botones
 
-  _menuInf = new Menu("./fondo/menu_inf.png", "./fondo/cursor_menu_inf.png",
+  _menuInf = new MenuVariable("./fondo/menu_inf.png", "./fondo/cursor_menu_inf.png",
 		  _pant, 480, 100, 0, 380);
 
   //_menuInf-> Añadir los botones

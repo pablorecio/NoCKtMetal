@@ -1,16 +1,16 @@
 /*
  * This program is free software: you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software
- * Foundation, either version 3 of the License, or any
+ * and/or modify it under the terms of the GNU General 
+ * Public License as published by the Free Software 
+ * Foundation, either version 3 of the License, or any 
  * later version.
-
+ 
  * This program is distributed in the hope that it will be
  * useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A 
  * PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
-
+ 
  * You should have received a copy of the GNU General
  * Public License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
@@ -29,7 +29,7 @@
 #include "SDL/SDL.h"
 
 /**
- * @brief Clase que abstrae el comportamiento de la ventana principal del
+ * @brief Clase que abstrae el comportamiento de la ventana principal del 
  * videojuego.
  * Se compone de una ventana principal, así como de múltiples superficies
  * empleadas como <i>buffers</i>.
@@ -62,7 +62,7 @@ class Pantalla {
     SDL_Surface* getFondo() const;
     /**
      * Método observador de la pantalla donde se gestiona el movimiento.
-     * @return Puntero a la<code>SDL_Surface</code> que representa el
+     * @return Puntero a la<code>SDL_Surface</code> que representa el 
      * movimiento de elementos.
      */
     SDL_Surface* getMovimiento() const;
@@ -119,7 +119,7 @@ class Pantalla {
     /**
      * Método modificador que copia el contenido de una pantalla en nuestra
      * pantalla principal.
-     * @param p1 Puntero a la pantalla (<code>SDL_Surface</code>) que se
+     * @param p1 Puntero a la pantalla (<code>SDL_Surface</code>) que se 
      * desea volcar.
      */
     void volcarPantalla(SDL_Surface *p1);
@@ -137,19 +137,12 @@ class Pantalla {
      * (<code>SDL_Surface</code>) en otra.
      * @param p1 Puntero a la pantalla (<code>SDL_Surface</code>) que se
      * desea volcar.
-     * @param p2 Puntero a la pantalla (<code>SDL_Surface</code>) que se
+     * @param p2 Puntero a la pantalla (<code>SDL_Surface</code>) que se 
      * va a ver modificada.
      */
     void volcarPantalla(SDL_Surface *p1, SDL_Surface *p2);
-    /**
-     * Método modificador que copia el contenido de una pantalla
-     * (<code>SDL_Surface</code>) en otra.
-     * @param p1 Puntero a la pantalla (<code>SDL_Surface</code>) que se
-     * desea volcar.
-     * @param p2 Puntero a la pantalla (<code>SDL_Surface</code>) que se
-     * va a ver modificada.
-     */
-    void volcarPantalla(SDL_Surface *p1, SDL_Surface *p2, SDL_Rect *rectP2);
+    void volcarPantalla(SDL_Surface *p1, SDL_Rect *rectP1, SDL_Surface *p2,
+                        SDL_Rect *rectP2);
 
     /**
      * Método que se encarga de finalizar de forma segura el funcionamiento
@@ -185,10 +178,10 @@ class Pantalla {
     /**
      * Puntero a la pantalla de movimiento, donde se dibuja el comportamiento
      * dinámico de determinados elementos.
-     * @note En principio se creía oportuno mantener esta superficie para
-     * dedicarla al movimiento de los <i>sprites</i>; sin embargo, esto no
-     * resulta conveniente, por lo que se dedicará al movimiento de menús si
-     * fuera posible.
+     * @note En principio se creía oportuno mantener esta superficie para 
+     * dedicarla al movimiento de los <i>sprites</i>; sin embargo, esto no 
+     * resulta conveniente, por lo que se dedicará al movimiento de menús si 
+     * fuera posible.     
      */
     SDL_Surface* _movimiento;
     /**

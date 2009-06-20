@@ -47,7 +47,7 @@ public:
 private:
 
 	/* Redibujar el combate completo */
-	Uint32 mostrarCombate();
+	void mostrarCombate();
 
 	Pantalla* _pant;
 	SDL_Surface* _base;
