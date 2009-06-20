@@ -83,9 +83,11 @@ Uint32 Combatiente::usarObjeto(Uint32 i, Combatiente& objetivo)
     --o;
     return res;
 }
-Uint32 Combatiente::ataqueEspecial(Uint32 i, Combatiente& objetivo){
+Uint32 Combatiente::ataqueEspecial(Uint32 i, Combatiente& objetivo)
+	throw (NoHaySuficientePE){
     Habilidad h = *_habilidades.at(i);
 
+	if(h.getGastoPE() > _PE) throw(NoHaySuficientePE());
     Uint32 res;
     if(h.getTipoAtaque() == CURATIVO){
         res = h.calculaDamage();

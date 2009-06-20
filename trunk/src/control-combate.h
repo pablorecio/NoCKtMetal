@@ -93,7 +93,7 @@ public:
      * @todo Toda la función xD
      */
     Uint32 postCombate();
-    //private:
+private:
     Grupo *_g1, *_g2;
     bool _huida;
     void mostrarCombate();
