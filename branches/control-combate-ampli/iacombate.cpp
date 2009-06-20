@@ -34,6 +34,7 @@
 #include "objeto.h"
 #include "habilidad.h"
 #include "inventario.h"
+#include "aleatorio.h"
 
 using namespace std;
 
