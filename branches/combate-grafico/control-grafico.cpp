@@ -24,12 +24,16 @@
  */
 
 #include "control-grafico.h"
+#include "control-combate.h"
 
-ControlGrafico::ControlGrafico() {
-	// TODO Auto-generated constructor stub
+ControlGrafico::ControlGrafico(Grupo &g1, Grupo &g2){
+  _huida = false;
+  _g1 = &g1;
+  _g2 = &g2;
 
+#ifdef DEBUG
+  cout << "ControlCombate::ControlCombate(Grupo &g1, Grupo &g2)" << endl;
+#endif
 }
 
-ControlGrafico::~ControlGrafico() {
-	// TODO Auto-generated destructor stub
-}
+ControlGrafico::~ControlGrafico() {}

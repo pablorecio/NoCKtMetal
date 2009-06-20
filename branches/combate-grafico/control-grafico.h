@@ -27,6 +27,7 @@
 #define CONTROLGRAFICO_H_
 
 #include "control-combate.h"
+#include "grupo.h"
 
 
 
@@ -39,16 +40,24 @@
 class ControlGrafico: public ControlCombate {
 public:
 	ControlGrafico();
-	Uint32 iniciarCombate();
+	/* Inicializar los mismos parámetros y además la parte gráfica */
+	ControlGrafico(Grupo& g1, Grupo& g2);
+
+	virtual ~ControlGrafico();
 private:
+
+	/* Redibujar el combate completo */
+	Uint32 mostrarCombate();
+
+	Pantalla* _pant;
+	SDL_Surface* _base;
+	Evento* _e;
 
 };
 
 /* Métodos inline de la clase ControlGrafico */
 inline ControlGrafico::ControlGrafico() {}
-
-
-
+inline ControlGrafico::~ControlGrafico() {}
 
 
 /**
@@ -62,7 +71,7 @@ class TurnoGrafico: public ControlTurno {
 };
 
 /* Métodos inline de la clase ControlTurno */
-inline ControlTurno::ControlTurno() {}
+inline TurnoGrafico::TurnoGrafico() {}
 
 
 #endif /* CONTROLGRAFICO_H_ */

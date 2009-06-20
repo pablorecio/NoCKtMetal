@@ -342,7 +342,7 @@ public:
 	void actualizarXML() {
 		guardar_XML(*this, _ruta_XML.c_str());
 	}
-private:
+protected:
 	std::string _nombre;
 	Uint32 _idCombatiente;
 	std::map<Uint32, Habilidad*> _habilidades;

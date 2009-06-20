@@ -96,7 +96,7 @@ public:
 protected:
     Grupo *_g1, *_g2;
     bool _huida;
-    void mostrarCombate();
+    virtual void mostrarCombate();
 
     friend class ControlTurno;
 };
