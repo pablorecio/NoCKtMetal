@@ -28,7 +28,7 @@
 
 #include "control-combate.h"
 #include "grupo.h"
-
+#include "menu.h"
 
 
 /**
@@ -41,7 +41,7 @@ class ControlGrafico: public ControlCombate {
 public:
 	ControlGrafico();
 	/* Inicializar los mismos parámetros y además la parte gráfica */
-	ControlGrafico(Grupo& g1, Grupo& g2);
+	ControlGrafico(Grupo& g1, Grupo& g2, Pantalla* p);
 
 	virtual ~ControlGrafico();
 private:
@@ -51,12 +51,12 @@ private:
 
 	Pantalla* _pant;
 	SDL_Surface* _base;
-	Evento* _e;
-
+	MenuVariable* _menuSup;
+	MenuVariable* _menuInf;
 };
 
 /* Métodos inline de la clase ControlGrafico */
-inline ControlGrafico::ControlGrafico() {}
+inline ControlGrafico::ControlGrafico(): ControlCombate() {}
 inline ControlGrafico::~ControlGrafico() {}
 
 

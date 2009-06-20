@@ -25,15 +25,35 @@
 
 #include "control-grafico.h"
 #include "control-combate.h"
+#include "menu.h"
 
-ControlGrafico::ControlGrafico(Grupo &g1, Grupo &g2){
-  _huida = false;
-  _g1 = &g1;
-  _g2 = &g2;
 
-#ifdef DEBUG
-  cout << "ControlCombate::ControlCombate(Grupo &g1, Grupo &g2)" << endl;
-#endif
+ControlGrafico::ControlGrafico(Grupo &g1, Grupo &g2, Pantalla* p):
+	ControlCombate(g1, g2), _pant(p) {
+
+  /* Añadir parte gráfica */
+  /* Forma fácil: con imágenes en lugar de tiles */
+
+	_pant->rellenarPantalla(_base, 100, 100, 100, 0);
+
+	/* Pintar los grupos en la base */
+
+
+  _menuSup = new MenuVariable("./fondo/menu_sup.png",
+		  "./fondo/cursor_menu_sup.png", _pant, 480, 100, 0,0);
+
+  //_menuSup-> Añadir los botones
+
+  _menuInf = new Menu("./fondo/menu_inf.png", "./fondo/cursor_menu_inf.png",
+		  _pant, 480, 100, 0, 380);
+
+  //_menuInf-> Añadir los botones
+
+  /* Volcar la base en la pantalla */
+  _pant->volcarPantalla(_base);
+  /* Volcar los menus.
+   * NOTA: Se debe hacer de forma independiente porque son elementos dinámicos.
+   */
+  _menuSup->dibujar();
+  _menuInf->dibujar();
 }
-
-ControlGrafico::~ControlGrafico() {}
