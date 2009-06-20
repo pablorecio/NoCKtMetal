@@ -118,6 +118,29 @@ void NPJ::dentroPantalla(Uint32 cx, Uint32 cy){
   pers_dibujado = (ppx_ < p_->getAncho() && ppy_ < p_->getAlto());
   
 }
+
+// void NPJ::dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, bool id, bool xy){ 
+
+//   this->cx_ = cx*Tile::getTam();
+//   this->cy_ = cy*Tile::getTam();
+
+//   if(xy){
+//     if(id)
+//       cx_ += sec;
+//     else
+//       cx_ -= sec;
+//   } else {
+//     if(id)
+//       cy_ += sec;
+//     else
+//       cy_ -= sec;
+//   }
+  
+
+//   establecerPosicion();
+//   pers_dibujado = (ppx_ < p_->getAncho() && ppy_ < p_->getAlto());
+  
+// }
   
 
 void NPJ::subir() { y_ -= 1; }
@@ -163,16 +186,16 @@ void NPJ::mover(Uint32 movimiento, Uint32 secuencia) {
   SDL_Delay(150 - vel_);
   /* Dibujamos el personaje en la imagen de secuencia indicada en la
    * posición actualizada de pantalla */
-  cout << "(cx,cy): (" << cx_ << "," << cy_ << ")" << endl;
-  cout << "(x,y): (" << x_ << "," << y_ << ")" << endl;
-  cout << "(px,py): (" << px_ << "," << py_ << ")" << endl;
-  cout << "(ppx,ppy): (" << ppx_ << "," << ppy_ << ")" << endl;
+  // cout << "(cx,cy): (" << cx_ << "," << cy_ << ")" << endl;
+  // cout << "(x,y): (" << x_ << "," << y_ << ")" << endl;
+  // cout << "(px,py): (" << px_ << "," << py_ << ")" << endl;
+  // cout << "(ppx,ppy): (" << ppx_ << "," << ppy_ << ")" << endl;
   sprite_.dibujar(movimiento, secuencia, p_->getBuffer(), ppx_, ppy_);
   p_->volcarPantalla(p_->getBuffer());
 }
 
 
-bool operator <(const NPJ n1, const NPJ n2)
-{
-  return (n1.getId() < n2.getId());
-}
+// bool operator <(const NPJ n1, const NPJ n2)
+// {
+//   return (n1.getId() < n2.getId());
+// }

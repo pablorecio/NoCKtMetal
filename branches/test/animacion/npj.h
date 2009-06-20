@@ -75,6 +75,7 @@ class NPJ {
   
   bool dentroPantalla() const;
   void dentroPantalla(Uint32 cx, Uint32 cy);
+  //void dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, bool id, bool xy);
 
   void subir();
   void bajar();
@@ -119,7 +120,7 @@ class NPJ {
 
 };
 
-bool operator <(const NPJ n1, const NPJ n2);
+//bool operator <(const NPJ n1, const NPJ n2);
 
 inline Uint32 NPJ::getId() const { return id_; }
 inline Uint32 NPJ::getX() const { return x_; }

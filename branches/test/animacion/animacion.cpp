@@ -130,7 +130,6 @@ bool Animacion::procesarAccion() {
   
   /* Comprobación de qué npjs están ahora dentro de la pantalla*/
   for(Uint32 i=0; i<_persSecs.size(); i++){
-    //cout << "(cx,cy): (" << cx << "," << cy << ")" << endl;
     _persSecs.at(i).dentroPantalla(cx,cy);
   }
   /* Movimiento actual tomado como NULO */
@@ -245,23 +244,33 @@ bool Animacion::procesarAccion() {
 
 void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y, char dir) {
     /* Mientras necesitemos mover al personaje */
+  cout << "(cx,cy): (" << _imag->getCX() << "," << _imag->getCY() << ")" << endl;
     for (Sint32 sec = _principal->getSecuenciasMovimiento() - 1; sec >= 0;
          --sec) {
         /* Desplazamos el mapa */
         _imag->dibujarSecuencia(dir, _principal->getSecuenciasMovimiento() - sec,
                                 _principal->getSecuenciasMovimiento());
+
         /* Mover el personaje (autovolcado en buffer) */
         mover(sec, 0);
+
 	for(Uint32 i=0; i<_persSecs.size(); i++){
+	  switch(dir){
+	  case 'u': _persSecs.at(i).dentroPantalla(_imag->getCX(), _imag->getCY(), _principal->getDesp(i), false, false); break;
+	  case 'd': _persSecs.at(i).dentroPantalla(_imag->getCX(), _imag->getCY(), _principal->getDesp(i), true, false); break;
+	  case 'l': _persSecs.at(i).dentroPantalla(_imag->getCX(), _imag->getCY(), _principal->getDesp(i), false, true); break;
+	  case 'r': _persSecs.at(i).dentroPantalla(_imag->getCX(), _imag->getCY(), _principal->getDesp(i), true, true); break;
+	  default: break;
+	  }
 	  if(_persSecs.at(i).dentroPantalla()){
-	    //cout << "personaje " << _persSecs.at(i).getId() << " dibujado en: ("
-	    // << _persSecs.at(i).getXpant() << "," << _persSecs.at(i).getYpant() << ")" << endl;
 	    _persSecs.at(i).dibujarPosicionFrente();
 	  }
 	}
+	
         /* Pantalla visible */
         _pant->volcarPantalla(_pant->getBuffer());
     }
+    cout << "(cx,cy): (" << _imag->getCX() << "," << _imag->getCY() << ")" << endl;
 }
 
 void Animacion::hacerMovimientoDinamico() {
@@ -275,8 +284,6 @@ void Animacion::hacerMovimientoDinamico() {
         /* Pantalla visible */
 	for(Uint32 i=0; i<_persSecs.size(); i++){
 	  if(_persSecs.at(i).dentroPantalla()){
-	    //cout << "personaje " << _persSecs.at(i).getId() << " dibujado en: ("
-	    // << _persSecs.at(i).getXpant() << "," << _persSecs.at(i).getYpant() << ")" << endl;
 	    _persSecs.at(i).dibujarPosicionFrente();
 	  }
 	}
