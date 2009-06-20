@@ -26,6 +26,7 @@
 #include <iostream>
 
 #include <vector>
+#include <set>
 
 #include "personaje.h"
 #include "animacion.h"
@@ -74,11 +75,6 @@ void Animacion::inicializarAnimacion() {
   cout << "matriz de tiles echo" << endl;
 
   Uint32 fondoX = 10, fondoY = 10;
-    
-  cout << "NPJS" << endl;
-  std::vector<NPJ> personajes;
-  personajes.push_back(NPJ(0,30,30,"baldos.png"));
-  personajes.push_back(NPJ(1,7,7,"lapunki.png"));
 
   std::map<Uint32,Tile> tiles;
   tiles.insert(make_pair(1,Tile("./tiles/piedra.png", true)));
@@ -89,62 +85,82 @@ void Animacion::inicializarAnimacion() {
   tiles.insert(make_pair(6,Tile("./tiles/metal.png")));
   
   cout << "imagen!" << endl;
-  _imag = new Imagen(48, 36, fondoX, fondoY, personajes, *_pant, matriz, tiles);
+  _imag = new Imagen(48, 36, fondoX, fondoY, *_pant, matriz, tiles);
   
   cout << "dibujar fondoo!" << endl;
   _imag->dibujarFondo();
+
+  cout << "personaje" << endl;
+  /* Personaje */
+  _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
+  _principal->setRango(2, 2);
+  _principal->setPosicion();
+  _principal->setMapa(fondoX + _principal->getPantX(),
+		      fondoY + _principal->getPantY());
+  _principal->setVelocidad(80);
+  _principal->dibujarPosicionFrente(); 
+
+  _pant->volcarPantalla(_pant->getBuffer());
+
+  cout << "NPJS" << endl;
+  _persSecs.push_back(NPJ(0,20,20,"./baldos.png",_pant, _imag->getCX(), _imag->getCY()));
+  _persSecs.push_back(NPJ(1,8,8,"./lapunki.png",_pant, _imag->getCX(), _imag->getCY()));
+
+  for(Uint32 i=0; i<_persSecs.size(); i++){
+    _imag->setColisionable(_persSecs.at(i).getX(), _persSecs.at(i).getY(), 1);
+    _imag->setInteractuable(_persSecs.at(i).getY(), _persSecs.at(i).getY(), 1);
+
+    if(_persSecs.at(i).dentroPantalla())
+      _persSecs.at(i).dibujarPosicionFrente();
+  }
+  _pant->volcarPantalla(_pant->getBuffer());
   
-    cout << "personaje" << endl;
-    /* Personaje */
-    _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
-    _principal->setRango(2, 2);
-    _principal->setPosicion();
-    _principal->setMapa(fondoX + _principal->getPantX(),
-                        fondoY + _principal->getPantY());
-    _principal->setVelocidad(80);
-    _principal->dibujarPosicionFrente();
-    /* Dibujamos la pantalla inicial */
-    _pant->volcarPantalla(_pant->getBuffer());
+
+  
 }
 
 bool Animacion::procesarAccion() {
-    /* Cargamos las posiciones iniciales del personaje y del fondo */
-    Uint32 x = _principal->getPantX();
-    Uint32 y = _principal->getPantY();
-    Uint32 mx = _principal->getMapaX();
-    Uint32 my = _principal->getMapaY();
-    Sint32 cx = _imag->getCX();
-    Sint32 cy = _imag->getCY();
-    /* Movimiento actual tomado como NULO */
-    _mov = NULO;
+  /* Cargamos las posiciones iniciales del personaje y del fondo */
+  Uint32 x = _principal->getPantX();
+  Uint32 y = _principal->getPantY();
+  Uint32 mx = _principal->getMapaX();
+  Uint32 my = _principal->getMapaY();
+  Sint32 cx = _imag->getCX();
+  Sint32 cy = _imag->getCY();
+  
+  /* Comprobación de qué npjs están ahora dentro de la pantalla*/
+  for(Uint32 i=0; i<_persSecs.size(); i++){
+    //cout << "(cx,cy): (" << cx << "," << cy << ")" << endl;
+    _persSecs.at(i).dentroPantalla(cx,cy);
+  }
+  /* Movimiento actual tomado como NULO */
+  _mov = NULO;
 
-    char dir = ' ';
-
-    /* Lectura del nuevo evento */
-    switch (evento.getEvento()) {
-    case SALIR:
-        cout << "Saliendo de la ejecucion del programa" << endl;
-        return true;
-    case MENU:
-        cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
-        break;
-    case ACEPTAR: {
-      if(_imag->isInteractuable(mx+1, my)){
-	cout << "mx+1,my: " << _imag->isInteractuable(mx+1,my) << endl;
-	_imag->dibujar(mx+1,my,_principal->getMapaX(), _principal->getMapaY());
-      } else if (_imag->isInteractuable(mx-1,my)){
-	cout << "mx-1,my: " << _imag->isInteractuable(mx-1,my) << endl;
-	_imag->dibujar(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
-      } else if(_imag->isInteractuable(mx,my+1)){
-	cout << "mx,my+1: " << _imag->isInteractuable(mx,my+1) << endl;
-	_imag->dibujar(mx,my+1,_principal->getMapaX(), _principal->getMapaY());
-      } else if(_imag->isInteractuable(mx,my-1)){
-	cout << "mx,my-1: " << _imag->isInteractuable(mx,my-1) << endl;
-	_imag->dibujar(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
-      }
-      _pant->volcarPantalla(_pant->getBuffer());
-      dibujarPosicionEstatica();
-      // for(size_t i=0; i<cozaz.size(); i++)
+  char dir = ' ';
+  
+  /* Lectura del nuevo evento */
+  switch (evento.getEvento()) {
+  case SALIR:
+    cout << "Saliendo de la ejecucion del programa" << endl;
+    return true;
+  case MENU:
+    cout << "Desea ver el menu... va a tener que esperar un poco..." << endl;
+    break;
+  case ACEPTAR: {
+    if(_imag->isInteractuable(mx+1, my)){
+      cout << "mx+1,my: " << _imag->isInteractuable(mx+1,my) << endl;
+      //_imag->dibujar(mx+1,my,_principal->getMapaX(), _principal->getMapaY());
+    } else if (_imag->isInteractuable(mx-1,my)){
+      cout << "mx-1,my: " << _imag->isInteractuable(mx-1,my) << endl;
+      //_imag->dibujar(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
+    } else if(_imag->isInteractuable(mx,my+1)){
+      cout << "mx,my+1: " << _imag->isInteractuable(mx,my+1) << endl;
+      //_imag->dibujar(mx,my+1,_principal->getMapaX(), _principal->getMapaY());
+    } else if(_imag->isInteractuable(mx,my-1)){
+      cout << "mx,my-1: " << _imag->isInteractuable(mx,my-1) << endl;
+      //_imag->dibujar(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
+    }
+    // for(size_t i=0; i<cozaz.size(); i++)
       // 	switch(cozaz.at(i)){
       // 	case NPJ::DIALOGO: cout << "DIALOGO" << endl; break;
       // 	case NPJ::OBJETO: cout << "OBJETO" << endl; break;
@@ -202,17 +218,27 @@ bool Animacion::procesarAccion() {
              * se moverá de forma estática, desplazándose el fondo por debajo */
             if (_principal->fueraRango(x, y)) {
                 hacerMovimientoEstatico(cx, cy, dir);
+		
             } else {
                 /* En caso de que se desplace el personaje, el fondo quedará tal y
                  * como estaba (por lo que no tendremos que pintarlo de nuevo,
                  * tan sólo hemos de volcarlo repetidas veces desde el buffer). */
                 hacerMovimientoDinamico();
             }
-        } else {
-            cout << "COLISION EN (" << mx << ", " << my << ")" << endl;
-            dibujarPosicionEstatica();
 	    
+        } else {
+	  cout << "COLISION EN (" << mx << ", " << my << ")" << endl;
+	  dibujarPosicionEstatica();
+	  
         }
+	// for(int i=0; i<_persSecs.size(); i++){
+// 	  if(_persSecs.at(i).dentroPantalla()){
+// 	    cout << "personaje " << _persSecs.at(i).getId() << " dibujado en: ("
+// 		 << _persSecs.at(i).getXpant() << "," << _persSecs.at(i).getYpant() << ")" << endl;
+// 	    _persSecs.at(i).dibujarPosicionFrente();
+// 	  }
+// 	}
+	_pant->volcarPantalla(_pant->getBuffer());
     }
     return false;
 }
@@ -226,6 +252,13 @@ void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y, char dir) {
                                 _principal->getSecuenciasMovimiento());
         /* Mover el personaje (autovolcado en buffer) */
         mover(sec, 0);
+	for(Uint32 i=0; i<_persSecs.size(); i++){
+	  if(_persSecs.at(i).dentroPantalla()){
+	    //cout << "personaje " << _persSecs.at(i).getId() << " dibujado en: ("
+	    // << _persSecs.at(i).getXpant() << "," << _persSecs.at(i).getYpant() << ")" << endl;
+	    _persSecs.at(i).dibujarPosicionFrente();
+	  }
+	}
         /* Pantalla visible */
         _pant->volcarPantalla(_pant->getBuffer());
     }
@@ -240,6 +273,13 @@ void Animacion::hacerMovimientoDinamico() {
         /* Volcar seccion de movimiento del PJ en buffer */
         mover(sec, _principal->getDesp(sec));
         /* Pantalla visible */
+	for(Uint32 i=0; i<_persSecs.size(); i++){
+	  if(_persSecs.at(i).dentroPantalla()){
+	    //cout << "personaje " << _persSecs.at(i).getId() << " dibujado en: ("
+	    // << _persSecs.at(i).getXpant() << "," << _persSecs.at(i).getYpant() << ")" << endl;
+	    _persSecs.at(i).dibujarPosicionFrente();
+	  }
+	}
         _pant->volcarPantalla(_pant->getBuffer());
     }
 
