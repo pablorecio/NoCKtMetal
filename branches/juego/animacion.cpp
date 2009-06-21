@@ -105,7 +105,7 @@ void Animacion::inicializarAnimacion() {
   _pant->volcarPantalla(_pant->getBuffer());
 
   cout << "NPJS" << endl;
-  _persSecs.push_back(NPJ(0,20,20,"./sprites/baldos.png",_pant, _imag->getCX(), _imag->getCY()));
+  _persSecs.push_back(NPJ(0,23,23,"./sprites/baldos.png",_pant, _imag->getCX(), _imag->getCY()));
   _persSecs.push_back(NPJ(1,14,14,"./sprites/dentacos.png",_pant, _imag->getCX(), _imag->getCY()));
 
   for(Uint32 i=0; i<_persSecs.size(); i++){
@@ -414,10 +414,11 @@ void Animacion::dialogos(Uint32 i)
   switch(i){
   case 1: {
     aux.clear();
-    aux.push_back(Dialogo::Mensaje(0, "hola! ¡que tal!"));
+    aux.push_back(Dialogo::Mensaje(0, "hola! que tal!"));
     aux.push_back(Dialogo::Mensaje(1, "no muy bien :("));
-    aux.push_back(Dialogo::Mensaje(0, "¿que te pasa colega?"));
-    aux.push_back(Dialogo::Mensaje(1, "unos kinkis que me an destrozao la harly\nno me dejan vivir en paz :("));
+    aux.push_back(Dialogo::Mensaje(0, "que te pasa colega?"));
+    aux.push_back(Dialogo::Mensaje(1, "unos kinkis que me an destrozao la harly"));
+    aux.push_back(Dialogo::Mensaje(1, "no me dejan vivir en paz :("));
     aux.push_back(Dialogo::Mensaje(0, "que dices!!!"));
     aux.push_back(Dialogo::Mensaje(1, "si quilla, estoy desanimao..."));
     aux.push_back(Dialogo::Mensaje(0, "se van a enterar de lo que es bueno esos kinkis! vamos!!"));
@@ -425,12 +426,12 @@ void Animacion::dialogos(Uint32 i)
     
   case 2:{
     aux.clear();
-    aux.push_back(Dialogo::Mensaje(0, "Que de tiempo hermana!"));
+    aux.push_back(Dialogo::Mensaje(0, "Que de tiempo Dentacos!"));
     aux.push_back(Dialogo::Mensaje(1, "Holaa!! ^^ que alegria me da verte"));
-    aux.push_back(Dialogo::Mensaje(0, "Si si y a mi :D ¿como estás?"));
-    aux.push_back(Dialogo::Mensaje(1, "bien bien! y tu? como es que estás por aqui?"));
+    aux.push_back(Dialogo::Mensaje(0, "Si si y a mi :D como estas?"));
+    aux.push_back(Dialogo::Mensaje(1, "bien bien! y tu? como es que estas por aqui?"));
     aux.push_back(Dialogo::Mensaje(0, "pues estoy buscando a Baldos"));
-    aux.push_back(Dialogo::Mensaje(1, "¿a si? creo que lo e visto... hacia el sur"));
+    aux.push_back(Dialogo::Mensaje(1, "a si? creo que lo e visto... hacia el sur"));
     aux.push_back(Dialogo::Mensaje(0, "ahh gracias!! voy hacia alli :P"));
     aux.push_back(Dialogo::Mensaje(1, "de nada mujer!! adios!! "));
     aux.push_back(Dialogo::Mensaje(0, "adioss!!"));  
