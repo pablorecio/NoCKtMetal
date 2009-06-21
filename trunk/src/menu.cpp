@@ -92,14 +92,14 @@ void Elemento::dibujar(SDL_Surface *p) {
 
 inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
                     Uint32 x, Uint32 y, Uint32 dX, Uint32 dY, Uint32 rX,
-                    Uint32 rY):
+                    Uint32 rY, const char* urlFont, Uint32 tamFont):
                     Elemento(url, x, y, p), _despX(dX), _despY(dY),
         _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje) {
 
 	iniciarTTF();
 
     /* Definición del tipo de fuente del menu */
-    _tipoFuente = TTF_OpenFontRW(SDL_RWFromFile("fuentes/FontMenu.ttf", "r"), 1, 19);
+    _tipoFuente = TTF_OpenFontRW(SDL_RWFromFile(urlFont, "r"), 1, tamFont);
 
     /* Color de la fuente */
     SDL_Color c;
@@ -157,14 +157,16 @@ Menu::Menu(const char* urlFondo, const char* urlCursor, Pantalla* p):
 
 
 void Menu::setBoton(const char* mensaje, Uint32 posx, Uint32 posy,
-                    const char* url, Uint32 espacioX, Uint32 espacioY) {
+                    const char* url, Uint32 espacioX, Uint32 espacioY,
+		    const char* urlFont, Uint32 tamFont) {
   
     /* Si es el primer botón, se toma por defecto como activado */
     if(_numBotones == 0) {
         _botonActivo = 0;
     }
 
-    Boton *b = new Boton(url, mensaje, _pant, posx, posy, 0,0,10,10);
+    Boton *b = new Boton(url, mensaje, _pant, posx, posy, 0,0,10,10,
+			 urlFont, tamFont);
     _botones.insert(make_pair(_numBotones, b));
 
     /* Dibujamos el botón en el fondo, puesto que no es necesario redibujarlo

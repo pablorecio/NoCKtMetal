@@ -131,33 +131,38 @@ void MostrarCreditos(Pantalla* p, Evento* e) {
     bool volver = false;
 
     vector<const char*> credLinea;
-    credLinea.push_back("          CRÉDITOS");
-    credLinea.push_back(" Juego desarrollado por:");
-    credLinea.push_back("      - Rosa María Durante Lerate (rosUnix)");
+    credLinea.push_back("  Juego desarrollado bajo GPLv3 por:");
+    credLinea.push_back("      - Rosa Maria Durante Lerate (rosUnix)");
     credLinea.push_back("      - Pablo Recio Quijano (riku)");
     credLinea.push_back("      - Noelia Sales Montes (nessa)");
-    credLinea.push_back("   -> ELEMENTOS VISUALES:");
-    credLinea.push_back("  + Extraídos de Battle for Wesnoth (GPL)");
-    credLinea.push_back("  + Desarrollado por Noelia Sales Montes (GPL)");
-    credLinea.push_back("   -> ELEMENTOS MULTIMEDIA (AUDIO):");
-    credLinea.push_back("  + Música Creative Commons (especificada en");
-    credLinea.push_back("    la documentación)");
-    credLinea.push_back(" Bajo licencia GPLv3");
-
-    credLinea.push_back("  Presione ESC o ENTER para volver al menú...");
+    credLinea.push_back("");
+    credLinea.push_back("              ELEMENTOS VISUALES:");
+    credLinea.push_back(" Extraidos de Battle for Wesnoth (GPL)");
+    credLinea.push_back(" Desarrollados por Noelia Sales Montes (GPL)");
+    credLinea.push_back("");
+    credLinea.push_back("          ELEMENTOS MULTIMEDIA (AUDIO):");
+    credLinea.push_back(" Musica Creative Commons (Nine Inch Nails)");
+    credLinea.push_back(" Desarrollados por Pablo Recio Quijano (GPL)");
+    credLinea.push_back("                     Presione ENTER para volver al menu");
 
     /* Construcción e inicialización del menú principal */
-    Menu cred("imagenes/creditos_fondo.png", "imagenes/nulo.png", p);
+    Menu cred("imagenes/creditos_fondo.png", "imagenes/vacio.png", p);
 
     for(size_t i = 0; i < credLinea.size(); ++i) {
-      cred.setBoton(credLinea.at(i), 50, 50 + 12 * i, "imagenes/nulo.png", 5,5);
+      if(i != credLinea.size() -1) {
+	cred.setBoton(credLinea.at(i), 120, 20+24 * i, "imagenes/nulo.png", 
+		      4,1, "fuentes/FontCreditos.ttf", 14);
+      } else {
+	cred.setBoton(credLinea.at(i), 120, 20+24 * i, "imagenes/nulo.png", 
+		      30,1, "fuentes/FontCreditos.ttf", 10);
+      }
     }
 
     cred.dibujar();
 
     while (!volver) {
 		switch (e->getEvento()) {
-		case SALIR: case ACEPTAR: case ATRAS:
+		case ACEPTAR: case ATRAS:
 			volver = true;
 			break;
 		default:

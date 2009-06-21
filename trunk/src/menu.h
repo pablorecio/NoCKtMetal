@@ -175,7 +175,8 @@ public:
      * interiores, en este caso el mensaje a mostrar.
      */
     Boton(const char* url, const char* mensaje, Pantalla* p, Uint32 x, Uint32 y,
-          Uint32 dX = 0, Uint32 dY = 0, Uint32 rX = 0, Uint32 rY = 0);
+          Uint32 dX = 0, Uint32 dY = 0, Uint32 rX = 0, Uint32 rY = 0, 
+	  const char* urlFont = "fuentes/FontMenu.ttf", Uint32 tamFont = 19);
 
     /**
      * Método observador del desplazamiento o margen horizontal con respecto
@@ -341,7 +342,9 @@ public:
      * @param espacioY Margen vertical interior del botón.
      */
     void setBoton(const char* mensaje, Uint32 posx, Uint32 posy,
-    		const char* url, Uint32 espacioX, Uint32 espacioY);
+		  const char* url, Uint32 espacioX, Uint32 espacioY, 
+		  const char* urlFont = "fuentes/FontMenu.ttf", 
+		  Uint32 tamFont = 19);
     /**
      * Método que dibuja el estado actual del menú en la pantalla.
      */
