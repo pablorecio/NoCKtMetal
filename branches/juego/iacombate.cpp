@@ -110,6 +110,7 @@ Combatiente* IACombate::seleccionarObjetivo(){
     Sint32 valor_aleatorio = a.valorEntero(1,val_aux);
 
     Combatiente *objetivo;
+    objetivo = *(auxiliar.begin());
     for(Sint32 i = n-1 ; i >= 0 ; i--){
     	if(i != 0 && valores.at(i) > valor_aleatorio && valores.at(i-1) < valor_aleatorio){
     		objetivo = auxiliar.at(n-i);
