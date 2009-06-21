@@ -116,6 +116,14 @@ class Pantalla {
                           Uint32 colorG = 255, Uint32 colorB = 255,
                           Uint32 colorA = 0);
 
+    
+    /**
+     * Tomaremos una SDL_Surface vacía y la volcaremos en el
+     * 'Buffer' que nos pasen por parámetro.
+     * @param buffer Es un tipo SDL_Surface que queremos limpiar.
+     */
+    void limpiarBuffer(SDL_Surface* buffer);
+
     /**
      * Método modificador que copia el contenido de una pantalla en nuestra
      * pantalla principal.
