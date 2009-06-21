@@ -61,6 +61,7 @@ public:
    case 1: //Ataque simple
      Combatiente *obj;
      obj = seleccionarObjetivo();
+     cout << "Objetivo: " << obj << endl;
      objetivo = obj->getIdentificador();
      danio = _actual->ataqueSimple(*obj);
      break;
@@ -89,18 +90,28 @@ Combatiente* IACombate::seleccionarObjetivo(){
     vector<Combatiente*> auxiliar;
 
     for (size_t i = 0; i < _g1->getNumeroCombatientes(); i++) {
-        if (_g1->getCombatientes().at(i)->getPV() > 0)
+      if (_g1->getCombatientes().at(i)->getPV() > 0){
             auxiliar.push_back(_g1->getCombatientes().at(i));
+	    cout << "Posible objetivo: " << _g1->getCombatientes().at(i) 
+		 << endl;
+      }
     }
 
     //Aleatorio a;
     //int seleccionado = a.valorEntero(1,auxiliar.size()) - 1;
     //return auxiliar.at(seleccionado);
-    make_heap(auxiliar.begin(),auxiliar.end(),ComparacionVida());
-    sort_heap(auxiliar.begin(),auxiliar.end());
+    sort(auxiliar.begin(),auxiliar.end());
+
+    #ifdef DEBUG
+    cout << "OBJETIVOS ORDENADOS:" << endl << "-----------------" << endl;
+    for(vector<Combatiente*>::iterator i = auxiliar.begin();
+	i != auxiliar.end() ; i++){
+      cout << (*i)->getNombre() << " -> " << *i << endl;
+    }
+    #endif
 
     Aleatorio a;
-    Sint32 n = _g1->getNumeroCombatientes();
+    Sint32 n = _g1->getNumeroCombatientesVivos();
     vector<Sint32> valores;
     Sint32 val_aux = 0;
     for(Sint32 i = 0 ; i < n ; i++){
@@ -113,8 +124,10 @@ Combatiente* IACombate::seleccionarObjetivo(){
     objetivo = *(auxiliar.begin());
     for(Sint32 i = n-1 ; i >= 0 ; i--){
     	if(i != 0 && valores.at(i) > valor_aleatorio && valores.at(i-1) < valor_aleatorio){
-    		objetivo = auxiliar.at(n-i);
+	  cout << "WOJOJO" << endl << "n: " << n << endl << "i: " << i << endl;
+	  objetivo = auxiliar.at(n-i);
     	}
     }
+    cout << "Objetivo seleccionado: " << objetivo << endl;
     return objetivo;
 }
