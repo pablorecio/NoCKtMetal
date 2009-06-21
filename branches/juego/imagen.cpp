@@ -18,17 +18,18 @@ using namespace std;
 
 Imagen::Imagen() { }
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ>& npj, Pantalla& p, 
+Imagen::Imagen(Uint32 ancho, Uint32 alto, /*std::vector<NPJ>& npj,*/ Pantalla& p, 
 	 std::vector<std::vector<Uint32> >& matriz_tiles, std::map<Uint32, Tile>& imagenes):
   _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0), _p(&p) {
   
-  for(size_t i=0; i<npj.size(); i++)
+  /*for(size_t i=0; i<npj.size(); i++)
     npjs_.push_back(npj.at(i));
-
+  
   for(size_t i=0; i<npjs_.size(); i++){
     npjs_.at(i).setImagen(*this);
   }
-  
+  */
+
   for(std::map<Uint32,Tile>::iterator i = imagenes.begin();
       i != imagenes.end(); i++)
     _tiles.insert(make_pair(i->first,i->second));
@@ -55,20 +56,21 @@ Imagen::Imagen(Uint32 ancho, Uint32 alto, std::vector<NPJ>& npj, Pantalla& p,
   
 }
 
-Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, std::vector<NPJ>& personajes, Pantalla& p,
+Imagen::Imagen(Uint32 ancho, Uint32 alto, Uint32 x, Uint32 y, /*std::vector<NPJ>& personajes,*/ Pantalla& p,
        std::vector<std::vector<Uint32> >& matriz_tiles, std::map<Uint32,Tile>& imagenes):
 
 _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(x), _cYt(y), _p(&p) {
 
-   for(std::map<Uint32,Tile>::iterator i = imagenes.begin();
+  for(std::map<Uint32,Tile>::iterator i = imagenes.begin();
       i != imagenes.end(); i++)
     _tiles.insert(make_pair(i->first,i->second));
-
-  for(size_t i=0; i<personajes.size(); i++)
+  
+  /*for(size_t i=0; i<personajes.size(); i++)
     npjs_.push_back(personajes.at(i));
   for(size_t i=0; i<npjs_.size(); i++){
     npjs_.at(i).setImagen(*this);
   }
+  */
 
   vector<Uint32> auxiliar(_alto);
   vector<bool> auxiliarb(_alto);
@@ -90,27 +92,22 @@ _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(x), _cYt(y), _p(&p) {
     }
 }
 
-Imagen::Imagen(std::map<Uint32, Tile>& imagenes, Uint32 ancho, Uint32 alto, Pantalla& p, std::vector<NPJ>& pers,
-	 std::vector<std::vector<Uint32> >& matriz_tiles) {
-
-    _ancho = ancho;
-    _alto = alto;
-
-    _cX = 0;
-    _cY = 0;
-
-    _cXt = 0;
-    _cYt = 0;
-
-    for(std::map<Uint32,Tile>::iterator i = imagenes.begin();
+Imagen::Imagen(std::map<Uint32, Tile>& imagenes, Uint32 ancho, Uint32 alto, Pantalla& p, /*std::vector<NPJ>& pers,*/
+	       std::vector<std::vector<Uint32> >& matriz_tiles) :
+  _alto(alto), _ancho(ancho), _cX(0), _cY(0), _cXt(0), _cYt(0)
+{
+  
+  for(std::map<Uint32,Tile>::iterator i = imagenes.begin();
       i != imagenes.end(); i++)
     _tiles.insert(make_pair(i->first,i->second));
-
-    for(size_t i=0; i<pers.size(); i++)
+  
+  /*
+  for(size_t i=0; i<pers.size(); i++)
     npjs_.push_back(pers.at(i));
   for(size_t i=0; i<npjs_.size(); i++){
     npjs_.at(i).setImagen(*this);
   }
+  */
 
    vector<Uint32> auxiliar(_alto);
    vector<bool> auxiliarb(_alto);
@@ -173,12 +170,13 @@ void Imagen::dibujarFondo() {
 
     cout << "mapa pintado" << endl;
     
-    for(size_t i=0; i<npjs_.size(); i++){
+    /*  for(size_t i=0; i<npjs_.size(); i++){
       NPJ aux = npjs_.at(i);
       _matrizColision[aux.getX()][aux.getY()] = true;
       _matrizInteractual[aux.getX()][npjs_.at(i).getY()] = true;
       aux.dibujarPosicionFrente();
     }
+    */
 
     _cX = _cXt * Tile::getTam();
     _cY = _cYt * Tile::getTam();
@@ -242,7 +240,7 @@ void Imagen::dibujarSecuencia(char dir, Uint32 secuencia, Uint32 veces) {
     }
 }
 
-const std::vector<NPJ::interaccion>& Imagen::dibujar(Uint32 tx, Uint32 ty, Uint32 px, Uint32 py)
+/*const std::vector<NPJ::interaccion>& Imagen::dibujar(Uint32 tx, Uint32 ty, Uint32 px, Uint32 py)
 {
   char dir;
   if(tx == px && ty < py)
@@ -309,3 +307,4 @@ const std::vector<NPJ::interaccion>& Imagen::dibujar(Uint32 tx, Uint32 ty, Uint3
   return npjs_.at(npj).acciones();
 
 }
+*/

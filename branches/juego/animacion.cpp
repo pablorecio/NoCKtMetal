@@ -30,6 +30,7 @@
 
 #include "personaje.h"
 #include "animacion.h"
+#include "evento.h"
 #include "imagen.h"
 #include "npj.h"
 #include "dialogo.h"
@@ -37,10 +38,10 @@
 using namespace std;
 
 Animacion::Animacion() {
-    evento = Evento();
+    _evento = new Evento();
 }
 
-Animacion::Animacion(Pantalla *p): _pant(p) { }
+Animacion::Animacion(Pantalla *p, Evento* e): _pant(p), _evento(e) { }
 
 Animacion::~Animacion() { }
 
@@ -93,7 +94,7 @@ void Animacion::inicializarAnimacion() {
 
   cout << "personaje" << endl;
   /* Personaje */
-  _principal = new Personaje(1,1,1,30,_pant, "./lapunki.png");
+  _principal = new Personaje(1,1,1,30,_pant, "./sprites/manolo.png");
   _principal->setRango(2, 2);
   _principal->setPosicion();
   _principal->setMapa(fondoX + _principal->getPantX(),
@@ -104,8 +105,8 @@ void Animacion::inicializarAnimacion() {
   _pant->volcarPantalla(_pant->getBuffer());
 
   cout << "NPJS" << endl;
-  _persSecs.push_back(NPJ(0,20,20,"./baldos.png",_pant, _imag->getCX(), _imag->getCY()));
-  _persSecs.push_back(NPJ(1,14,14,"./lapunki.png",_pant, _imag->getCX(), _imag->getCY()));
+  _persSecs.push_back(NPJ(0,20,20,"./sprites/baldos.png",_pant, _imag->getCX(), _imag->getCY()));
+  _persSecs.push_back(NPJ(1,14,14,"./sprites/dentacos.png",_pant, _imag->getCX(), _imag->getCY()));
 
   for(Uint32 i=0; i<_persSecs.size(); i++){
     _imag->setColisionable(_persSecs.at(i).getX(), _persSecs.at(i).getY(), 1);
@@ -139,7 +140,7 @@ bool Animacion::procesarAccion() {
   char dir = ' ';
   
   /* Lectura del nuevo evento */
-  switch (evento.getEvento()) {
+  switch (_evento->getEvento()) {
   case SALIR:
     cout << "Saliendo de la ejecucion del programa" << endl;
     return true;

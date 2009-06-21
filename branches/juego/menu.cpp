@@ -96,7 +96,7 @@ inline Boton::Boton(const char* url, const char* mensaje, Pantalla* p,
                     Elemento(url, x, y, p), _despX(dX), _despY(dY),
         _rangoMensajeX(rX), _rangoMensajeY(rY), _mensaje(mensaje) {
 
-	iniciarTTF();
+  iniciarSubsistemaTTF();
 
     /* Definición del tipo de fuente del menu */
     _tipoFuente = TTF_OpenFontRW(SDL_RWFromFile(urlFont, "r"), 1, tamFont);

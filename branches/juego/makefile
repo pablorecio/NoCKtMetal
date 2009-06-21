@@ -4,7 +4,7 @@ DEBUG = -g
 LIB = -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -lboost_serialization
 EXE = main-menu
 GENERA = generar-xml
-OBJS = animacion.o imagen.o musica.o sprite.o tile.o personaje.o npj.o atributos.o combatiente.o grupo.o inventario.o especial.o objeto.o habilidad.o control-combate.o iacombate.o aleatorio.o biblioteca.o sistema.o pantalla.o evento.o menu.o menu-principal.o motor-movimiento.o motor-combate.o
+OBJS = animacion.o imagen.o musica.o sprite.o tile.o personaje.o npj.o atributos.o combatiente.o grupo.o inventario.o especial.o objeto.o habilidad.o control-combate.o iacombate.o aleatorio.o biblioteca.o sistema.o pantalla.o evento.o menu.o menu-principal.o dialogo.o motor-movimiento.o motor-combate.o
 OBJETOS = ${OBJS} ${EXE}.o
 OBJS-G =  ${OBJS} iniciar-objetos.o biblioteca.o ${GENERA}.o
 
@@ -28,7 +28,8 @@ iacombate.o: iacombate.h grupo.h objeto.h combatiente.h habilidad.h inventario.h
 aleatorio.o: aleatorio.h
 biblioteca.o: combatiente.h grupo.h objeto.h habilidad.h biblioteca.h
 # ---------------------------------------------------------------------
-animacion.o: evento.h pantalla.h personaje.h imagen.h npj.h animacion.h 
+animacion.o: evento.h pantalla.h personaje.h imagen.h npj.h dialogo.h animacion.h
+dialogo.o: pantalla.h dialogo.h
 imagen.o: pantalla.h npj.h tile.h imagen.h
 musica.o: musica.h
 sprite.o: sprite.h

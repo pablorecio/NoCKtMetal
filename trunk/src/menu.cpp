@@ -199,7 +199,7 @@ bool Menu::actualizar() {
 
     /* Lectura del nuevo evento */
     switch (_evento.getEvento()) {
-    case SALIR:
+      case SALIR:
         cout << "Saliendo de la ejecucion del programa" << endl;
         _estadoSalida = true;
         return true;
