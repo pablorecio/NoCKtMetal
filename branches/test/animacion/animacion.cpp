@@ -148,22 +148,27 @@ bool Animacion::procesarAccion() {
     break;
   case ACEPTAR: {
     int x,y;
+    _pant->volcarPantalla(_pant->getFondo());
     if(_imag->isInteractuable(mx+1, my)){
       x = mx+1; y = my;
       cout << "mx+1,my: " << _imag->isInteractuable(mx+1,my) << endl;
       persAactuar(mx+1,my).dibujarPosicion(mx+1,my,_principal->getMapaX(), _principal->getMapaY());
+      _principal->dibujarPosicionLatDcha();
     } else if (_imag->isInteractuable(mx-1,my)){
       x = mx-1; y = my; 
       cout << "mx-1,my: " << _imag->isInteractuable(mx-1,my) << endl;
       persAactuar(mx-1,my).dibujarPosicion(mx-1,my,_principal->getMapaX(), _principal->getMapaY());
+      _principal->dibujarPosicionLatIzda();
     } else if(_imag->isInteractuable(mx,my+1)){
       x = mx; y = my+1;
       cout << "mx,my+1: " << _imag->isInteractuable(mx,my+1) << endl;
+      _principal->dibujarPosicionFrente();
       persAactuar(mx,my+1).dibujarPosicion(mx,my+1,_principal->getMapaX(), _principal->getMapaY());
     } else if(_imag->isInteractuable(mx,my-1)){
       x = mx; y = my-1;
       cout << "mx,my-1: " << _imag->isInteractuable(mx,my-1) << endl;
       persAactuar(mx,my-1).dibujarPosicion(mx,my-1,_principal->getMapaX(), _principal->getMapaY());
+      _principal->dibujarPosicionEspaldas();
     }
     _pant->volcarPantalla(_pant->getBuffer());
     // for(size_t i=0; i<cozaz.size(); i++)
@@ -259,13 +264,23 @@ void Animacion::hacerMovimientoEstatico(Sint32 x, Sint32 y, char dir) {
     _imag->dibujarSecuencia(dir, _principal->getSecuenciasMovimiento() - sec,
 			    _principal->getSecuenciasMovimiento());
     
-    /* Mover el personaje (autovolcado en buffer) */
-    mover(sec, 0);
-    
+    /* Mover los npjs que están encima del pj primero.*/
     for(Uint32 i=0; i<_persSecs.size(); i++){
       _persSecs.at(i).dentroPantalla(_imag->getCX(), _imag->getCY(), 
 				     _principal->getSecuenciasMovimiento() - sec, dir);	  
-      if(_persSecs.at(i).dentroPantalla()){
+      if(_persSecs.at(i).dentroPantalla() && _principal->getMapaY() > _persSecs.at(i).getY()){
+	_persSecs.at(i).dibujarPosicionFrente();
+      }
+    }
+
+    /* Mover el personaje (autovolcado en buffer) */
+    mover(sec, 0);
+    
+    /* Mover los npjs que están debajo del pj despues.*/
+    for(Uint32 i=0; i<_persSecs.size(); i++){
+      _persSecs.at(i).dentroPantalla(_imag->getCX(), _imag->getCY(), 
+				     _principal->getSecuenciasMovimiento() - sec, dir);	  
+      if(_persSecs.at(i).dentroPantalla() && _principal->getMapaY() <= _persSecs.at(i).getY()){
 	_persSecs.at(i).dibujarPosicionFrente();
       }
     }
@@ -281,11 +296,17 @@ void Animacion::hacerMovimientoDinamico() {
        --sec) {
     /* Volcar fondo en buffer */
     _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
+    /* primero npj de arriba*/
+    for(Uint32 i=0; i<_persSecs.size(); i++){
+      if(_persSecs.at(i).dentroPantalla() && _principal->getMapaY() > _persSecs.at(i).getY()){
+	_persSecs.at(i).dibujarPosicionFrente();
+      }
+    }
     /* Volcar seccion de movimiento del PJ en buffer */
     mover(sec, _principal->getDesp(sec));
-    /* Pantalla visible */
+    /* dp npjs de abajo. */
     for(Uint32 i=0; i<_persSecs.size(); i++){
-      if(_persSecs.at(i).dentroPantalla()){
+      if(_persSecs.at(i).dentroPantalla() && _principal->getMapaY() <= _persSecs.at(i).getY()){
 	_persSecs.at(i).dibujarPosicionFrente();
       }
     }
@@ -357,9 +378,14 @@ void Animacion::dibujarPosicionEstatica() {
     /* Volcar fondo en buffer */
     _pant->volcarPantalla(_pant->getFondo(), _pant->getBuffer());
     /* Mover el personaje (autovolcado en buffer) */
+    for(Uint32 i=0; i<_persSecs.size(); i++){
+      if(_persSecs.at(i).dentroPantalla() && _principal->getMapaY() > _persSecs.at(i).getY()){
+     	_persSecs.at(i).dibujarPosicionFrente();
+      }
+    }
     mover(sec, 0);
     for(Uint32 i=0; i<_persSecs.size(); i++){
-      if(_persSecs.at(i).dentroPantalla()){
+      if(_persSecs.at(i).dentroPantalla() && _principal->getMapaY() <= _persSecs.at(i).getY()){
      	_persSecs.at(i).dibujarPosicionFrente();
       }
     }
