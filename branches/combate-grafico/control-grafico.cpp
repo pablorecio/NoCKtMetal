@@ -42,10 +42,14 @@ ControlGrafico::ControlGrafico(Grupo &g1, Grupo &g2, Pantalla* p):
   _menuSup = new MenuVariable("./fondo/menu_sup.png",
 		  "./fondo/cursor_menu_sup.png", _pant, 480, 100, 0,0);
 
-  //_menuSup-> Añadir los botones
+	  /*_menuSup-> Añadir los botones
+	  for(Uint32 c = 0; i < _g1->getNumeroCombatientes(); ++i) {
+		  _menuSup->setBoton()
+	  }
+  */
 
-  _menuInf = new MenuVariable("./fondo/menu_inf.png", "./fondo/cursor_menu_inf.png",
-		  _pant, 480, 100, 0, 380);
+  _menuInf = new MenuVariable("./fondo/menu_inf.png",
+		  "./fondo/cursor_menu_inf.png", _pant, 480, 100, 0, 380);
 
   //_menuInf-> Añadir los botones
 
@@ -56,4 +60,11 @@ ControlGrafico::ControlGrafico(Grupo &g1, Grupo &g2, Pantalla* p):
    */
   _menuSup->dibujar();
   _menuInf->dibujar();
+}
+
+
+void ControlGrafico::mostrarCombate() {
+	ControlCombate::mostrarCombate();
+	_menuSup->dibujar();
+	_menuInf->dibujar();
 }

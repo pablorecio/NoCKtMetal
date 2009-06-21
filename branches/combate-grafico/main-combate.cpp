@@ -29,9 +29,9 @@ using namespace std;
 
 int main(){
 
-	Pantalla p();
+	Pantalla p;
 
-	p.
+	//p.setTitulo("")
 
   Biblioteca bib;
   bib.recargarXML("datos-xml/biblioteca.xml");
@@ -40,7 +40,7 @@ int main(){
   /* 	GrupoGrafico(Inventario& invent, bool contr, Uint32 i, string rXML,
 			Pantalla* p, vector<const char*> sprites */
 
-  vector<const char*> spritesPrincipal();
+  vector<const char*> spritesPrincipal;
   spritesPrincipal.push_back("./sprites/baldos.png");
   spritesPrincipal.push_back("./sprites/baldos.png");
   spritesPrincipal.push_back("./sprites/baldos.png");
@@ -66,7 +66,7 @@ int main(){
   cout << "Seleccionado " << I->first;
   cout << " " << bib.getGrupoEnemigo(I->first) << endl;
 
-  vector<const char*> spritesEnemigos();
+  vector<const char*> spritesEnemigos;
   spritesEnemigos.push_back("./sprites/graimito.png");
   spritesEnemigos.push_back("./sprites/graimito.png");
   spritesEnemigos.push_back("./sprites/graimito.png");

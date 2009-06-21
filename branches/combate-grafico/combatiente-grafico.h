@@ -38,7 +38,8 @@ public:
 //	CombatienteGrafico(const Combatiente& c);
 
 	Sprite* getSprite();
-	void setSprite(const char* sprite,Uint32 numF, Uint32 numC);
+
+	void setSprite(const char* sprite, Uint32 numF, Uint32 numC);
 
 	bool getPosNormal() const;
 
@@ -87,13 +88,13 @@ inline CombatienteGrafico::CombatienteGrafico (string nombre, Uint32 id,
 					exp_ganable), _sprite(sprite, f, c), _posNormal(pos) {}
 
 inline Sprite* CombatienteGrafico::getSprite() { return &_sprite; }
-void CombatienteGrafico::setSprite(const char* sprite, Uint32 numF, Uint32 numC) {
-	_sprite = Sprite(sprite, numF, numC);
-}
+
+inline void CombatienteGrafico::setSprite(const char* sprite, Uint32 numF,
+		Uint32 numC) { _sprite = Sprite(sprite, numF, numC); }
 
 inline bool CombatienteGrafico::getPosNormal() const { return _posNormal; }
 
-void CombatienteGrafico::setPosNormal(bool pos) { _posNormal = pos; }
+inline void CombatienteGrafico::setPosNormal(bool pos) { _posNormal = pos; }
 
 inline CombatienteGrafico::~CombatienteGrafico() {}
 
