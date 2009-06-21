@@ -33,7 +33,7 @@
 #include "imagen.h"
 #include "npj.h"
 #include "dialogo.h"
-
+#include "motor-combate.h"
 using namespace std;
 
 Animacion::Animacion() {
@@ -177,8 +177,10 @@ bool Animacion::procesarAccion() {
       // cout << "Ha aceptado algo... Pero aqui no sirve de nada... "
       // 	   << " eso solo vale en los menus..." << endl;
     
-    if(persAactuar(x,y).getId() == 0) 
+    if(persAactuar(x,y).getId() == 0) {
       dialogos(1);
+      iniciarMotorCombate();
+    }
     else
       dialogos(2);
     
@@ -385,16 +387,13 @@ void Animacion::dialogos(Uint32 i)
   switch(i){
   case 1: {
     aux.clear();
-    aux.push_back(Dialogo::Mensaje(0, "hola! que tal!"));
-    aux.push_back(Dialogo::Mensaje(1, "bien! ^^ aquí vamos :P"));
-    aux.push_back(Dialogo::Mensaje(0, "pues yo tengo un problemón"));
-    aux.push_back(Dialogo::Mensaje(1, "que te pasa colega?"));
-    aux.push_back(Dialogo::Mensaje(0, "mi vieja y sus amigas..."));
-    aux.push_back(Dialogo::Mensaje(1, "ofuf.. a ver.."));
-    aux.push_back(Dialogo::Mensaje(0, "que no me dejan vivir en paz :("));
-    aux.push_back(Dialogo::Mensaje(1, "que dices!!!"));
-    aux.push_back(Dialogo::Mensaje(0, "si tio, toy desanimao..."));
-    aux.push_back(Dialogo::Mensaje(1, "se van a enterar de lo que es bueno esas viejas! vamos!!"));
+    aux.push_back(Dialogo::Mensaje(0, "hola! ¡que tal!"));
+    aux.push_back(Dialogo::Mensaje(1, "no muy bien :("));
+    aux.push_back(Dialogo::Mensaje(0, "¿que te pasa colega?"));
+    aux.push_back(Dialogo::Mensaje(1, "unos kinkis que me an destrozao la harly\nno me dejan vivir en paz :("));
+    aux.push_back(Dialogo::Mensaje(0, "que dices!!!"));
+    aux.push_back(Dialogo::Mensaje(1, "si quilla, estoy desanimao..."));
+    aux.push_back(Dialogo::Mensaje(0, "se van a enterar de lo que es bueno esos kinkis! vamos!!"));
   } break;
     
   case 2:{
@@ -413,6 +412,13 @@ void Animacion::dialogos(Uint32 i)
   default: break;
   }
   cout << "comienza el diálogo!!" << endl;
-  Dialogo a2(aux, *_pant);
+  Dialogo a2(aux, *_pant, 0,0,0,0,0,0);
 }
 
+
+void Animacion::iniciarMotorCombate()
+{
+  MotorCombate a;
+  a.asignarEnemigo(70);
+  a.ejecutar();
+}

@@ -55,8 +55,6 @@ _ancho(ancho), _alto(alto), _prof(prof) {
                                   _prof, 0, 0, 0, 0);
     _movimiento = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho,
                                        _alto, _prof, 0, 0, 0, 0);
-    _movSec = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho, _alto,
-				   _prof, 0, 0, 0, 0);
 }
 
 Pantalla::~Pantalla() {}

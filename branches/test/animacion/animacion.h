@@ -95,6 +95,8 @@ public:
   /**
    * Destructor de la clase Animacion.
    */
+
+  void iniciarMotorCombate();
   virtual ~Animacion();
  private:
   
