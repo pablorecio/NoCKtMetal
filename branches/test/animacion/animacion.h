@@ -98,6 +98,8 @@ public:
   virtual ~Animacion();
  private:
   
+  NPJ& persAactuar(Uint32 mx, Uint32 my);
+
   /**
    * Método auxiliar que dibuja un movimiento estático <i>desde el punto
    * de vista del personaje</i>.
@@ -133,6 +135,9 @@ public:
    * (cuando se topa con un tile colisionable).
    */
   void dibujarPosicionEstatica();
+  void hacerMovDinNPJ();
+
+  void dialogos(Uint32 i);
   /**
    * Puntero a la pantalla general del juego.
    */

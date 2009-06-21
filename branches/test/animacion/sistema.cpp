@@ -25,12 +25,13 @@
 
 #include <iostream>
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include "sistema.h"
 
 using namespace std;
 
 bool iniciarSistema(bool video, bool audio, bool tiempo, bool cd,
-                    bool joystick) {
+                    bool joystick, bool ttf) {
     bool iniciado = false;
 
     /* Al iniciar el sistema SDL, definir que se desactive el sistema en
@@ -38,7 +39,7 @@ bool iniciarSistema(bool video, bool audio, bool tiempo, bool cd,
     atexit(SDL_Quit);
 
     Uint32 flagVideo = 0, flagAudio = 0, flagTiempo = 0, flagCD = 0,
-           flagJoy = 0;
+      flagJoy = 0, flagTTF = 0;
 
     if (video) {
         flagVideo = SDL_INIT_VIDEO;
@@ -55,15 +56,21 @@ bool iniciarSistema(bool video, bool audio, bool tiempo, bool cd,
     if (joystick) {
         flagJoy = SDL_INIT_JOYSTICK;
     }
-
+   
     /* Iniciar SDL: modo video */
-    if (SDL_Init(flagVideo|flagAudio|flagTiempo|flagCD|flagJoy) < 0) {
+    if (SDL_Init(flagVideo|flagAudio|flagTiempo|flagCD|flagJoy|flagTTF) < 0) {
         cerr << "No se pudo iniciar SDL: " << SDL_GetError() << endl;
         exit(1);
     } else {
         iniciado = true;
         cout << "INICIADO" << endl;
     }
+    
+     if (ttf){
+       iniciarSubsistemaTTF();
+    }
+
+
     return iniciado;
 }
 
@@ -106,4 +113,18 @@ void iniciarSubsistemaJoystick() {
                 << endl;
         exit(1);
     }
+}
+
+
+void iniciarSubsistemaTTF() {
+  if(TTF_Init() == 0) {
+    atexit(TTF_Quit);
+    cout << "TTF inicializada" << endl;	
+  }
+  else{
+    cerr << "no se puede inicializar el sistema de fuentes " << SDL_GetError()
+	 << endl;
+    exit(1);
+  }
+  
 }

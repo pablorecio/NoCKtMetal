@@ -27,12 +27,12 @@
 #define	_SISTEMA_H
 
 bool iniciarSistema(bool video = true, bool audio = true, bool tiempo = false,
-                    bool cd = false, bool joystick = false);
+                    bool cd = false, bool joystick = false, bool ttf = true);
 void iniciarSubsistemaVideo();
 void iniciarSubsistemaAudio();
 void iniciarSubsistemaTiempo();
 void iniciarSubsistemaCD();
 void iniciarSubsistemaJoystick();
-
+void iniciarSubsistemaTTF();
 #endif	/* _SISTEMA_H */
 

@@ -71,9 +71,6 @@ void NPJ::establecerPosicion()
   px_ = x_*Tile::getTam();
   py_ = y_*Tile::getTam();
 
-  ppx_ = px_ - cx_;
-  ppy_ = py_ - cy_;
-
   tam_ = Tile::getTam();
 
   /* Colocación en pixels correcta de los sprites en las casillas */
@@ -82,12 +79,10 @@ void NPJ::establecerPosicion()
       /* Si el ancho del sprite es distinto, hay que centrarlo
        * horizontalmente en la casilla */
       px_ -= (sprite_.getAncho() - tam_)/2;
-      ppx_ -= (sprite_.getAncho() - tam_)/2;
     } else {
       /* Si el ancho del sprite es distinto, hay que centrarlo
        * horizontalmente en la casilla */
       px_ += (tam_ - sprite_.getAncho())/2;
-      ppx_ += (tam_ - sprite_.getAncho())/2;
     }
   }
   
@@ -95,13 +90,14 @@ void NPJ::establecerPosicion()
   if (tam_ > sprite_.getAlto()) {
     /* Si el alto del sprite es mayor hay que centrarlo */
     py_ += tam_ - sprite_.getAlto()/2;
-    ppy_ += tam_ - sprite_.getAlto()/2;
   } else {
     /* De forma general el sprite se colocará con su borde inferior alineado
      * con el borde inferior de la casilla */
-    py_ += tam_ - sprite_.getAlto()/2;
-    ppy_ += tam_ - sprite_.getAlto()/2;
+    py_ += tam_ - sprite_.getAlto();
   }
+
+  ppx_ = px_ - cx_;
+  ppy_ = py_ - cy_;
   
 }
 
@@ -112,36 +108,53 @@ void NPJ::dentroPantalla(Uint32 cx, Uint32 cy){
 
   establecerPosicion();
 
-  //cout << "(px, py) ->> (" << px_ << "," << py_ << ")" << endl;
-  
-  //cout << "(ppx,ppy): (" << ppx_ << "," << ppy_ << ")" << endl;
   pers_dibujado = (ppx_ < p_->getAncho() && ppy_ < p_->getAlto());
   
 }
 
-// void NPJ::dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, bool id, bool xy){ 
+void NPJ::dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, char dir){ 
 
-//   this->cx_ = cx*Tile::getTam();
-//   this->cy_ = cy*Tile::getTam();
+   this->cx_ = cx*Tile::getTam();
+   this->cy_ = cy*Tile::getTam();
 
-//   if(xy){
-//     if(id)
-//       cx_ += sec;
-//     else
-//       cx_ -= sec;
-//   } else {
-//     if(id)
-//       cy_ += sec;
-//     else
-//       cy_ -= sec;
-//   }
+   if(sec < desp_.size()){
+     for(Uint32 i=0; i<sec; i++){
+       switch(dir){
+       case 'u': cy_ -= desp_.at(i); 
+	 break;
+       case 'd': cy_ += desp_.at(i);
+	 break;
+       case 'l': cx_ -= desp_.at(i);
+	 break;
+       case 'r': cx_ += desp_.at(i);
+	 break;
+       }  
+     }
+   }
+  
+   establecerPosicion();
+   pers_dibujado = (ppx_ < p_->getAncho() && ppy_ < p_->getAlto());
+  
+ }
   
 
-//   establecerPosicion();
-//   pers_dibujado = (ppx_ < p_->getAncho() && ppy_ < p_->getAlto());
-  
-// }
-  
+void NPJ::dibujarPosicion(Uint32 mx, Uint32 my, Uint32 px, Uint32 py)
+{
+  cout << "identificador: " << id_;
+  if(mx == px && my < py) {// posición frente: pj abajo , npj arriba.
+    cout << " -> posicion frente" << endl;
+    dibujarPosicionFrente();
+  } else if(mx == px && my > py){ // posición de espaldas.
+    cout << " -> posicion de espaldas" << endl;
+    dibujarPosicionEspaldas();
+  } else if(my == py && mx < px){ // posicion lateral derecha
+    cout << " -> posicion derecha" << endl;
+    dibujarPosicionLatDcha();
+  } else if(my == py && mx > px){
+    cout << " -> posicion izquierda" << endl;
+    dibujarPosicionLatIzda();
+  }
+}
 
 void NPJ::subir() { y_ -= 1; }
 void NPJ::bajar() { y_ += 1; }
@@ -191,7 +204,7 @@ void NPJ::mover(Uint32 movimiento, Uint32 secuencia) {
   // cout << "(px,py): (" << px_ << "," << py_ << ")" << endl;
   // cout << "(ppx,ppy): (" << ppx_ << "," << ppy_ << ")" << endl;
   sprite_.dibujar(movimiento, secuencia, p_->getBuffer(), ppx_, ppy_);
-  p_->volcarPantalla(p_->getBuffer());
+  //p_->volcarPantalla(p_->getBuffer());
 }
 
 

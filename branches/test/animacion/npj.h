@@ -75,7 +75,9 @@ class NPJ {
   
   bool dentroPantalla() const;
   void dentroPantalla(Uint32 cx, Uint32 cy);
-  //void dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, bool id, bool xy);
+  void dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, char dir);
+
+  void dibujarPosicion(Uint32 mx, Uint32 my, Uint32 px, Uint32 py);
 
   void subir();
   void bajar();

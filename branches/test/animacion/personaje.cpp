@@ -304,5 +304,5 @@ void Personaje::mover(Uint32 movimiento, Uint32 secuencia) {
     /* Dibujamos el personaje en la imagen de secuencia indicada en la
      * posición actualizada de pantalla */
     _sprite.dibujar(movimiento, secuencia, _p->getBuffer(), _x, _y);
-    _p->volcarPantalla(_p->getBuffer());
+    //_p->volcarPantalla(_p->getBuffer());
 }
