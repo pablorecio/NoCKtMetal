@@ -1,0 +1,50 @@
+\section{Descarga}
+
+Actualmente tenemos dos formas para descargar distintas versiones: la última
+versión estable o la versión de prueba.
+
+\subsection*{Ultima versión estable}
+
+Para descargar la última versión estable, \url{http://forja.rediris.es/frs/?group_id=559}, 
+y seleccionando la última versión que aparezca en la web. Una vez descargado,
+simplemente descomprimelo para compilarlo despues.
+
+\subsection*{Última revisión}
+
+Haciendo uso de \texttt{SVN}, cualquiera puede obtener la última versión del
+código fuente del proyecto y utilizar esa. Lógicamente no aseguramos el
+correcto funcionamiento de dicha versión, ya que puede que estemos trabajando
+en ella.\\
+
+Para realiza la descarga \footnote{Teniendo instalado un cliente SVN}:
+
+\begin{lstlisting}[style=consola]
+svn checkout https://forja.rediris.es/svn/nocktmetal
+\end{lstlisting}
+
+\section{Instalación}
+
+\subsection*{Requisitos del sistema}
+
+Actualmente no tenemos bien definidos los requisitos \texttt{hardware}. 
+Cualquier colaboración en ese sentido, será bienvenida.\\
+
+La configuración software probada es la siguiente:
+
+\begin{itemize}
+\item Sistema Operativo: cualquier distribución Linux
+\item gcc 4.3.3 ó posterior  
+\item Librería SDL en su versión 1.2 ó posterior
+\item Librería Boost en su versión 1.35 (falta depurar las versiones posteriores)
+\end{itemize}
+
+\subsection*{Procedimiento}
+
+Para compilar y preparar el primer arranque del juego, simplemente hacemos:
+
+\begin{lstlisting}[style=consola]
+make all
+\end{lstlisting}
+
+en el directorio donde tenemos todos los ficheros de código fuente, y ya tendremos
+el fichero ejecutable listo. 
