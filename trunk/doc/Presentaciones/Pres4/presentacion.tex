@@ -114,15 +114,10 @@
 
    \subsection{Elementos multimedia}
 
-   \begin{frame}{Estado actual: Motor de Combate}
+   \begin{frame}{Créditos del juego}
    \transdissolve
 
-    Se comenta en los créditos del juego y la documentación el origen de
-    los elementos visuales y sonoros del juego y existe algo hecho por
-    ellos.\\
-
-    Captura de pantalla de la pantalla de créditos que muestra lo
-    solicitado.
+    INCLUIR CAPTURA CUANDO ESTÉ
    \end{frame}
 
 
@@ -174,7 +169,124 @@
     \end{itemize}
    \end{frame}
 
- \section{Presentación del producto}
+   \subsection{Dificultades en la implementación}
+
+   \begin{frame}{Problemas encontrados (I)}
+   El desarrollo ha sido de un nivel de programación algo complejo, ya que
+   nos hemos encontrado muchos problemas en los dos motores:
+
+   \begin{block}{Motor de movimiento}
+     Hemos intentado siempre crear clases para todo, abstrayendo lo más posible
+     los datos de la SDL, lo cual no siempre ha sido fácil, porque queríamos
+     que la librería fuera transparente para el programador y no le fuera
+     necesario conocer como funciona SDL.\\
+
+     Conseguir tener varios objetos de clases distintas ``colaborando'' de
+     alguna manera dentro de una misma entidad de tipo ``mapa de tiles'', nos
+     ha llevado varias horas de peleas con el compilador y entre nosotros.
+   \end{block}
+   
+   \end{frame}
+
+   \begin{frame}[fragile=singleslide]{Problemas encontrados (II)}
+     \begin{block}{Motor de combate}
+       En la implementación del motor de combate se intentó evitar desde un
+       principio la redundancia de datos y objetos, para que al reescribir
+       las cosas no hubiera inconsisencia.\\
+       
+       ¿Cómo se consiguió? \textbf{Todo} en el motor de combate son punteros
+       y referencias. Muy bonito, precioso todo, hasta que te equivocas en un
+       sitio y se caen todos los punteros. Un ejemplo de instrucción sencilla
+       puede ser:
+\begin{verbatim}
+_comb->_g1->getCombatientes().at(i)->tiradaSuerte();
+\end{verbatim}
+       
+       El control del turno tiene un puntero al control del combate, el cual
+       tiene un puntero a cada grupo del combate. Estos grupos a su vez tienen
+       un vector de punteros a combatiente. Más o menos, la implementación es así
+     \end{block}
+   \end{frame}
+
+   \begin{frame}{Problemas encontrados (y III)}
+     Sin entrar en los motores en sí, también ha resultado complicado:
+     \begin{itemize}
+     \item El aprendizaje y uso \textbf{correcto} de la libSDL
+     \item Las estadísticas de un juego de rol no es algo sencillo
+     \item Comunicación y compenetración entre distintos programadores
+     \item Para juegos jRPG no hay nada en la comunidad, por tanto
+       hemos partido desde 0 prácticamente, lo cual no es lo mismo
+       que partir con algo ya hecho de otros proyectos.
+     \end{itemize}
+
+     Una pequeña nota es que lo que nos ha faltado por desarrollar no ha 
+     sido por complicación, si no por falta de tiempo en general.
+   \end{frame}
+ 
+ \section{Trabajo individual}
+
+ \subsection{División básica}
+ \begin{frame}{Divisón del trabajo}
+   \transdissolve
+   
+   Desde el principio, intentamos dividir el proyecto en partes perfectamente
+   distinguibles y repartirnos mejor el trabajo.\\
+
+   La división ya se ha mencionado anteriormente, ha sido la de dividir el
+   juego en dos \textbf{motores} ó gestores, uno de movimiento y otro de
+   combate, ya que tienen características muy diferentes\\
+ \end{frame}
+
+\subsection{Trabajo realizado por Rosa}
+\begin{frame}{Rosa ha realizado...}
+  \transdissolve
+  
+  \begin{itemize}
+  \item Análisis y diseño del motor de movimiento, el cual se ha cumplido
+    en un 80\% aproximadamente
+  \item Creación de las clases que trabajan con el mapa mediante tiles.
+  \item Compenetración entre el mapa y los personajes.
+  \item Ampliación de la clase \texttt{Animacion}
+  \item Inclusión de los NPJs en el motor de movimiento.
+  \item Interacción del PJ con los elementos del escenario.
+  \item Interacción entre ambos motores.
+  \end{itemize}
+\end{frame}
+
+\subsection{Trabajo realizado por Pablo}
+\begin{frame}{Pablo ha realizado}
+  \transdissolve
+
+  \begin{itemize}
+  \item Análisis y diseño del motor de combate, el cual apenas se usó, por falta
+    de perspectiva inicial.
+  \item Pequeño estudio matemático para las estadísticas del combate, de
+    forma que fueran compensadas.
+  \item Todo el nucleo del combate, con sus clases e interacción entre ellas.
+  \item Corrección de bugs.
+  \item Mezclado de algunas músicas y efectos de sonidos.
+  \item Persistencia de los objetos para grabar partidas, usando XML
+  \item Un poco del guión
+  \end{itemize}
+\end{frame}
+
+\subsection{Trabajo realizado por Noelia}
+\begin{frame}{Noelia ha realizado}
+  \transdissolve
+
+  \begin{itemize}
+  \item Diseño gráfico (sprites y tiles)
+  \item Movimiento de los personajes por pixels
+  \item Base de los PJs y NPJs mediante la clase \texttt{Personaje}
+  \item Abstracción de los dos motores
+  \item Menu inicial
+  \item Abstracción de la inicialización de los sistemas, las pantallas y 
+    los eventos.
+  \item Comienzo (¿final?) de la incusión de gráficos al motor de combate
+  \end{itemize}
+\end{frame}
+
+\section{Presentación del producto}
 
   \subsection{¡A jugar!}
  \begin{frame}{Estado del menu principal}
@@ -185,10 +297,54 @@
   Paso a la ejecución del juego.
  \end{frame}
  
-
-  
  \section{Para terminar}
+ \begin{frame}{Conclusiones}
+   \transdissolve
+   \begin{itemize}
+   \item Diseñar y programar un videojuego es bastante distinto a lo que se
+     imagina uno, sin embargo hemos disfrutado dándonos de cabezazos con
+     el compilador.
+   \item Un juego no se puede hacer solo con programadores, es necesario un
+     equipo multidisciplinar: diseñadores, guionistas...
+   \item Aunque el juego no está completo, realmente lo que hemos hecho 
+     (estamos haciendo) es una librería para juegos RPG partiendo desde
+     cero, cosa que no ha sido nada fácil.
+   \end{itemize}
+ \end{frame}
 
+ \begin{frame}{Agradecimientos}
+   \transdissolve
+   \begin{itemize}
+   \item Nos gustaria auto-felicitarnos porque aunque el producto no está 
+     completo, consideramos que hemos hecho un buen trabajo, partiendo de
+     la base que no habia \textbf{nada} de este estilo con licencia libre.
+   \item Tambien felicitar a todos los grupos y compañeros que han trabajado
+     y han llevado su videojuego adelante, la mayoria con muy buen resultado.
+   \item Sin ánimo de ser \textit{pelotas}, agradecer a Manuel la dinámica de
+     la asignatura, con la que hemos aprendido bastante a llevar (ó como no
+     llevar) un proyecto en grupo, así como hacer algo más tangible que
+     en otras asignaturas.
+   \item Y aunque no es alumno de la asignatura, a David Casas Molina, que ha
+     sido nuestro \textit{beta-tester} particular.
+   \end{itemize}
+ \end{frame}
+
+ \begin{frame}{Herramientos utilizadas en el proyecto}
+   \transdissolve
+   \begin{description}
+   \item[Subversion: ] Imprescindible algún sistema de control de versiones.
+     Nos hubiera gustado usar Git, pero redIris trabaja con SVN.
+   \item[C++: ] Todo el código está programado en C++ siguiendo el estandar ISO.
+   \item[libSDL: ] Librería de abstracción multimedia.
+   \item[Doxygen: ] Herramienta de documentación automática, para poder 
+     generar una documentación interna de altísima calidad
+   \item[\LaTeX : ] Para las presentaciones y el manual de usuario.
+   \item[Gimp: ] Para la creación y edición de sprites y tiles
+   \item[Inkscape: ] Editor de gráficos vectoriales, usado para el menu.
+   \item[LMMS: ] Usado para la generación de la música y efectos sonoros.
+   \end{description}
+ \end{frame}
+ 
   \input{../licencia.tex}
 
   
