@@ -158,8 +158,8 @@ Menu::Menu(const char* urlFondo, const char* urlCursor, Pantalla* p):
 
 void Menu::setBoton(const char* mensaje, Uint32 posx, Uint32 posy,
                     const char* url, Uint32 espacioX, Uint32 espacioY) {
-
-	/* Si es el primer botón, se toma por defecto como activado */
+  
+    /* Si es el primer botón, se toma por defecto como activado */
     if(_numBotones == 0) {
         _botonActivo = 0;
     }

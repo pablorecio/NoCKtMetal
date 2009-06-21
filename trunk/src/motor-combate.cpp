@@ -55,7 +55,6 @@ MotorCombate::MotorCombate() {
 
 void MotorCombate::ejecutar() {
 
-    cout << "Nuestro grupo es: id(" << _combate._g1->getIdentificador() << ")" << endl;
     cout << "El primer combatiente es " << _jugador.getCombatientes().at(1)->getNombre() 
 	 << " y el ID del grupo es " 
 	 << _jugador.getCombatientes().at(1)->getGrupo().getIdentificador() << endl;
