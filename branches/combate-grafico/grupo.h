@@ -199,7 +199,7 @@ public:
 	 */
 	bool vivo() const;
 
-	void mostrarGrupo() const;
+	virtual void mostrarGrupo() const;
 
 	/**
 	 *
@@ -220,7 +220,7 @@ public:
 		guardar_XML(*this, _ruta_XML.c_str());
 	}
 
-private:
+protected:
 	bool _controlable;
 	Inventario* _inventario;
 	vector<Combatiente*> _componentes;

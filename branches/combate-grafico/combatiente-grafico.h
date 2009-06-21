@@ -35,7 +35,10 @@ public:
 				Uint32 f, Uint32 c, bool pos, Uint32 exp = 0,
 				Uint32 exp_ganable = 0);
 
+//	CombatienteGrafico(const Combatiente& c);
+
 	Sprite* getSprite();
+	void setSprite(const char* sprite,Uint32 numF, Uint32 numC);
 
 	bool getPosNormal() const;
 
@@ -57,6 +60,7 @@ public:
 	void empeorarEstado();
 
 	virtual ~CombatienteGrafico();
+	CombatienteGrafico& operator= (const Combatiente& c);
 private:
 	Sprite _sprite;
 
@@ -74,6 +78,7 @@ private:
 	Uint32 _estado;
 };
 
+
 inline CombatienteGrafico::CombatienteGrafico (string nombre, Uint32 id,
 		AtributoBase atr, Grupo &grupo, string rXML, Arma &arma,
 		Armadura &armadura, const char* sprite,	Uint32 f, Uint32 c, bool pos,
@@ -82,6 +87,9 @@ inline CombatienteGrafico::CombatienteGrafico (string nombre, Uint32 id,
 					exp_ganable), _sprite(sprite, f, c), _posNormal(pos) {}
 
 inline Sprite* CombatienteGrafico::getSprite() { return &_sprite; }
+void CombatienteGrafico::setSprite(const char* sprite, Uint32 numF, Uint32 numC) {
+	_sprite = Sprite(sprite, numF, numC);
+}
 
 inline bool CombatienteGrafico::getPosNormal() const { return _posNormal; }
 

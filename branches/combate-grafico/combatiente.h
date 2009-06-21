@@ -227,6 +227,24 @@ public:
 	}
 
 	/**
+	 * Método <i>getter</i> para obtener el valor del arma equipada del combatiente
+	 *
+	 * @return Puntero al arma del combatiente
+	 */
+	Arma* getArma() const {
+		return _arma;
+	}
+
+	/**
+	 * Método <i>getter</i> para obtener el valor de la armadura equipada del combatiente
+	 *
+	 * @return Puntero a la armadura del combatiente
+	 */
+	Armadura* getArmaduraReal() const {
+		return _armadura;
+	}
+
+	/**
 	 * Método <i>getter</i> para obtener el valor de la armadura equipada del combatiente
 	 *
 	 * @return Valor entero sin signo de 32 bits con la armadura del combatiente

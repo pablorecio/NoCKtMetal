@@ -16,7 +16,7 @@
 #include "atributos.h"
 #include "atributos_base.h"
 #include "combatiente-grafico.h"
-#include "grupo.h"
+#include "grupo-grafico.h"
 #include "habilidad.h"
 #include "objeto.h"
 #include "inventario.h"
@@ -31,15 +31,26 @@ int main(){
 
 	Pantalla p();
 
+	p.
 
   Biblioteca bib;
   bib.recargarXML("datos-xml/biblioteca.xml");
   cout << "Biblioteca cargada" << endl;
 
-  Grupo AmpliBreakers(bib.getGrupoPrincipal().c_str());
+  /* 	GrupoGrafico(Inventario& invent, bool contr, Uint32 i, string rXML,
+			Pantalla* p, vector<const char*> sprites */
+
+  vector<const char*> spritesPrincipal();
+  spritesPrincipal.push_back("./sprites/baldos.png");
+  spritesPrincipal.push_back("./sprites/baldos.png");
+  spritesPrincipal.push_back("./sprites/baldos.png");
+  spritesPrincipal.push_back("./sprites/baldos.png");
+
+  GrupoGrafico AmpliBreakers(bib.getGrupoPrincipal().c_str(), &p, spritesPrincipal, true); //izda
 
   srand(time(0));
   cout << "WOLA RUBIOOOO " << bib.getNumeroGruposEnemigos() << endl;
+
   Aleatorio a;
   Uint32 num_rep = a.valorEntero(0,bib.getNumeroGruposEnemigos() - 1);
   map<Uint32,string> aux = bib.getGruposEnemigos();
@@ -50,15 +61,23 @@ int main(){
   for(size_t i = 0 ; i < num_rep ; i++){
 	  I++;
   }
+
   cout << "Despues del for :)" << endl;
   cout << "Seleccionado " << I->first;
   cout << " " << bib.getGrupoEnemigo(I->first) << endl;
 
-  Grupo Enemigos(bib.getGrupoEnemigo(I->first).c_str());
+  vector<const char*> spritesEnemigos();
+  spritesEnemigos.push_back("./sprites/graimito.png");
+  spritesEnemigos.push_back("./sprites/graimito.png");
+  spritesEnemigos.push_back("./sprites/graimito.png");
+  spritesEnemigos.push_back("./sprites/graimito.png");
+
+  GrupoGrafico Enemigos(bib.getGrupoEnemigo(I->first).c_str(), &p, spritesEnemigos, false); //dcha
 
     AmpliBreakers.mostrarGrupo();
     Enemigos.mostrarGrupo();
 
+    /*
     ControlCombate combate(AmpliBreakers, Enemigos);
 
   #ifdef DEBUG
@@ -67,6 +86,6 @@ int main(){
 
     combate.iniciarCombate();
     combate.postCombate();
-
+*/
 }
 
