@@ -27,6 +27,7 @@
 #include "dialogo.h"
 #include <iostream>
 #include "sistema.h"
+#include "pantalla.h"
 using namespace std;
 
 

@@ -29,7 +29,7 @@ aleatorio.o: aleatorio.h
 biblioteca.o: combatiente.h grupo.h objeto.h habilidad.h biblioteca.h
 # ---------------------------------------------------------------------
 animacion.o: evento.h pantalla.h personaje.h imagen.h npj.h dialogo.h animacion.h
-dialogo.o: pantalla.h dialogo.h
+dialogo.o: pantalla.h sistema.h dialogo.h
 imagen.o: pantalla.h npj.h tile.h imagen.h
 musica.o: musica.h
 sprite.o: sprite.h

@@ -150,10 +150,10 @@ void MostrarCreditos(Pantalla* p, Evento* e) {
 
     for(size_t i = 0; i < credLinea.size(); ++i) {
       if(i != credLinea.size() -1) {
-	cred.setBoton(credLinea.at(i), 120, 20+24 * i, "imagenes/nulo.png", 
+	cred.setBoton(credLinea.at(i), 170, 40+24 * i, "imagenes/nulo.png", 
 		      4,1, "fuentes/FontCreditos.ttf", 14);
       } else {
-	cred.setBoton(credLinea.at(i), 120, 20+24 * i, "imagenes/nulo.png", 
+	cred.setBoton(credLinea.at(i), 170, 40+24 * i, "imagenes/nulo.png", 
 		      30,1, "fuentes/FontCreditos.ttf", 10);
       }
     }
