@@ -53,11 +53,12 @@ MotorCombate::MotorCombate() {
     _combate = ControlCombate(_jugador, _enemigosActuales);
 }
 
+void MotorCombate::asignarEnemigo(Uint32 clave){
+  cargar_XML(_enemigosActuales,_bib.getGrupoEnemigo(clave).c_str());
+}
+
 void MotorCombate::ejecutar() {
 
-    cout << "El primer combatiente es " << _jugador.getCombatientes().at(1)->getNombre() 
-	 << " y el ID del grupo es " 
-	 << _jugador.getCombatientes().at(1)->getGrupo().getIdentificador() << endl;
     cout << endl << "--------------------------------------"
             << "------------------------------------" << endl
             << " Entrando en el motor de movimiento " << endl
@@ -66,17 +67,6 @@ void MotorCombate::ejecutar() {
             << endl;
 
     /* Lanzar motor de combate */
-
-    cout << "Seleccionado " << _iterador->first;
-    cout << " " << _bib.getGrupoEnemigo(_iterador->first) << endl;
-
-    cout << "ID - " << _jugador.getIdentificador() << endl;
-    cout << "Controlable - " << _jugador.controlable() << endl;
-    _jugador.mostrarGrupo();
-    cout << "----------" << endl;
-    cout << "ID - " << _enemigosActuales.getIdentificador() << endl;
-    cout << "Controlable - " << _enemigosActuales.controlable() << endl;
-    _enemigosActuales.mostrarGrupo();
 
 #ifdef DEBUG
     cout << "Combate inicializado" << endl;

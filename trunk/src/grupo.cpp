@@ -57,6 +57,15 @@ Combatiente& Grupo::getCombatiente(Uint32 i) throw(NoExisteCombatiente){
     throw(new NoExisteCombatiente());
 }
 
+Uint32 Grupo::getNumeroCombatientesVivos() const{
+  Uint32 cont = 0;
+  for(size_t i = 0 ; i < _numComp ; i++){
+    if(_componentes.at(i)->getPV() > 0)
+      cont++;
+  }
+  return cont;
+}
+
 bool Grupo::vivo() const {
     for (unsigned int i = 0 ; i < _numComp ; i++)
       if (_componentes.at(i)->getPV() != 0){

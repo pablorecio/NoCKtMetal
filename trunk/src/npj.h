@@ -44,24 +44,24 @@
 
 #include <SDL/SDL.h>
 
-class Imagen;
 class Sprite;
+class Pantalla;
 
 class NPJ {
  public:
  
-  enum interaccion {DIALOGO, OBJETO, PELEA};
+  enum interaccion {DIALOGO, OBJETO, PELEA, ANIMACION};
   
   NPJ(); // para vectores;
-  NPJ(Uint32 i, Uint32 x, Uint32 y, const char* sprite, 
-      Uint32 amplMov = 2, Uint32 f = 4, Uint32 c = 4);
+  NPJ(Uint32 i, Uint32 x, Uint32 y, const char* sprite, Pantalla* p,
+      Uint32 xmapa, Uint32 ymapa, Uint32 amplMov = 2, Uint32 f = 4, Uint32 c = 4);
 
   Uint32 getId() const;
   Uint32 getX() const;
   Uint32 getY() const;
+  Uint32 getXpant() const;
+  Uint32 getYpant() const;
   void addAccion(const interaccion& i);
-
-  void setImagen(Imagen& im);
 
   // Devuelve todas las acciones que se tienen que activar cuando 
   // colisiona con el personaje principal.
@@ -73,6 +73,12 @@ class NPJ {
   Uint32 getVelocidad() const;
   Uint32 getTamanio() const;
   
+  bool dentroPantalla() const;
+  void dentroPantalla(Uint32 cx, Uint32 cy);
+  void dentroPantalla(Uint32 cx, Uint32 cy, Uint32 sec, char dir);
+
+  void dibujarPosicion(Uint32 mx, Uint32 my, Uint32 px, Uint32 py);
+
   void subir();
   void bajar();
   void izq();
@@ -88,6 +94,7 @@ class NPJ {
     
  private:
   void mover(Uint32 movimiento, Uint32 secuencia);
+  void establecerPosicion();
 
   Uint32 id_;
   Uint32 tam_;
@@ -95,24 +102,31 @@ class NPJ {
   std::vector<Uint32> desp_;
   SDL_Rect rango_;
 
-  Uint32 x_; // TILES 
+  Uint32 x_; // TILES.
   Uint32 y_;
-  Uint32 px_;
+  Uint32 px_; // pixels mapa.
   Uint32 py_;
+  Uint32 ppx_; //pixels pantalla.
+  Uint32 ppy_;
+
+  Uint32 cx_; // coordenada supIzq de la pantalla en el mapa.
+  Uint32 cy_;
+  
+  bool pers_dibujado;
 
   std::vector<interaccion> acciones_;
 
   Sprite sprite_;
 
-  Imagen* imagen_;
+  Pantalla* p_;
+
 };
 
+//bool operator <(const NPJ n1, const NPJ n2);
 
 inline Uint32 NPJ::getId() const { return id_; }
 inline Uint32 NPJ::getX() const { return x_; }
 inline Uint32 NPJ::getY() const { return y_; }
-
-inline void NPJ::setImagen(Imagen& im) { imagen_ = &im; }
   
 inline void NPJ::addAccion(const interaccion& i) { acciones_.push_back(i); }
 
@@ -129,5 +143,11 @@ inline bool NPJ::fueraRango(Uint32 x, Uint32 y) const
 inline Uint32 NPJ::getSecuenciasMovimiento() const { return sprite_.getColumnas(); }
 inline Uint32 NPJ::getVelocidad() const { return vel_; } 
 inline Uint32 NPJ::getTamanio() const { return tam_; }
+
+inline  bool NPJ::dentroPantalla() const { return pers_dibujado;}
+
+
+inline Uint32 NPJ::getXpant() const { return ppx_;}
+inline Uint32 NPJ::getYpant() const { return ppy_;}
 
 #endif

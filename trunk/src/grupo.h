@@ -166,6 +166,15 @@ public:
 		return _numComp;
 	}
 
+        /**
+	 * Método <i>getter</i> para obtener el número de combatientes vivos
+	 * del grupo.
+	 *
+	 * @return Entero sin signo de 32 bits con el número de combatientes
+	 * vivos en el grupo.
+	 */
+        Uint32 getNumeroCombatientesVivos() const;
+
 	/**
 	 * Método que sirve para añadir un combatiente al grupo
 	 *

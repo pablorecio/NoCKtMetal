@@ -25,7 +25,9 @@
  */
 
 #include "dialogo.h"
-
+#include <iostream>
+#include "sistema.h"
+#include "pantalla.h"
 using namespace std;
 
 
@@ -35,29 +37,37 @@ Dialogo::Mensaje::Mensaje(Uint32 personaje_hablador, const char* msj):pers_(pers
 // Ya se ha tenido que iniciar el subsistema para poder crear objetos.
 Dialogo::Dialogo(std::vector<Dialogo::Mensaje> m, Pantalla& p, 
 	Uint32 rP1, Uint32 gP1, Uint32 bP1, Uint32 rP2, Uint32 gP2, Uint32 bP2):
-  p_(&p), mensajes_(m) {
+  p_(&p){
 
+  iniciarSubsistemaTTF();
+
+  cout << "cargando los mensajes" << endl;
+  for(Uint32 i=0; i<m.size(); i++)
+    mensajes_.push_back(m.at(i));
+  
+  cout << "definiendo colores de la fuente" << endl;
   c1.r=rP1; c1.g=gP1; c1.b=bP1; 
   c2.r=rP2; c2.g=gP2; c2.b=bP2;
 
+  cout << "definiendo tipo de la fuente" << endl;
   // tipo de la fuente del diálogo. Suponemos siempre la misma.
-  tipoFuente_ = TTF_OpenFont("fuentes/FreeMono.ttf", 15);
+  tipoFuente_ = TTF_OpenFont("fuentes/FontMenu.ttf", 15);
 
   SDL_Rect r1, r2;
 
   SDL_Surface *texto1, *texto2;
 
   for(size_t i=0; i<mensajes_.size(); i++){
+    p_->volcarPantalla(p_->getBuffer(), p_->getMovimiento());
     if(mensajes_[i].Personaje() == 0){
       // Cargamos el mensaje del jugador principal
-      texto1 = TTF_RenderText_Blended(tipoFuente_, mensajes_[i].mensaje(), c1);
+      texto1 = TTF_RenderText_Blended(tipoFuente_, mensajes_.at(i).mensaje(), c1);
       // Comenzará en la esquina superior izquierda.
       r1.x = 10;
       r1.y = 10;
       r1.h = texto1->h;
       r1.w = texto1->w;
-      
-      p_->volcarPantalla(texto1, NULL, p_->getBuffer(), &r1);
+      p_->volcarPantalla(texto1, NULL, p_->getMovimiento(), &r1);
     }
     else{
       texto2 = TTF_RenderText_Blended(tipoFuente_, mensajes_[i].mensaje(), c2);
@@ -66,16 +76,16 @@ Dialogo::Dialogo(std::vector<Dialogo::Mensaje> m, Pantalla& p,
       r2.h = texto2->h;
       r2.w = texto2->w;
       
-      p_->volcarPantalla(texto2, NULL, p_->getBuffer(), &r2);
+      p_->volcarPantalla(texto2, NULL, p_->getMovimiento(), &r2);
     }
     
     // Actualizamos toda la pantalla para poder borrar la frase anterior. 
-    p_->volcarPantalla(p_->getFondo());
+    // p_->volcarPantalla(p_->getFondo());
+    // p_->volcarPantalla(p_->getBuffer());
     p_->volcarPantalla(p_->getMovimiento());
-    p_->volcarPantalla(p_->getBuffer());
     SDL_Delay(3000);
     // Limpiamos el buffer para no superponer las frases.
-    p_->limpiarBuffer(p_->getBuffer());
+    p_->limpiarBuffer(p_->getMovimiento());
   }
   
 }

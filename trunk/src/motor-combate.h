@@ -8,6 +8,8 @@
 #ifndef MOTORCOMBATE_H_
 #define MOTORCOMBATE_H_
 
+#include <SDL/SDL.h>
+
 #include "atributos.h"
 #include "atributos_base.h"
 #include "combatiente.h"
@@ -24,6 +26,8 @@ class MotorCombate {
  public:
   MotorCombate();
   void ejecutar();
+
+  void asignarEnemigo(Uint32 clave);
 
   private:
     Biblioteca _bib;

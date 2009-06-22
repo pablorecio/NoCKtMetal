@@ -80,6 +80,12 @@ void Pantalla::rellenarPantalla(SDL_Surface *p, Uint32 colorR, Uint32 colorG,
                                       colorA));
 }
 
+void Pantalla::limpiarBuffer(SDL_Surface* buffer)
+{
+  SDL_Surface *auxiliar = SDL_CreateRGBSurface(SDL_HWSURFACE, _ancho, _alto,			       _prof, 0, 0, 0, 0);
+  volcarPantalla(auxiliar, buffer);
+}
+
 void Pantalla::volcarPantalla(SDL_Surface *p1) {
     /* Copiar la surface completa p1 en la pantalla principal */
     SDL_BlitSurface(p1, NULL, _pantalla, NULL);
