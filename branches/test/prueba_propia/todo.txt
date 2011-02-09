@@ -1,2 +1,0 @@
-- Revisar constructores: ¿reservar memoria de la SDL_Surface?
-- Excepciones
